@@ -15,9 +15,6 @@
         default-python = pkgs.python310;
         nix-dev-dependencies = [
           # Alternative Pythons for Tox
-          pkgs.python37
-          pkgs.python38
-          pkgs.python39
           pkgs.python310
           pkgs.poetry
           

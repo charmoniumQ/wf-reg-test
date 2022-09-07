@@ -9,6 +9,12 @@ from .util import create_temp_dir
 docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
 
 
+class WorkflowEngine:
+    @abc.abstractmethod
+    def run(self, workflow: Path) -> Execution:
+        ...
+
+
 @dataclasses.dataclass
 class DockerWorkflowEngine(WorkflowEngine):
     name: str
