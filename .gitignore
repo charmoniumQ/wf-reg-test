@@ -5,3 +5,5 @@ __pycache__/
 /.tox/
 /.direnv/
 
+/.cache2/
+/secrets.json
