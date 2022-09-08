@@ -1,8 +1,10 @@
 import contextlib
 import tempfile
 from pathlib import Path
-from typing import Generator, Union, Iterable
+from typing import Generator, Iterable, Union
+
 import xxhash
+
 
 @contextlib.contextmanager
 def create_temp_dir() -> Generator[Path, None, None]:

@@ -1,13 +1,14 @@
 import abc
-import docker  # type: ignore
 import dataclasses
 from datetime import datetime
 from pathlib import Path
-from .workflows import Execution, MerkleTreeNode
+
+import docker  # type: ignore
+
 from .util import create_temp_dir
+from .workflows import Execution, MerkleTreeNode
 
-
-docker_client = docker.DockerClient(base_url='unix://var/run/docker.sock')
+docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
 
 class WorkflowEngine:
@@ -56,7 +57,7 @@ class DockerWorkflowEngine(WorkflowEngine):
         return Execution(
             datetime=datetime.now(),
             output=output_blobs,
-            success=True, # TODO: fix this
+            success=True,  # TODO: fix this
         )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:

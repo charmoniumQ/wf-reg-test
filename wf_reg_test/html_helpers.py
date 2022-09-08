@@ -1,34 +1,42 @@
-from typing import Sequence, Optional, Iterable, TypeAlias
 import itertools
 from pathlib import Path
+from typing import Mapping, Optional, Sequence, TypeAlias
 
-from domonic import html  # type: ignore
-import domonic
+import domonic  # type: ignore
+import domonic as html  # so tags like html.a work.
 
 TagLike: TypeAlias = domonic.dom.Element | str
 
 
 def html_table(
-    elems: Sequence[Sequence[TagLike]],
+    elems: Sequence[Mapping[TagLike, Sequence[TagLike]]],
     headers: Optional[Sequence[TagLike]] = None,
 ) -> domonic.dom.Element:
+    if headers is None and elems:
+        headers = elems[0]
     if headers is not None:
         thead = [html.thead(html.tr(*[html.td(header) for header in headers]))]
     else:
         thead = []
     return html.table(
         *thead,
-        html.tbody(*[html.tr(*[html.td(elem) for elem in row]) for row in elems]),
+        html.tbody(*[html.tr(*[html.td(elem) for elem in row.values()]) for row in elems]),
     )
 
 
-def html_list(elements: Sequence[TagLike], ordered: bool = False) -> domonic.dom.Element:
+def html_list(
+    elements: Sequence[TagLike], ordered: bool = False
+) -> domonic.dom.Element:
     list_factory = html.ol() if ordered else html.ul()
     return list_factory(*[html.li(element) for element in elements])
 
 
+def html_link(text: TagLike, target: str) -> domonic.dom.Element:
+    return html.a(text, _href=target)
+
+
 def html_fs_link(path: Path) -> domonic.dom.Element:
-    return html.a(href=f"file://{path.resolve()}")(html.code(str(path)))
+    return html_link(text=html.code(str(path)), target=f"file://{path.resolve()}")
 
 
 def highlighted_head(languages: Sequence[str]) -> Sequence[domonic.dom.Element]:
@@ -51,7 +59,11 @@ def highlighted_head(languages: Sequence[str]) -> Sequence[domonic.dom.Element]:
     ]
 
 
-def css_string(**declarations: str) -> str:
+def css_rule(selector: str, declarations: Mapping[str, str]) -> str:
+    return selector + " {" + css_attribute(**declarations) + "}"
+
+
+def css_attribute(**declarations: str) -> str:
     return ";".join(
         [
             f"{property.replace('_', '-')}: {value}"
@@ -76,14 +88,16 @@ def highlighted_code(lang: str, code: str, width: int = 60) -> domonic.dom.Eleme
     )
 
 
-def collapsed(summary: TagLike, *details: TagLike, open: bool = False) -> domonic.dom.Element:
+def collapsed(
+    summary: TagLike, *details: TagLike, open: bool = False
+) -> domonic.dom.Element:
     return html.details(**({"open": ""} if open else {}))(
         html.summary(summary),
         *details,
     )
 
 
-def disp_bool(val: bool) -> domonic.dom.Element:
+def html_emoji_bool(val: bool) -> domonic.dom.Element:
     return html.span(
         {
             False: "❌",
@@ -94,10 +108,7 @@ def disp_bool(val: bool) -> domonic.dom.Element:
 
 def br_join(lines: Sequence[TagLike]) -> domonic.dom.Element:
     return html.span(
-        *itertools.chain.from_iterable(
-            (line, html.br())
-            for line in lines
-        )
+        *itertools.chain.from_iterable((line, html.br()) for line in lines)
     )
 
 

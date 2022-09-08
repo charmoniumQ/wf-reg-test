@@ -1,18 +1,29 @@
+from __future__ import annotations
+
 import abc
-from typing import ContextManager
-import github
-import json
 import dataclasses
-import xxhash
-import git
-from typing import Optional
+import json
 import types
-from pathlib import Path
-import xxhash
 from datetime import datetime
+from pathlib import Path
+from typing import ContextManager, Optional
+
+import git
+import github
+import xxhash
 
 
 class Repo(abc.ABC):
+    @property
+    @abc.abstractmethod
+    def name(self) -> str:
+        ...
+
+    @property
+    @abc.abstractmethod
+    def url(self) -> str:
+        ...
+
     @abc.abstractmethod
     def get_revisions(self) -> list[tuple[datetime, LazyPath]]:
         ...
@@ -31,20 +42,22 @@ github_client = github.Github(json.loads(Path("secrets.json").read_text())["gith
 class GitHubRepo(Repo):
     user: str
     repo: str
-    only_use_tagged_commits: bool
+    only_tags: bool
+
+    @property
+    def name(self) -> str:
+        return self.repo
+
+    @property
+    def url(self) -> str:
+        return f"https://github.com/{self.user}/{self.repo}"
 
     def get_revisions(self) -> list[tuple[datetime, LazyPath]]:
         repo = github_client.get_user(self.user).get_repo(self.repo)
-        if self.only_use_tagged_commits:
-             revs = (
-                 (tag.commit, tag.name)
-                 for tag in repo.get_tags()
-             )
+        if self.only_tags:
+            revs = ((tag.commit, tag.name) for tag in repo.get_tags())
         else:
-            revs = (
-                (commit, commit.sha)
-                for commit in repo.get_commits()
-            )
+            revs = ((commit, commit.sha) for commit in repo.get_commits())
         return [
             (commit.commit.committer.date, LazyGitCheckout(repo.svn_url, rev))
             for commit, rev in revs
@@ -52,6 +65,7 @@ class GitHubRepo(Repo):
 
 
 cache_path = Path(".cache2")
+
 
 @dataclasses.dataclass
 class LazyGitCheckout(LazyPath):
@@ -73,9 +87,14 @@ class LazyGitCheckout(LazyPath):
             return repo_path
 
     def __exit__(
-            self,
-            _exc_type: Optional[type[BaseException]],
-            _exc_value: Optional[BaseException],
-            _traceback: Optional[types.TracebackType],
+        self,
+        _exc_type: Optional[type[BaseException]],
+        _exc_value: Optional[BaseException],
+        _traceback: Optional[types.TracebackType],
     ) -> None:
         pass
+
+
+repos = {
+    "GitHubRepo": GitHubRepo,
+}

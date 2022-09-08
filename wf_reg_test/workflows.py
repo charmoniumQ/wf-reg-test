@@ -1,18 +1,25 @@
 from __future__ import annotations
-import abc
-import dataclasses
+
 from datetime import datetime
 import functools
 import json
 import operator
 from pathlib import Path
-from typing import Mapping, Optional, Any
 
-from sqlalchemy import Column, ForeignKey, Boolean, Integer, String, LargeBinary, DateTime
-from sqlalchemy.orm import declarative_base, relationship, Mapped
+import sqlalchemy
+from sqlalchemy import (
+    Boolean,
+    Column,
+    DateTime,
+    ForeignKey,
+    Integer,
+    LargeBinary,
+    String,
+)
+from sqlalchemy.orm import Mapped, Session, declarative_base, relationship
 
-from .util import hash_path, walk
-
+from .repos import Repo as RealRepo, repos
+from .util import hash_path
 
 Base = declarative_base()
 
@@ -39,21 +46,24 @@ class Repo(Base):
     __tablename__ = "Repo"
     _id = Column(Integer, primary_key=True, nullable=False)
     type: Mapped[str] = Column(String(ENUM_SIZE), nullable=False)
-    _kwargs: Mapped[str] = Column(String(1023), nullable=False)
+    kwargs: Mapped[str] = Column(String(1023), nullable=False)
     revisions: Mapped[Revision] = relationship("Revision", order_by="Revision.datetime")
 
-    @property
-    def kwargs(self) -> Any:
-        return json.loads(self._kwargs)
+    def parse(self) -> RealRepo:
+        return repos[self.type](**json.loads(self.kwargs))
 
 
 class Revision(Base):
     __tablename__ = "Revision"
     _id = Column(Integer, primary_key=True, nullable=False)
+    name: Mapped[str] = Column(String(HUMAN_READABLE_NAME_SIZE), nullable=False)
+    url: Mapped[str] = Column(String(URL_SIZE), nullable=False)
     datetime: Mapped[datetime] = Column(DateTime, nullable=False)
     tree: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
     _tree_hash = Column(Integer, ForeignKey("MerkleTreeNode.hash"), nullable=False)
-    executions: Mapped[list[Execution]] = relationship("Execution", order_by="Execution.datetime")
+    executions: Mapped[list[Execution]] = relationship(
+        "Execution", order_by="Execution.datetime"
+    )
     _repo_id = Column(String(127), ForeignKey("Repo._id"), nullable=False)
 
 
@@ -73,22 +83,26 @@ class MerkleTreeNode(Base):
     hash: Mapped[int] = Column(Integer, primary_key=True, nullable=False)
     name: Mapped[str] = Column(String(HUMAN_READABLE_NAME_SIZE), nullable=False)
     _parent_hash = Column(Integer, ForeignKey("MerkleTreeNode.hash"))
-    children: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
+    children: Mapped[MerkleTreeNode] = relationship(
+        "MerkleTreeNode"
+    )  # TODO: make this relationship a dict
     blob: Mapped[Blob] = relationship("Blob")
     _blob_hash = Column(Integer, ForeignKey("Blob.hash"))
 
+    def ref_count(self, session: Session) -> None:
+        return sqlalchemy.select(WorkflowApp).filter_by(_parent_hash=self.hash).count()
+
     @staticmethod
     def from_path(
-            path: Path,
-            root: bool = True,
+        path: Path,
+        root: bool = True,
     ) -> MerkleTreeNode:
+        # TODO: deduplicate
         ret = MerkleTreeNode(
             name="." if root else path.name,
         )
         if path.is_dir():
-            ret.children = [
-                MerkleTreeNode.from_path(path, root=False)
-            ]
+            ret.children = [MerkleTreeNode.from_path(path, root=False)]
             ret.blob = None
             ret.hash = functools.reduce(
                 operator.xor,
