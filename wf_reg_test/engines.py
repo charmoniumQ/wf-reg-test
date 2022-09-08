@@ -1,8 +1,9 @@
 import abc
 import docker  # type: ignore
 import dataclasses
+from datetime import datetime
 from pathlib import Path
-from .workflows import WorkflowEngine, Execution, FileBundle
+from .workflows import Execution, MerkleTreeNode
 from .util import create_temp_dir
 
 
@@ -22,7 +23,6 @@ class DockerWorkflowEngine(WorkflowEngine):
     image: str
 
     def run(self, workflow: Path) -> Execution:
-        input_blobs = FileBundle.create(workflow)
         with create_temp_dir() as output_dir:
             output = docker_client.containers.run(
                 image=self.image,
@@ -52,10 +52,10 @@ class DockerWorkflowEngine(WorkflowEngine):
                 stderr=True,
             )
             (output_dir / "output").write_bytes(output)
-            output_blobs = FileBundle.create(output_dir)
+            output_blobs = MerkleTreeNode.from_path(output_dir)
         return Execution(
-            input_blobs=input_blobs,
-            output_blobs=output_blobs,
+            datetime=datetime.now(),
+            output=output_blobs,
             success=True, # TODO: fix this
         )
 

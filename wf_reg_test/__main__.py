@@ -1,11 +1,16 @@
 import json
+from pathlib import Path
 
 import sqlalchemy
-import sqlalchemy_schemadisplay
+import sqlalchemy_schemadisplay  # type: ignore
 
 from .workflows import Base, WorkflowApp, Repo
 
-engine = sqlalchemy.create_engine("sqlite:///test.sqlite", future=True)
+
+path = Path("test.sqlite")
+if path.exists():
+    path.unlink()
+engine = sqlalchemy.create_engine(f"sqlite:///{path}", future=True)
 
 
 graph = sqlalchemy_schemadisplay.create_schema_graph(
@@ -25,7 +30,7 @@ default_wf_app = WorkflowApp(
     name="nf-core/mag",
     repo=Repo(
         type="github",
-        config=json.dumps({
+        _kwargs=json.dumps({
             "user": "nf-core",
             "repo": "mag",
             "only_tags": True

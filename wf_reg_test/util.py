@@ -10,8 +10,12 @@ def create_temp_dir() -> Generator[Path, None, None]:
         yield Path(tmpdir)
 
 
-def hash_path(path: Union[Path, str, bytes]) -> bytes:
-    hasher = xxhash.xxh128()
+def hash_path(path: Union[Path, str, bytes], size: int = 128) -> int:
+    hasher = {
+        128: xxhash.xxh128(),
+        64: xxhash.xxh128(),
+        32: xxhash.xxh128(),
+    }[size]
     block_size = 1 << 14
     with open(path, "rb") as file:
         while True:
@@ -19,7 +23,7 @@ def hash_path(path: Union[Path, str, bytes]) -> bytes:
             if not buffer:
                 break
             hasher.update(buffer)
-    return bytes(hasher.hexdigest(), encoding="ascii")
+    return hasher.intdigest()
 
 
 def walk(path: Path) -> Iterable[Path]:
