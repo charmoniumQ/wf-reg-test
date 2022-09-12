@@ -4,6 +4,7 @@ from datetime import datetime
 from pathlib import Path
 
 import docker  # type: ignore
+from sqlalchemy.orm import Session
 
 from .util import create_temp_dir
 from .workflows import Execution, MerkleTreeNode
@@ -13,7 +14,7 @@ docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
 class WorkflowEngine:
     @abc.abstractmethod
-    def run(self, workflow: Path) -> Execution:
+    def run(self, workflow: Path, session: Session) -> Execution:
         ...
 
 
@@ -23,7 +24,7 @@ class DockerWorkflowEngine(WorkflowEngine):
     url: str
     image: str
 
-    def run(self, workflow: Path) -> Execution:
+    def run(self, workflow: Path, session: Session) -> Execution:
         with create_temp_dir() as output_dir:
             output = docker_client.containers.run(
                 image=self.image,
@@ -53,7 +54,8 @@ class DockerWorkflowEngine(WorkflowEngine):
                 stderr=True,
             )
             (output_dir / "output").write_bytes(output)
-            output_blobs = MerkleTreeNode.from_path(output_dir)
+            # TODO: fix this
+            output_blobs = MerkleTreeNode.from_path(output_dir, session, {}, {})
         return Execution(
             datetime=datetime.now(),
             output=output_blobs,

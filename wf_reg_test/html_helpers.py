@@ -13,7 +13,7 @@ def html_table(
     headers: Optional[Sequence[TagLike]] = None,
 ) -> domonic.dom.Element:
     if headers is None and elems:
-        headers = elems[0]
+        headers = list(elems[0].keys())
     if headers is not None:
         thead = [html.thead(html.tr(*[html.td(header) for header in headers]))]
     else:
@@ -78,7 +78,7 @@ def highlighted_code(lang: str, code: str, width: int = 60) -> domonic.dom.Eleme
         html.code(
             **{
                 "class": f"language-{lang}",
-                "style": css_string(
+                "style": css_attribute(
                     max_width=f"{width}ch",
                     max_height="20vw",
                     resize="both",
@@ -113,4 +113,4 @@ def br_join(lines: Sequence[TagLike]) -> domonic.dom.Element:
 
 
 def small(text: str) -> domonic.dom.Element:
-    return html.span(text, _style=css_string(font_size="8pt"))
+    return html.span(text, _style=css_attribute(font_size="8pt"))
