@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import abc
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 import functools
 import json
@@ -16,6 +16,7 @@ from sqlalchemy import (
     DateTime,
     ForeignKey,
     Integer,
+    Interval,
     LargeBinary,
     String,
     BigInteger
@@ -41,7 +42,7 @@ class WorkflowApp(Base):
     url: Mapped[str] = Column(String(URL_SIZE), nullable=False)
     display_name: Mapped[str] = Column(String(HUMAN_READABLE_NAME_SIZE), nullable=False)
     repo_url: Mapped[str] = Column(String(URL_SIZE), nullable=False)
-    revisions: Mapped[Revision] = relationship("Revision", order_by="Revision.datetime")
+    revisions: Mapped[Revision] = relationship("Revision", order_by="Revision.datetime", back_populates="workflow_app")
 
 
 class RepoAccessor(abc.ABC):
@@ -50,7 +51,7 @@ class RepoAccessor(abc.ABC):
         ...
 
     @abc.abstractmethod
-    def checkout(self, revision: Revision) -> ContextManager[Path]:
+    def checkout(self, url: str) -> ContextManager[Path]:
         ...
 
 
@@ -66,6 +67,7 @@ class Revision(Base):
         "Execution", order_by="Execution.datetime"
     )
     _workflow_app_id = Column(Integer, ForeignKey("WorkflowApp._id"), nullable=False)
+    workflow_app: Mapped[WorkflowApp] = relationship("WorkflowApp", back_populates="revisions")
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Revision):
@@ -85,7 +87,11 @@ class Execution(Base):
     datetime: Mapped[datetime] = Column(DateTime, nullable=False)
     output: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
     _output_hash = Column(BigInteger, ForeignKey("MerkleTreeNode.hash"), nullable=False)
-    success: Mapped[bool] = Column(Boolean, nullable=False)
+    status_code: Mapped[int] = Column(Integer, nullable=False)
+    user_cpu_time: Mapped[timedelta] = Column(Interval, nullable=False)
+    system_cpu_time: Mapped[timedelta] = Column(Interval, nullable=False)
+    max_rss: Mapped[int] = Column(Integer, nullable=False)
+    wall_time: Mapped[timedelta] = Column(Interval, nullable=False)
 
 
 class MerkleTreeNode(Base):
@@ -100,10 +106,6 @@ class MerkleTreeNode(Base):
     )  # TODO: make this relationship a dict
     blob: Mapped[Optional[Blob]] = relationship("Blob")
     _blob_hash = Column(BigInteger, ForeignKey("Blob.hash"))
-
-    def ref_count(self, session: Session) -> int:
-        # TODO: remove this cast
-        return sqlalchemy.select(WorkflowApp).filter_by(_parent_hash=self.hash).count() # type: ignore
 
     @staticmethod
     def from_path(
@@ -139,7 +141,7 @@ class MerkleTreeNode(Base):
                 )
             else:
                 blob = Blob.from_path(path, blobs_in_transaction, session)
-                hash_contents = f"{path!s}:{blob.hash:08x}"
+                hash_contents = f"{path!s}:{blob.hash:08x}".encode()
 
             hash = hash_bytes(hash_contents, size=64) - (1 << 63)
 

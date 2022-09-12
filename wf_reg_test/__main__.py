@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
 import json
+import logging
 from pathlib import Path
 import warnings
 
@@ -9,6 +10,7 @@ import sqlalchemy_schemadisplay  # type: ignore
 from .report import report_html
 from .workflows import Base, Execution, WorkflowApp, Revision, MerkleTreeNode, Blob
 from .repos import get_repo_accessor
+from .engines import engines
 
 
 def create_tables() -> None:
@@ -48,11 +50,7 @@ def add_default_wf() -> None:
 def report(path: Path) -> None:
     print(f"Generating report {path!s}")
     with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
-        workflow_apps = (
-            session.execute(sqlalchemy.select(WorkflowApp))
-            .scalars()
-            .all()
-        )
+        workflow_apps = session.execute(sqlalchemy.select(WorkflowApp)).scalars().all()
         path.write_text(report_html(workflow_apps))
 
 
@@ -61,11 +59,7 @@ def refresh_revisions() -> None:
     blobs_in_transaction: dict[int, Blob] = {}
     nodes_in_transaction: dict[int, MerkleTreeNode] = {}
     with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
-        wf_apps = (
-            session.execute(sqlalchemy.select(WorkflowApp))
-            .scalars()
-            .all()
-        )
+        wf_apps = session.execute(sqlalchemy.select(WorkflowApp)).scalars()
         for wf_app in wf_apps:
             repo = get_repo_accessor(wf_app.repo_url)
             db_revisions = set(wf_app.revisions)
@@ -78,7 +72,7 @@ def refresh_revisions() -> None:
                 )
             for revision in new_revisions:
                 print(f"Adding {wf_app.display_name} {revision.display_name}")
-                with repo.checkout(revision) as local_copy:
+                with repo.checkout(revision.url) as local_copy:
                     revision.tree = MerkleTreeNode.from_path(  # type: ignore
                         local_copy,
                         session,
@@ -90,26 +84,27 @@ def refresh_revisions() -> None:
 
 def run_out_of_date(period: timedelta) -> None:
     now = datetime.now()
-    with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
-        revisions = (
-            session.execute(
-                sqlalchemy.select(WorkflowApp, Revision)
-                .outerjoin(Execution)
-                .where((Execution.datetime < now - period) | (Execution == None))
+    with sqlalchemy.orm.Session(engine, future=True) as session:
+        with session.begin():
+            revisions_to_test = (
+                session.execute(
+                    sqlalchemy.select(Revision)
+                    .join(WorkflowApp)
+                    .join(Execution, isouter=True)
+                    # .where((Execution.datetime < now - period) | (Execution == None))
+                )
+                .scalars()
+                .all()
             )
-            .scalars()
-            .all()
-        )
-        revisions_to_test = [
-            revision
-            for revision in revisions
-            if not revision.executions or revision.executions[-1].datetime < now - period
-        ]
-    for revision in revisions_to_test:
-        with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
-            print(f"Running {revision.url}")
-            with repo.checkout(revision) as local_copy:
-                pass
+        for revision in revisions_to_test:
+            print(f"Running {revision.workflow_app.display_name} {revision.display_name}")
+            # with session.begin():
+            if True:
+                repo = get_repo_accessor(revision.workflow_app.repo_url)
+                with repo.checkout(revision.url) as local_copy:
+                    wf_engine = engines[revision.workflow_app.workflow_engine_name]
+                    execution = wf_engine.run(local_copy, session)
+                    revision.executions.append(execution)
 
 
 secrets = json.loads(Path("secrets.json").read_text())

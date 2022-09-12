@@ -23,9 +23,9 @@ def report_table_row(arg: Any) -> Mapping[str, TagLike]:
 def _(execution: Execution) -> html.Element:
     return {
         "Date/time": execution.datetime.isoformat(),
-        "Success": html_emoji_bool(
-            execution.success
-        ),
+        # "Success": html_emoji_bool(
+        #     execution.success
+        # ),
         "Output Hash": html.code(
             "{execution.output.hash:016x}"
         ),

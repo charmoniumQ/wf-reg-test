@@ -62,11 +62,11 @@ class GitHubRepo(RepoAccessor):
             for commit, rev in revs
         ]
 
-    def checkout(self, revision: Revision) -> ContextManager[Path]:
-        parsed_url = urllib.parse.urlparse(revision.url)
+    def checkout(self, url: str) -> ContextManager[Path]:
+        parsed_url = urllib.parse.urlparse(url)
         path_parts = Path(parsed_url.path).parts
         if path_parts[:4] != ("/", self.user, self.repo, "tree") or len(path_parts) != 5:
-            raise ValueError(f"{revision.url} doesn't match {self.url}")
+            raise ValueError(f"{url} doesn't match {self.url}")
         return GitHubRevision(repo=self, revision=path_parts[4])
 
 
