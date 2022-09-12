@@ -13,12 +13,12 @@ from .repos import get_repo_accessor
 from .engines import engines
 
 
-def create_tables() -> None:
+def create_tables(engine: sqlalchemy.engine.Engine) -> None:
     print("Creating tables if it doesn't already exist")
     Base.metadata.create_all(engine)
 
 
-def clear_tables() -> None:
+def clear_tables(engine: sqlalchemy.engine.Engine) -> None:
     print("Clearing tables")
     Base.metadata.drop_all(engine)
 
@@ -35,7 +35,7 @@ def diagram_object_model(path: Path) -> None:
     graph.write_png(path)
 
 
-def add_default_wf() -> None:
+def add_default_wf(session: sqlalchemy.orm.Session) -> None:
     default_wf_app = WorkflowApp(
         workflow_engine_name="nextflow",
         url="https://nf-co.re/mag",
@@ -43,22 +43,22 @@ def add_default_wf() -> None:
         repo_url="https://github.com/nf-core/mag?only_tags"
     )
     print(f"Adding {default_wf_app.display_name}")
-    with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
+    with session.begin():
         session.add(default_wf_app)
 
 
-def report(path: Path) -> None:
+def report(path: Path, session: sqlalchemy.orm.Session) -> None:
     print(f"Generating report {path!s}")
-    with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
+    with session.begin():
         workflow_apps = session.execute(sqlalchemy.select(WorkflowApp)).scalars().all()
         path.write_text(report_html(workflow_apps))
 
 
-def refresh_revisions() -> None:
+def refresh_revisions(session: sqlalchemy.orm.Session) -> None:
     now = datetime.now()
     blobs_in_transaction: dict[int, Blob] = {}
     nodes_in_transaction: dict[int, MerkleTreeNode] = {}
-    with sqlalchemy.orm.Session(engine, future=True) as session, session.begin():
+    with session.begin():
         wf_apps = session.execute(sqlalchemy.select(WorkflowApp)).scalars()
         for wf_app in wf_apps:
             repo = get_repo_accessor(wf_app.repo_url)
@@ -82,45 +82,47 @@ def refresh_revisions() -> None:
                 wf_app.revisions.append(revision)
 
 
-def run_out_of_date(period: timedelta) -> None:
+def run_out_of_date(period: timedelta, session: sqlalchemy.orm.Session) -> None:
     now = datetime.now()
-    with sqlalchemy.orm.Session(engine, future=True) as session:
-        with session.begin():
-            revisions_to_test = (
-                session.execute(
-                    sqlalchemy.select(Revision)
-                    .join(WorkflowApp)
-                    .join(Execution, isouter=True)
-                    # .where((Execution.datetime < now - period) | (Execution == None))
+    with session.begin():
+        recent_executions = (
+            sqlalchemy.select(Execution._revision_id)
+            .where(Execution.datetime > now - period)
+        ).subquery()
+        revisions_to_test = (
+            session.execute(
+                sqlalchemy.select(Revision)
+                .join(
+                    recent_executions,
+                    recent_executions.c._revision_id == Revision._id,
+                    isouter=True,
                 )
-                .scalars()
-                .all()
+                .where(recent_executions.c._revision_id == None)
             )
+            .scalars()
+            .all()
+        )
+    with session.begin():
         for revision in revisions_to_test:
             print(f"Running {revision.workflow_app.display_name} {revision.display_name}")
-            # with session.begin():
-            if True:
-                repo = get_repo_accessor(revision.workflow_app.repo_url)
-                with repo.checkout(revision.url) as local_copy:
-                    wf_engine = engines[revision.workflow_app.workflow_engine_name]
-                    execution = wf_engine.run(local_copy, session)
-                    revision.executions.append(execution)
+            repo = get_repo_accessor(revision.workflow_app.repo_url)
+            with repo.checkout(revision.url) as local_copy:
+                wf_engine = engines[revision.workflow_app.workflow_engine_name]
+                execution = wf_engine.run(local_copy, session)
+                revision.executions.append(execution)
 
 
+logging.basicConfig()
 secrets = json.loads(Path("secrets.json").read_text())
 engine = sqlalchemy.create_engine(secrets["db_url"], future=True)
-# restart_db = True
-# if restart_db:
-#     clear_tables()
-#     create_tables()
-#     add_default_wf()
-#     refresh_revisions()
+with sqlalchemy.orm.Session(engine, future=True) as session:
+    restart_db = False
+    if restart_db:
+        clear_tables(engine)
+        create_tables(engine)
+        add_default_wf(session)
+        refresh_revisions(session)
+        # diagram_object_model(Path("dbschema.png"))
 
-## diagram_object_model(Path("dbschema.png"))
-
-run_out_of_date(timedelta(days=100))
-# report(Path("build/results.html"))
-
-# Scan registry
-# Look for new versions of repo or all repos
-# Run tests
+    run_out_of_date(timedelta(days=100), session)
+    report(Path("build/results.html"), session)

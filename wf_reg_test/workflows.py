@@ -64,7 +64,7 @@ class Revision(Base):
     tree: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
     _tree_hash = Column(BigInteger, ForeignKey("MerkleTreeNode.hash"), nullable=False)
     executions: Mapped[list[Execution]] = relationship(
-        "Execution", order_by="Execution.datetime"
+        "Execution", order_by="Execution.datetime", back_populates="revision",
     )
     _workflow_app_id = Column(Integer, ForeignKey("WorkflowApp._id"), nullable=False)
     workflow_app: Mapped[WorkflowApp] = relationship("WorkflowApp", back_populates="revisions")
@@ -84,6 +84,7 @@ class Execution(Base):
 
     _id = Column(Integer, primary_key=True)
     _revision_id = Column(Integer, ForeignKey("Revision._id"), nullable=False)
+    revision: Mapped[Revision] = relationship("Revision", back_populates="executions")
     datetime: Mapped[datetime] = Column(DateTime, nullable=False)
     output: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
     _output_hash = Column(BigInteger, ForeignKey("MerkleTreeNode.hash"), nullable=False)

@@ -111,7 +111,7 @@ class Nextflow(DockerWorkflowEngine):
         )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        return ["sh", "-c", f"cp {workflow}/main.nf {output_dir}"]
+        return ["sh", "-c", f"cp {workflow.resolve()!s}/main.nf {output_dir.resolve()!s}"]
         # return [
         #     "nextflow",
         #     "run",
