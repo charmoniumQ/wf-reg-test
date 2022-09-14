@@ -1,25 +1,23 @@
 from __future__ import annotations
 
-import abc
 import dataclasses
 import json
 import types
-from datetime import datetime
+import urllib.parse
 from pathlib import Path
 from typing import ContextManager, Optional
-import urllib.parse
 
 import git
 import github
 import xxhash
 
-from .workflows import RepoAccessor, Revision, MerkleTreeNode
+from .workflows import RepoAccessor, Revision
 
 
 def get_repo_accessor(url: str) -> RepoAccessor:
     parsed_url = urllib.parse.urlparse(url)
     path = Path(parsed_url.path)
-    if parsed_url.netloc  == "github.com" or "git@github:" in parsed_url.netloc:
+    if parsed_url.netloc == "github.com" or "git@github:" in parsed_url.netloc:
         if len(path.parts) == 3:
             return GitHubRepo(
                 user=path.parts[1],
@@ -27,7 +25,9 @@ def get_repo_accessor(url: str) -> RepoAccessor:
                 only_tags="only_tags" in parsed_url.query,
             )
         else:
-            raise NotImplementedError("Only know how to access whole git repositories, not subdirs")
+            raise NotImplementedError(
+                "Only know how to access whole git repositories, not subdirs"
+            )
     raise NotImplementedError(f"No known RepoAccessor for {parsed_url!s}")
 
 
@@ -65,7 +65,10 @@ class GitHubRepo(RepoAccessor):
     def checkout(self, url: str) -> ContextManager[Path]:
         parsed_url = urllib.parse.urlparse(url)
         path_parts = Path(parsed_url.path).parts
-        if path_parts[:4] != ("/", self.user, self.repo, "tree") or len(path_parts) != 5:
+        if (
+            path_parts[:4] != ("/", self.user, self.repo, "tree")
+            or len(path_parts) != 5
+        ):
             raise ValueError(f"{url} doesn't match {self.url}")
         return GitHubRevision(repo=self, revision=path_parts[4])
 

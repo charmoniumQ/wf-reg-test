@@ -1,19 +1,16 @@
 from __future__ import annotations
 
 import abc
-from datetime import datetime, timedelta
 import logging
-import functools
-import json
-import operator
-from pathlib import Path
-import subprocess
 import platform
-from typing import ContextManager, cast, Optional, Callable, ClassVar
+import subprocess
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Callable, ClassVar, ContextManager, Optional, cast
 
 import sqlalchemy
 from sqlalchemy import (
-    Boolean,
+    BigInteger,
     Column,
     DateTime,
     ForeignKey,
@@ -21,11 +18,10 @@ from sqlalchemy import (
     Interval,
     LargeBinary,
     String,
-    BigInteger
 )
-from sqlalchemy.orm import Mapped, Session, declarative_base, relationship, deferred
+from sqlalchemy.orm import Mapped, Session, declarative_base, deferred, relationship
 
-from .util import hash_path, hash_bytes, walk
+from .util import hash_bytes, hash_path, walk
 
 Base = declarative_base()
 
@@ -40,11 +36,15 @@ HUMAN_READABLE_NAME_SIZE = 63
 class WorkflowApp(Base):
     __tablename__ = "WorkflowApp"
     _id = Column(Integer, primary_key=True)
-    workflow_engine_name: Mapped[str] = Column(String(HUMAN_READABLE_NAME_SIZE), nullable=False)
+    workflow_engine_name: Mapped[str] = Column(
+        String(HUMAN_READABLE_NAME_SIZE), nullable=False
+    )
     url: Mapped[str] = Column(String(URL_SIZE), nullable=False)
     display_name: Mapped[str] = Column(String(HUMAN_READABLE_NAME_SIZE), nullable=False)
     repo_url: Mapped[str] = Column(String(URL_SIZE), nullable=False)
-    revisions: Mapped[Revision] = relationship("Revision", order_by="Revision.datetime", back_populates="workflow_app")
+    revisions: Mapped[Revision] = relationship(
+        "Revision", order_by="Revision.datetime", back_populates="workflow_app"
+    )
 
 
 class RepoAccessor(abc.ABC):
@@ -66,10 +66,14 @@ class Revision(Base):
     tree: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
     _tree_hash = Column(BigInteger, ForeignKey("MerkleTreeNode.hash"), nullable=False)
     executions: Mapped[list[Execution]] = relationship(
-        "Execution", order_by="Execution.datetime", back_populates="revision",
+        "Execution",
+        order_by="Execution.datetime",
+        back_populates="revision",
     )
     _workflow_app_id = Column(Integer, ForeignKey("WorkflowApp._id"), nullable=False)
-    workflow_app: Mapped[WorkflowApp] = relationship("WorkflowApp", back_populates="revisions")
+    workflow_app: Mapped[WorkflowApp] = relationship(
+        "WorkflowApp", back_populates="revisions"
+    )
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Revision):
@@ -111,20 +115,24 @@ class Machine(Base):
     def current_host(
         session: Session,
     ) -> Machine:
-        short_description = "-".join([
-            platform.node(),
-            platform.platform(),
-        ])
+        short_description = "-".join(
+            [
+                platform.node(),
+                platform.platform(),
+            ]
+        )
         if Machine.CURRENT_MACHINE is not None:
             return Machine.CURRENT_MACHINE
 
-        existing_in_db = cast(Machine,
+        existing_in_db = cast(
+            Machine,
             session.execute(
-                sqlalchemy.select(Machine)
-                .where(Machine.short_description == short_description)
+                sqlalchemy.select(Machine).where(
+                    Machine.short_description == short_description
+                )
             )
             .scalars()
-            .one_or_none()
+            .one_or_none(),
         )
         if existing_in_db is not None:
             return existing_in_db
@@ -135,7 +143,7 @@ class Machine(Base):
                 ["lstopo", "--output-format", "xml"],
                 check=True,
                 capture_output=True,
-                text=True
+                text=True,
             ).stdout,
         )
         return Machine.CURRENT_MACHINE
@@ -176,7 +184,6 @@ class MerkleTreeNode(Base):
         nodes_in_transaction: dict[int, MerkleTreeNode],
         blobs_in_transaction: dict[int, Blob],
     ) -> Callable[[Path, list[MerkleTreeNode]], MerkleTreeNode]:
-
         def inner(path: Path, children: list[MerkleTreeNode]) -> MerkleTreeNode:
             # TODO: capture children names in parent rather than child
 
@@ -213,10 +220,11 @@ class MerkleTreeNode(Base):
 
     def list_children(self, prefix: str = "") -> str:
         new_prefix = prefix + "/" + self.name if prefix else self.name
-        return  new_prefix + "\n" + "".join([
-            child.list_children(new_prefix)
-            for child in self.children
-        ])
+        return (
+            new_prefix
+            + "\n"
+            + "".join([child.list_children(new_prefix) for child in self.children])
+        )
 
     def __eq__(self, other: object) -> bool:
         if isinstance(other, MerkleTreeNode):
@@ -234,7 +242,9 @@ class Blob(Base):
     data: Mapped[bytes] = deferred(Column(LargeBinary, nullable=False))
 
     @staticmethod
-    def from_path(path: Path, blobs_in_transaction: dict[int, Blob], session: Session) -> Blob:
+    def from_path(
+        path: Path, blobs_in_transaction: dict[int, Blob], session: Session
+    ) -> Blob:
         hash = hash_path(path, size=64) - (1 << 63)
 
         existing_in_transaction = blobs_in_transaction.get(hash)

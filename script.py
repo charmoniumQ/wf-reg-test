@@ -41,11 +41,11 @@ Return = TypeVar("Return")
 
 
 def coroutine_to_function(
-    coroutine: Callable[Params, Awaitable[Return]]  # type: ignore
-) -> Callable[Params, Return]:  # type: ignore
+    coroutine: Callable[Params, Awaitable[Return]]
+) -> Callable[Params, Return]:
     @wraps(coroutine)
-    def wrapper(*args: Params.args, **kwargs: Params.kwargs) -> Return:  # type: ignore
-        return asyncio.run(coroutine(*args, **kwargs))  # type: ignore
+    def wrapper(*args: Params.args, **kwargs: Params.kwargs) -> Return:
+        return asyncio.run(coroutine(*args, **kwargs))
 
     return wrapper
 

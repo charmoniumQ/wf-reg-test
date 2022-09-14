@@ -1,22 +1,22 @@
 import abc
 import dataclasses
-from datetime import datetime, timedelta
 import getpass
-from pathlib import Path
+import itertools
 import os
 import shlex
 import subprocess
 import sys
-from typing import Mapping, Any
-import itertools
 import warnings
+from datetime import datetime, timedelta
+from pathlib import Path
+from typing import Any, Mapping
 
 import docker  # type: ignore
 import requests
 from sqlalchemy.orm import Session
 
 from .util import create_temp_dir
-from .workflows import Execution, MerkleTreeNode, Machine
+from .workflows import Execution, Machine, MerkleTreeNode
 
 docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
@@ -29,10 +29,17 @@ class WorkflowEngine:
 
 def docker_chown(paths: list[Path]) -> None:
     username = getpass.getuser()
-    gid = os.getgid()
+    # gid = os.getgid()
     uid = os.getuid()
     command0 = shlex.join(["adduser", "--uid", str(uid), str(username)])
-    command1 = shlex.join(["chown", "--recursive", str(username), *[str(path.resolve()) for path in paths]])
+    command1 = shlex.join(
+        [
+            "chown",
+            "--recursive",
+            str(username),
+            *[str(path.resolve()) for path in paths],
+        ]
+    )
     print(f"docker run --rm ubuntu:22.04 sh -c '{command0} && {command1}'")
     docker_client.containers.run(
         image="ubuntu:22.04",
@@ -49,14 +56,20 @@ def docker_chown(paths: list[Path]) -> None:
     )
 
 
-def docker_monitor_stats(container: docker.models.containers.Container) -> Mapping[str, Any]:
+def docker_monitor_stats(
+    container: docker.models.containers.Container,
+) -> Mapping[str, Any]:
     user_cpu_time = 0
     kernel_cpu_time = 0
     max_rss = 0
     start_time = datetime.now()
     for stats in container.stats(stream=True, decode=True):
-        user_cpu_time = max(user_cpu_time, stats["cpu_stats"]["cpu_usage"]["usage_in_usermode"])
-        kernel_cpu_time = max(kernel_cpu_time, stats["cpu_stats"]["cpu_usage"]["usage_in_kernelmode"])
+        user_cpu_time = max(
+            user_cpu_time, stats["cpu_stats"]["cpu_usage"]["usage_in_usermode"]
+        )
+        kernel_cpu_time = max(
+            kernel_cpu_time, stats["cpu_stats"]["cpu_usage"]["usage_in_kernelmode"]
+        )
         max_rss = max(max_rss, stats["memory_stats"].get("usage", 0))
         try:
             exit_info = container.wait(timeout=1)
@@ -113,9 +126,9 @@ class DockerWorkflowEngine(WorkflowEngine):
                 ),
             )
             stats = docker_monitor_stats(container)
-            subprocess.run(["ls", "-ahlt", output_dir])
+            subprocess.run(["ls", "-ahlt", output_dir], check=True)
             print("chown", workflow, output_dir)
-            subprocess.run(["ls", "-ahlt", output_dir])
+            subprocess.run(["ls", "-ahlt", output_dir], check=True)
             docker_chown([workflow, output_dir])
             (output_dir / "stdout").write_bytes(stats["stdout"])
             (output_dir / "stderr").write_bytes(stats["stderr"])
@@ -159,7 +172,9 @@ class NixWorkflowEngine(WorkflowEngine):
                 "develop",
                 "--ignore-environment",
                 str(self.flake.resolve()),
-                *itertools.chain.from_iterable(["--keep", env_var] for env_var in self.keep_env_vars),
+                *itertools.chain.from_iterable(
+                    ["--keep", env_var] for env_var in self.keep_env_vars
+                ),
                 "--command",
                 *time_command,
             ]
@@ -180,7 +195,9 @@ class NixWorkflowEngine(WorkflowEngine):
                 system_sec = "0.0"
                 user_sec = "0.0"
                 wall_time = "0.0"
-                warnings.warn(f"Could not parse time output: {time_output!r}; setting those fields to 0")
+                warnings.warn(
+                    f"Could not parse time output: {time_output!r}; setting those fields to 0"
+                )
             return Execution(
                 datetime=datetime.now(),
                 output=MerkleTreeNode.from_path(output_dir, session, {}, {}),

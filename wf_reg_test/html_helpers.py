@@ -2,16 +2,15 @@ import itertools
 from pathlib import Path
 from typing import Mapping, Optional, Sequence, TypeAlias
 
-import domonic  # type: ignore
-import domonic as html  # so tags like html.a work.
+import domonic as html  # type: ignore
 
-TagLike: TypeAlias = domonic.dom.Element | str
+TagLike: TypeAlias = html.Element | str
 
 
 def html_table(
     elems: Sequence[Mapping[TagLike, Sequence[TagLike]]],
     headers: Optional[Sequence[TagLike]] = None,
-) -> domonic.dom.Element:
+) -> html.Element:
     if headers is None and elems:
         headers = list(elems[0].keys())
     if headers is not None:
@@ -20,26 +19,28 @@ def html_table(
         thead = []
     return html.table(
         *thead,
-        html.tbody(*[html.tr(*[html.td(elem) for elem in row.values()]) for row in elems]),
+        html.tbody(
+            *[html.tr(*[html.td(elem) for elem in row.values()]) for row in elems]
+        ),
     )
 
 
 def html_list(
     elements: Sequence[TagLike], ordered: bool = False
-) -> domonic.dom.Element:
+) -> html.Element:
     list_factory = html.ol() if ordered else html.ul()
     return list_factory(*[html.li(element) for element in elements])
 
 
-def html_link(text: TagLike, target: str) -> domonic.dom.Element:
+def html_link(text: TagLike, target: str) -> html.Element:
     return html.a(text, _href=target)
 
 
-def html_fs_link(path: Path) -> domonic.dom.Element:
+def html_fs_link(path: Path) -> html.Element:
     return html_link(text=html.code(str(path)), target=f"file://{path.resolve()}")
 
 
-def highlighted_head(languages: Sequence[str]) -> Sequence[domonic.dom.Element]:
+def highlighted_head(languages: Sequence[str]) -> Sequence[html.Element]:
     # for supported langs https://cdnjs.com/libraries/highlight.js
     return [
         html.link(
@@ -72,7 +73,7 @@ def css_attribute(**declarations: str) -> str:
     )
 
 
-def highlighted_code(lang: str, code: str, width: int = 60) -> domonic.dom.Element:
+def highlighted_code(lang: str, code: str, width: int = 60) -> html.Element:
     # see https://highlightjs.org/usage/
     return html.pre(
         html.code(
@@ -89,16 +90,14 @@ def highlighted_code(lang: str, code: str, width: int = 60) -> domonic.dom.Eleme
 
 
 def collapsed(
-    summary: TagLike, *details: TagLike, open: bool = False
-) -> domonic.dom.Element:
+    summary: TagLike, *details: TagLike, is_open: bool = False
+) -> html.Element:
     return html.details(
-        html.summary(summary),
-        *details,
-        **({"_open": ""} if open else {})
+        html.summary(summary), *details, **({"_open": ""} if is_open else {})
     )
 
 
-def html_emoji_bool(val: bool) -> domonic.dom.Element:
+def html_emoji_bool(val: bool) -> html.Element:
     return html.span(
         {
             False: "❌",
@@ -107,11 +106,11 @@ def html_emoji_bool(val: bool) -> domonic.dom.Element:
     )
 
 
-def br_join(lines: Sequence[TagLike]) -> domonic.dom.Element:
+def br_join(lines: Sequence[TagLike]) -> html.Element:
     return html.span(
         *itertools.chain.from_iterable((line, html.br()) for line in lines)
     )
 
 
-def small(text: str) -> domonic.dom.Element:
+def small(text: str) -> html.Element:
     return html.span(text, _style=css_attribute(font_size="8pt"))

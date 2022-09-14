@@ -1,11 +1,10 @@
 import contextlib
 import tempfile
 from pathlib import Path
-from typing import Generator, Iterable, Union, Callable, TypeVar, cast
-
-from gitignore_parser import parse_gitignore  # type: ignore
+from typing import Callable, Generator, Iterable, TypeVar, Union, cast
 
 import xxhash
+from gitignore_parser import parse_gitignore  # type: ignore
 
 
 @contextlib.contextmanager
@@ -46,10 +45,12 @@ def _ignore_vcs(path: str) -> bool:
 
 _T = TypeVar("_T")
 _V = TypeVar("_V")
+
+
 def walk(
-        mapper: Callable[[Path, list[_T]], _T],
-        path: Path,
-        ignore_preds: tuple[Callable[[str], bool], ...] = (_ignore_vcs,),
+    mapper: Callable[[Path, list[_T]], _T],
+    path: Path,
+    ignore_preds: tuple[Callable[[str], bool], ...] = (_ignore_vcs,),
 ) -> _T:
     if path.is_dir():
         ignore_file = path / ".gitignore"
@@ -67,8 +68,8 @@ def walk(
         children = []
     return mapper(path, children)
 
+
 def sorted_and_dropped(
-        input: Iterable[tuple[_T, _V]],
-        reverse: bool = False
+    inp: Iterable[tuple[_T, _V]], reverse: bool = False
 ) -> list[_V]:
-    return [y for x, y in sorted(input)]
+    return [y for x, y in sorted(inp, reverse=reverse)]

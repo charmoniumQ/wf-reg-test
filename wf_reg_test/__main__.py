@@ -1,16 +1,16 @@
-from datetime import datetime, timedelta
 import json
 import logging
-from pathlib import Path
 import warnings
+from datetime import datetime, timedelta
+from pathlib import Path
 
 import sqlalchemy
 import sqlalchemy_schemadisplay  # type: ignore
 
-from .report import report_html
-from .workflows import Base, Execution, WorkflowApp, Revision, MerkleTreeNode, Blob
-from .repos import get_repo_accessor
 from .engines import engines
+from .report import report_html
+from .repos import get_repo_accessor
+from .workflows import Base, Blob, Execution, MerkleTreeNode, Revision, WorkflowApp
 
 
 def create_tables(engine: sqlalchemy.engine.Engine) -> None:
@@ -41,7 +41,7 @@ def add_default_wf(session: sqlalchemy.orm.Session) -> None:
             workflow_engine_name="nextflow",
             url="https://nf-co.re/mag",
             display_name="nf-core/mag",
-            repo_url="https://github.com/nf-core/mag?only_tags"
+            repo_url="https://github.com/nf-core/mag?only_tags",
         ),
         # WorkflowApp(
         #     workflow_engine_name="nextflow",
@@ -70,7 +70,6 @@ def report(path: Path, session: sqlalchemy.orm.Session) -> None:
 
 
 def refresh_revisions(session: sqlalchemy.orm.Session) -> None:
-    now = datetime.now()
     blobs_in_transaction: dict[int, Blob] = {}
     nodes_in_transaction: dict[int, MerkleTreeNode] = {}
     with session.begin():
@@ -101,8 +100,9 @@ def run_out_of_date(period: timedelta, session: sqlalchemy.orm.Session) -> None:
     now = datetime.now()
     with session.begin():
         recent_executions = (
-            sqlalchemy.select(Execution._revision_id)
-            .where(Execution.datetime > now - period)
+            sqlalchemy.select(Execution._revision_id).where(
+                Execution.datetime > now - period
+            )
         ).subquery()
         revisions_to_test = (
             session.execute(
@@ -119,7 +119,9 @@ def run_out_of_date(period: timedelta, session: sqlalchemy.orm.Session) -> None:
         )
     with session.begin():
         for revision in revisions_to_test:
-            print(f"Running {revision.workflow_app.display_name} {revision.display_name}")
+            print(
+                f"Running {revision.workflow_app.display_name} {revision.display_name}"
+            )
             repo = get_repo_accessor(revision.workflow_app.repo_url)
             with repo.checkout(revision.url) as local_copy:
                 wf_engine = engines[revision.workflow_app.workflow_engine_name]
@@ -131,22 +133,27 @@ def enable_sql_echo() -> None:
     logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
 
-logging.basicConfig()
-secrets = json.loads(Path("secrets.json").read_text())
-engine = sqlalchemy.create_engine(secrets["db_url"], future=True)
-with sqlalchemy.orm.Session(engine, future=True) as session:
-    restart_db = False
-    if restart_db:
-        clear_tables(engine)
-        create_tables(engine)
-        add_default_wf(session)
-        diagram_object_model(Path("dbschema.png"))
-    else:
-        create_tables(engine)
+def main() -> None:
+    logging.basicConfig()
+    secrets = json.loads(Path("secrets.json").read_text())
+    engine = sqlalchemy.create_engine(secrets["db_url"], future=True)
+    with sqlalchemy.orm.Session(engine, future=True) as session:
+        restart_db = False
+        if restart_db:
+            clear_tables(engine)
+            create_tables(engine)
+            add_default_wf(session)
+            diagram_object_model(Path("dbschema.png"))
+        else:
+            create_tables(engine)
 
-    # refresh_revisions(session)
-    run_out_of_date(timedelta(days=100), session)
-    report(Path("build/results.html"), session)
+        # refresh_revisions(session)
+        run_out_of_date(timedelta(days=100), session)
+        report(Path("build/results.html"), session)
+
+
+main()
+
 
 # https://snakemake.github.io/snakemake-workflow-catalog/data.js
 # https://github.com/nf-core/nf-co.re/blob/master/update_pipeline_details.php#L85
