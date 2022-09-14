@@ -17,7 +17,7 @@
           # Alternative Pythons for Tox
           pkgs.python310
           pkgs.poetry
-          
+          pkgs.hwloc
         ];
       in {
         packages.${name} = pkgs.poetry2nix.mkPoetryApplication {

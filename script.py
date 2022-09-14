@@ -152,7 +152,7 @@ async def fmt(parallel: bool = True) -> None:
             pool.imap_unordered if parallel else map,
         )
         list(mapper(autoimport_and_isort, all_python_files))
-    await pretty_run(["black", "--quiet", *all_python_files])
+    await pretty_run(["black", "--exclude", "report.py", "--quiet", *all_python_files])
 
 
 @app.command()

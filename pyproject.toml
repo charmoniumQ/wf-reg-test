@@ -128,5 +128,4 @@ install = "^1.3.5"
 sqlalchemy_schemadisplay = "^1.3"
 domonic = "^0.9.11"
 gitignore-parser = "^0.1.0"
-psutil = "^5.9.2"
 

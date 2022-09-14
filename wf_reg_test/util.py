@@ -44,12 +44,13 @@ def _ignore_vcs(path: str) -> bool:
     return path == ".git" or path.endswith("/.git")
 
 
-T = TypeVar("T")
+_T = TypeVar("_T")
+_V = TypeVar("_V")
 def walk(
-        mapper: Callable[[Path, list[T]], T],
+        mapper: Callable[[Path, list[_T]], _T],
         path: Path,
         ignore_preds: tuple[Callable[[str], bool], ...] = (_ignore_vcs,),
-) -> T:
+) -> _T:
     if path.is_dir():
         ignore_file = path / ".gitignore"
         if ignore_file.exists():
@@ -65,3 +66,9 @@ def walk(
     else:
         children = []
     return mapper(path, children)
+
+def sorted_and_dropped(
+        input: Iterable[tuple[_T, _V]],
+        reverse: bool = False
+) -> list[_V]:
+    return [y for x, y in sorted(input)]

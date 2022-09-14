@@ -91,9 +91,10 @@ def highlighted_code(lang: str, code: str, width: int = 60) -> domonic.dom.Eleme
 def collapsed(
     summary: TagLike, *details: TagLike, open: bool = False
 ) -> domonic.dom.Element:
-    return html.details(**({"open": ""} if open else {}))(
+    return html.details(
         html.summary(summary),
         *details,
+        **({"_open": ""} if open else {})
     )
 
 

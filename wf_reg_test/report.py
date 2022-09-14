@@ -1,56 +1,32 @@
-from typing import Mapping, Any, Sequence, cast
+from datetime import datetime, timedelta
+from typing import Mapping, Any, Sequence, cast, Optional
 import domonic as html  # type: ignore
 import functools
-from .html_helpers import TagLike, html_table, html_emoji_bool, html_link, css_rule
-from .workflows import Execution, Revision, WorkflowApp
-
-def wf_app_table(workflow_apps: Sequence[WorkflowApp]) -> html.Element:
-    raise NotImplementedError()
-
-def report_table(list_: list[Any]) -> html.Element:
-    return html_table([
-        report_table_row(item)
-        for item in list_
-    ])
+from .html_helpers import TagLike, html_table, html_emoji_bool, html_link, css_rule, css_attribute, collapsed
+from .workflows import Execution, Revision, WorkflowApp, MerkleTreeNode
+from .util import sorted_and_dropped
 
 
-@functools.singledispatch
-def report_table_row(arg: Any) -> Mapping[str, TagLike]:
-    raise TypeError("report_item(...) is not implemented for {type(arg)!s}")
+def html_mtn(node: Optional[MerkleTreeNode]) -> html.Element:
+    if node is None:
+        return html.span("Missing", style=css_attribute(background="red"))
+    else:
+        return collapsed(
+            html.code(f"{node.hash + 2**63:016x}"),
+            html.code(html.pre(node.list_children()))
+        )
 
 
-@report_table_row.register
-def _(execution: Execution) -> html.Element:
-    return {
-        "Date/time": execution.datetime.isoformat(),
-        # "Success": html_emoji_bool(
-        #     execution.success
-        # ),
-        "Output Hash": html.code(
-            "{execution.output.hash:016x}"
-        ),
-    }
+def html_date(dt: datetime) -> html.Element:
+    return dt.strftime("%Y-%m-%d")
 
 
-@report_table_row.register
-def _(revision: Revision) -> Mapping[str, TagLike]:
-    return {
-        "Revision": html_link(revision.display_name, revision.url),
-        "Date/time": revision.datetime.isoformat(),
-        "Executions": report_table(revision.executions),
-    }
+def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
+    day_diff = td.total_seconds() / timedelta(**{unit: 1}).total_seconds()
+    return f"{day_diff:.{digits}f} {unit}"
 
 
-@report_table_row.register
-def _(wf_app: WorkflowApp) -> Mapping[str, TagLike]:
-    return {
-        "Workflow": html_link(wf_app.display_name, wf_app.url),
-        "Repo": html_link("repo", wf_app.repo_url),
-        "Revisions": report_table(wf_app.revisions),
-    }
-
-
-def report_html(workflow_apps: list[WorkflowApp]) -> str:
+def report_html(wf_apps: list[WorkflowApp]) -> str:
     return cast(str, html.html(
         html.head(
             html.style(
@@ -72,6 +48,58 @@ def report_html(workflow_apps: list[WorkflowApp]) -> str:
             ),
         ),
         html.body(
-            report_table(workflow_apps),
+            html.h1("Workflows"),
+            html_table([
+                {
+                    "Workflow": html_link(wf_app.display_name, wf_app.url),
+                    "Repo": html_link("repo", wf_app.repo_url),
+                    "Revisions": collapsed("Revisions", html_table([
+                        {
+                            "Revision": html_link(revision.display_name, revision.url),
+                            "Date/time": html_date(revision.datetime),
+                            "Input Hash": html_mtn(revision.tree),
+                            "Executions": html_table([
+                                {
+                                    "Date/time": html_date(execution.datetime),
+                                    "Output Hash": html_mtn(execution.output),
+                                    "Success": html_emoji_bool(execution.status_code == 0),
+                                    "Max RAM": f"{execution.max_rss / 2**30:.1f}GiB",
+                                    "CPU Time": html_timedelta(execution.user_cpu_time + execution.system_cpu_time, unit="seconds", digits=1),
+                                    "Wall Time": html_timedelta(execution.wall_time, unit="seconds", digits=1),
+                                    "Machine": execution.machine.short_description,
+                                }
+                                for execution in revision.executions
+                            ]),
+                        }
+                        for revision in wf_app.revisions
+                    ])),
+                }
+                for wf_app in wf_apps
+            ]),
+            html.h1("Executions"),
+            html_table(
+                sorted_and_dropped([
+                    (
+                        execution.datetime - revision.datetime,
+                        {
+                            "Workflow": html_link(wf_app.display_name, wf_app.url),
+                            "Revision": html_link(revision.display_name, revision.url),
+                            "Revision date": html_date(revision.datetime),
+                            "Staleness": html_timedelta(execution.datetime - revision.datetime, unit="days", digits=0),
+                            "Success": html_emoji_bool(execution.status_code == 0),
+                            "Max RAM": f"{execution.max_rss / 2**30:.1f}GiB",
+                            "CPU Time": html_timedelta(execution.user_cpu_time + execution.system_cpu_time, unit="seconds", digits=1),
+                            "Wall Time": html_timedelta(execution.wall_time, unit="seconds", digits=1),
+                            "Machine": execution.machine.short_description,
+                            # "Reproducible": html_emoji_bool(True),
+                        },
+                    )
+                    for wf_app in wf_apps
+                    for revision in wf_app.revisions
+                    for execution in revision.executions
+                ], reverse=True)
+            ),
         ),
     ).__format__(""))
+
+# TODO: put execution resource statistics

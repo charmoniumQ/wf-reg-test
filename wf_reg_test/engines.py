@@ -1,16 +1,22 @@
 import abc
 import dataclasses
 from datetime import datetime, timedelta
+import getpass
 from pathlib import Path
+import os
+import shlex
+import subprocess
 import sys
 from typing import Mapping, Any
+import itertools
+import warnings
 
 import docker  # type: ignore
 import requests
 from sqlalchemy.orm import Session
 
 from .util import create_temp_dir
-from .workflows import Execution, MerkleTreeNode
+from .workflows import Execution, MerkleTreeNode, Machine
 
 docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
@@ -21,7 +27,29 @@ class WorkflowEngine:
         ...
 
 
-def monitor_stats(container: docker.models.containers.Container) -> Mapping[str, Any]:
+def docker_chown(paths: list[Path]) -> None:
+    username = getpass.getuser()
+    gid = os.getgid()
+    uid = os.getuid()
+    command0 = shlex.join(["adduser", "--uid", str(uid), str(username)])
+    command1 = shlex.join(["chown", "--recursive", str(username), *[str(path.resolve()) for path in paths]])
+    print(f"docker run --rm ubuntu:22.04 sh -c '{command0} && {command1}'")
+    docker_client.containers.run(
+        image="ubuntu:22.04",
+        command=f"sh -c '{command0} && {command1}'",
+        remove=True,
+        detach=False,
+        volumes={
+            str(path.resolve()): {
+                "bind": str(path.resolve()),
+                "mode": "rw",
+            }
+            for path in paths
+        },
+    )
+
+
+def docker_monitor_stats(container: docker.models.containers.Container) -> Mapping[str, Any]:
     user_cpu_time = 0
     kernel_cpu_time = 0
     max_rss = 0
@@ -84,7 +112,11 @@ class DockerWorkflowEngine(WorkflowEngine):
                     config={},
                 ),
             )
-            stats = monitor_stats(container)
+            stats = docker_monitor_stats(container)
+            subprocess.run(["ls", "-ahlt", output_dir])
+            print("chown", workflow, output_dir)
+            subprocess.run(["ls", "-ahlt", output_dir])
+            docker_chown([workflow, output_dir])
             (output_dir / "stdout").write_bytes(stats["stdout"])
             (output_dir / "stderr").write_bytes(stats["stderr"])
             sys.stderr.buffer.write(stats["stderr"])
@@ -96,33 +128,120 @@ class DockerWorkflowEngine(WorkflowEngine):
                 user_cpu_time=stats["user_cpu_time"],
                 system_cpu_time=stats["kernel_cpu_time"],
                 max_rss=stats["max_rss"],
+                machine=Machine.current_host(session),
             )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
         raise NotImplementedError("Override and implement in a subclass")
 
 
-class Nextflow(DockerWorkflowEngine):
+@dataclasses.dataclass
+class NixWorkflowEngine(WorkflowEngine):
+    name: str
+    url: str
+    flake: Path
+    keep_env_vars: tuple[str, ...] = ()
+
+    def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
+        raise NotImplementedError("Override and implement in a subclass")
+
+    def run(self, workflow: Path, session: Session) -> Execution:
+        with create_temp_dir() as output_dir:
+            command = self.get_command(workflow, output_dir)
+            time_command = [
+                "time",
+                f"--output={output_dir!s}/time",
+                "--format=%F %S %U %e",
+                *command,
+            ]
+            nix_time_command = [
+                "nix",
+                "develop",
+                "--ignore-environment",
+                str(self.flake.resolve()),
+                *itertools.chain.from_iterable(["--keep", env_var] for env_var in self.keep_env_vars),
+                "--command",
+                *time_command,
+            ]
+            print(shlex.join(nix_time_command))
+            proc = subprocess.run(
+                nix_time_command,
+                check=False,
+                capture_output=True,
+            )
+            (output_dir / "stdout").write_bytes(proc.stdout)
+            (output_dir / "stderr").write_bytes(proc.stderr)
+            sys.stderr.buffer.write(proc.stderr)
+            time_output = Path(output_dir / "time").read_text().strip().split(" ")
+            try:
+                mem_kb, system_sec, user_sec, wall_time = time_output
+            except ValueError:
+                mem_kb = "0"
+                system_sec = "0.0"
+                user_sec = "0.0"
+                wall_time = "0.0"
+                warnings.warn(f"Could not parse time output: {time_output!r}; setting those fields to 0")
+            return Execution(
+                datetime=datetime.now(),
+                output=MerkleTreeNode.from_path(output_dir, session, {}, {}),
+                status_code=proc.returncode,
+                wall_time=timedelta(seconds=float(wall_time)),
+                user_cpu_time=timedelta(seconds=float(user_sec)),
+                system_cpu_time=timedelta(seconds=float(system_sec)),
+                max_rss=int(mem_kb) * 1024,
+                machine=Machine.current_host(session),
+            )
+
+
+class NextflowDocker(DockerWorkflowEngine):
     def __init__(self) -> None:
         super().__init__(
             name="Nextflow",
             url="https://www.nextflow.io/",
-            image="index.docker.io/nextflow/nextflow:22.09.1-edge",
+            image="index.docker.io/nextflow/nextflow:22.09.3-edge",
         )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        return ["sh", "-c", f"cp {workflow.resolve()!s}/main.nf {output_dir.resolve()!s}"]
+        # return ["sh", "-c", f"cp {workflow.resolve()!s}/main.nf {output_dir.resolve()!s}"]
+        return [
+            "nextflow",
+            "run",
+            str(workflow.resolve()),
+            "-profile",
+            "test,docker",
+            "--outdir",
+            str(output_dir.resolve()),
+        ]
+
+
+class NextflowNix(NixWorkflowEngine):
+    def __init__(self) -> None:
+        super().__init__(
+            name="Nextflow",
+            url="https://www.nextflow.io/",
+            flake=Path() / "engines" / "nextflow",
+            keep_env_vars=("HOME",),
+        )
+
+    def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
+        # return ["sh", "-c", f"cp {workflow.resolve()!s}/main.nf {output_dir.resolve()!s}"]
         # return [
         #     "nextflow",
         #     "run",
-        #     str(workflow),
+        #     str(workflow.resolve()),
         #     "-profile",
         #     "test,docker",
         #     "--outdir",
-        #     str(output_dir),
+        #     str(output_dir.resolve()),
         # ]
+        return [
+            "sh",
+            "-c",
+            "head --bytes 8388608 /dev/urandom | xz -9e - | unxz - | wc -c",
+        ]
 
 
 engines = {
-    "nextflow": Nextflow(),
+    "nextflow-docker": NextflowDocker(),
+    "nextflow": NextflowNix(),
 }

@@ -36,15 +36,30 @@ def diagram_object_model(path: Path) -> None:
 
 
 def add_default_wf(session: sqlalchemy.orm.Session) -> None:
-    default_wf_app = WorkflowApp(
-        workflow_engine_name="nextflow",
-        url="https://nf-co.re/mag",
-        display_name="nf-core/mag",
-        repo_url="https://github.com/nf-core/mag?only_tags"
-    )
-    print(f"Adding {default_wf_app.display_name}")
+    wf_apps = [
+        WorkflowApp(
+            workflow_engine_name="nextflow",
+            url="https://nf-co.re/mag",
+            display_name="nf-core/mag",
+            repo_url="https://github.com/nf-core/mag?only_tags"
+        ),
+        # WorkflowApp(
+        #     workflow_engine_name="nextflow",
+        #     url="https://nf-co.re/rnaseq",
+        #     display_name="nf-core/rnaseq",
+        #     repo_url="https://github.com/nf-core/rnaseq?only_tags"
+        # ),
+        # WorkflowApp(
+        #     workflow_engine_name="nextflow",
+        #     url="https://nf-co.re/chipseq",
+        #     display_name="nf-core/chipseq",
+        #     repo_url="https://github.com/nf-core/chipseq?only_tags"
+        # ),
+    ]
     with session.begin():
-        session.add(default_wf_app)
+        for wf_app in wf_apps:
+            print(f"Adding {wf_app.display_name}")
+            session.add(wf_app)
 
 
 def report(path: Path, session: sqlalchemy.orm.Session) -> None:
@@ -112,6 +127,10 @@ def run_out_of_date(period: timedelta, session: sqlalchemy.orm.Session) -> None:
                 revision.executions.append(execution)
 
 
+def enable_sql_echo() -> None:
+    logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
+
+
 logging.basicConfig()
 secrets = json.loads(Path("secrets.json").read_text())
 engine = sqlalchemy.create_engine(secrets["db_url"], future=True)
@@ -121,8 +140,13 @@ with sqlalchemy.orm.Session(engine, future=True) as session:
         clear_tables(engine)
         create_tables(engine)
         add_default_wf(session)
-        refresh_revisions(session)
-        # diagram_object_model(Path("dbschema.png"))
+        diagram_object_model(Path("dbschema.png"))
+    else:
+        create_tables(engine)
 
+    # refresh_revisions(session)
     run_out_of_date(timedelta(days=100), session)
     report(Path("build/results.html"), session)
+
+# https://snakemake.github.io/snakemake-workflow-catalog/data.js
+# https://github.com/nf-core/nf-co.re/blob/master/update_pipeline_details.php#L85

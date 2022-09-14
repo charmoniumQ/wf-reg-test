@@ -7,7 +7,9 @@ import functools
 import json
 import operator
 from pathlib import Path
-from typing import ContextManager, cast, Optional, Callable
+import subprocess
+import platform
+from typing import ContextManager, cast, Optional, Callable, ClassVar
 
 import sqlalchemy
 from sqlalchemy import (
@@ -85,6 +87,8 @@ class Execution(Base):
     _id = Column(Integer, primary_key=True)
     _revision_id = Column(Integer, ForeignKey("Revision._id"), nullable=False)
     revision: Mapped[Revision] = relationship("Revision", back_populates="executions")
+    _machine_id = Column(Integer, ForeignKey("Machine._id"), nullable=False)
+    machine: Mapped[Machine] = relationship("Machine")
     datetime: Mapped[datetime] = Column(DateTime, nullable=False)
     output: Mapped[MerkleTreeNode] = relationship("MerkleTreeNode")
     _output_hash = Column(BigInteger, ForeignKey("MerkleTreeNode.hash"), nullable=False)
@@ -93,6 +97,48 @@ class Execution(Base):
     system_cpu_time: Mapped[timedelta] = Column(Interval, nullable=False)
     max_rss: Mapped[int] = Column(Integer, nullable=False)
     wall_time: Mapped[timedelta] = Column(Interval, nullable=False)
+
+
+class Machine(Base):
+    __tablename__ = "Machine"
+    _id = Column(Integer, primary_key=True)
+    short_description: Mapped[str] = Column(String(128), nullable=False, unique=True)
+    long_description: Mapped[str] = deferred(Column(String(102400), nullable=False))
+
+    CURRENT_MACHINE: ClassVar[Optional[Machine]] = None
+
+    @staticmethod
+    def current_host(
+        session: Session,
+    ) -> Machine:
+        short_description = "-".join([
+            platform.node(),
+            platform.platform(),
+        ])
+        if Machine.CURRENT_MACHINE is not None:
+            return Machine.CURRENT_MACHINE
+
+        existing_in_db = cast(Machine,
+            session.execute(
+                sqlalchemy.select(Machine)
+                .where(Machine.short_description == short_description)
+            )
+            .scalars()
+            .one_or_none()
+        )
+        if existing_in_db is not None:
+            return existing_in_db
+
+        Machine.CURRENT_MACHINE = Machine(
+            short_description=short_description,
+            long_description=subprocess.run(
+                ["lstopo", "--output-format", "xml"],
+                check=True,
+                capture_output=True,
+                text=True
+            ).stdout,
+        )
+        return Machine.CURRENT_MACHINE
 
 
 class MerkleTreeNode(Base):
