@@ -2,6 +2,7 @@ import abc
 import dataclasses
 import getpass
 import itertools
+import logging
 import os
 import shlex
 import subprocess
@@ -9,7 +10,7 @@ import sys
 import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Mapping
+from typing import Any, Mapping, Optional
 
 import docker  # type: ignore
 import requests
@@ -20,11 +21,36 @@ from .workflows import Execution, Machine, MerkleTreeNode
 
 docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
+logger = logging.getLogger("wf_reg_test")
+
 
 class WorkflowEngine:
     @abc.abstractmethod
     def run(self, workflow: Path, session: Session) -> Execution:
         ...
+
+
+def docker_command(
+        image: str,
+        command: Optional[list[str]] = None,
+        volumes: Optional[Mapping[str, Mapping[str, str]]] = None,
+        workdir: Optional[str] = None,
+        detach: bool = False,
+        remove: bool = False,
+) -> str:
+    return shlex.join([
+        "docker",
+        "run",
+        *(["--rm"] if remove else []),
+        *(["--detach"] if detach else []),
+        *(list(itertools.chain.from_iterable(
+            ["--volume", ":".join([path, volume["bind"], volume["mode"]])]
+            for path, volume in volumes.items()
+        )) if volumes is not None else []),
+        *(["--workdir", workdir] if workdir is not None else []),
+        image,
+        *(command if command is not None else []),
+    ])
 
 
 def docker_chown(paths: list[Path]) -> None:
@@ -101,10 +127,10 @@ class DockerWorkflowEngine(WorkflowEngine):
 
     def run(self, workflow: Path, session: Session) -> Execution:
         with create_temp_dir() as output_dir:
-            container = docker_client.containers.run(
-                image=self.image,
-                command=self.get_command(workflow, output_dir),
-                volumes={
+            docker_args = {
+                "image": self.image,
+                "command": self.get_command(workflow, output_dir),
+                "volumes": {
                     str(workflow.resolve()): {
                         "bind": str(workflow.resolve()),
                         "mode": "rw",
@@ -118,17 +144,17 @@ class DockerWorkflowEngine(WorkflowEngine):
                         "mode": "rw",
                     },
                 },
-                working_dir="/workdir",
-                detach=True,
-                log_config=docker.types.LogConfig(
+                "working_dir": "/workdir",
+                "detach": True,
+                "log_config": docker.types.LogConfig(
                     type=docker.types.LogConfig.types.JSON,
                     config={},
                 ),
-            )
+            }
+            if logger.isEnabledFor(logging.INFO):
+                logger.info("Running: " + docker_command(**docker_args))
+            container = docker_client.containers.run(**docker_args)
             stats = docker_monitor_stats(container)
-            subprocess.run(["ls", "-ahlt", output_dir], check=True)
-            print("chown", workflow, output_dir)
-            subprocess.run(["ls", "-ahlt", output_dir], check=True)
             docker_chown([workflow, output_dir])
             (output_dir / "stdout").write_bytes(stats["stdout"])
             (output_dir / "stderr").write_bytes(stats["stderr"])
@@ -164,7 +190,7 @@ class NixWorkflowEngine(WorkflowEngine):
             time_command = [
                 "time",
                 f"--output={output_dir!s}/time",
-                "--format=%F %S %U %e",
+                "--format=%F %S %U %e %x",
                 *command,
             ]
             nix_time_command = [
@@ -178,7 +204,8 @@ class NixWorkflowEngine(WorkflowEngine):
                 "--command",
                 *time_command,
             ]
-            print(shlex.join(nix_time_command))
+            if logger.isEnabledFor(logging.INFO):
+                logger.info("Running: " + shlex.join(nix_time_command))
             proc = subprocess.run(
                 nix_time_command,
                 check=False,
@@ -187,21 +214,22 @@ class NixWorkflowEngine(WorkflowEngine):
             (output_dir / "stdout").write_bytes(proc.stdout)
             (output_dir / "stderr").write_bytes(proc.stderr)
             sys.stderr.buffer.write(proc.stderr)
-            time_output = Path(output_dir / "time").read_text().strip().split(" ")
+            time_output = Path(output_dir / "time").read_text().strip().split("\n")[-1].split(" ")
             try:
-                mem_kb, system_sec, user_sec, wall_time = time_output
+                mem_kb, system_sec, user_sec, wall_time, exit_status = time_output
             except ValueError:
                 mem_kb = "0"
                 system_sec = "0.0"
                 user_sec = "0.0"
                 wall_time = "0.0"
+                exit_status = "0"
                 warnings.warn(
                     f"Could not parse time output: {time_output!r}; setting those fields to 0"
                 )
             return Execution(
                 datetime=datetime.now(),
                 output=MerkleTreeNode.from_path(output_dir, session, {}, {}),
-                status_code=proc.returncode,
+                status_code=int(exit_status),
                 wall_time=timedelta(seconds=float(wall_time)),
                 user_cpu_time=timedelta(seconds=float(user_sec)),
                 system_cpu_time=timedelta(seconds=float(system_sec)),
@@ -219,7 +247,6 @@ class NextflowDocker(DockerWorkflowEngine):
         )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        # return ["sh", "-c", f"cp {workflow.resolve()!s}/main.nf {output_dir.resolve()!s}"]
         return [
             "nextflow",
             "run",
@@ -241,21 +268,20 @@ class NextflowNix(NixWorkflowEngine):
         )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        # return ["sh", "-c", f"cp {workflow.resolve()!s}/main.nf {output_dir.resolve()!s}"]
-        # return [
-        #     "nextflow",
-        #     "run",
-        #     str(workflow.resolve()),
-        #     "-profile",
-        #     "test,docker",
-        #     "--outdir",
-        #     str(output_dir.resolve()),
-        # ]
         return [
-            "sh",
-            "-c",
-            "head --bytes 8388608 /dev/urandom | xz -9e - | unxz - | wc -c",
+            "nextflow",
+            "run",
+            str(workflow.resolve()),
+            "-profile",
+            "test,docker",
+            "--outdir",
+            str(output_dir.resolve()),
         ]
+        # return [
+        #     "sh",
+        #     "-c",
+        #     "head --bytes 8388608 /dev/urandom | xz -9e - | unxz - | wc -c",
+        # ]
 
 
 engines = {

@@ -18,6 +18,7 @@ from sqlalchemy import (
     Interval,
     LargeBinary,
     String,
+    Boolean,
 )
 from sqlalchemy.orm import Mapped, Session, declarative_base, deferred, relationship
 
@@ -31,6 +32,7 @@ URL_SIZE = 127
 HUMAN_READABLE_NAME_SIZE = 63
 
 # TODO: think long and hard about cascading deletes
+# TODO: remove underscore from id
 
 
 class WorkflowApp(Base):
@@ -45,6 +47,8 @@ class WorkflowApp(Base):
     revisions: Mapped[Revision] = relationship(
         "Revision", order_by="Revision.datetime", back_populates="workflow_app"
     )
+    def __str__(self) -> str:
+        return f"WorkflowApp {self.display_name}"
 
 
 class RepoAccessor(abc.ABC):
@@ -75,6 +79,9 @@ class Revision(Base):
         "WorkflowApp", back_populates="revisions"
     )
 
+    def __str__(self) -> str:
+        return f"Revision {self.display_name} of {self.workflow_app}"
+
     def __eq__(self, other: object) -> bool:
         if isinstance(other, Revision):
             return self.url == other.url
@@ -102,12 +109,18 @@ class Execution(Base):
     max_rss: Mapped[int] = Column(Integer, nullable=False)
     wall_time: Mapped[timedelta] = Column(Interval, nullable=False)
 
+    def __str__(self) -> str:
+        return f"Execution {self._id} of {self.revision}"
+
 
 class Machine(Base):
     __tablename__ = "Machine"
     _id = Column(Integer, primary_key=True)
     short_description: Mapped[str] = Column(String(128), nullable=False, unique=True)
     long_description: Mapped[str] = deferred(Column(String(102400), nullable=False))
+
+    def __str__(self) -> str:
+        return f"Machine {self.short_description}"
 
     CURRENT_MACHINE: ClassVar[Optional[Machine]] = None
 
@@ -161,6 +174,8 @@ class MerkleTreeNode(Base):
     )  # TODO: make this relationship a dict
     blob: Mapped[Optional[Blob]] = relationship("Blob")
     _blob_hash = Column(BigInteger, ForeignKey("Blob.hash"))
+    # size_of_descendents = Column(Integer)
+    # updated = Column(Boolean)
 
     @staticmethod
     def from_path(
@@ -213,6 +228,7 @@ class MerkleTreeNode(Base):
                 children=children,
                 hash=hash,
                 blob=blob,
+                # size_of_descendents=blob.size + sum([child.size_of_descendents for child in children]),
             )
             return ret
 
@@ -235,11 +251,18 @@ class MerkleTreeNode(Base):
     def __hash__(self) -> int:
         return self.hash
 
+    def __str__(self) -> str:
+        return f"MerkleTreeNode {self.name}"
+
 
 class Blob(Base):
     __tablename__ = "Blob"
     hash: Mapped[int] = Column(BigInteger, primary_key=True, autoincrement=False)
     data: Mapped[bytes] = deferred(Column(LargeBinary, nullable=False))
+    # size: int = Column(Integer)
+
+    def __str__(self) -> str:
+        return f"Blob {self.hash}"
 
     @staticmethod
     def from_path(
@@ -256,9 +279,11 @@ class Blob(Base):
             blobs_in_transaction[hash] = existing_in_db
             return existing_in_db
 
+        data = path.read_bytes()
         new = Blob(
             hash=hash,
-            data=path.read_bytes(),
+            data=data,
+            # size=len(data),
         )
         blobs_in_transaction[hash] = new
         return new
