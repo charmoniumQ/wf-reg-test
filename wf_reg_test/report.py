@@ -27,7 +27,7 @@ def get_info(wf_apps: list[WorkflowApp]) -> str:
             executions_count += len(revision.executions)
             for execution in revision.executions:
                 machines_set.add(execution.machine)
-        return f"{executions_count} executions of {revisions_count} revisions of {wf_apps_count} workflows on {len(machines_set)} machines"
+    return f"{executions_count} executions of {revisions_count} revisions of {wf_apps_count} workflows on {len(machines_set)} machines"
 
 
 def html_mtn(node: Optional[MerkleTreeNode]) -> html.Element:

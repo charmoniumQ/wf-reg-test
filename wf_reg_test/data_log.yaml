@@ -1,0 +1,12 @@
+- datetime: 2022-09-14 17:05:22
+  rev: 03a4735d968cc0125ccbafe6c68214ad0dfbce57
+  description:
+    - Began with three hardcoded nf-core workflows
+    - Scraped all revisions
+    - Ran all revisions with Nix nf-core
+    - Note that one of the workflows took more than two hours without using any CPU. Therefore, I killed that one.
+
+- datetime: 2022-09-14 17:05:22
+  description:
+    - Retroactively fixed bug where time was not recorded when a workflow failed.
+    - Removed database row from the aforementioned hung run.

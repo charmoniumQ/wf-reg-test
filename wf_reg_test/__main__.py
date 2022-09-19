@@ -4,10 +4,11 @@ import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
 
+import charmonium.time_block as ch_time_block
+from rich.prompt import Confirm
 import sqlalchemy
 from sqlalchemy import func
 import sqlalchemy_schemadisplay  # type: ignore
-import charmonium.time_block as ch_time_block
 
 from .engines import engines
 from .report import report_html
@@ -170,7 +171,7 @@ def enable_sql_echo() -> None:
     logging.getLogger("sqlalchemy.engine").setLevel(logging.INFO)
 
 
-def get_db_info(session: sqlalchemy.orm.Session) -> None:
+def get_db_info(session: sqlalchemy.orm.Session) -> str:
     with session.begin():
         wf_apps = session.query(func.count(WorkflowApp._id)).scalar()
         revisions = session.query(func.count(Revision._id)).scalar()
@@ -180,57 +181,46 @@ def get_db_info(session: sqlalchemy.orm.Session) -> None:
         return f"{blobs} blobs from {executions} executions of {revisions} revisions of {wf_apps} workflows on {machines} machines"
 
 
-def fix_size(session: sqlalchemy.orm.Session) -> None:
-    with session.begin():
-        blobs = set(session.execute(
-            sqlalchemy.select(Blob)
-        ).scalars().all())
-        for blob in blobs:
-            blob.size = len(blob.data)
+# def fix_size(session: sqlalchemy.orm.Session) -> None:
+#     with session.begin():
+#         blobs = set(session.execute(
+#             sqlalchemy.select(Blob)
+#         ).scalars().all())
+#         for blob in blobs:
+#             blob.size = len(blob.data)
 
-        nodes = set(session.execute(
-            sqlalchemy.select(MerkleTreeNodes)
-        ).scalars().all())
-        while nodes:
-            print(len(nodes), "nodes remaining")
-            for node in list(nodes):
-                if all([child.is_updated for child in node.children]):
-                    node.size_of_descendents = node.blob.size + sum([child.size_of_descendents for child in node.children])
-                    nodes.remove(node)
+#         nodes = set(session.execute(
+#             sqlalchemy.select(MerkleTreeNode)
+#         ).scalars().all())
+#         while nodes:
+#             logger.info(len(nodes), "nodes remaining")
+#             for node in list(nodes):
+#                 if all([child.is_updated for child in node.children]):
+#                     node.size_of_descendents = node.blob.size + sum([child.size_of_descendents for child in node.children])
+#                     nodes.remove(node)
 
 
-@ch_time_block.decor()
 def check_blobs_are_owned(session: sqlalchemy.orm.Session) -> None:
-    with sesion.begin():
+    with session.begin():
         blobs = session.execute(
             sqlalchemy.select(Blob)
             .join(MerkleTreeNode, isouter=True)
-            .where(MerkleTreeNode._id == None)
+            .where(MerkleTreeNode.hash == None)
         ).scalars().all()
-        assert not blobs
+        for blob in blobs:
+            if Confirm(f"Delete {blob!s}"):
+                blob.delete()
+            else:
+                logger.info("Not deleting")
 
 
-@ch_time_block.decor()
 def check_nodes_are_owned(session: sqlalchemy.orm.Session) -> None:
-    with sesion.begin():
-        unowned_nodes = set(
-            session.execute(
-                sqlalchemy.select(MerkleTreeNode)
-            )
-            .scalars()
-            .all()
-        )
-        while unowned_nodes:
-            print(len(unowned_nodes), "nodes remaining")
-            for node in list(unowned_nodes):
-                if all([child not in unowned_nodes for child in node.children]):
-                    unowned_nodes.remove(node)
+    pass
 
 
 @ch_time_block.decor()
 def main() -> None:
-    secrets = json.loads(Path("secrets.json").read_text())
-    engine = sqlalchemy.create_engine(secrets["db_url"], future=True)
+    engine = sqlalchemy.create_engine("data.sqlite", future=True)
     with sqlalchemy.orm.Session(engine, future=True) as session:
         # clear_tables(engine)
         # diagram_object_model(Path("dbschema.png"))
@@ -241,6 +231,10 @@ def main() -> None:
         # ensure_revisions(session)
         # ensure_recent_executions(timedelta(days=100), session)
         # fix_failed_revisions(session)
+        # delete_zero_time_executions(session)
+
+        check_blobs_are_owned(session)
+        check_nodes_are_owned(session)
 
         logger.info("After: " + get_db_info(session))
         report(Path("docs/results.html"), session)

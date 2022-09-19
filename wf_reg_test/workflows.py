@@ -8,6 +8,7 @@ from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Callable, ClassVar, ContextManager, Optional, cast
 
+import git
 import sqlalchemy
 from sqlalchemy import (
     BigInteger,
@@ -253,6 +254,14 @@ class MerkleTreeNode(Base):
 
     def __str__(self) -> str:
         return f"MerkleTreeNode {self.name}"
+
+    def full_delete(self, session: Session) -> None:
+        print(f"Deleting {self.name!s}")
+        for child in self.children:
+            child.full_delete(session)
+        if self.blob is not None:
+            session.delete(self.blob)
+        session.delete(self)
 
 
 class Blob(Base):
