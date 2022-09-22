@@ -179,6 +179,7 @@ class NixWorkflowEngine(WorkflowEngine):
     name: str
     url: str
     flake: Path
+    walltime_limit: int
     keep_env_vars: tuple[str, ...] = ()
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
@@ -191,6 +192,9 @@ class NixWorkflowEngine(WorkflowEngine):
                 "time",
                 f"--output={output_dir!s}/time",
                 "--format=%F %S %U %e %x",
+                "timeout",
+                f"--kill-after={1.1 * self.walltime_limit:.0d}",
+                str(self.walltime_limit),
                 *command,
             ]
             nix_time_command = [
@@ -265,6 +269,8 @@ class NextflowNix(NixWorkflowEngine):
             url="https://www.nextflow.io/",
             flake=Path() / "engines" / "nextflow",
             keep_env_vars=("HOME",),
+            walltime_limit=int(timedelta(hours=1.5).total_seconds()),
+            # TODO: conigure timeout
         )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:

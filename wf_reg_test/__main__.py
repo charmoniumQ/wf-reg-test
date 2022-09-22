@@ -9,11 +9,13 @@ from rich.prompt import Confirm
 import sqlalchemy
 from sqlalchemy import func
 import sqlalchemy_schemadisplay  # type: ignore
+import yaml
 
 from .engines import engines
 from .report import report_html
 from .repos import get_repo_accessor
 from .workflows import Base, Blob, Execution, MerkleTreeNode, Revision, WorkflowApp, Machine
+from .workflows2 import WorkflowApp2
 
 
 logging.basicConfig()
@@ -217,10 +219,16 @@ def check_blobs_are_owned(session: sqlalchemy.orm.Session) -> None:
 def check_nodes_are_owned(session: sqlalchemy.orm.Session) -> None:
     pass
 
+@ch_time_block.decor()
+def convert(session: sqlalchemy.orm.Session) -> None:
+    workflow_apps = session.execute(sqlalchemy.select(WorkflowApp)).scalars().all()
+    workflow_apps2 = [WorkflowApp2.convert(workflow_app) for workflow_app in workflow_apps]
+    Path("data.yaml").write_text(yaml.dump(workflow_apps2))
+
 
 @ch_time_block.decor()
 def main() -> None:
-    engine = sqlalchemy.create_engine("data.sqlite", future=True)
+    engine = sqlalchemy.create_engine("sqlite:///../data.sqlite", future=True)
     with sqlalchemy.orm.Session(engine, future=True) as session:
         # clear_tables(engine)
         # diagram_object_model(Path("dbschema.png"))
@@ -237,8 +245,9 @@ def main() -> None:
         check_nodes_are_owned(session)
 
         logger.info("After: " + get_db_info(session))
-        report(Path("docs/results.html"), session)
+        # report(Path("docs/results.html"), session)
 
+        convert(session)
 
 main()
 

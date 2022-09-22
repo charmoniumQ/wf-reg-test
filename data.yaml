@@ -1,0 +1,1117 @@
+- &id002 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: nf-core/mag
+  repo_url: https://github.com/nf-core/mag?only_tags
+  revisions:
+  - &id001 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-12-21 10:19:32
+    display_name: 1.0.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 10:43:26.856416
+      machine: &id003 !!python/object:wf_reg_test.workflows2.Machine2
+        long_description: "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<!DOCTYPE topology\
+          \ SYSTEM \"hwloc2.dtd\">\n<topology version=\"2.0\">\n  <object type=\"\
+          Machine\" os_index=\"0\" cpuset=\"0x000000ff\" complete_cpuset=\"0x000000ff\"\
+          \ allowed_cpuset=\"0x000000ff\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" allowed_nodeset=\"0x00000001\" gp_index=\"1\">\n    <info name=\"\
+          DMIProductName\" value=\"MS-7693\"/>\n    <info name=\"DMIProductVersion\"\
+          \ value=\"2.0\"/>\n    <info name=\"DMIBoardVendor\" value=\"MSI\"/>\n \
+          \   <info name=\"DMIBoardName\" value=\"970A-G46 (MS-7693)\"/>\n    <info\
+          \ name=\"DMIBoardVersion\" value=\"2.0\"/>\n    <info name=\"DMIBoardAssetTag\"\
+          \ value=\"To be filled by O.E.M.\"/>\n    <info name=\"DMIChassisVendor\"\
+          \ value=\"MSI\"/>\n    <info name=\"DMIChassisType\" value=\"3\"/>\n   \
+          \ <info name=\"DMIChassisVersion\" value=\"2.0\"/>\n    <info name=\"DMIChassisAssetTag\"\
+          \ value=\"To Be Filled By O.E.M.\"/>\n    <info name=\"DMIBIOSVendor\" value=\"\
+          American Megatrends Inc.\"/>\n    <info name=\"DMIBIOSVersion\" value=\"\
+          V1.10\"/>\n    <info name=\"DMIBIOSDate\" value=\"10/18/2012\"/>\n    <info\
+          \ name=\"DMISysVendor\" value=\"MSI\"/>\n    <info name=\"Backend\" value=\"\
+          Linux\"/>\n    <info name=\"LinuxCgroup\" value=\"/user.slice\"/>\n    <info\
+          \ name=\"OSName\" value=\"Linux\"/>\n    <info name=\"OSRelease\" value=\"\
+          5.15.0-47-generic\"/>\n    <info name=\"OSVersion\" value=\"#51-Ubuntu SMP\
+          \ Thu Aug 11 07:51:15 UTC 2022\"/>\n    <info name=\"HostName\" value=\"\
+          home-server\"/>\n    <info name=\"Architecture\" value=\"x86_64\"/>\n  \
+          \  <info name=\"hwlocVersion\" value=\"2.8.0\"/>\n    <info name=\"ProcessName\"\
+          \ value=\"lstopo\"/>\n    <object type=\"Package\" os_index=\"0\" cpuset=\"\
+          0x000000ff\" complete_cpuset=\"0x000000ff\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"3\">\n      <info name=\"CPUVendor\" value=\"AuthenticAMD\"\
+          />\n      <info name=\"CPUFamilyNumber\" value=\"21\"/>\n      <info name=\"\
+          CPUModelNumber\" value=\"1\"/>\n      <info name=\"CPUModel\" value=\"AMD\
+          \ FX(tm)-8120 Eight-Core Processor           \"/>\n      <info name=\"CPUStepping\"\
+          \ value=\"2\"/>\n      <object type=\"NUMANode\" os_index=\"0\" cpuset=\"\
+          0x000000ff\" complete_cpuset=\"0x000000ff\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"36\" local_memory=\"8304668672\">\n        <page_type\
+          \ size=\"4096\" count=\"2027507\"/>\n        <page_type size=\"2097152\"\
+          \ count=\"0\"/>\n        <page_type size=\"1073741824\" count=\"0\"/>\n\
+          \      </object>\n      <object type=\"L3Cache\" os_index=\"2\" cpuset=\"\
+          0x000000ff\" complete_cpuset=\"0x000000ff\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"8\" cache_size=\"8388608\" depth=\"3\" cache_linesize=\"\
+          64\" cache_associativity=\"64\" cache_type=\"0\">\n        <info name=\"\
+          Inclusive\" value=\"0\"/>\n        <object type=\"L2Cache\" os_index=\"\
+          8\" cpuset=\"0x00000003\" complete_cpuset=\"0x00000003\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"7\" cache_size=\"2097152\"\
+          \ depth=\"2\" cache_linesize=\"64\" cache_associativity=\"16\" cache_type=\"\
+          0\">\n          <info name=\"Inclusive\" value=\"0\"/>\n          <object\
+          \ type=\"L1iCache\" os_index=\"8\" cpuset=\"0x00000003\" complete_cpuset=\"\
+          0x00000003\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          6\" cache_size=\"65536\" depth=\"1\" cache_linesize=\"64\" cache_associativity=\"\
+          2\" cache_type=\"2\">\n            <info name=\"Inclusive\" value=\"0\"\
+          />\n            <object type=\"L1Cache\" os_index=\"16\" cpuset=\"0x00000001\"\
+          \ complete_cpuset=\"0x00000001\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"5\" cache_size=\"16384\" depth=\"1\" cache_linesize=\"\
+          64\" cache_associativity=\"4\" cache_type=\"1\">\n              <info name=\"\
+          Inclusive\" value=\"0\"/>\n              <object type=\"Core\" os_index=\"\
+          0\" cpuset=\"0x00000001\" complete_cpuset=\"0x00000001\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"2\">\n                <object\
+          \ type=\"PU\" os_index=\"0\" cpuset=\"0x00000001\" complete_cpuset=\"0x00000001\"\
+          \ nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"4\"\
+          />\n              </object>\n            </object>\n            <object\
+          \ type=\"L1Cache\" os_index=\"17\" cpuset=\"0x00000002\" complete_cpuset=\"\
+          0x00000002\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          11\" cache_size=\"16384\" depth=\"1\" cache_linesize=\"64\" cache_associativity=\"\
+          4\" cache_type=\"1\">\n              <info name=\"Inclusive\" value=\"0\"\
+          />\n              <object type=\"Core\" os_index=\"1\" cpuset=\"0x00000002\"\
+          \ complete_cpuset=\"0x00000002\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"9\">\n                <object type=\"PU\" os_index=\"\
+          1\" cpuset=\"0x00000002\" complete_cpuset=\"0x00000002\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"10\"/>\n              </object>\n\
+          \            </object>\n          </object>\n        </object>\n       \
+          \ <object type=\"L2Cache\" os_index=\"9\" cpuset=\"0x0000000c\" complete_cpuset=\"\
+          0x0000000c\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          16\" cache_size=\"2097152\" depth=\"2\" cache_linesize=\"64\" cache_associativity=\"\
+          16\" cache_type=\"0\">\n          <info name=\"Inclusive\" value=\"0\"/>\n\
+          \          <object type=\"L1iCache\" os_index=\"9\" cpuset=\"0x0000000c\"\
+          \ complete_cpuset=\"0x0000000c\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"15\" cache_size=\"65536\" depth=\"1\" cache_linesize=\"\
+          64\" cache_associativity=\"2\" cache_type=\"2\">\n            <info name=\"\
+          Inclusive\" value=\"0\"/>\n            <object type=\"L1Cache\" os_index=\"\
+          18\" cpuset=\"0x00000004\" complete_cpuset=\"0x00000004\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"14\" cache_size=\"16384\" depth=\"\
+          1\" cache_linesize=\"64\" cache_associativity=\"4\" cache_type=\"1\">\n\
+          \              <info name=\"Inclusive\" value=\"0\"/>\n              <object\
+          \ type=\"Core\" os_index=\"2\" cpuset=\"0x00000004\" complete_cpuset=\"\
+          0x00000004\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          12\">\n                <object type=\"PU\" os_index=\"2\" cpuset=\"0x00000004\"\
+          \ complete_cpuset=\"0x00000004\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"13\"/>\n              </object>\n            </object>\n\
+          \            <object type=\"L1Cache\" os_index=\"19\" cpuset=\"0x00000008\"\
+          \ complete_cpuset=\"0x00000008\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"19\" cache_size=\"16384\" depth=\"1\" cache_linesize=\"\
+          64\" cache_associativity=\"4\" cache_type=\"1\">\n              <info name=\"\
+          Inclusive\" value=\"0\"/>\n              <object type=\"Core\" os_index=\"\
+          3\" cpuset=\"0x00000008\" complete_cpuset=\"0x00000008\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"17\">\n                <object\
+          \ type=\"PU\" os_index=\"3\" cpuset=\"0x00000008\" complete_cpuset=\"0x00000008\"\
+          \ nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"18\"\
+          />\n              </object>\n            </object>\n          </object>\n\
+          \        </object>\n        <object type=\"L2Cache\" os_index=\"10\" cpuset=\"\
+          0x00000030\" complete_cpuset=\"0x00000030\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"24\" cache_size=\"2097152\" depth=\"2\" cache_linesize=\"\
+          64\" cache_associativity=\"16\" cache_type=\"0\">\n          <info name=\"\
+          Inclusive\" value=\"0\"/>\n          <object type=\"L1iCache\" os_index=\"\
+          10\" cpuset=\"0x00000030\" complete_cpuset=\"0x00000030\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"23\" cache_size=\"65536\" depth=\"\
+          1\" cache_linesize=\"64\" cache_associativity=\"2\" cache_type=\"2\">\n\
+          \            <info name=\"Inclusive\" value=\"0\"/>\n            <object\
+          \ type=\"L1Cache\" os_index=\"20\" cpuset=\"0x00000010\" complete_cpuset=\"\
+          0x00000010\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          22\" cache_size=\"16384\" depth=\"1\" cache_linesize=\"64\" cache_associativity=\"\
+          4\" cache_type=\"1\">\n              <info name=\"Inclusive\" value=\"0\"\
+          />\n              <object type=\"Core\" os_index=\"4\" cpuset=\"0x00000010\"\
+          \ complete_cpuset=\"0x00000010\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"20\">\n                <object type=\"PU\" os_index=\"\
+          4\" cpuset=\"0x00000010\" complete_cpuset=\"0x00000010\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"21\"/>\n              </object>\n\
+          \            </object>\n            <object type=\"L1Cache\" os_index=\"\
+          21\" cpuset=\"0x00000020\" complete_cpuset=\"0x00000020\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"27\" cache_size=\"16384\" depth=\"\
+          1\" cache_linesize=\"64\" cache_associativity=\"4\" cache_type=\"1\">\n\
+          \              <info name=\"Inclusive\" value=\"0\"/>\n              <object\
+          \ type=\"Core\" os_index=\"5\" cpuset=\"0x00000020\" complete_cpuset=\"\
+          0x00000020\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          25\">\n                <object type=\"PU\" os_index=\"5\" cpuset=\"0x00000020\"\
+          \ complete_cpuset=\"0x00000020\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"26\"/>\n              </object>\n            </object>\n\
+          \          </object>\n        </object>\n        <object type=\"L2Cache\"\
+          \ os_index=\"11\" cpuset=\"0x000000c0\" complete_cpuset=\"0x000000c0\" nodeset=\"\
+          0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"32\" cache_size=\"\
+          2097152\" depth=\"2\" cache_linesize=\"64\" cache_associativity=\"16\" cache_type=\"\
+          0\">\n          <info name=\"Inclusive\" value=\"0\"/>\n          <object\
+          \ type=\"L1iCache\" os_index=\"11\" cpuset=\"0x000000c0\" complete_cpuset=\"\
+          0x000000c0\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          31\" cache_size=\"65536\" depth=\"1\" cache_linesize=\"64\" cache_associativity=\"\
+          2\" cache_type=\"2\">\n            <info name=\"Inclusive\" value=\"0\"\
+          />\n            <object type=\"L1Cache\" os_index=\"22\" cpuset=\"0x00000040\"\
+          \ complete_cpuset=\"0x00000040\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"30\" cache_size=\"16384\" depth=\"1\" cache_linesize=\"\
+          64\" cache_associativity=\"4\" cache_type=\"1\">\n              <info name=\"\
+          Inclusive\" value=\"0\"/>\n              <object type=\"Core\" os_index=\"\
+          6\" cpuset=\"0x00000040\" complete_cpuset=\"0x00000040\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"28\">\n                <object\
+          \ type=\"PU\" os_index=\"6\" cpuset=\"0x00000040\" complete_cpuset=\"0x00000040\"\
+          \ nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"29\"\
+          />\n              </object>\n            </object>\n            <object\
+          \ type=\"L1Cache\" os_index=\"23\" cpuset=\"0x00000080\" complete_cpuset=\"\
+          0x00000080\" nodeset=\"0x00000001\" complete_nodeset=\"0x00000001\" gp_index=\"\
+          35\" cache_size=\"16384\" depth=\"1\" cache_linesize=\"64\" cache_associativity=\"\
+          4\" cache_type=\"1\">\n              <info name=\"Inclusive\" value=\"0\"\
+          />\n              <object type=\"Core\" os_index=\"7\" cpuset=\"0x00000080\"\
+          \ complete_cpuset=\"0x00000080\" nodeset=\"0x00000001\" complete_nodeset=\"\
+          0x00000001\" gp_index=\"33\">\n                <object type=\"PU\" os_index=\"\
+          7\" cpuset=\"0x00000080\" complete_cpuset=\"0x00000080\" nodeset=\"0x00000001\"\
+          \ complete_nodeset=\"0x00000001\" gp_index=\"34\"/>\n              </object>\n\
+          \            </object>\n          </object>\n        </object>\n      </object>\n\
+          \    </object>\n    <object type=\"Bridge\" gp_index=\"53\" bridge_type=\"\
+          0-1\" depth=\"0\" bridge_pci=\"0000:[00-04]\">\n      <object type=\"Bridge\"\
+          \ gp_index=\"45\" bridge_type=\"1-1\" depth=\"1\" bridge_pci=\"0000:[01-01]\"\
+          \ pci_busid=\"0000:00:03.0\" pci_type=\"0604 [1002:5a17] [1462:7693] 00\"\
+          \ pci_link_speed=\"2.000000\">\n        <object type=\"PCIDev\" gp_index=\"\
+          41\" pci_busid=\"0000:01:00.0\" pci_type=\"0300 [10de:10c3] [3842:1300]\
+          \ a2\" pci_link_speed=\"2.000000\"/>\n      </object>\n      <object type=\"\
+          PCIDev\" gp_index=\"50\" pci_busid=\"0000:00:11.0\" pci_type=\"0106 [1002:4390]\
+          \ [1462:7693] 40\" pci_link_speed=\"0.000000\">\n        <object type=\"\
+          OSDev\" gp_index=\"54\" name=\"sda\" subtype=\"Disk\" osdev_type=\"0\">\n\
+          \          <info name=\"Size\" value=\"976762584\"/>\n          <info name=\"\
+          SectorSize\" value=\"512\"/>\n          <info name=\"LinuxDeviceID\" value=\"\
+          8:0\"/>\n          <info name=\"Vendor\" value=\"Western Digital\"/>\n \
+          \         <info name=\"Model\" value=\"WDC_WD10EZEX-00B\"/>\n          <info\
+          \ name=\"Revision\" value=\"1A01\"/>\n          <info name=\"SerialNumber\"\
+          \ value=\"WD-WCC6Y2XC5S4R\"/>\n        </object>\n      </object>\n    \
+          \  <object type=\"PCIDev\" gp_index=\"42\" pci_busid=\"0000:00:14.1\" pci_type=\"\
+          0101 [1002:439c] [1462:7693] 40\" pci_link_speed=\"0.000000\"/>\n      <object\
+          \ type=\"Bridge\" gp_index=\"47\" bridge_type=\"1-1\" depth=\"1\" bridge_pci=\"\
+          0000:[04-04]\" pci_busid=\"0000:00:15.0\" pci_type=\"0604 [1002:43a0] [1002:0000]\
+          \ 00\" pci_link_speed=\"0.250000\">\n        <object type=\"PCIDev\" gp_index=\"\
+          51\" pci_busid=\"0000:04:00.0\" pci_type=\"0200 [10ec:8168] [1462:7693]\
+          \ 06\" pci_link_speed=\"0.250000\">\n          <object type=\"OSDev\" gp_index=\"\
+          55\" name=\"enp4s0\" osdev_type=\"2\">\n            <info name=\"Address\"\
+          \ value=\"d4:3d:7e:4b:ae:77\"/>\n          </object>\n        </object>\n\
+          \      </object>\n    </object>\n  </object>\n  <support name=\"discovery.pu\"\
+          />\n  <support name=\"discovery.numa\"/>\n  <support name=\"discovery.numa_memory\"\
+          />\n  <support name=\"discovery.disallowed_pu\"/>\n  <support name=\"discovery.disallowed_numa\"\
+          />\n  <support name=\"discovery.cpukind_efficiency\"/>\n  <support name=\"\
+          cpubind.set_thisproc_cpubind\"/>\n  <support name=\"cpubind.get_thisproc_cpubind\"\
+          />\n  <support name=\"cpubind.set_proc_cpubind\"/>\n  <support name=\"cpubind.get_proc_cpubind\"\
+          />\n  <support name=\"cpubind.set_thisthread_cpubind\"/>\n  <support name=\"\
+          cpubind.get_thisthread_cpubind\"/>\n  <support name=\"cpubind.set_thread_cpubind\"\
+          />\n  <support name=\"cpubind.get_thread_cpubind\"/>\n  <support name=\"\
+          cpubind.get_thisproc_last_cpu_location\"/>\n  <support name=\"cpubind.get_proc_last_cpu_location\"\
+          />\n  <support name=\"cpubind.get_thisthread_last_cpu_location\"/>\n  <support\
+          \ name=\"membind.set_thisthread_membind\"/>\n  <support name=\"membind.get_thisthread_membind\"\
+          />\n  <support name=\"membind.set_area_membind\"/>\n  <support name=\"membind.get_area_membind\"\
+          />\n  <support name=\"membind.alloc_membind\"/>\n  <support name=\"membind.firsttouch_membind\"\
+          />\n  <support name=\"membind.bind_membind\"/>\n  <support name=\"membind.interleave_membind\"\
+          />\n  <support name=\"membind.migrate_membind\"/>\n  <support name=\"membind.get_area_memlocation\"\
+          />\n  <support name=\"custom.exported_support\"/>\n  <cpukind cpuset=\"\
+          0x000000ff\">\n    <info name=\"FrequencyMaxMHz\" value=\"3100\"/>\n  </cpukind>\n\
+          </topology>\n"
+        short_description: home-server-Linux-5.15.0-47-generic-x86_64-with-glibc2.35
+      max_rss: 1203200
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 1bf07db062738f62
+      revision: *id001
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 18
+      - 320000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 88
+      - 790000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1587
+      - 830000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/1.0.0
+    workflow_app: *id002
+  - &id004 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-06 13:44:58
+    display_name: 1.1.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 08:41:49.375005
+      machine: *id003
+      max_rss: 1087488
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 023977997b54f6aa
+      revision: *id004
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 18
+      - 950000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 94
+      - 710000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1499
+      - 230000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/1.1.0
+    workflow_app: *id002
+  - &id005 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-11-10 17:11:59
+    display_name: 1.1.1
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 08:16:47.746068
+      machine: *id003
+      max_rss: 1011712
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - b65266a468bf3dc4
+      revision: *id005
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 19
+      - 610000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 94
+      - 150000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1522
+      - 510000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/1.1.1
+    workflow_app: *id002
+  - &id006 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-11-24 17:58:19
+    display_name: 1.1.2
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 07:51:22.912981
+      machine: *id003
+      max_rss: 1068032
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 7bc1e1d30dad7a71
+      revision: *id006
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 19
+      - 600000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 92
+      - 270000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1532
+      - 690000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/1.1.2
+    workflow_app: *id002
+  - &id007 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-02-10 10:23:16
+    display_name: 1.2.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 09:30:20.374096
+      machine: *id003
+      max_rss: 962560
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 742309d38c009824
+      revision: *id007
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 19
+      - 560000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 95
+      - 100000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1524
+      - 750000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/1.2.0
+    workflow_app: *id002
+  - &id008 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-06-01 11:36:53
+    display_name: 2.0.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 09:04:55.048759
+      machine: *id003
+      max_rss: 147456
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - a90a45db926a76e2
+      revision: *id008
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 100000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 39
+      - 250000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 12
+      - 110000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/2.0.0
+    workflow_app: *id002
+  - &id009 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-07-29 07:00:58
+    display_name: 2.1.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 09:04:40.576555
+      machine: *id003
+      max_rss: 1413120
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 6dd330a5c80fdc9c
+      revision: *id009
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 20
+      - 180000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 120
+      - 640000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1368
+      - 940000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/2.1.0
+    workflow_app: *id002
+  - &id010 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-11-26 10:37:41
+    display_name: 2.1.1
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:13:18.015424
+      machine: *id003
+      max_rss: 1552384
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 7996216ed8f4291c
+      revision: *id010
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 26
+      - 730000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 141
+      - 710000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1782
+      - 780000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/2.1.1
+    workflow_app: *id002
+  - &id011 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-14 06:29:15
+    display_name: 2.2.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 07:25:43.999750
+      machine: *id003
+      max_rss: 2464768
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 13be7b4b4dfc7aa6
+      revision: *id011
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 44
+      - 380000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 168
+      - 810000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 3725
+      - 220000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/2.2.0
+    workflow_app: *id002
+  - &id012 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-08-25 10:32:18
+    display_name: 2.2.1
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 10:16:53.340760
+      machine: *id003
+      max_rss: 2457600
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 6781df83b783cfc2
+      revision: *id012
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 41
+      - 60000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 145
+      - 800000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2791
+      - 200000
+    tree: null
+    url: https://github.com/nf-core/mag/tree/2.2.1
+    workflow_app: *id002
+  url: https://nf-co.re/mag
+  workflow_engine_name: nextflow
+- &id014 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: nf-core/rnaseq
+  repo_url: https://github.com/nf-core/rnaseq?only_tags
+  revisions:
+  - &id013 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-08-20 16:36:08
+    display_name: '1.0'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:14:14.280437
+      machine: *id003
+      max_rss: 30720
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 4a4df966e8f5d2e4
+      revision: *id013
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 30000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 38
+      - 830000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 11
+      - 190000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.0
+    workflow_app: *id014
+  - &id015 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-10-05 22:19:24
+    display_name: '1.1'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:14:02.529465
+      machine: *id003
+      max_rss: 26624
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - ecde03d1cef2acfc
+      revision: *id015
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 50000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 41
+      - 260000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 11
+      - 770000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.1
+    workflow_app: *id014
+  - &id016 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-12-12 16:43:31
+    display_name: '1.2'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 21:35:22.394537
+      machine: *id003
+      max_rss: 125952
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - ac4bb6e824b70d94
+      revision: *id016
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 0
+      - 900000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 38
+      - 890000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 12
+      - 160000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.2
+    workflow_app: *id014
+  - &id017 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-03-26 20:03:50
+    display_name: '1.3'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:49:35.376909
+      machine: *id003
+      max_rss: 1198080
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 9618344764203e19
+      revision: *id017
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 12
+      - 480000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 90
+      - 850000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 693
+      - 630000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.3
+    workflow_app: *id014
+  - &id018 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-10-15 13:09:13
+    display_name: '1.4'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:37:56.404962
+      machine: *id003
+      max_rss: 1019904
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 4e7363054c2192ff
+      revision: *id018
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 12
+      - 560000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 94
+      - 640000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 693
+      - 230000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.4
+    workflow_app: *id014
+  - &id019 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-10-17 17:39:21
+    display_name: 1.4.1
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 22:28:26.071100
+      machine: *id003
+      max_rss: 944128
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 85870ad75895a74a
+      revision: *id019
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 11
+      - 690000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 94
+      - 730000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 676
+      - 700000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.4.1
+    workflow_app: *id014
+  - &id020 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-10-18 10:50:14
+    display_name: 1.4.2
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:26:12.684914
+      machine: *id003
+      max_rss: 963584
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 9b507cdfd2e44af2
+      revision: *id020
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 12
+      - 770000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 93
+      - 780000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 707
+      - 610000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/1.4.2
+    workflow_app: *id014
+  - &id021 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-11-12 19:58:30
+    display_name: '2.0'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:13:31.201650
+      machine: *id003
+      max_rss: 64512
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - b1629dc0a36285d9
+      revision: *id021
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 0
+      - 870000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 33
+      - 400000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 9
+      - 660000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/2.0
+    workflow_app: *id014
+  - &id022 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-12-15 16:21:06
+    display_name: '3.0'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:14:24.470907
+      machine: *id003
+      max_rss: 26624
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 7d4eb282347ec863
+      revision: *id022
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 0
+      - 930000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 33
+      - 720000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 9
+      - 570000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.0
+    workflow_app: *id014
+  - &id023 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-05-13 12:59:54
+    display_name: '3.1'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 20:47:07.598752
+      machine: *id003
+      max_rss: 169984
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 79ccda46ea2370b1
+      revision: *id023
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 120000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 38
+      - 50000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 12
+      - 170000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.1
+    workflow_app: *id014
+  - &id024 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-06-18 13:58:36
+    display_name: '3.2'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:13:50.192758
+      machine: *id003
+      max_rss: 26624
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 190248dcc27282d2
+      revision: *id024
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 360000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 49
+      - 440000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 18
+      - 230000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.2
+    workflow_app: *id014
+  - &id025 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-07-29 13:22:42
+    display_name: '3.3'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:50:16.921416
+      machine: *id003
+      max_rss: 198656
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 1b35378563847468
+      revision: *id025
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 590000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 56
+      - 540000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 20
+      - 400000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.3
+    workflow_app: *id014
+  - &id026 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-10-05 13:44:47
+    display_name: '3.4'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 11:50:32.489090
+      machine: *id003
+      max_rss: 31744
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 0e9c59e05334eed2
+      revision: *id026
+      status_code: 1
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 1
+      - 220000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 47
+      - 570000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 15
+      - 60000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.4
+    workflow_app: *id014
+  - &id027 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-12-17 16:05:54
+    display_name: '3.5'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 21:35:05.868895
+      machine: *id003
+      max_rss: 2691072
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 98cd1ba3febd8d7f
+      revision: *id027
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 39
+      - 230000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 184
+      - 140000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2877
+      - 710000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.5
+    workflow_app: *id014
+  - &id028 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-03-04 13:45:46
+    display_name: '3.6'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 23:13:36.388296
+      machine: *id003
+      max_rss: 2908160
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - a6204449ab60bdcb
+      revision: *id028
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 38
+      - 20000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 188
+      - 140000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2704
+      - 700000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.6
+    workflow_app: *id014
+  - &id029 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-03 11:13:00
+    display_name: '3.7'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 23:55:47.535945
+      machine: *id003
+      max_rss: 2840576
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 709498611cadab7a
+      revision: *id029
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 37
+      - 640000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 188
+      - 600000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2526
+      - 80000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.7
+    workflow_app: *id014
+  - &id030 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-25 09:44:12
+    display_name: '3.8'
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-14 22:17:07.277415
+      machine: *id003
+      max_rss: 2607104
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - a7bae5198a500ae6
+      revision: *id030
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 37
+      - 590000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 184
+      - 620000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2504
+      - 200000
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.8
+    workflow_app: *id014
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-27 16:33:22
+    display_name: 3.8.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/rnaseq/tree/3.8.1
+    workflow_app: *id014
+  url: https://nf-co.re/rnaseq
+  workflow_engine_name: nextflow
+- &id032 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: nf-core/chipseq
+  repo_url: https://github.com/nf-core/chipseq?only_tags
+  revisions:
+  - &id031 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-06-06 15:10:58
+    display_name: 1.0.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-15 02:24:18.149037
+      machine: *id003
+      max_rss: 1603584
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - dca9178462695f4d
+      revision: *id031
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 25
+      - 920000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 107
+      - 820000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 3150
+      - 290000
+    tree: null
+    url: https://github.com/nf-core/chipseq/tree/1.0.0
+    workflow_app: *id032
+  - &id033 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-11-05 12:14:21
+    display_name: 1.1.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-15 03:21:15.699500
+      machine: *id003
+      max_rss: 1768448
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 5d0530a1e3d973f6
+      revision: *id033
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 28
+      - 100000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 114
+      - 350000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 3413
+      - 310000
+    tree: null
+    url: https://github.com/nf-core/chipseq/tree/1.1.0
+    workflow_app: *id032
+  - &id034 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-07-02 11:16:53
+    display_name: 1.2.0
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-15 04:09:43.019973
+      machine: *id003
+      max_rss: 1631232
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 2d6da91dd3df9990
+      revision: *id034
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 25
+      - 760000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 114
+      - 330000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2904
+      - 350000
+    tree: null
+    url: https://github.com/nf-core/chipseq/tree/1.2.0
+    workflow_app: *id032
+  - &id035 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-07-29 16:33:46
+    display_name: 1.2.1
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-15 00:44:31.952347
+      machine: *id003
+      max_rss: 1521664
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 372a758a336950cc
+      revision: *id035
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 26
+      - 870000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 118
+      - 570000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2921
+      - 470000
+    tree: null
+    url: https://github.com/nf-core/chipseq/tree/1.2.1
+    workflow_app: *id032
+  - &id036 !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-04-22 19:26:48
+    display_name: 1.2.2
+    executions:
+    - !!python/object:wf_reg_test.workflows2.Execution2
+      datetime: 2022-09-15 01:31:45.146004
+      machine: *id003
+      max_rss: 1633280
+      output: !!python/object/apply:pathlib.PosixPath
+      - data
+      - 9532d14b5b7173bc
+      revision: *id036
+      status_code: 0
+      system_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 24
+      - 670000
+      user_cpu_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 115
+      - 860000
+      wall_time: !!python/object/apply:datetime.timedelta
+      - 0
+      - 2829
+      - 80000
+    tree: null
+    url: https://github.com/nf-core/chipseq/tree/1.2.2
+    workflow_app: *id032
+  url: https://nf-co.re/chipseq
+  workflow_engine_name: nextflow

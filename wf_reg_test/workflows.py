@@ -5,6 +5,7 @@ import logging
 import platform
 import subprocess
 from datetime import datetime, timedelta
+import random
 from pathlib import Path
 from typing import Callable, ClassVar, ContextManager, Optional, cast
 
@@ -205,15 +206,16 @@ class MerkleTreeNode(Base):
 
             if path.is_dir():
                 blob = None
-                hash_contents = b"".join(
-                    f"{path!s}/{child.name}:{child.hash:016x}".encode()
-                    for child in sorted(children, key=lambda child: child.hash)
-                )
+                # hash_contents = b"".join(
+                #     f"{path!s}/{child.name}:{child.hash:016x}".encode()
+                #     for child in sorted(children, key=lambda child: child.hash)
+                # )
             else:
                 blob = Blob.from_path(path, blobs_in_transaction, session)
-                hash_contents = f"{path!s}:{blob.hash:08x}".encode()
+                # hash_contents = f"{path!s}:{blob.hash:08x}".encode()
 
-            hash = hash_bytes(hash_contents, size=64) - (1 << 63)
+            # hash = hash_bytes(hash_contents, size=64) - (1 << 63)
+            hash = random.randint(-(1 << 63), (1 << 63) - 1)
 
             existing_in_transaction = nodes_in_transaction.get(hash)
             if existing_in_transaction:
@@ -269,6 +271,7 @@ class Blob(Base):
     hash: Mapped[int] = Column(BigInteger, primary_key=True, autoincrement=False)
     data: Mapped[bytes] = deferred(Column(LargeBinary, nullable=False))
     # size: int = Column(Integer)
+    # TODO: fix bugz
 
     def __str__(self) -> str:
         return f"Blob {self.hash}"

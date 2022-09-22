@@ -7,6 +7,5 @@ __pycache__/
 
 /.cache2/
 /secrets.json
-/*.sqlite
 .r-mount
 docs
