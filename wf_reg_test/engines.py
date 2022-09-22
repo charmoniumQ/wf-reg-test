@@ -4,20 +4,20 @@ import getpass
 import itertools
 import logging
 import os
+import random
 import shlex
 import subprocess
 import sys
 import warnings
 from datetime import datetime, timedelta
 from pathlib import Path
-from typing import Any, Mapping, Optional
+from typing import Any, Mapping, Optional, ClassVar
 
 import docker  # type: ignore
 import requests
-from sqlalchemy.orm import Session
 
 from .util import create_temp_dir
-from .workflows import Execution, Machine, MerkleTreeNode
+from .workflows2 import Execution2 as Execution, Machine2 as Machine, Revision2 as Revision
 
 docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
 
@@ -26,7 +26,7 @@ logger = logging.getLogger("wf_reg_test")
 
 class WorkflowEngine:
     @abc.abstractmethod
-    def run(self, workflow: Path, session: Session) -> Execution:
+    def run(self, workflow: Path, revision: Revision) -> Execution:
         ...
 
 
@@ -125,50 +125,52 @@ class DockerWorkflowEngine(WorkflowEngine):
     url: str
     image: str
 
-    def run(self, workflow: Path, session: Session) -> Execution:
-        with create_temp_dir() as output_dir:
-            docker_args = {
-                "image": self.image,
-                "command": self.get_command(workflow, output_dir),
-                "volumes": {
-                    str(workflow.resolve()): {
-                        "bind": str(workflow.resolve()),
-                        "mode": "rw",
-                    },
-                    str(output_dir.resolve()): {
-                        "bind": str(output_dir.resolve()),
-                        "mode": "rw",
-                    },
-                    "/var/run/docker.sock": {
-                        "bind": "/var/run/docker.sock",
-                        "mode": "rw",
-                    },
+    def run(self, workflow: Path, revision: Revision) -> Execution:
+        output_dir = Path("data") / f"{random.randint(0, 1 << (16 << 2)):016x}"
+        output_dir.mkdir()
+        docker_args = {
+            "image": self.image,
+            "command": self.get_command(workflow, output_dir),
+            "volumes": {
+                str(workflow.resolve()): {
+                    "bind": str(workflow.resolve()),
+                    "mode": "rw",
                 },
-                "working_dir": "/workdir",
-                "detach": True,
-                "log_config": docker.types.LogConfig(
-                    type=docker.types.LogConfig.types.JSON,
-                    config={},
-                ),
-            }
-            if logger.isEnabledFor(logging.INFO):
-                logger.info("Running: " + docker_command(**docker_args))
-            container = docker_client.containers.run(**docker_args)
-            stats = docker_monitor_stats(container)
-            docker_chown([workflow, output_dir])
-            (output_dir / "stdout").write_bytes(stats["stdout"])
-            (output_dir / "stderr").write_bytes(stats["stderr"])
-            sys.stderr.buffer.write(stats["stderr"])
-            return Execution(
-                datetime=datetime.now(),
-                output=MerkleTreeNode.from_path(output_dir, session, {}, {}),
-                status_code=stats["status_code"],
-                wall_time=stats["wall_time"],
-                user_cpu_time=stats["user_cpu_time"],
-                system_cpu_time=stats["kernel_cpu_time"],
-                max_rss=stats["max_rss"],
-                machine=Machine.current_host(session),
-            )
+                str(output_dir.resolve()): {
+                    "bind": str(output_dir.resolve()),
+                    "mode": "rw",
+                },
+                "/var/run/docker.sock": {
+                    "bind": "/var/run/docker.sock",
+                    "mode": "rw",
+                },
+            },
+            "working_dir": "/workdir",
+            "detach": True,
+            "log_config": docker.types.LogConfig(
+                type=docker.types.LogConfig.types.JSON,
+                config={},
+            ),
+        }
+        if logger.isEnabledFor(logging.INFO):
+            logger.info("Running: " + docker_command(**docker_args))
+        container = docker_client.containers.run(**docker_args)
+        stats = docker_monitor_stats(container)
+        docker_chown([workflow, output_dir])
+        (output_dir / "stdout").write_bytes(stats["stdout"])
+        (output_dir / "stderr").write_bytes(stats["stderr"])
+        sys.stderr.buffer.write(stats["stderr"])
+        return Execution(
+            datetime=datetime.now(),
+            output=output_dir,
+            status_code=stats["status_code"],
+            wall_time=stats["wall_time"],
+            user_cpu_time=stats["user_cpu_time"],
+            system_cpu_time=stats["kernel_cpu_time"],
+            max_rss=stats["max_rss"],
+            machine=Machine.current_host(),
+            revision=revision,
+        )
 
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
         raise NotImplementedError("Override and implement in a subclass")
@@ -185,61 +187,63 @@ class NixWorkflowEngine(WorkflowEngine):
     def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
         raise NotImplementedError("Override and implement in a subclass")
 
-    def run(self, workflow: Path, session: Session) -> Execution:
-        with create_temp_dir() as output_dir:
-            command = self.get_command(workflow, output_dir)
-            time_command = [
-                "time",
-                f"--output={output_dir!s}/time",
-                "--format=%F %S %U %e %x",
-                "timeout",
-                f"--kill-after={1.1 * self.walltime_limit:.0d}",
-                str(self.walltime_limit),
-                *command,
-            ]
-            nix_time_command = [
-                "nix",
-                "develop",
-                "--ignore-environment",
-                str(self.flake.resolve()),
-                *itertools.chain.from_iterable(
-                    ["--keep", env_var] for env_var in self.keep_env_vars
-                ),
-                "--command",
-                *time_command,
-            ]
-            if logger.isEnabledFor(logging.INFO):
-                logger.info("Running: " + shlex.join(nix_time_command))
-            proc = subprocess.run(
-                nix_time_command,
-                check=False,
-                capture_output=True,
+    def run(self, workflow: Path, revision: Revision) -> Execution:
+        output_dir = Path("data") / f"{random.randint(0, 1 << (16 << 2)):016x}"
+        output_dir.mkdir()
+        command = self.get_command(workflow, output_dir)
+        time_command = [
+            "time",
+            f"--output={output_dir!s}/time",
+            "--format=%F %S %U %e %x",
+            "timeout",
+            f"--kill-after={1.2 * self.walltime_limit:.0f}",
+            str(self.walltime_limit),
+            *command,
+        ]
+        nix_time_command = [
+            "nix",
+            "develop",
+            "--ignore-environment",
+            str(self.flake.resolve()),
+            *itertools.chain.from_iterable(
+                ["--keep", env_var] for env_var in self.keep_env_vars
+            ),
+            "--command",
+            *time_command,
+        ]
+        if logger.isEnabledFor(logging.INFO):
+            logger.info("Running: " + shlex.join(nix_time_command))
+        proc = subprocess.run(
+            nix_time_command,
+            check=False,
+            capture_output=True,
+        )
+        (output_dir / "stdout").write_bytes(proc.stdout)
+        (output_dir / "stderr").write_bytes(proc.stderr)
+        sys.stderr.buffer.write(proc.stderr)
+        time_output = Path(output_dir / "time").read_text().strip().split("\n")[-1].split(" ")
+        try:
+            mem_kb, system_sec, user_sec, wall_time, exit_status = time_output
+        except ValueError:
+            mem_kb = "0"
+            system_sec = "0.0"
+            user_sec = "0.0"
+            wall_time = "0.0"
+            exit_status = "0"
+            warnings.warn(
+                f"Could not parse time output: {time_output!r}; setting those fields to 0"
             )
-            (output_dir / "stdout").write_bytes(proc.stdout)
-            (output_dir / "stderr").write_bytes(proc.stderr)
-            sys.stderr.buffer.write(proc.stderr)
-            time_output = Path(output_dir / "time").read_text().strip().split("\n")[-1].split(" ")
-            try:
-                mem_kb, system_sec, user_sec, wall_time, exit_status = time_output
-            except ValueError:
-                mem_kb = "0"
-                system_sec = "0.0"
-                user_sec = "0.0"
-                wall_time = "0.0"
-                exit_status = "0"
-                warnings.warn(
-                    f"Could not parse time output: {time_output!r}; setting those fields to 0"
-                )
-            return Execution(
-                datetime=datetime.now(),
-                output=MerkleTreeNode.from_path(output_dir, session, {}, {}),
-                status_code=int(exit_status),
-                wall_time=timedelta(seconds=float(wall_time)),
-                user_cpu_time=timedelta(seconds=float(user_sec)),
-                system_cpu_time=timedelta(seconds=float(system_sec)),
-                max_rss=int(mem_kb) * 1024,
-                machine=Machine.current_host(session),
-            )
+        return Execution(
+            datetime=datetime.now(),
+            output=output_dir,
+            status_code=int(exit_status),
+            wall_time=timedelta(seconds=float(wall_time)),
+            user_cpu_time=timedelta(seconds=float(user_sec)),
+            system_cpu_time=timedelta(seconds=float(system_sec)),
+            max_rss=int(mem_kb) * 1024,
+            machine=Machine.current_host(),
+            revision=revision,
+        )
 
 
 class NextflowDocker(DockerWorkflowEngine):

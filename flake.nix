@@ -1,11 +1,29 @@
 {
-  inputs.flake-utils.url = "github:numtide/flake-utils";
-  inputs.nixpkgs.url = "github:NixOS/nixpkgs";
-  inputs.poetry2nix.url = "github:nix-community/poetry2nix";
+  inputs = {
+    flake-utils = {
+      url = "github:numtide/flake-utils";
+    };
+    nixpkgs = {
+      url = "github:NixOS/nixpkgs";
+    };
+    poetry2nix = {
+      url = "github:nix-community/poetry2nix";
+    };
+    gitignore = {
+      url = "github:hercules-ci/gitignore.nix";
+      # Use the same nixpkgs
+      inputs = {
+        nixpkgs = {
+          follows = "nixpkgs";
+        };
+      };
+    };
+  };
 
-  outputs = { self, nixpkgs, flake-utils, poetry2nix }:
+  outputs = { self, nixpkgs, flake-utils, poetry2nix, gitignore }:
     flake-utils.lib.eachDefaultSystem (system:
       let
+        inherit (gitignore.lib) gitignoreSource;
         pkgs = nixpkgs.legacyPackages.${system};
         pyproject = builtins.fromTOML(builtins.readFile(./pyproject.toml));
         name = pyproject.tool.poetry.name;
@@ -21,7 +39,7 @@
         ];
       in {
         packages.${name} = pkgs.poetry2nix.mkPoetryApplication {
-          projectDir = ./.;
+          projectDir = gitignoreSource ./.;
           python = default-python;
         };
 
@@ -36,7 +54,7 @@
         packages.${name-pure-shell} = pkgs.mkShell {
           buildInputs = nix-dev-dependencies ++ [
             (pkgs.poetry2nix.mkPoetryEnv {
-              projectDir = ./.;
+              projectDir = gitignoreSource ./.;
               # default Python for shell
               python = default-python;
             })

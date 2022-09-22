@@ -13,7 +13,7 @@ from .html_helpers import (
     html_table,
 )
 from .util import sorted_and_dropped
-from .workflows import MerkleTreeNode, WorkflowApp
+from .workflows2 import WorkflowApp2 as WorkflowApp
 
 
 def get_info(wf_apps: list[WorkflowApp]) -> str:
@@ -28,16 +28,6 @@ def get_info(wf_apps: list[WorkflowApp]) -> str:
             for execution in revision.executions:
                 machines_set.add(execution.machine)
     return f"{executions_count} executions of {revisions_count} revisions of {wf_apps_count} workflows on {len(machines_set)} machines"
-
-
-def html_mtn(node: Optional[MerkleTreeNode]) -> html.Element:
-    if node is None:
-        return html.span("Missing", style=css_attribute(background="red"))
-    else:
-        return collapsed(
-            html.code(f"{node.hash + 2**63:016x}"),
-            html.code(html.pre(node.list_children())),
-        )
 
 
 def html_date(dt: datetime) -> html.Element:
@@ -66,15 +56,11 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                                     revision.display_name, revision.url
                                 ),
                                 "Date/time": html_date(revision.datetime),
-                                "Input Hash": html_mtn(revision.tree),
                                 "Executions": html_table(
                                     [
                                         {
                                             "Date/time": html_date(
                                                 execution.datetime
-                                            ),
-                                            "Output Hash": html_mtn(
-                                                execution.output
                                             ),
                                             "Success": html_emoji_bool(
                                                 execution.status_code == 0

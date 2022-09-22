@@ -1,5 +1,6 @@
 from __future__ import annotations
-from typing import Mapping, DefaultDict, Optional
+import abc
+from typing import Mapping, DefaultDict, Optional, ContextManager, ClassVar
 from pathlib import Path
 from datetime import datetime as DateTime, timedelta as TimeDelta
 from dataclasses import dataclass, fields
@@ -100,9 +101,8 @@ class Machine2:
 
     @staticmethod
     def current_host() -> Machine2:
-        global _CURRENT_MACHINE
-        if _CURRENT_MACHINE is None:
-            _CURRENT_MACHINE = Machine2(
+        if Machine2._CURRENT_MACHINE is None:
+            Machine2._CURRENT_MACHINE = Machine2(
                 short_description="-".join(
                     [
                         platform.node(),
@@ -116,11 +116,11 @@ class Machine2:
                     text=True,
                 ).stdout,
             )
-        return _CURRENT_MACHINE
+        return Machine2._CURRENT_MACHINE
 
     @staticmethod
     def convert(machine: Machine1) -> Machine2:
-        return _machine_cache.setdefault(
+        return Machine2._machine_cache.setdefault(
             machine.short_description,
             Machine2(
                 short_description=machine.short_description,
@@ -131,8 +131,8 @@ class Machine2:
     def __str__(self) -> str:
         return f"Machine2 {self.short_description}"
 
-_CURRENT_MACHINE: Optional[Machine2] = None
-_machine_cache: Dict[str, Machine2] = {}
+    _CURRENT_MACHINE: ClassVar[Optional[Machine2]] = None
+    _machine_cache: ClassVar[dict[str, Machine2]] = {}
 
 _data_path = Path("data")
 _data_key_digits = 16
@@ -153,3 +153,13 @@ def serialize_rooted_tree(mtn: MerkleTreeNode, root: Path) -> None:
         (root / mtn.name).mkdir()
         for child in mtn.children:
             serialize_rooted_tree(child, root / mtn.name)
+
+
+class RepoAccessor(abc.ABC):
+    @abc.abstractmethod
+    def get_revisions(self, wf_app: WorkflowApp2) -> list[Revision2]:
+        ...
+
+    @abc.abstractmethod
+    def checkout(self, url: str) -> ContextManager[Path]:
+        ...

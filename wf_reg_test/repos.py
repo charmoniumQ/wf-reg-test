@@ -11,7 +11,7 @@ import git
 import github
 import xxhash
 
-from .workflows import RepoAccessor, Revision
+from .workflows2 import RepoAccessor, Revision2 as Revision, WorkflowApp2 as WorkflowApp
 
 
 def get_repo_accessor(url: str) -> RepoAccessor:
@@ -47,7 +47,7 @@ class GitHubRepo(RepoAccessor):
     def url(self) -> str:
         return f"https://github.com/{self.user}/{self.repo}"
 
-    def get_revisions(self) -> list[Revision]:
+    def get_revisions(self, wf_app: WorkflowApp) -> list[Revision]:
         repo = github_client.get_user(self.user).get_repo(self.repo)
         if self.only_tags:
             revs = ((tag.commit, tag.name) for tag in repo.get_tags())
@@ -55,9 +55,12 @@ class GitHubRepo(RepoAccessor):
             revs = ((commit, commit.sha) for commit in repo.get_commits())
         return [
             Revision(
+                workflow_app=wf_app,
+                executions=[],
                 display_name=rev,
                 url=f"{self.url}/tree/{rev}",
                 datetime=commit.commit.committer.date,
+                tree=None,
             )
             for commit, rev in revs
         ]
