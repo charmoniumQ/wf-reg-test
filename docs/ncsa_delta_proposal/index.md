@@ -22,6 +22,9 @@ number-sections: no
 indent: no
 pagestyle: plain
 papersize: letter
+
+colorlinks: yes
+linkcolor: blue
 ---
 
 # Abstract
@@ -72,6 +75,7 @@ Workflow registries contain hundreds of examples of computational experiments in
 -->
 
 Workflow registries of interest:
+
 - [nf-core](https://nf-co.re/)
 - [Dockstore](https://dockstore.org/)
 - [Snakemake Catalog](https://snakemake.github.io/snakemake-workflow-catalog/)
@@ -79,6 +83,7 @@ Workflow registries of interest:
 - [myExperiment](https://www.myexperiment.org/)
 
 Workflow engines of interest:
+
 - [Nextflow](https://www.nextflow.io/)
 - [Snakemake](https://snakemake.github.io/)
 - [Galaxy](https://galaxyproject.org/)
@@ -96,7 +101,7 @@ We would also regress test failures on staleness, which Zhao does not attempt.
 
 ## Description of codes
 
-We developed [a Python package](github.com/charmoniumQ/wf-reg-test/) that finds and tests workflows.
+We developed [a Python package](https:/github.com/charmoniumQ/wf-reg-test/) that finds and tests workflows.
 This package depends on [Nix](https://nixos.org/) and [Docker](https://www.docker.com/) on the host system.
 From Nix and Docker, the package can create software environments for each workflow engine of interest.
 We have yet to parallelize the application, but we think this can be done easily using the parallel-map paradigm in [Dask](https://www.dask.org/).

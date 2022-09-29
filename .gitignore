@@ -6,6 +6,7 @@ __pycache__/
 /.direnv/
 
 /.cache2/
+/data/
 /secrets.json
 .r-mount
-docs
+.ipynb_checkpoints/
