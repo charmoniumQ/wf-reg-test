@@ -21,7 +21,7 @@ logging.basicConfig()
 logger = logging.getLogger("wf_reg_test")
 logger.setLevel(logging.INFO)
 ch_time_block.disable_stderr()
-
+data = Path("data.yaml")
 
 @ch_time_block.decor()
 def ensure_revisions(wf_apps: list[WorkflowApp2]) -> None:
@@ -96,7 +96,6 @@ def check_nodes_are_owned(wf_apps: list[WorkflowApp2]) -> None:
 
 @ch_time_block.decor()
 def main() -> None:
-    data = Path("data.yaml")
     wf_apps = cast(list[WorkflowApp2], yaml.load(data.read_text(), Loader=yaml.Loader))
     assert all(isinstance(wf_app, WorkflowApp2) for wf_app in wf_apps)
     logger.info("Before: " + get_info(wf_apps))

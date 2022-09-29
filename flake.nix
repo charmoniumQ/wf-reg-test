@@ -33,7 +33,7 @@
         default-python = pkgs.python310;
         nix-dev-dependencies = [
           # Alternative Pythons for Tox
-          pkgs.python310
+          (pkgs.python310.withPackages(ps: [ps.scipy ps.numpy ps.matplotlib]))
           pkgs.poetry
           pkgs.hwloc
         ];
@@ -76,6 +76,9 @@
             export PYTHONNOUSERSITE=true
             export VIRTUAL_ENV=$(poetry env info --path)
             export PATH=$VIRTUAL_ENV/bin:$PATH
+            export LD_LIBRARY_PATH=${pkgs.lapack}/lib:${pkgs.blas}/lib:${pkgs.gcc-unwrapped.lib}/lib
+            export IPYTHONDIR=$HOME/.config/ipython
+            export JUPYTER_CONFIG_DIR=$HOME/.config/jupyter
           '';
           # TODO: write a check expression (`nix flake check`)
         };
