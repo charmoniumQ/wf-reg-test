@@ -6,14 +6,21 @@ from datetime import datetime as DateTime, timedelta as TimeDelta
 from dataclasses import dataclass, fields
 import platform
 import subprocess
-from .workflows import (
-    WorkflowApp as WorkflowApp1,
-    Revision as Revision1,
-    Execution as Execution1,
-    Machine as Machine1,
-    MerkleTreeNode,
-    Blob,
-)
+from typing import Any
+WorkflowApp1 = Any
+Revision1 = Any
+Execution1 = Any
+Machien1 = Any
+MerkleTreeNode = Any
+Blob = Any
+# from .workflows import (
+#     WorkflowApp as WorkflowApp1,
+#     Revision as Revision1,
+#     Execution as Execution1,
+#     Machine as Machine1,
+#     MerkleTreeNode,
+#     Blob,
+# )
 
 @dataclass
 class WorkflowApp2:

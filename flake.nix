@@ -36,6 +36,7 @@
           (pkgs.python310.withPackages(ps: [ps.scipy ps.numpy ps.matplotlib]))
           pkgs.poetry
           pkgs.hwloc
+          pkgs.graphviz
         ];
       in {
         packages.${name} = pkgs.poetry2nix.mkPoetryApplication {
