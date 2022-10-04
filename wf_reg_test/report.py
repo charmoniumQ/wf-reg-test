@@ -41,8 +41,7 @@ def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
 
 def report_html(wf_apps: list[WorkflowApp]) -> str:
     info = get_info(wf_apps)
-    with ch_time_block.ctx("table_by_workflows"):
-        table_by_workflows = html_table(
+    table_by_workflows = html_table(
         [
             {
                 "Workflow": html_link(wf_app.display_name, wf_app.url),

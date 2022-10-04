@@ -1,7 +1,7 @@
 import json
 import logging
 import warnings
-from datetime import datetime, timedelta
+from datetime import datetime as DateTime, timedelta as TimeDelta
 import random
 from typing import cast
 from pathlib import Path
@@ -51,11 +51,11 @@ def report(wf_apps: list[WorkflowApp2]) -> None:
 
 def ensure_recent_executions(
         wf_apps: list[WorkflowApp2],
-        period: timedelta,
+        period: TimeDelta,
         desired_count: int = 1,
         dry_run: bool = False,
 ) -> None:
-    now = datetime.now()
+    now = DateTime.now()
     revisions_to_test: list[Revision2] = []
     for wf_app in wf_apps:
         for revision in wf_app.revisions:
@@ -78,6 +78,17 @@ def ensure_recent_executions(
             report(wf_apps)
             data.write_text(yaml.dump(wf_apps))
 
+
+def remove_phantom_executions(wf_apps: list[WorkflowApp2]) -> None:
+    for wf_app in wf_apps:
+        for revision in wf_app.revisions:
+            revision.executions = [
+                execution
+                for execution in revision.executions
+                if execution.user_cpu_time > TimeDelta(seconds=0)
+            ]
+
+
 def check_nodes_are_owned(wf_apps: list[WorkflowApp2]) -> None:
     used_data = {
         revision.tree
@@ -96,17 +107,20 @@ def check_nodes_are_owned(wf_apps: list[WorkflowApp2]) -> None:
 
 @ch_time_block.decor()
 def main() -> None:
-    wf_apps = cast(list[WorkflowApp2], yaml.load(data.read_text(), Loader=yaml.Loader))
-    assert all(isinstance(wf_app, WorkflowApp2) for wf_app in wf_apps)
-    logger.info("Before: " + get_info(wf_apps))
-    # ensure_revisions(wf_apps)
-    # data.write_text(yaml.dump(wf_apps))
-    ensure_recent_executions(wf_apps, timedelta(days=100), 2, dry_run=False)
-    data.write_text(yaml.dump(wf_apps))
-    logger.info("After: " + get_info(wf_apps))
-    with ch_time_block.ctx("report_html"):
+    with ch_time_block.ctx("load", print_start=False):
+        wf_apps = cast(list[WorkflowApp2], yaml.load(data.read_text(), Loader=yaml.Loader))
+        assert all(isinstance(wf_app, WorkflowApp2) for wf_app in wf_apps)
+    with ch_time_block.ctx("process", print_start=False):
+        logger.info("Before: " + get_info(wf_apps))
+        # ensure_revisions(wf_apps)
+        # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)
+        remove_phantom_executions(wf_apps)
+        # check_nodes_are_owned(wf_apps)
+        logger.info("After: " + get_info(wf_apps))
+    with ch_time_block.ctx("store", print_start=False):
+        data.write_text(yaml.dump(wf_apps))
+    with ch_time_block.ctx("report", print_start=False):
         report(wf_apps)
-    check_nodes_are_owned(wf_apps)
 
 
 main()
