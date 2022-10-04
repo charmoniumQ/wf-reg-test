@@ -7,20 +7,7 @@ from dataclasses import dataclass, fields
 import platform
 import subprocess
 from typing import Any
-WorkflowApp1 = Any
-Revision1 = Any
-Execution1 = Any
-Machien1 = Any
-MerkleTreeNode = Any
-Blob = Any
-# from .workflows import (
-#     WorkflowApp as WorkflowApp1,
-#     Revision as Revision1,
-#     Execution as Execution1,
-#     Machine as Machine1,
-#     MerkleTreeNode,
-#     Blob,
-# )
+
 
 @dataclass
 class WorkflowApp2:
@@ -31,19 +18,6 @@ class WorkflowApp2:
     revisions: list[Revision2]
     def __str__(self) -> str:
         return f"WorkflowApp2 {self.display_name}"
-
-    @staticmethod
-    def convert(wf_app1: WorkflowApp1) -> WorkflowApp2:
-        wf_app = WorkflowApp2(
-            workflow_engine_name=wf_app1.workflow_engine_name,
-            url=wf_app1.url,
-            display_name=wf_app1.display_name,
-            repo_url=wf_app1.repo_url,
-            revisions=[],
-        )
-        for revision in wf_app1.revisions:
-            wf_app.revisions.append(Revision2.convert(revision, wf_app))
-        return wf_app
 
 
 @dataclass
@@ -58,19 +32,6 @@ class Revision2:
     def __str__(self) -> str:
         return f"Revision2 {self.display_name} of {self.workflow_app}"
 
-    @staticmethod
-    def convert(revision1: Revision1, workflow_app: WorkflowApp2) -> Revision2:
-        revision = Revision2(
-            display_name=revision1.display_name,
-            url=revision1.url,
-            datetime=revision1.datetime,
-            tree=None,
-            workflow_app=workflow_app,
-            executions=[],
-        )
-        for execution in revision1.executions:
-            revision.executions.append(Execution2.convert(execution, revision))
-        return revision
 
 @dataclass
 class Execution2:
@@ -87,19 +48,6 @@ class Execution2:
     def __str__(self) -> str:
         return f"Execution2 of {self.revision}"
 
-    @staticmethod
-    def convert(execution: Execution1, revision: Revision2) -> Execution2:
-        return Execution2(
-            revision=revision,
-            machine=Machine2.convert(execution.machine),
-            datetime=execution.datetime,
-            output=serialize_tree(execution.output),
-            status_code=execution.status_code,
-            user_cpu_time=execution.user_cpu_time,
-            system_cpu_time=execution.system_cpu_time,
-            max_rss=execution.max_rss,
-            wall_time=execution.wall_time,
-        )
 
 @dataclass(frozen=True)
 class Machine2:
@@ -125,16 +73,6 @@ class Machine2:
             )
         return Machine2._CURRENT_MACHINE
 
-    @staticmethod
-    def convert(machine: Machine1) -> Machine2:
-        return Machine2._machine_cache.setdefault(
-            machine.short_description,
-            Machine2(
-                short_description=machine.short_description,
-                long_description=machine.long_description,
-            ),
-        )
-
     def __str__(self) -> str:
         return f"Machine2 {self.short_description}"
 
@@ -145,22 +83,6 @@ _data_path = Path("data")
 _data_key_digits = 16
 
 _data_path.mkdir(exist_ok=True)
-
-def serialize_tree(mtn: MerkleTreeNode) -> Path:
-    result_path = _data_path / "{:016x}".format(mtn.hash + (1 << 63))
-    mtn.name = "."
-    serialize_rooted_tree(mtn, result_path)
-    return result_path
-
-def serialize_rooted_tree(mtn: MerkleTreeNode, root: Path) -> None:
-    if mtn.blob is not None:
-        assert not mtn.children
-        (root / mtn.name).write_bytes(mtn.blob.data)
-    else:
-        (root / mtn.name).mkdir()
-        for child in mtn.children:
-            serialize_rooted_tree(child, root / mtn.name)
-
 
 class RepoAccessor(abc.ABC):
     @abc.abstractmethod

@@ -56,7 +56,7 @@ def ensure_recent_executions(
         dry_run: bool = False,
 ) -> None:
     now = datetime.now()
-    revisions_to_test: list[tuple[Revision2, int]] = []
+    revisions_to_test: list[Revision2] = []
     for wf_app in wf_apps:
         for revision in wf_app.revisions:
             existing_count = sum([
@@ -65,7 +65,7 @@ def ensure_recent_executions(
             ])
             if existing_count < desired_count:
                 revisions_to_test.extend([revision] * (desired_count - existing_count))
-    random.shuffle(revisions_to_test)
+    # random.shuffle(revisions_to_test)
     for revision in revisions_to_test:
         logger.info("Running %s", revision)
         if not dry_run:
