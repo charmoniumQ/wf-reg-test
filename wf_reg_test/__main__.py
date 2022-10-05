@@ -116,14 +116,14 @@ def main() -> None:
     with ch_time_block.ctx("load", print_start=False):
         wf_apps = cast(list[WorkflowApp2], yaml.load(data.read_text(), Loader=yaml.Loader))
         assert all(isinstance(wf_app, WorkflowApp2) for wf_app in wf_apps)
-    with ch_time_block.ctx("process", print_start=False):
-        wf_apps.extend(snakemake_registry())
-        wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
+    # with ch_time_block.ctx("process", print_start=False):
+        # wf_apps.extend(snakemake_registry())
+        # wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
         # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)
         # remove_phantom_executions(wf_apps)
         # check_nodes_are_owned(wf_apps)
-    with ch_time_block.ctx("store", print_start=False):
-        data.write_text(yaml.dump(wf_apps))
+    # with ch_time_block.ctx("store", print_start=False):
+    #     data.write_text(yaml.dump(wf_apps))
     with ch_time_block.ctx("report", print_start=False):
         report(wf_apps)
 

@@ -17,6 +17,10 @@ from .util import sorted_and_dropped
 from .workflows2 import WorkflowApp2 as WorkflowApp
 
 
+def is_interesting(wf_app: WorkflowApp) -> bool:
+    return sum(bool(revision.executions) for revision in wf_app.revisions) > 3
+
+
 def get_stats(wf_apps: list[WorkflowApp]) -> html.Element:
     engine2wf_apps = {
         key: list(group)
@@ -25,19 +29,25 @@ def get_stats(wf_apps: list[WorkflowApp]) -> html.Element:
     stats: Mapping[str, Callable[[list[WorkflowApp]], int]] = {
         "N workflows": lambda wf_apps: len(wf_apps),
         "N revisions": lambda wf_apps: sum(len(wf_app.revisions) for wf_app in wf_apps),
-        "N interesting revisions": lambda wf_apps: sum(
-            1 if len(revision.executions) > 3 else 0
-            for wf_app in wf_apps
-            for revision in wf_app.revisions
-        ),
         "N executions": lambda wf_apps: sum(
             len(revision.executions)
             for wf_app in wf_apps
             for revision in wf_app.revisions
         ),
-        "N executions of interesting revisions": lambda wf_apps: sum(
-            len(revision.executions) if len(revision.executions) > 3 else 0
+        "N interesting workflows": lambda wf_apps: sum(
+            1
             for wf_app in wf_apps
+            if is_interesting(wf_app)
+        ),
+        "N revisions of interesting workflows": lambda wf_apps: sum(
+            len(wf_app.revisions)
+            for wf_app in wf_apps
+            if is_interesting(wf_app)
+        ),
+        "N executions of interesting workflows": lambda wf_apps: sum(
+            len(revision.executions)
+            for wf_app in wf_apps
+            if is_interesting(wf_app)
             for revision in wf_app.revisions
         ),
     }
@@ -69,7 +79,9 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
         [
             {
                 "Workflow": html_link(wf_app.display_name, wf_app.url),
+                "Engine": wf_app.workflow_engine_name,
                 "Repo": html_link("repo", wf_app.repo_url),
+                "Interesting?": html_emoji_bool(is_interesting(wf_app)),
                 "Revisions": collapsed(
                     "Revisions",
                     html_table(
@@ -123,6 +135,7 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                         "Workflow": html_link(
                             wf_app.display_name, wf_app.url
                         ),
+                        "Engine": wf_app.workflow_engine_name,
                         "Revision": html_link(
                             revision.display_name, revision.url
                         ),
