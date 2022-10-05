@@ -1,5 +1,6 @@
 from datetime import datetime, timedelta
-from typing import Optional, cast
+from typing import Optional, cast, Mapping, Callable, Any
+import itertools
 
 import domonic as html  # type: ignore
 import charmonium.time_block as ch_time_block
@@ -16,18 +17,42 @@ from .util import sorted_and_dropped
 from .workflows2 import WorkflowApp2 as WorkflowApp
 
 
-def get_info(wf_apps: list[WorkflowApp]) -> str:
-    wf_apps_count = len(wf_apps)
-    revisions_count = 0
-    executions_count = 0
-    machines_set = set()
-    for wf_app in wf_apps:
-        revisions_count += len(wf_app.revisions)
-        for revision in wf_app.revisions:
-            executions_count += len(revision.executions)
-            for execution in revision.executions:
-                machines_set.add(execution.machine)
-    return f"{executions_count} executions of {revisions_count} revisions of {wf_apps_count} workflows on {len(machines_set)} machines"
+def get_stats(wf_apps: list[WorkflowApp]) -> html.Element:
+    engine2wf_apps = {
+        key: list(group)
+        for key, group in itertools.groupby(wf_apps, lambda wf_app: wf_app.workflow_engine_name)
+    }
+    stats: Mapping[str, Callable[[list[WorkflowApp]], int]] = {
+        "N workflows": lambda wf_apps: len(wf_apps),
+        "N revisions": lambda wf_apps: sum(len(wf_app.revisions) for wf_app in wf_apps),
+        "N interesting revisions": lambda wf_apps: sum(
+            1 if len(revision.executions) > 3 else 0
+            for wf_app in wf_apps
+            for revision in wf_app.revisions
+        ),
+        "N executions": lambda wf_apps: sum(
+            len(revision.executions)
+            for wf_app in wf_apps
+            for revision in wf_app.revisions
+        ),
+        "N executions of interesting revisions": lambda wf_apps: sum(
+            len(revision.executions) if len(revision.executions) > 3 else 0
+            for wf_app in wf_apps
+            for revision in wf_app.revisions
+        ),
+    }
+    engines = engine2wf_apps.keys()
+    return html_table([
+        {
+            "Stat": stat_name,
+            "Total": str(stat_func(wf_apps)),
+            **{
+                engine: str(stat_func(engine2wf_apps[engine]))
+                for engine in engines
+            }
+        }
+        for stat_name, stat_func in stats.items()
+    ])
 
 
 def html_date(dt: datetime) -> html.Element:
@@ -40,7 +65,6 @@ def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
 
 
 def report_html(wf_apps: list[WorkflowApp]) -> str:
-    info = get_info(wf_apps)
     table_by_workflows = html_table(
         [
             {
@@ -160,9 +184,8 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                 ),
             ),
             html.body(
-                html.span(
-                    info
-                ),
+                html.h1("Stats"),
+                get_stats(wf_apps),
                 html.h1("Workflows"),
                 table_by_workflows,
                 html.h1("Executions"),

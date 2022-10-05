@@ -22,7 +22,7 @@ def get_repo_accessor(url: str) -> RepoAccessor:
             return GitHubRepo(
                 user=path.parts[1],
                 repo=path.parts[2].replace(".git", ""),
-                only_tags="only_tags" in parsed_url.query,
+                only_tags="all_commits" not in parsed_url.query,
             )
         else:
             raise NotImplementedError(

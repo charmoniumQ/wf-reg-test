@@ -11,8 +11,9 @@ from rich.prompt import Confirm
 from tqdm import tqdm
 import yaml
 
+from .registries import snakemake_registry
 from .engines import engines
-from .report import report_html, get_info
+from .report import report_html
 from .repos import get_repo_accessor
 from .workflows2 import WorkflowApp2, Revision2
 
@@ -24,26 +25,31 @@ ch_time_block.disable_stderr()
 data = Path("data.yaml")
 
 @ch_time_block.decor()
-def ensure_revisions(wf_apps: list[WorkflowApp2]) -> None:
+def ensure_revisions(wf_apps: list[WorkflowApp2], only_empty: bool = True, delete_empty: bool = True) -> list[WorkflowApp2]:
+    ret_wf_apps: list[WorkflowApp2] = []
     for wf_app in tqdm(wf_apps):
-        repo = get_repo_accessor(wf_app.repo_url)
-        db_revisions = list(wf_app.revisions)
-        observed_revisions = list(repo.get_revisions(wf_app))
-        deleted_revisions = [
-            drevision
-            for drevision in db_revisions
-            if not any(orevision.url == drevision.url for orevision in observed_revisions)
-        ]
-        new_revisions = [
-            orevision
-            for orevision in observed_revisions
-            if not any(orevision.url == drevision.url for drevision in db_revisions)
-        ]
-        if deleted_revisions:
-            warnings.warn(
-                f"{len(deleted_revisions)} deleted revisions on repo {repo}",
-            )
-        wf_app.revisions.extend(new_revisions)
+        if (not wf_app.revisions) or (not only_empty):
+            repo = get_repo_accessor(wf_app.repo_url)
+            db_revisions = list(wf_app.revisions)
+            observed_revisions = list(repo.get_revisions(wf_app))
+            deleted_revisions = [
+                drevision
+                for drevision in db_revisions
+                if not any(orevision.url == drevision.url for orevision in observed_revisions)
+            ]
+            new_revisions = [
+                orevision
+                for orevision in observed_revisions
+                if not any(orevision.url == drevision.url for drevision in db_revisions)
+            ]
+            if deleted_revisions:
+                warnings.warn(
+                    f"{len(deleted_revisions)} deleted revisions on repo {repo}",
+                )
+            wf_app.revisions.extend(new_revisions)
+        if wf_app.revisions or (not delete_empty):
+            ret_wf_apps.append(wf_app)
+    return ret_wf_apps
 
 
 def report(wf_apps: list[WorkflowApp2]) -> None:
@@ -111,12 +117,11 @@ def main() -> None:
         wf_apps = cast(list[WorkflowApp2], yaml.load(data.read_text(), Loader=yaml.Loader))
         assert all(isinstance(wf_app, WorkflowApp2) for wf_app in wf_apps)
     with ch_time_block.ctx("process", print_start=False):
-        logger.info("Before: " + get_info(wf_apps))
-        # ensure_revisions(wf_apps)
+        wf_apps.extend(snakemake_registry())
+        wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
         # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)
-        remove_phantom_executions(wf_apps)
+        # remove_phantom_executions(wf_apps)
         # check_nodes_are_owned(wf_apps)
-        logger.info("After: " + get_info(wf_apps))
     with ch_time_block.ctx("store", print_start=False):
         data.write_text(yaml.dump(wf_apps))
     with ch_time_block.ctx("report", print_start=False):
