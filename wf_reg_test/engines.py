@@ -9,214 +9,54 @@ import shlex
 import subprocess
 import sys
 import warnings
-from datetime import datetime, timedelta
+from datetime import datetime as DateTime, timedelta as TimeDelta
+import re
 from pathlib import Path
-from typing import Any, Mapping, Optional, ClassVar
+from typing import Any, Mapping, Optional, ClassVar, Callable
 
-import docker  # type: ignore
 import requests
 
 from .util import create_temp_dir
 from .workflows2 import Execution2 as Execution, Machine2 as Machine, Revision2 as Revision
 
-docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
+try:
+    import docker  # type: ignore
+except ImportError:
+    class DockerClient:
+        def __getattr__(self, attr: str) -> Any:
+            raise RuntimeError("Python Docker is not installed.")
+else:
+    docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
+
 
 logger = logging.getLogger("wf_reg_test")
 
 
+@dataclasses.dataclass
 class WorkflowEngine:
-    @abc.abstractmethod
-    def run(self, workflow: Path, revision: Revision) -> Execution:
-        ...
+    env: Mapping[str, str]
+    command: Callable[[Path], tuple[str, ...]]
 
-
-def docker_command(
-        image: str,
-        command: Optional[list[str]] = None,
-        volumes: Optional[Mapping[str, Mapping[str, str]]] = None,
-        workdir: Optional[str] = None,
-        detach: bool = False,
-        remove: bool = False,
-) -> str:
-    return shlex.join([
-        "docker",
-        "run",
-        *(["--rm"] if remove else []),
-        *(["--detach"] if detach else []),
-        *(list(itertools.chain.from_iterable(
-            ["--volume", ":".join([path, volume["bind"], volume["mode"]])]
-            for path, volume in volumes.items()
-        )) if volumes is not None else []),
-        *(["--workdir", workdir] if workdir is not None else []),
-        image,
-        *(command if command is not None else []),
-    ])
-
-
-def docker_chown(paths: list[Path]) -> None:
-    username = getpass.getuser()
-    # gid = os.getgid()
-    uid = os.getuid()
-    command0 = shlex.join(["adduser", "--uid", str(uid), str(username)])
-    command1 = shlex.join(
-        [
-            "chown",
-            "--recursive",
-            str(username),
-            *[str(path.resolve()) for path in paths],
-        ]
-    )
-    print(f"docker run --rm ubuntu:22.04 sh -c '{command0} && {command1}'")
-    docker_client.containers.run(
-        image="ubuntu:22.04",
-        command=f"sh -c '{command0} && {command1}'",
-        remove=True,
-        detach=False,
-        volumes={
-            str(path.resolve()): {
-                "bind": str(path.resolve()),
-                "mode": "rw",
-            }
-            for path in paths
-        },
-    )
-
-
-def docker_monitor_stats(
-    container: docker.models.containers.Container,
-) -> Mapping[str, Any]:
-    user_cpu_time = 0
-    kernel_cpu_time = 0
-    max_rss = 0
-    start_time = datetime.now()
-    for stats in container.stats(stream=True, decode=True):
-        user_cpu_time = max(
-            user_cpu_time, stats["cpu_stats"]["cpu_usage"]["usage_in_usermode"]
-        )
-        kernel_cpu_time = max(
-            kernel_cpu_time, stats["cpu_stats"]["cpu_usage"]["usage_in_kernelmode"]
-        )
-        max_rss = max(max_rss, stats["memory_stats"].get("usage", 0))
-        try:
-            exit_info = container.wait(timeout=1)
-        except requests.ConnectionError:
-            # Hit timeout
-            pass
-        else:
-            break
-    elapsed_wall_time = datetime.now() - start_time
-    stdout = container.attach(stdout=True, stderr=False, stream=False, logs=True)
-    stderr = container.attach(stdout=False, stderr=True, stream=False, logs=True)
-    container.remove()
-    return {
-        "user_cpu_time": timedelta(microseconds=user_cpu_time // 1000),
-        "kernel_cpu_time": timedelta(microseconds=kernel_cpu_time // 1000),
-        "max_rss": max_rss,
-        "wall_time": elapsed_wall_time,
-        "status_code": exit_info["StatusCode"],
-        "stdout": stdout,
-        "stderr": stderr,
-    }
-
-
-@dataclasses.dataclass
-class DockerWorkflowEngine(WorkflowEngine):
-    name: str
-    url: str
-    image: str
-
-    def run(self, workflow: Path, revision: Revision) -> Execution:
+    def run(self, workflow: Path, revision: Revision, walltime_limit: TimeDelta = TimeDelta(hours=1, minutes=30)) -> Execution:
         output_dir = Path("data") / f"{random.randint(0, 1 << (16 << 2)):016x}"
         output_dir.mkdir()
-        docker_args = {
-            "image": self.image,
-            "command": self.get_command(workflow, output_dir),
-            "volumes": {
-                str(workflow.resolve()): {
-                    "bind": str(workflow.resolve()),
-                    "mode": "rw",
-                },
-                str(output_dir.resolve()): {
-                    "bind": str(output_dir.resolve()),
-                    "mode": "rw",
-                },
-                "/var/run/docker.sock": {
-                    "bind": "/var/run/docker.sock",
-                    "mode": "rw",
-                },
-            },
-            "working_dir": "/workdir",
-            "detach": True,
-            "log_config": docker.types.LogConfig(
-                type=docker.types.LogConfig.types.JSON,
-                config={},
-            ),
-        }
-        if logger.isEnabledFor(logging.INFO):
-            logger.info("Running: " + docker_command(**docker_args))
-        container = docker_client.containers.run(**docker_args)
-        stats = docker_monitor_stats(container)
-        docker_chown([workflow, output_dir])
-        (output_dir / "stdout").write_bytes(stats["stdout"])
-        (output_dir / "stderr").write_bytes(stats["stderr"])
-        sys.stderr.buffer.write(stats["stderr"])
-        return Execution(
-            datetime=datetime.now(),
-            output=output_dir,
-            status_code=stats["status_code"],
-            wall_time=stats["wall_time"],
-            user_cpu_time=stats["user_cpu_time"],
-            system_cpu_time=stats["kernel_cpu_time"],
-            max_rss=stats["max_rss"],
-            machine=Machine.current_host(),
-            revision=revision,
-        )
-
-    def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        raise NotImplementedError("Override and implement in a subclass")
-
-
-@dataclasses.dataclass
-class NixWorkflowEngine(WorkflowEngine):
-    name: str
-    url: str
-    flake: Path
-    walltime_limit: int
-    keep_env_vars: tuple[str, ...] = ()
-
-    def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        raise NotImplementedError("Override and implement in a subclass")
-
-    def run(self, workflow: Path, revision: Revision) -> Execution:
-        output_dir = Path("data") / f"{random.randint(0, 1 << (16 << 2)):016x}"
-        output_dir.mkdir()
-        command = self.get_command(workflow, output_dir)
         time_command = [
             "time",
             f"--output={output_dir!s}/time",
             "--format=%F %S %U %e %x",
             "timeout",
-            f"--kill-after={1.2 * self.walltime_limit:.0f}",
-            str(self.walltime_limit),
-            *command,
-        ]
-        nix_time_command = [
-            "nix",
-            "develop",
-            "--ignore-environment",
-            str(self.flake.resolve()),
-            *itertools.chain.from_iterable(
-                ["--keep", env_var] for env_var in self.keep_env_vars
-            ),
-            "--command",
-            *time_command,
+            "--kill-after={:.0f}".format(1.2 * walltime_limit.total_seconds()),
+            "{:.0f}".format(walltime_limit.total_seconds()),
+            *self.command(workflow),
         ]
         if logger.isEnabledFor(logging.INFO):
-            logger.info("Running: " + shlex.join(nix_time_command))
+            logger.info("Running: " + shlex.join(time_command))
         proc = subprocess.run(
-            nix_time_command,
+            time_command,
             check=False,
             capture_output=True,
+            cwd=output_dir,
+            env=self.env,
         )
         (output_dir / "stdout").write_bytes(proc.stdout)
         (output_dir / "stderr").write_bytes(proc.stderr)
@@ -234,67 +74,65 @@ class NixWorkflowEngine(WorkflowEngine):
                 f"Could not parse time output: {time_output!r}; setting those fields to 0"
             )
         return Execution(
-            datetime=datetime.now(),
+            datetime=DateTime.now(),
             output=output_dir,
             status_code=int(exit_status),
-            wall_time=timedelta(seconds=float(wall_time)),
-            user_cpu_time=timedelta(seconds=float(user_sec)),
-            system_cpu_time=timedelta(seconds=float(system_sec)),
+            wall_time=TimeDelta(seconds=float(wall_time)),
+            user_cpu_time=TimeDelta(seconds=float(user_sec)),
+            system_cpu_time=TimeDelta(seconds=float(system_sec)),
             max_rss=int(mem_kb) * 1024,
             machine=Machine.current_host(),
             revision=revision,
         )
 
 
-class NextflowDocker(DockerWorkflowEngine):
-    def __init__(self) -> None:
-        super().__init__(
-            name="Nextflow",
-            url="https://www.nextflow.io/",
-            image="index.docker.io/nextflow/nextflow:22.09.3-edge",
-        )
+env_line = re.compile("^(?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE)
+def parse_env(env: str) -> Mapping[str, str]:
+    return {
+        match.group("var"): match.group("val")
+        for match in env_line.finditer(env)
+    }
 
-    def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        return [
-            "nextflow",
-            "run",
-            str(workflow.resolve()),
-            "-profile",
-            "test,docker",
-            "--outdir",
-            str(output_dir.resolve()),
-        ]
+bashrc_line = re.compile("^export (?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE)
+def parse_bashrc(env: str) -> Mapping[str, str]:
+    return {
+        match.group("var"): match.group("val")
+        for match in bashrc_line.finditer(env)
+    }
 
+def get_nix_flake_env(flake: str) -> Mapping[str, str]:
+    return parse_env(
+        subprocess.run(
+            ["nix", "develop", flake, "--command", "env"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
+    )
 
-class NextflowNix(NixWorkflowEngine):
-    def __init__(self) -> None:
-        super().__init__(
-            name="Nextflow",
-            url="https://www.nextflow.io/",
-            flake=Path() / "engines" / "nextflow",
-            keep_env_vars=("HOME",),
-            walltime_limit=int(timedelta(hours=1.5).total_seconds()),
-            # TODO: conigure timeout
-        )
-
-    def get_command(self, workflow: Path, output_dir: Path) -> list[str]:
-        return [
-            "nextflow",
-            "run",
-            str(workflow.resolve()),
-            "-profile",
-            "test,docker",
-            "--outdir",
-            str(output_dir.resolve()),
-        ]
-        # return [
-        #     "sh",
-        #     "-c",
-        #     "head --bytes 8388608 /dev/urandom | xz -9e - | unxz - | wc -c",
-        # ]
-
+def get_spack_env(env: Path) -> Mapping[str, str]:
+    # TOOD: check that env is installed first
+    return parse_bashrc(
+        subprocess.run(
+            ["spack", "env", "activate", "--dir", str(env), "--sh"],
+            check=True,
+            capture_output=True,
+            text=True,
+        ).stdout
+    )
 
 engines = {
-    "nextflow-docker": NextflowDocker(),
-    "nextflow": NextflowNix(),
+    "nextflow": WorkflowEngine(
+        env={
+            **get_spack_env(Path() / "engines" / "nextflow"),
+            "HOME": os.environ["HOME"],
+        },
+        command=lambda workflow: ("nextflow", "run", str(workflow), "-profile", "test,singularity", "--outdir", "."),
+    ),
+    "snakemake": WorkflowEngine(
+        env={
+            **get_spack_env(Path() / "engines" / "snakemake"),
+        },
+        command=lambda workflow: ("snakemake", "--cores", "all", "--use-conda", "--use-singularity", str(workflow / "workflow")),
+    ),
 }
