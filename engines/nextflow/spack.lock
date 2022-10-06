@@ -1,0 +1,101 @@
+{
+  "_meta": {
+    "file-type": "spack-lockfile",
+    "lockfile-version": 4,
+    "specfile-version": 3
+  },
+  "roots": [
+    {
+      "hash": "g5lecrn6avsp2atpqcgytxxg2disg3qf",
+      "spec": "nextflow"
+    },
+    {
+      "hash": "7yngn72gt6h7en5ia3kbstmvhmltk4cm",
+      "spec": "time"
+    }
+  ],
+  "concrete_specs": {
+    "g5lecrn6avsp2atpqcgytxxg2disg3qf": {
+      "name": "nextflow",
+      "version": "22.04.4",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "xbsrqjf3dc3zdhhax2jq4oux257swtr6vmr4cf2nxj53mw4zgjka====",
+      "dependencies": [
+        {
+          "name": "openjdk",
+          "hash": "di42caheoizl67o5n5xtjzh2opxtdoul",
+          "type": [
+            "build",
+            "link"
+          ]
+        }
+      ],
+      "hash": "g5lecrn6avsp2atpqcgytxxg2disg3qf"
+    },
+    "di42caheoizl67o5n5xtjzh2opxtdoul": {
+      "name": "openjdk",
+      "version": "11.0.15_10",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "c3bs6k7sxzomcasbxd5ko7hlj4y5slxaxxj5ycdutziguzpu423q====",
+      "hash": "di42caheoizl67o5n5xtjzh2opxtdoul"
+    },
+    "7yngn72gt6h7en5ia3kbstmvhmltk4cm": {
+      "name": "time",
+      "version": "1.9",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "sqebra7hchrtnuwxvcfrthvcsemcsqoagjsxceuxqr6livd3kbja====",
+      "hash": "7yngn72gt6h7en5ia3kbstmvhmltk4cm"
+    }
+  }
+}

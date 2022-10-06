@@ -10,3 +10,4 @@ __pycache__/
 /secrets.json
 .r-mount
 .ipynb_checkpoints/
+.spack-env
