@@ -4,7 +4,7 @@
 # configuration settings.
 spack:
   # add package specs to the `specs` list
-  specs: [snakemake, singularity]
+  specs: [snakemake, singularity, time, coreutils]
   view: true
   concretizer:
     unify: false

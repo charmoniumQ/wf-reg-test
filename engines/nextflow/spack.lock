@@ -12,6 +12,10 @@
     {
       "hash": "7yngn72gt6h7en5ia3kbstmvhmltk4cm",
       "spec": "time"
+    },
+    {
+      "hash": "hdwl66el4yfhfwcanygsyyvgug4uvffo",
+      "spec": "coreutils"
     }
   ],
   "concrete_specs": {
@@ -96,6 +100,37 @@
       },
       "package_hash": "sqebra7hchrtnuwxvcfrthvcsemcsqoagjsxceuxqr6livd3kbja====",
       "hash": "7yngn72gt6h7en5ia3kbstmvhmltk4cm"
+    },
+    "hdwl66el4yfhfwcanygsyyvgug4uvffo": {
+      "name": "coreutils",
+      "version": "9.1",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "gprefix": false,
+        "patches": [
+          "8f50e8a894950f007aba0707697eb5b67a673d2ce8cb39b4733438a918e4f644"
+        ],
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "patches": [
+        "8f50e8a894950f007aba0707697eb5b67a673d2ce8cb39b4733438a918e4f644"
+      ],
+      "package_hash": "mpr6ym6holv64uy7qonbfnzucayxy6p5uakad7lsgcqfmiwegtza====",
+      "hash": "hdwl66el4yfhfwcanygsyyvgug4uvffo"
     }
   }
 }
