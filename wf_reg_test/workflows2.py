@@ -1,26 +1,27 @@
 from __future__ import annotations
+
 import abc
-from typing import Mapping, DefaultDict, Optional, ContextManager, ClassVar
-from pathlib import Path
-from datetime import datetime as DateTime, timedelta as TimeDelta
-from dataclasses import dataclass, fields
 import platform
 import subprocess
-from typing import Any
+from datetime import datetime as DateTime, timedelta as TimeDelta
+import dataclasses
+from pathlib import Path
+from typing import ClassVar, ContextManager, Optional
 
 
-@dataclass
+@dataclasses.dataclass
 class WorkflowApp2:
     workflow_engine_name: str
     url: str
     display_name: str
     repo_url: str
     revisions: list[Revision2]
+
     def __str__(self) -> str:
         return f"WorkflowApp2 {self.display_name}"
 
 
-@dataclass
+@dataclasses.dataclass
 class Revision2:
     display_name: str
     url: str
@@ -33,7 +34,7 @@ class Revision2:
         return f"Revision2 {self.display_name} of {self.workflow_app}"
 
 
-@dataclass
+@dataclasses.dataclass
 class Execution2:
     machine: Machine2
     datetime: DateTime
@@ -49,7 +50,7 @@ class Execution2:
         return f"Execution2 of {self.revision}"
 
 
-@dataclass(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class Machine2:
     short_description: str
     long_description: str
@@ -79,10 +80,12 @@ class Machine2:
     _CURRENT_MACHINE: ClassVar[Optional[Machine2]] = None
     _machine_cache: ClassVar[dict[str, Machine2]] = {}
 
+
 _data_path = Path("data")
 _data_key_digits = 16
 
 _data_path.mkdir(exist_ok=True)
+
 
 class RepoAccessor(abc.ABC):
     @abc.abstractmethod

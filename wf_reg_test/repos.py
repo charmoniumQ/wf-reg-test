@@ -11,7 +11,9 @@ import git
 import github
 import xxhash
 
-from .workflows2 import RepoAccessor, Revision2 as Revision, WorkflowApp2 as WorkflowApp
+from .workflows2 import RepoAccessor
+from .workflows2 import Revision2 as Revision
+from .workflows2 import WorkflowApp2 as WorkflowApp
 
 
 def get_repo_accessor(url: str) -> RepoAccessor:

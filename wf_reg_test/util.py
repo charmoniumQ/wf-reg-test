@@ -69,7 +69,5 @@ def walk(
     return mapper(path, children)
 
 
-def sorted_and_dropped(
-    inp: Iterable[tuple[_T, _V]], reverse: bool = False
-) -> list[_V]:
+def sorted_and_dropped(inp: Iterable[tuple[_T, _V]], reverse: bool = False) -> list[_V]:
     return [y for x, y in sorted(inp, reverse=reverse)]

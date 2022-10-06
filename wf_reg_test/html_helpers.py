@@ -25,9 +25,7 @@ def html_table(
     )
 
 
-def html_list(
-    elements: Sequence[TagLike], ordered: bool = False
-) -> html.Element:
+def html_list(elements: Sequence[TagLike], ordered: bool = False) -> html.Element:
     list_factory = html.ol() if ordered else html.ul()
     return list_factory(*[html.li(element) for element in elements])
 

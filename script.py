@@ -139,8 +139,8 @@ def autoimport_and_isort(path: Path) -> None:
     path.write_text(code)
 
 
-T1 = TypeVar("T1")
-T2 = TypeVar("T2")
+_T1 = TypeVar("_T1")
+_T2 = TypeVar("_T2")
 
 
 @app.command()
@@ -148,7 +148,7 @@ T2 = TypeVar("T2")
 async def fmt(parallel: bool = True) -> None:
     with multiprocessing.Pool() as pool:
         mapper = cast(
-            Callable[[Callable[[T1], T2], Iterable[T1]], Iterable[T2]],
+            Callable[[Callable[[_T1], _T2], Iterable[_T1]], Iterable[_T2]],
             pool.imap_unordered if parallel else map,
         )
         list(mapper(autoimport_and_isort, all_python_files))

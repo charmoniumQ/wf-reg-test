@@ -1,15 +1,14 @@
-from typing import Iterable
 import json
-import requests
+from typing import Iterable
 
-import github
+import requests
 
 from .workflows2 import WorkflowApp2
 
 
 def snakemake_registry() -> Iterable[WorkflowApp2]:
     url = "https://raw.githubusercontent.com/snakemake/snakemake-workflow-catalog/main/data.js"
-    repo_infos = json.loads(requests.get(url).text.partition("\n")[2])
+    repo_infos = json.loads(requests.get(url).text.partition("\n")[2], timeout=10)
     for repo_info in repo_infos:
         if repo_info["standardized"]:
             yield WorkflowApp2(
