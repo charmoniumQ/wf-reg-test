@@ -4,7 +4,7 @@
 # configuration settings.
 spack:
   # add package specs to the `specs` list
-  specs: [nextflow, time]
+  specs: [nextflow, time, coreutils]
   view: true
   concretizer:
     unify: false
