@@ -13,9 +13,9 @@ notes-after-punctuation: yes
 
 title: A reactive approach to identifying and mitigating software collapse computational science
 author:
-- Samuel Grayson, Department of Computer Science <grayson5@illinois.edu>
-- Daniel S. Katz, NCSA <dskatz@illinois.edu>
-- Darko Marniov, Department of Computer Science <marinov@illinois.edu>
+- Samuel Grayson, Department of Computer Science, Univerity of Illinois Urbana Champaign <grayson5@illinois.edu>
+- Daniel S. Katz, NCSA & CS & ECE & iSchool, Univerity of Illinois Urbana Champaign <d.katz@ieee.org>
+- Darko Marniov, Department of Computer Science, Univerity of Illinois Urbana Champaign <marinov@illinois.edu>
 - Reed Milewicz, Sandia National Laboratories <rmilewi@sandia.gov>
 number-sections: no
 
@@ -33,27 +33,27 @@ _I will write this last. TODO_
 
 # Introduction
 
-More than half of scientists surveyed fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
-Unfortunately, the code they develop tends to break over time, even if it is unchanged, due to non-obvious changes in the computational environment.
-This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with unstable foundation.
-This breakage could manifest as irreproducible[^1] results.
+More than half of scientists surveyed across all fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
+Unfortunately, the code they develop tends to break over time, even if it is unchanged, due to non-obvious changes in the computational environment. [DSK: this seems like like it is saying that this is problem for scientists, while it's really an issue for all software developers.]
+This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with unstable foundation. [DSK: and all scientific software has an unstable foundation, unless it's monolithic.]
+This breakage could manifest as irreproducible[^1] results. [DSK: It's more likely to manifest as code that doesn't build or run - though I agree it could also lead to different results]
 
-[^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means anyone can use the same code to get the same result.
+[^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means anyone can use the same code to get the same result. [this defition is a bit loose - Also, I like the terminology discussion in https://www.frontiersin.org/articles/10.3389/fninf.2017.00076/full]
 
 <!-- TODO: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash reproducibility and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results. -->
 
 If computational experiments are allowed to collapse, scientists cannot independently verify or build on those results.
 Thus, software collapse undermines two fundamental norms of science identified by Merton, organized skepticism and communalism [@merton_sociology_1974].
-Software collapse is a technical factor which contributes to the ongoing reproducibility crisis in computational science [@collberg_repeatability_2016], which hinders the credibility of science [@ioannidis_why_2005].
+Software collapse is a technical factor that contributes to the ongoing reproducibility crisis in computational science [@collberg_repeatability_2016], which hinders the credibility of science [@ioannidis_why_2005]. [I might prefer to cite https://www.amazon.com/Science-Fictions-Negligence-Undermine-Search/dp/1250222699 as more broad and a bit less political.]
 
 Zhao et al. studied software collapse computational of experiments deposited in the myExperiment registry [@zhao_why_2012].
-They find 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata.
-Of which, change of third-party resources causes the most failures.
-This would include a step in the experiment that references data from another server through the internet which is no longer available.
+They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata.
+Of these, change of third-party resources caused the most failures.
+This included a step in the experiment that referenced data from another server through the internet which was no longer available.
 
 Part of the problem is technical: people who want their software to be reliable do not necessarily know how to achieve that, given their resource constraints.
 We suggest a technical solution, which should be a part of a holistic solution.
-The technical solution could be proactive or reactive; A proactive solution would change something about the environment or application to provide determinism, whereas a reactive solution would seek to detect non-determinism and alert human developers.
+The technical solution could be proactive or reactive: a proactive solution would change something about the environment or application to provide determinism, whereas a reactive solution would seek to detect non-determinism and alert human developers.
 Proactive solutions are preferable, but to date, no proactive solution will eliminate a large case of irreproducibility.
 Therefore, we need both proactive and reactive solutions.
 
@@ -63,22 +63,22 @@ Therefore, we need both proactive and reactive solutions.
   However, these instructions are UNIX commands, which can be non-deterministic themselves[^2], e.g. `pip install ...`.
   Docker cannot mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
   Zhao et al. showed that first of these, networked resources, is the most common cause of software collapse as well [@zhao_why_2012].
-  This is empirically validated, as Henkel et al. find 25% of Dockerfiles in their already limited sample still fail to build [@henkel_shipwright_2021].
+  This is empirically validated, as Henkel et al. find 25% of Dockerfiles in their already limited sample still fail to build [@henkel_shipwright_2021]. [DSK: maybe talk about version pinning?]
 
 [^2]: Docker itself never claims that `Dockerfile`s are reproducible; it only says "reproducible" three times in [their documentation] at the time of writing, and none of them are referring to reproducing the same result from running a `Dockerfile` twice.
   
 [their documentation]: https://www.google.com/search?q=reproducible+site%3Adocs.docker.com&client=ms-google-coop&cx=005610573923180467403%3Aiwlnuvjqpv4&ei=iPFEY4eSFY-fptQPopa3aA&ved=0ahUKEwiH9vrzq9f6AhWPj4kEHSLLDQ0Q4dUDCA4&uact=5&oq=reproducible+site%3Adocs.docker.com&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzoKCAAQRxDWBBCwAzoHCAAQsAMQQzoFCAAQgAQ6CAgAEIAEELEDOgQIABBDOggIABAWEB4QDzoKCAAQFhAeEA8QCjoGCAAQFhAeOgUIIRCgAToFCCEQqwJKBAhBGABKBAhGGABQ5wJYyxpg-xtoBHABeAGAAccCiAGaHJIBCDAuMTcuNS4xmAEAoAEByAEKwAEB&sclient=gws-wiz-serp
 
-- **Filesystem snapshot**: Container images (e.g. Docker, Singularity), functional package managers (e.g. Nix, Guix), CDE [@guo_cde_2011], Sumatra [@davison_automated_2012], and chroot containers spawn a program in a view of the filesystem that they control.
+- **Filesystem snapshot**: Container images (e.g., Docker, Singularity), functional package managers (e.g., Nix, Guix), CDE [@guo_cde_2011], Sumatra [@davison_automated_2012], and chroot containers spawn a program in a view of the filesystem that they control.
   Then, one can ship the entire filesystem to another user so they can reproduce the execution.
-  However, this approach is heavyweight with filesystem snapshots as large as 50Gb.
+  However, this approach is heavyweight with filesystem snapshots as large as 50 Gb.
   Furthermore, this does not control network resources, pseudorandomness, and parallel program order.
   Finally, these are difficult to work with to 
 
 ## Reactive solution
 
-Continuous testing is a reactive solution to software collapse that is robust to networked resources, pseudorandomness, and parallel program order.
-One could imagine running the computational experiment periodically to assess if the experiment is still not crashing and still reproducible.
+Continuous testing is a reactive solution to software collapse in that is robust to networked resources, pseudorandomness, and parallel program order. [DSK: I'm not sure about the parallel program order part.]
+One could imagine running the computational experiment periodically to assess if the experiment is both still running to completion and still producing the same results.
 The major drawback is increased computational cost.
 However, one can always lower the frequency of testing, which trades off computational resources with efficacy of finding bugs.
 Additionally, one could test mission-critical experiments more frequently than other experiments.
@@ -88,7 +88,7 @@ If one could predict which workflows were more likely to break, one could also p
 
 # Methods
 
-We want to collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
+We want to [DSK: We plan to?  We have begun to?  Our aim is to?] collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
 These registries include:
 
 - [nf-core](https://nf-co.re/): _TODO: describe each of these (one sentence)._
@@ -99,13 +99,13 @@ These registries include:
 - Sandia's internal repository
 
 We cannot take one computational experiment and simulate it one, five, and ten years into the future.
-Instead, we will look for historical revisions of an experiment from one, five, or ten years ago and simulate it today.
-All of the registries above store historical revisions of the workflow.
+Instead, we will look for historical revisions [DSK: versions?] of an experiment from one, five, or ten years ago and simulate it today.
+All of the registries above store historical revisions [DSK; versions?] of the workflow.
 We make a _time symmetry_ assumption: historical rates of change will be similar to the future rate of change.
 It is likely that some will still work and some sill fail, due to software collapse.
 
-We will run the following pseudo-code to collect the data.
-We will analyze it as described in the next section and publish the raw data for other researchers.
+We will run the following pseudo-code to collect the data,
+which we will analyze as described in the next section. We plan to publish the raw data we collect for other researchers.
 
 ```
 for registry in registries:
@@ -129,10 +129,10 @@ for registry in registries:
 
 # Analysis
 
-We will replicate the quantities described by Zhao et al. [@zhao_why_2012] to see if these are changed: proportion of broken experiments, and proportion of breakages due to each reason (volatile third-party resources, missing example data, missing execution environment, insufficient description).
+We plan to replicate the quantities described by Zhao et al. [@zhao_why_2012] to see if these have changed since their work, or if they are different for workflows: proportion of broken experiments, and proportion of breakages due to each reason (volatile third-party resources, missing example data, missing execution environment, insufficient description).
 To this, we add "reproducible results" as a new "level" of success, beyond merely not crashing.
-We will also extend the failure classification of Zhao et al. by going into deeper subcategories.
-We will extend the results of Zhao et al. by asking how the proportion of broken experiments changes with time.
+We also plan to extend the failure classification of Zhao et al. by going into deeper subcategories.
+We will also study how the proportion of broken experiments changes with time.
 
 We can improve resource utilization of continuous testing by using our dataset to predict the rate of collapse of various computational experiments.
 We will develop predictive models based on the staleness, properties of the code in the revision, and other determinants to predict the probability that a given experiment will fail.
@@ -149,7 +149,7 @@ Once we know what kinds of failure are possible, we can also investigate automat
 Our dataset will contain the output logs for each failure.
 Therefore, we can apply similar techniques to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize a large number of failures into a small number of clusters.
 
-We can also use your model to identify best practices, by seeing if they correlate to an empirically lower failure rate.
+We can also use your [DSK: whose?] model to identify best practices, by seeing if they correlate to an empirically lower failure rate.
 We will use a "Bayes net" to test for confounding causal variables.
 We will operationalize a set of reproducibility metrics based on existing literature and compare them to established software quality measures and their evolution over time for a small set of exemplar software projects; this work will leverage tools our team has developed for repository mining at scale.
 
@@ -163,12 +163,13 @@ If successful, our preliminary work will provide us with a tested ensemble of re
 
 ## Threats to Validity
 
-The time symmetry assumption may not hold.
+There are a number of threats to the validity of our work and planned results.
+First, our time symmetry assumption may not hold.
 With all of the contemporary focus and effort around reproducibility, future rates of change may be markedly less than past rates of change.
 While our computed rates of change will be understimates, those underestimates can still be useful as bounds.
 Our method will also be useful, unchanged, for future studies.
 
-It is possible that our sample is not representative of the real world of computational experiments.
+Second, it is possible that our sample is not representative of the real world of computational experiments.
 However, we are casting the widest net we can by systematically pulling a large number experiment from several registries.
 Still there is a selection bias in which workflows end up in registries.
 The model has some factors based on the population and some based on the actual history of the experiment.
