@@ -37,20 +37,21 @@
                         "index.md" = ./ncsa_delta_proposal.md;
                         "main.bib" = ./main.bib;
                         "predictive_maintenance.png" = ./predictive_maintenance.png;
-                      } // nix-utils-lib.packageSet [
-                        #self."graphviz.svg"
-                      ];
+                      };
                     };
                     name = "ncsa_delta_proposal.pdf";
-                    pdfEngine = "xelatex";
                     outputFormat = "pdf";
-                    date = 1664238411; # `date +%s`
-                    texlivePackages = nix-documents-lib.pandocTexlivePackages // {
-                      inherit (pkgs.texlive)
-                        #fancyhdr
-                      ;
+                  })
+                  (nix-documents-lib.markdownDocument {
+                    src = nix-utils-lib.mergeDerivations {
+                      packageSet = {
+                        "index.md" = ./icse_nier.md;
+                        "main.bib" = ./main.bib;
+                        "predictive_maintenance.png" = ./predictive_maintenance.png;
+                      };
                     };
-                    nixPackages = [ ];
+                    name = "icse_nier.pdf";
+                    outputFormat = "pdf";
                   })
                 ]);
             };
