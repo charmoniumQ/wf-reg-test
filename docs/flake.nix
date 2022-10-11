@@ -34,7 +34,9 @@
                   (nix-documents-lib.markdownDocument {
                     src = nix-utils-lib.mergeDerivations {
                       packageSet = {
-                        "." = ./ncsa_delta_proposal;
+                        "index.md" = ./ncsa_delta_proposal.md;
+                        "main.bib" = ./main.bib;
+                        "predictive_maintenance.png" = ./predictive_maintenance.png;
                       } // nix-utils-lib.packageSet [
                         #self."graphviz.svg"
                       ];
