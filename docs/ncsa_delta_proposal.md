@@ -22,12 +22,17 @@ colorlinks: yes
 linkcolor: blue
 ---
 
+<!--
+https://www.ncsa.illinois.edu/expertise/user-services/allocations/delta-proposal-guidelines/
+-->
+
 # Participants
 
 | Name | Role | Institution | Email |
+|-----|----|--------|-------|
 | Daniel S. Katz | PI | National Center for Supercomputing Applications | <dskatz@illinois.edu> |
 | Darko Marinov | Co-PI | Department of Computer Science, UIUC | <marinov@illinois.edu> |
-| Reed Milewicz | Extenral Collaborator | Sandia National Laboratories | <rmilewi@sandia.gov> |
+| Reed Milewicz | Extern Collaborator | Sandia National Laboratories | <rmilewi@sandia.gov> |
 | Samuel Grayson | Student | Department of Computer Science | <grayson5@illinois.edu> |
 
 # Abstract
@@ -125,16 +130,16 @@ From Nix and Docker, the package can create software environments for each workf
 We have yet to parallelize the application, but we think this can be done easily using the parallel-map paradigm in [Dask](https://www.dask.org/).
 The code is not done yet; namely, we need to implement scanning for more registries and more workflow engines.
 
-## Appendix B: Experience, readiness, usage plans, and funding sources
+## Experience, readiness, usage plans, and funding sources
 
 We have experience with SLURM batch system, Dask programming, and related HPC technology.
 Note that we need to develop more features and robustness in our code before we can run it on an HPC system.
 
-## Appendix C: Resources required
+## Resources required
 
 5 registries, 100 workflows per registry, 10 revisions per workflow, 300 CPU seconds per workflow is a total of [^TODO: put in latest numbers and recompute.]
 
-## Appendix D: Requested start date and duration
+## Requested start date and duration
 
 As soon as possible.
 

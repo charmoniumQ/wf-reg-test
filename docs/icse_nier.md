@@ -35,7 +35,7 @@ _I will write this last. TODO_
 
 More than half of scientists surveyed fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
 Unfortunately, the code they develop tends to break over time, even if it is unchanged, due to non-obvious changes in the computational environment.
-This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analagous to a building with unstable foundation.
+This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with unstable foundation.
 This breakage could manifest as irreproducible[^1] results.
 
 [^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means anyone can use the same code to get the same result.
@@ -84,7 +84,7 @@ However, one can always lower the frequency of testing, which trades off computa
 Additionally, one could test mission-critical experiments more frequently than other experiments.
 If one could predict which workflows were more likely to break, one could also prioritize testing on that basis.
 
-![Figure: Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=2.5in }
+![Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=2.5in }
 
 # Methods
 
@@ -136,13 +136,13 @@ We will extend the results of Zhao et al. by asking how the proportion of broken
 
 We can improve resource utilization of continuous testing by using our dataset to predict the rate of collapse of various computational experiments.
 We will develop predictive models based on the staleness, properties of the code in the revision, and other determinants to predict the probability that a given experiment will fail.
-Testing experiments prone to failure more often than reliable ones could save computational resources while maintining approximately the same degree of reliability in all experiments.
+Testing experiments prone to failure more often than reliable ones could save computational resources while maintaining approximately the same degree of reliability in all experiments.
 <!--
 Note that a failure could indicate collapse, or it could indicate that the experiment never worked in the first place, possibly due to incomplete metadata.
 -->
 
 Hinsen suggests that most code should build on reliable, well-tested libraries can provide some degree of resistance to collapse [@hinsen_dealing_2019].
-In practice, many experiments fall into collapse despite their best effort to build on reliable fundations.
+In practice, many experiments fall into collapse despite their best effort to build on reliable foundations.
 If that level of reliability is insufficient, one can add continuous testing to help get more reliability.
 
 Once we know what kinds of failure are possible, we can also investigate automatic repair.
@@ -175,44 +175,6 @@ The model has some factors based on the population and some based on the actual 
 Its initial guess when there is no history would be biased by our selection, but in the long-run it would learn the characteristics of the actual experiment.
 
 _TODO: other threats to validity._
-
-<!--
-A workflow is a set of data transformations and dataflow linkages between them [@gil_examining_2007].
-Workflows languages are often less complex than programming languages and easier for scientists to write and maintain.
-Workflow registries contain hundreds of examples of computational experiments in a way that is suited for automatic execution.
--->
-
-<!--
-# Prior work
-
-Zhao et al. studied the reliability workflows uploaded to the myExperiment registry, finding that 80% were not working [@zhao_why_2012].
-Since then, a new generation of workflow engines have emphasized reproducibility, often running each node inside a container, so it would be interesting to reproduce Zhao's study on a modern workflow repository.
-Zhao et al. only classifies their failures into four categories: volatile third-party resources, missing example data, missing execution environment, and insufficient description about workflows.
-We would like to use more categories, for example, is the third-party resource a software dependency or data dependency?
-We would also regress test failures on staleness, which Zhao does not attempt.
-We would also report whether the experiment was deterministic.
--->
-
-## Appendix A: Description of codes
-
-We developed [a Python package](https:/github.com/charmoniumQ/wf-reg-test/) that finds and tests workflows.
-This package depends on [Nix](https://nixos.org/) and [Docker](https://www.docker.com/) on the host system.
-From Nix and Docker, the package can create software environments for each workflow engine of interest.
-We have yet to parallelize the application, but we think this can be done easily using the parallel-map paradigm in [Dask](https://www.dask.org/).
-The code is not done yet; namely, we need to implement scanning for more registries and more workflow engines.
-
-## Appendix B: Experience, readiness, usage plans, and funding sources
-
-We have experience with SLURM batch system, Dask programming, and related HPC technology.
-Note that we need to develop more features and robustness in our code before we can run it on an HPC system.
-
-## Appendix C: Resources required
-
-5 registries, 100 workflows per registry, 10 revisions per workflow, 300 CPU seconds per workflow is a total of [^TODO: put in latest numbers and recompute.]
-
-## Appendix D: Requested start date and duration
-
-As soon as possible.
 
 # References
 
