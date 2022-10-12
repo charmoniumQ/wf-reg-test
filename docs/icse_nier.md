@@ -60,7 +60,7 @@ Therefore, we need both proactive and reactive solutions.
 ## Proactive solutions
 
 - **Docker**: A Dockerfile is a set of UNIX commands and auxiliary commands that specify how to build a Docker image.
-  However, these instructions are UNIX commands, which can be non-deterministic themselves[^2], e.g. `pip install ...`.
+  However, these instructions are UNIX commands, which can be non-deterministic themselves[^2], e.g. `pip install`.
   Docker cannot mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
   Zhao et al. showed that first of these, networked resources, is the most common cause of software collapse as well [@zhao_why_2012].
   This is empirically validated, as Henkel et al. find 25% of Dockerfiles in their already limited sample still fail to build [@henkel_shipwright_2021].
@@ -96,7 +96,11 @@ These registries include:
 - [Snakemake Catalog](https://snakemake.github.io/snakemake-workflow-catalog/)
 - [WorkflowHub](https://workflowhub.eu/)
 - [myExperiment](https://www.myexperiment.org/)
+- [PegasusHub](https://pegasushub.io)
 - Sandia's internal repository
+- Globus Flows
+  - https://www.globus.org/platform/services/flows
+  - https://anl-braid.github.io/braid/
 
 We cannot take one computational experiment and simulate it one, five, and ten years into the future.
 Instead, we will look for historical revisions of an experiment from one, five, or ten years ago and simulate it today.
