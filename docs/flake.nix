@@ -41,6 +41,7 @@
                     };
                     name = "ncsa_delta_proposal.pdf";
                     outputFormat = "pdf";
+                    date = 1665609977; # date +%s
                   })
                   (nix-documents-lib.markdownDocument {
                     src = nix-utils-lib.mergeDerivations {
@@ -52,6 +53,7 @@
                     };
                     name = "icse_nier.pdf";
                     outputFormat = "pdf";
+                    date = 1665609977; # date +%s
                   })
                 ]);
             };
