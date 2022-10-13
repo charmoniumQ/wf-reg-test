@@ -12,7 +12,7 @@ cite-method: citeproc
 bibliography: main.bib
 
 # LaTeX options, see template.tex
-title: A dataset of software collapse in scientific software
+title: Predictive continuous testing to mitigate software collapse in scientific software
 author:
   - name: Samuel Grayson
     department: Dept. of Computer Science
@@ -51,8 +51,8 @@ babel-lang: english
 abstract: |
   Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
   Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
-  We propose to create the first public dataset which measures software collapse in computational experiments.
-  We explain how that data can be used to identify best practices, make continuous testing feasible, and repair broken programs, which can greatly improve reproducibility of computational expeirments.
+  We propose to create the first public dataset of automatically executable scientific experiments.
+  We explain how that data can be used to identify best practices, make continuous testing feasible, and repair broken programs, in order to increase the reproducibility of computational expeirments.
 ---
 
 # Introduction
@@ -61,50 +61,59 @@ abstract: |
 Software tends to break over time, even if it is unchanged, due to non-obvious changes in the computational environment.
 This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with unstable foundation.
 Software collapse is not a significant problem in some domains; it is acceptable if Google returns slightly different results one day to the next.
-But in the scientific domain, software collapse could manifest as irreproducible[^1] results, which not only undermine long-term credibility of science but also hinder its day-to-day operations.
+But in the scientific domain, software collapse could manifest as irreproducible results or unreliable software[^irreproducible-term], which not only undermine long-term credibility of science but also hinder its day-to-day operations.
 
-[^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means that one can use the same code in a different computational environment to get the same result [DSK: this defition is a bit loose]. If the execution does not terminate successfully, one can consider the error as "the result"; if code crashes in one environment and succeeds in another, that would count as an irreproducibility. Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology. [DSK: I don't think "error" is a verb. Typically, some fault occurs (in the system) or some error in the code is triggered at runtime, which is a fault event - after this fault the code might hang, a crash, or complete.  Two of these are failures. If it completes, the results might or might not be changed, and this change may or may not be significant enough to be "different" that what was expected.]
-
-<!-- TODO: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash reproducibility and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results. -->
+[^irreproducible-term]: In this article, we use Claerbout's terminology to define ir/reproducibility [@claerbout_electronic_1992]:
+one can use the same code in a different computational environment to get the same result. 
+Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology.
+Un/reliable, on the other hand, just refers to whether the software can fail to produce a result.
 
 <!--
-TODO: Explain how nuclear national security engineers require reproducibility.
+TODO: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash reproducibility and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results.
 -->
 
 1. **Undermines long-term credibility**: More than half of scientists surveyed across all fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
    ^[DSK: 90+% of researchers use research software, 50% develop it, research papers are filled with software mentions, research funders spend a significant fraction of their budget on software...]
    If computational experiments are allowed to collapse, scientists cannot independently verify or build on each others' results.
    This undermines two fundamental norms of science identified by Merton, organized skepticism and communalism [@merton_sociology_1974], that make science self-correcting.
-   In recent years, this has manifested itself as the ongoing reproducibility crisis in computational science [@collberg_repeatability_2016], which damages the long-term credibility of science [@ritchie_science_2020].
+   In recent years, this has manifested itself as the ongoing reproducibility crisis[^rep-vs-rec] in computational science [@collberg_repeatability_2016], which damages the long-term credibility of science [@ritchie_science_2020].
+   
+[^rep-vs-rec]: Contrary to the name, Irreproducible and unreliable contribute to the so-called "reproducibility crisis" in science.
 
 2. **Hinders day-to-day operations**: Consider scientists tasked with securing their nations' nuclear stockpile.
    They might create a simulation that tests if a physical part is going to properly preform a critical function for nuclear storage.
    The physical part might last several decades, but the software often collapses much faster than that.
    As our understanding of material science improves, they might want to reassess if the simulation still predicts the part preforms its function properly given our improved understanding.
-   If the simulation experienced software collapse, this may be extremely difficult or impossible, especially if the original developer is retired.
+   If the simulation experienced software collapse, this will likely need to be fixed, despite the software not changing.
+   Fixing the software may be difficult or impossible, especially if the original developer is retired.
 
-Unfortunately, software collapse seems widespread.
+Unfortunately, software collapse appears to be widespread in the computational science domain.
 Zhao et al. studied software collapse computational of experiments deposited in the myExperiment registry [@zhao_why_2012].
-They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata.
-Of these, change of third-party resources caused the most failures.
-This included a step in the experiment that referenced data from another server through the internet which was no longer available.
+They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata;
+of these, change of third-party resources caused the most failures, such as when a step in an experiment referenced data from another server through the internet which was no longer available.
 
-While the problem of irreproducible science is not solely technical, this paper studies technical solutions which should be a part of a holistic effort, including policy, economic and social factors.
-The technical solution could be proactive or reactive:
-a proactive solution would change something about the environment or application to provide determinism, whereas a reactive solution would seek to detect non-determinism and alert human developers.
-Proactive solutions are preferred because they offer certain guarantees of determinism, although this guarantee is often not met in practice.
+The problem of irreproducibility in scientific computing is not solely technical:
+the cultural norms around preserving scientific software and attitudes of funding agencies play significant roles in the decision to invest in software sustainability and reproducibility.
+Our work examines technical solutions which should be part of a holistic effort to address policy, economic, and social factors that drive software collapse in science.
+Such a solution could be proactive or reactive:
+a _proactive solution_ would control and preserve the environment or application in order to to ensure reproducibility as software ages,
+whereas a _reactive solution_ would wait until reproducibility fails and try to fix that or alert human developers.
+The following are examples of state-of-the-art proactive tools:
 
-- **Snapshotting the environment**: Container images (e.g., Docker, qcow2), VM images, CDE [@guo_cde_2011], and Sumatra [@davison_automated_2012] attempt to snapshot the entire computational environment.
+- **Snapshotting the environment**: Container images (e.g., Docker), VM images, CDE [@guo_cde_2011], and Sumatra [@davison_automated_2012] attempt to snapshot the entire computational environment.
   Then, one can ship the entire filesystem to another user so they can reproduce the execution.
   However, this approach is heavyweight with filesystem snapshots as large as 50 Gb, as it needs to record a large chunk of the filesystem.
   Finally, these are difficult to modify and audit.
 
-- **Specifying construction of the environment**: `Dockerfile`s let the user specify instructions to construct the computational environment enclosing software.
+- **Specifying construction of the environment**: `Dockerfile`s and install scripts let the user specify instructions to construct the computational environment enclosing software.
   However, these instructions are UNIX commands, which can be non-deterministic themselves[^2], e.g. `pip install`.
 
-[^2]: Docker itself never claims that `Dockerfile`s are reproducible; it only says "reproducible" three times in [their documentation] at the time of writing, and none of them are referring to reproducing the same result from running a `Dockerfile` twice.
+[^2]: Although many people believe Docker gives them reproducibility [@henkel_shipwright_2021], Docker itself never claims that `Dockerfile`s are reproducible;
+The term "reproducible" and "reproducibility" only occur three times in [Docker's documentation] at the time of this writing, and none of them are referring to reproducing the same result from running a `Dockerfile` twice.
+One occurrence references to ability to reproduce an environment on another machine by pulling the same container image, not by running the `Dockerfile` twice.
+Distributing the container image is described in the previous bullet (snapshotting the environment).
   
-[their documentation]: https://www.google.com/search?q=reproducible+site%3Adocs.docker.com&client=ms-google-coop&cx=005610573923180467403%3Aiwlnuvjqpv4&ei=iPFEY4eSFY-fptQPopa3aA&ved=0ahUKEwiH9vrzq9f6AhWPj4kEHSLLDQ0Q4dUDCA4&uact=5&oq=reproducible+site%3Adocs.docker.com&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzoKCAAQRxDWBBCwAzoHCAAQsAMQQzoFCAAQgAQ6CAgAEIAEELEDOgQIABBDOggIABAWEB4QDzoKCAAQFhAeEA8QCjoGCAAQFhAeOgUIIRCgAToFCCEQqwJKBAhBGABKBAhGGABQ5wJYyxpg-xtoBHABeAGAAccCiAGaHJIBCDAuMTcuNS4xmAEAoAEByAEKwAEB&sclient=gws-wiz-serp
+[Docker's documentation]: https://www.google.com/search?q=reproducible+site%3Adocs.docker.com&client=ms-google-coop&cx=005610573923180467403%3Aiwlnuvjqpv4&ei=iPFEY4eSFY-fptQPopa3aA&ved=0ahUKEwiH9vrzq9f6AhWPj4kEHSLLDQ0Q4dUDCA4&uact=5&oq=reproducible+site%3Adocs.docker.com&gs_lcp=Cgxnd3Mtd2l6LXNlcnAQAzoKCAAQRxDWBBCwAzoHCAAQsAMQQzoFCAAQgAQ6CAgAEIAEELEDOgQIABBDOggIABAWEB4QDzoKCAAQFhAeEA8QCjoGCAAQFhAeOgUIIRCgAToFCCEQqwJKBAhBGABKBAhGGABQ5wJYyxpg-xtoBHABeAGAAccCiAGaHJIBCDAuMTcuNS4xmAEAoAEByAEKwAEB&sclient=gws-wiz-serp
 
 - **Functional package managers:** Functional package managers (e.g., Nix, Guix, Spack) is a restricted form of environment construction which only permits certain UNIX capabilities.
   For example, Nix only lets users download from the internet if they provide a hash of the expected outcome; if this hash is different, Nix errors because this execution is not going to reproduce th previous one.
@@ -113,12 +122,11 @@ Proactive solutions are preferred because they offer certain guarantees of deter
 ^[DSK: maybe talk about version pinning?]
 ^[SAG: Refer to the literature on reproducing Jupyter/IPython notebooks]
 
-Furthermore, none of these proactive solutions can mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
-Zhao et al. showed that first of these, networked resources, is the most common cause of software collapse as well [@zhao_why_2012].
-This is empirically validated, as Henkel et al. find 25% of Dockerfiles in their already limited sample still fail to build [@henkel_shipwright_2021].
-Therefore, we need both proactive _and_ reactive solutions.
+The most straightforward way to improve reproducibility is through proactive solutions^[SAG: citations], but none of these  solutions can mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
+Zhao et al. showed that first of these, networked resources, is the most common cause of software collapse as well [@zhao_why_2012], so irreproducibility due to the network cannot be ignored.
+Henkel et al. find 25% of Dockerfiles in their already limited sample still fail to build [@henkel_shipwright_2021].
+Therefore, important computational experiments should be protected from collapse by proactive _and_ reactive solutions.
 
-- **Continuous testing (reactive)**^[3]
   Continuous testing is a reactive solution to software collapse that is robust to networked resources, pseudorandomness, and parallel program order.
   ^[DSK: I'm not sure about the parallel program order part. SAG: this can be done by injecting randomness into the program schedule; recent work does something like that. I have yet to go back and find that paper, and weave it into the narrative in this paragraph.]
   One could imagine running the computational experiment periodically to assess if the experiment is both not crashing and still producing the same results.
@@ -127,7 +135,7 @@ Therefore, we need both proactive _and_ reactive solutions.
   Additionally, one could test mission-critical experiments more frequently than other experiments.
   If one could predict which workflows were more likely to break, one could also prioritize testing on that basis.
 
-^[3]: SAG: Explain difference with traditional CI.
+[SAG: Explain difference with traditional CI.]
 
 ![Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
 
@@ -136,7 +144,8 @@ In practice, many experiments fall into collapse despite their best effort to bu
 If that level of reliability is insufficient, one can add continuous testing to help get more reliability.
 ^[SAG: Explain why we need dataset (to improve reproducibility through continuous testing, automatic program repair, and identify best practices).]
 
-This paper will build a dataset of software collapse of computatoinal experiments and answer the following research questions:
+This paper will build a dataset of software collapse of computational experiments and answer the following research questions:
+
 - **RQ1 measure rate of software collapse:** What are typical rates of software collapse over time? This number is not well-known, since the last experiment to measure it was Zhao et al., and we have new reproducibility technology (NextFlow over Taverna).
 - **RQ2 predict rate of software collapse:**  Can we predict the rate of decay for a project based on its history (if available) and code? A predictive model is important for the next research question. The model should function on a "cold start", where we know nothing about the computational experiments historical results, but it should be able to learn from those historical runs if they are present.
 - **RQ3 optimize continuous testing:** Can we improve the efficiency of continuous testing by predicting the rate of decay? This could be useful for instutions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
@@ -169,6 +178,7 @@ We will run the following pseudo-code to collect the data.
 Then we we will analyze it as described in the next section.
 Finally, we plan to publish the raw data we collect for other researchers.
 
+\scriptsize
 ```python
 for registry in registries:
     for experiment in registry:
@@ -177,12 +187,12 @@ for registry in registries:
                 execution = execute(revision)
                 data.append((
                     execution.date,   execution.output,
-                    execution.logs,   execuiton.resource_utilization,
+                    execution.logs,   execuiton.res_usage,
                     revision.date,    revision.code,
                     experiment.name,  registry.name,
                 ))
 ```
-
+\normalsize
 
 # Analysis
 
@@ -234,6 +244,15 @@ The dataset would indicate how various reactive solutions compare, allowing us t
 However, no proactive solution is perfect, so we also look at the reactive solution of continuous testing.
 The dataset would also allow us to optimize continuous testing such that it is feasible.
 Finally, when the continuous testing finds a failure, the automatic repair we plan to prototype would help fix that failure.
+
+## Future Work
+
+[SAG: TODO]
+
+- Use the dataset for workflows that work, with timeout and resource utilization
+- Automatic scale-down experiments
+- Automatically tune error thresholds
+- Autotuning experiments
 
 # References
 
