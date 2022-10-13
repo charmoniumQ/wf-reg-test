@@ -201,7 +201,7 @@ We will use a "Bayes net" to test for confounding causal variables.
 
 - **RQ5: attempt automatic repair**: Once we know what kinds of failure are possible, we can also investigate automatic repair.
 Our dataset will contain the output logs for each failure.
-Therefore, we can apply similar techniques to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize a large number of failures into a small number of clusters.
+Therefore, we can apply similar techniques to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize many failures into a few clusters.
 
 <!--
 Note that a failure could indicate collapse, or it could indicate that the experiment never worked in the first place, possibly due to incomplete metadata.
@@ -212,15 +212,15 @@ Note that a failure could indicate collapse, or it could indicate that the exper
 There are a number of threats to the validity of our work and planned results.
 
 1. Our time symmetry assumption may not hold.
-   With all of the contemporary focus and effort around reproducibility, future rates of change may be markedly less than past rates of change.
-   While our computed rates of change will be understimates, those underestimates can still be useful as bounds.
+   With contemporary efforts on reproducibility, future rates of change may be markedly less than past rates of change.
+   While our computed rates of change will be underestimates, those underestimates can still be useful as bounds.
    Our method will also be useful, unchanged, for future studies.
 
 2. It is possible that our sample is not representative of the real world of computational experiments.
-   However, we are casting the widest net we can by systematically pulling a large number experiment from several registries.
-   Still there is a selection bias in which workflows end up in registries.
+   However, we are casting the widest net we can by systematically pulling many experiments from several registries.
+   Still, there is a selection bias in which workflows end up in registries.
    The model has some factors based on the population and some based on the actual history of the experiment.
-   Its initial guess when there is no history would be biased by our selection, but in the long-run it would learn the characteristics of the actual experiment.
+   Its initial guess when there is no history would be biased by our selection, but in the long run it would learn the characteristics of the actual experiment.
 
 # Conclusion
 
@@ -231,7 +231,7 @@ In order to do any research in this area, we need to build standard, communal da
 The dataset would indicate how various reactive solutions compare, allowing us to identify the best practices that correlate with reproducibility.
 However, no proactive solution is perfect, so we also look at the reactive solution of continuous testing.
 The dataset would also allow us to optimize continuous testing such that it is feasible.
-Finally, when the test identifies a failure, the automatic repair we plan to prototype would help fix that failure.
+Finally, when the continuous testing finds a failure, the automatic repair we plan to prototype would help fix that failure.
 
 # References
 
