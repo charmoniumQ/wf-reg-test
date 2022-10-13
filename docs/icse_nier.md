@@ -12,7 +12,7 @@ cite-method: citeproc
 bibliography: main.bib
 
 # LaTeX options, see template.tex
-title: A dataset of software collapse in scientific science
+title: A dataset of software collapse in scientific software
 author:
   - name: Samuel Grayson
     department: Dept. of Computer Science
@@ -29,7 +29,7 @@ author:
     affiliation: Sandia National Laboratories
 	email: \href{mailto:rmilewi@sandia.gov}{rmilewi@sandia.gov}
 	location: Albuquerque, NM
-  - name: Darko Marniov
+  - name: Darko Marinov
     department: Dept. of Computer Science
 	affiliation: Univerity of Illinois Urbana Champaign
 	location: Urbana, IL
@@ -64,7 +64,7 @@ This phenomenon is called "software collapse" [@hinsen_dealing_2019], because so
 Software collapse is not a significant problem in some domains; it is acceptable if Google returns slightly different results one day to the next.
 But in the scientific domain, software collapse could manifest as irreproducible[^1] results, which not only undermine long-term credibility of science but also hinder its day-to-day operations.
 
-[^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means that one can use the same code in a different computational environment to get the same result [DSK: this defition is a bit loose]. If the execution does not terminate successfully, one can consider the error as "the result"; if code crashes in one environment and succeeds in another, that would count as an irreproducibility. Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology.
+[^1]: In this article, we use Claerbout's terminology to define reproducibility [@claerbout_electronic_1992]: one can use the same code in a different computational environment to get the same result [DSK: this defition is a bit loose]. If the execution does not terminate successfully, one can consider the error as "the result"; if code crashes in one environment and succeeds in another, that would count as an irreproducibility. Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology.
 
 <!-- TODO: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash reproducibility and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results. -->
 
@@ -83,16 +83,12 @@ TODO: Explain how nuclear national security engineers require reproducibility.
    As our understanding of material science improves, they might want to reassess if the simulation still predicts the part preforms its function properly given our improved understanding.
    If the simulation experienced software collapse, this may be extremely difficult or impossible, especially if the original developer is retired.
 
-Unfortunately, software collapse seems widespread.
+Unfortunately, software collapse appears to be widespread in the computational science domain.
 Zhao et al. studied software collapse computational of experiments deposited in the myExperiment registry [@zhao_why_2012].
-They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata.
-Of these, change of third-party resources caused the most failures.
-This included a step in the experiment that referenced data from another server through the internet which was no longer available.
+They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata; of these, change of third-party resources caused the most failures, such as when a step in an experiment referenced data from another server through the internet which was no longer available
 
-While the problem of irreproducible science is not solely technical, this paper studies technical solutions which should be a part of a holistic effort, including policy, economic and social factors.
-The technical solution could be proactive or reactive:
-a proactive solution would change something about the environment or application to provide determinism, whereas a reactive solution would seek to detect non-determinism and alert human developers.
-Proactive solutions are preferred because they offer certain guarantees of determinism, although this guarantee is often not met in practice.
+The problem of irreproducibility in scientific computing is not solely technical: the cultural norms around preserving scientific software and attitudes of funding agencies play significant roles in the decision to invest in software sustainability and reproducibility. Our work examines technical solutions which should be part of a holistic effort to address policy, economic, and social factors that drive software collapse in science. Such a solution could be proactive or reactive:
+a proactive solution would monitor, preserve, and adapt the computational environment or the application to enforce reproducibility constraints as the software ages or allow for graceful degredation where enforcement fails, whereas a reactive solution would wait until reproducibility constraints fail and alert human developers. the following are examples of state-of-the-art tools and practices on this front.
 
 - **Snapshotting the environment**: Container images (e.g., Docker, qcow2), VM images, CDE [@guo_cde_2011], and Sumatra [@davison_automated_2012] attempt to snapshot the entire computational environment.
   Then, one can ship the entire filesystem to another user so they can reproduce the execution.
@@ -135,7 +131,7 @@ Hinsen suggests that most code should build on reliable, well-tested libraries c
 In practice, many experiments fall into collapse despite their best effort to build on reliable foundations.
 If that level of reliability is insufficient, one can add continuous testing to help get more reliability.
 
-This paper will build a dataset of software collapse of computatoinal experiments and answer the following questions:
+This paper will build a dataset of software collapse of computational experiments and answer the following questions:
 1. What are typical rates of decay? This number is not well-known, since the last experiment to measure it was Zhao et al., and we have new reproducibility technology (NextFlow over Taverna).
 2. Can we predict the rate of decay for a project based on its history (if available) and code? A predictive model is important for the next research question. The model should function on a "cold start", where we know nothing about the computational experiments historical results, but it should be able to learn from those historical runs if they are present.
 3. Can we improve the efficiency of continuous testing by predicting the rate of decay? This could be useful for instutions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
