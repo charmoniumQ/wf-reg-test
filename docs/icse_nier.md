@@ -16,12 +16,12 @@ title: Predictive continuous testing to mitigate software collapse in scientific
 author:
   - name: Samuel Grayson
     department: Dept. of Computer Science
-    affiliation: Univerity of Illinois Urbana Champaign
+    affiliation: University of Illinois Urbana-Champaign
     location: Urbana, IL
     email: \href{https://orcid.org/0000-0001-5411-356X}{0000-0001-5411-356X}
   - name: Daniel S. Katz
     department: NCSA \& CS \& ECE \& iSchool
-    affiliation: Univerity of Illinois Urbana Champaign
+    affiliation: University of Illinois Urbana-Champaign
     email: \href{https://orcid.org/0000-0001-5934-7525}{0000-0001-5934-7525}
     location: Urbana, IL
   - name: Reed Milewicz
@@ -31,7 +31,7 @@ author:
     location: Albuquerque, NM
   - name: Darko Marinov
     department: Dept. of Computer Science
-    affiliation: Univerity of Illinois Urbana Champaign
+    affiliation: University of Illinois Urbana-Champaign
     location: Urbana, IL
     email: \href{https://orcid.org/0000-0001-5023-3492}{0000-0001-5023-3492}
     # TODO: reformat department, affiliation, email, ORCId
@@ -52,7 +52,7 @@ abstract: |
   Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
   Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
   We propose to create the first public dataset of automatically executable scientific experiments.
-  We explain how that data can be used to identify best practices, make continuous testing feasible, and repair broken programs, in order to increase the reproducibility of computational expeirments.
+  We explain how that data can be used to identify best practices, make continuous testing feasible, and repair broken programs, in order to increase the reproducibility of computational experiments.
 ---
 
 # Introduction
@@ -129,7 +129,7 @@ Here are reactive solutions:
 - **Continuous testing:** Automated systems can run the computational experiment periodically to assess if the experiment is both not crashing and still producing the same results.
   Continuous testing is robust to more sources of non-determinism, including networked resources, pseudorandomness, and parallel program order.^[Non-determinism in the pseudorandom number generator and program schedule can be injected by the environment.]
   Traditional continuous testing is usually a part of continuous testing and continuous deployment (CI/CD).
-  The continous testing we are proposing here differs from traditional continuous testing in CI/CD because the former is triggered periodically while the latter it is triggered when the code is changed.
+  The continuous testing we are proposing here differs from traditional continuous testing in CI/CD because the former is triggered periodically while the latter it is triggered when the code is changed.
   The traditional continuous testing mitigates software regression, which is due to _internal changes_, but periodic continuous testing mitigates software collapse, which is due to _external changes_.
 
 - **Predictive continuous testing:** The major drawback is increased computational cost.
@@ -156,7 +156,7 @@ This paper will build a dataset of software collapse of computational experiment
 - **RQ categorize causes of software collapse:**
   When software collapses, what is the immediate technical cause that collapse?
   Zhao et al. studies these at a high-level, and we plan to replicate those categories as well as delve into more subcategories.
-  For example, when a third-party resource is unavailable, we will assess whether that resource is _data_ or a _dependnecies_.
+  For example, when a third-party resource is unavailable, we will assess whether that resource is _data_ or a _dependencies_.
 
 - **RQ predict rate of software collapse:**
   Can we predict the rate of decay for a project based on its history (if available) and code?
@@ -165,7 +165,7 @@ This paper will build a dataset of software collapse of computational experiment
 
 - **RQ optimize continuous testing:**
   Can we improve the efficiency of continuous testing by predicting the rate of decay?
-  This could be useful for instutions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
+  This could be useful for intuitions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
 
 - **RQ identify best practices:**
   What are the best practices that improve reproducibility?
@@ -222,7 +222,7 @@ for registry in registries:
   To this, we add "reproducible results" as a new "level" of success, beyond merely not crashing (i.e. reliability).
   We will also study how the proportion of broken experiments changes with time.
   Note that a failure could indicate collapse, or it could indicate that the experiment never worked in the first place, possibly due to incomplete metadata.
-  We plan to model this using a Bayesian framework that permits either possibility (never working or collapse) as an unobserved random variable.
+  We can model this using a Bayesian framework that permits either possibility (never working or collapse) as an unobserved random variable.
 
 - **RQ categorize causes of software collapse:**
   We will examine some of those workflows which not reliable or reproducible and classify their causes.
@@ -239,8 +239,7 @@ Testing experiments prone to failure more often than reliable ones could save co
 
 - **RQ identify best practices:**
   We can also use this data to identify practices that improve the reproducibility and longevity of computational experiments.
-  We plan to use a "Bayes net" to test for confounding causal variables.
-  We plan to examine choice of workflow manager, cyclomatic complexity, significant lines of code, choice of reproducibility tools (docker, requirements.txt with pinned packages, singularity), and other factors.
+  We plan to examine choice of workflow manager, cyclomatic complexity, significant lines of code, choice of reproducibility tools (docker, `requirements.txt` with pinned packages, singularity), and other factors.
 
 - **RQ5 attempt automatic repair:**
   Once we know what kinds of failure are possible, we can also investigate automatic repair.
