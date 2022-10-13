@@ -62,7 +62,7 @@ Software tends to break over time, even if it is unchanged, due to non-obvious c
 This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with unstable foundation.
 ^[DSK: and all scientific software has an unstable foundation, unless it's monolithic.]
 Software collapse is not a significant problem in some domains; it is acceptable if Google returns slightly different results one day to the next.
-But in the scientific domain, software collapse could manifest as irreproducible[^1] results which hinder not only the long-term credibility of science but also its day-to-day operations.
+But in the scientific domain, software collapse could manifest as irreproducible[^1] results, which not only undermine long-term credibility of science but also hinder its day-to-day operations.
 
 [^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means that one can use the same code in a different computational environment to get the same result [DSK: this defition is a bit loose]. If the execution does not terminate successfully, one can consider the error as "the result"; if code crashes in one environment and succeeds in another, that would count as an irreproducibility. Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology.
 
@@ -72,12 +72,12 @@ But in the scientific domain, software collapse could manifest as irreproducible
 TODO: Explain how nuclear national security engineers require reproducibility.
 -->
 
-1. **Hinders long-term credibility**: More than half of scientists surveyed across all fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
+1. **Undermines long-term credibility**: More than half of scientists surveyed across all fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
    If computational experiments are allowed to collapse, scientists cannot independently verify or build on each others' results.
    This undermines two fundamental norms of science identified by Merton, organized skepticism and communalism [@merton_sociology_1974], that make science self-correcting.
    In recent years, this has manifested itself as the ongoing reproducibility crisis in computational science [@collberg_repeatability_2016], which damages the long-term credibility of science [@ritchie_science_2020].
 
-2. **Hidners day-to-day operations**: Consider scientists tasked with securing their nations' nuclear stockpile.
+2. **Hinders day-to-day operations**: Consider scientists tasked with securing their nations' nuclear stockpile.
    They might create a simulation that tests if a physical part is going to properly preform a critical function for nuclear storage.
    The physical part might last several decades, but the software often collapses much faster than that.
    As our understanding of material science improves, they might want to reassess if the simulation still predicts the part preforms its function properly given our improved understanding.
