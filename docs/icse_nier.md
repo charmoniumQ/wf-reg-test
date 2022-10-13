@@ -1,35 +1,57 @@
 ---
 # See https://raw.githubusercontent.com/charmoniumQ/nix-documents/main/examples-src/markdown-bells-and-whistles/index.md
+# Print LaTeX source when compile fail
+# biblatex, natbib options
+# template option
 fail-if-warnings: yes
 standalone: yes
 dpi: 300
 table-of-contents: no
-citeproc: yes
-cite-method: citeproc # or natbib or biblatex
-bibliography: main.bib
-link-citations: yes # in-text citation -> biblio entry
-link-bibliography: yes # URLs in biblio
-notes-after-punctuation: yes
 
+cite-method: citeproc
+bibliography: main.bib
+
+# LaTeX options, see template.tex
 title: A reactive approach to identifying and mitigating software collapse computational science
 author:
-- Samuel Grayson, Department of Computer Science, Univerity of Illinois Urbana Champaign <grayson5@illinois.edu>
-- Daniel S. Katz, NCSA & CS & ECE & iSchool, Univerity of Illinois Urbana Champaign <d.katz@ieee.org>
-- Darko Marniov, Department of Computer Science, Univerity of Illinois Urbana Champaign <marinov@illinois.edu>
-- Reed Milewicz, Sandia National Laboratories <rmilewi@sandia.gov>
-number-sections: no
-
-indent: no
-pagestyle: plain
+  - name: Samuel Grayson
+    department: Dept. of Computer Science
+    affiliation: Univerity of Illinois Urbana Champaign
+	location: Urbana, IL
+	email: \href{https://orcid.org/0000-0001-5411-356X}{0000-0001-5411-356X}
+  - name: Daniel S. Katz
+    department: NCSA \& CS \& ECE \& iSchool
+    affiliation: Univerity of Illinois Urbana Champaign
+	email: \href{https://orcid.org/0000-0001-5934-7525}{0000-0001-5934-7525}
+	location: Urbana, IL
+  - name: Reed Milewicz
+    department: Software Engineering and Research Dept.
+    affiliation: Sandia National Laboratories
+	email: \href{mailto:rmilewi@sandia.gov}{rmilewi@sandia.gov}
+	location: Albuquerque, NM
+  - name: Darko Marniov
+    department: Dept. of Computer Science
+	affiliation: Univerity of Illinois Urbana Champaign
+	location: Urbana, IL
+	email: \href{https://orcid.org/0000-0001-5023-3492}{0000-0001-5023-3492}
+	# TODO: reformat department, affiliation, email, ORCId
+classoption:
+  - conference
+fontsize: 10pt
 papersize: letter
-
 colorlinks: yes
 linkcolor: blue
+keywords:
+  - workflows
+  - reproducibility
+  - software reliability
+  - continuous testing
+numbersections: yes
+lang: en
+babel-lang: english
+abstract: |
+  TODO
 ---
-
-# Abstract
-
-_I will write this last. TODO_
 
 # Introduction
 
@@ -42,7 +64,7 @@ This breakage could manifest as irreproducible[^1] results.
 ^[DSK: It's more likely to manifest as code that doesn't build or run - though I agree it could also lead to different results]
 
 [^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means anyone can use the same code to get the same result.
-[DSK: this defition is a bit loose - Also, I like the terminology discussion in https://www.frontiersin.org/articles/10.3389/fninf.2017.00076/full]
+[DSK: this defition is a bit loose - Also, I like the terminology discussion in <https://www.frontiersin.org/articles/10.3389/fninf.2017.00076/full>]
 
 <!-- TODO: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash reproducibility and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results. -->
 
@@ -53,7 +75,7 @@ TODO: Explain how nuclear national security engineers require reproducibility.
 If computational experiments are allowed to collapse, scientists cannot independently verify or build on those results.
 Thus, software collapse undermines two fundamental norms of science identified by Merton, organized skepticism and communalism [@merton_sociology_1974].
 Software collapse is a technical factor that contributes to the ongoing reproducibility crisis in computational science [@collberg_repeatability_2016], which hinders the credibility of science [@ioannidis_why_2005].
-^[DSK: I might prefer to cite https://www.amazon.com/Science-Fictions-Negligence-Undermine-Search/dp/1250222699 as more broad and a bit less political.]
+^[DSK: I might prefer to cite <https://www.amazon.com/Science-Fictions-Negligence-Undermine-Search/dp/1250222699> as more broad and a bit less political.]
 
 Zhao et al. studied software collapse computational of experiments deposited in the myExperiment registry [@zhao_why_2012].
 They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata.
@@ -96,7 +118,7 @@ However, one can always lower the frequency of testing, which trades off computa
 Additionally, one could test mission-critical experiments more frequently than other experiments.
 If one could predict which workflows were more likely to break, one could also prioritize testing on that basis.
 
-![Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=2.5in }
+![Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
 
 # Methods
 
@@ -124,7 +146,7 @@ We will run the following pseudo-code to collect the data.
 Then we we will analyze it as described in the next section.
 Finally, we plan to publish the raw data we collect for other researchers.
 
-```
+```python
 for registry in registries:
     for experiment in registry:
         for revision in experiment:
