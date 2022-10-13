@@ -119,27 +119,29 @@ Distributing the container image is described in the previous bullet.
   However, the most common of these (Pip, Conda, and Nix) allow users to specify packages _without_ pinning a specific version and require extra steps (often not taken!) to lock the versions.
   Even if the versions are uniquely pinned, data is often not distributed as a package but pulled from ephemeral resources on the internet, 
 
-[SAG: Refer to the literature on reproducing Jupyter/IPython notebooks]
+[SAG: Cite work on reproducing Jupyter/IPython notebooks]
 
 The most straightforward way to improve reproducibility is through proactive solutions^[SAG: citations], but none of these  solutions can mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
 Zhao et al. showed that first of these, networked resources, is the most common cause of software collapse as well [@zhao_why_2012], so irreproducibility due to the network cannot be ignored.
 Therefore, important computational experiments should be protected from collapse by proactive _and_ reactive solutions.
 Here are reactive solutions:
 
-- **Continuous testing:** Automated systems can run the computational experiment periodically to assess if the experiment is both not crashing and still producing the same results.
+- **Continuous testing:**
+  Automated systems can run the computational experiment periodically to assess if the experiment is both not crashing and still producing the same results.
   Continuous testing is robust to more sources of non-determinism, including networked resources, pseudorandomness, and parallel program order.^[Non-determinism in the pseudorandom number generator and program schedule can be injected by the environment.]
   Traditional continuous testing is usually a part of continuous testing and continuous deployment (CI/CD).
   The continuous testing we are proposing here differs from traditional continuous testing in CI/CD because the former is triggered periodically while the latter it is triggered when the code is changed.
   The traditional continuous testing mitigates software regression, which is due to _internal changes_, but periodic continuous testing mitigates software collapse, which is due to _external changes_.
 
-- **Predictive continuous testing:** The major drawback is increased computational cost.
-  However, one can always lower the frequency of testing, which trades off computational resources with efficacy of finding bugs.
-  Additionally, one could test mission-critical experiments more frequently than other experiments.
-  If one could predict which workflows were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive continuous testing_. [SAG: revise]
+  The major drawback is increased computational cost.
+  However, one can always trade off computational resources with latency of finding bugs by reducing the period.
+  In addition to this, if one could predict which workflows were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive continuous testing_. [SAG: revise]
 
-- **Automatic program repair**: [SAG: Write about automatic repair.]
+  ![Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
 
-![Predicting the rate of software collapse can reduce the resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
+- **Automatic program repair:**
+  Automatic program repair seeks to encode solutions for common sources of errors.
+  This has been done successfully in other domains [@henkel_shipwright_2021]^[SAG: cite automatic program repair].
 
 Hinsen suggests that most code should build on reliable, well-tested libraries can provide some degree of resistance to collapse [@hinsen_dealing_2019].
 In practice, many experiments fall into collapse despite their best effort to build on reliable foundations.
@@ -274,12 +276,19 @@ Finally, when the continuous testing finds a failure, the automatic repair we pl
 
 ## Future Work
 
-[SAG: TODO]
+There is a plethora of exciting future work to be done on this topic and with this dataset.
+Many studies of reproducibility such as Collberg and Proebsting [@collberg_repeatability_2016], Zhao et al. [@zhao_why_2012], Henkel et al. [@henkel_shipwright_2021] require a dataset of computational experiments with metadata that supports automatic execution.
+However, each had to construct their own datasets.
+This dataset mined from 6 community standard experimental registries could serve as a starting point for future research on reproducibility.
+Notably, our dataset will contain a distributin of the CPU time, RAM, and disk space needed to run the experiment, so researchers can make informed requests to batch schedulers (rather than guessing a constant runtime distribution for running unknown code).
 
-- Use the dataset for workflows that work, with timeout and resource utilization
-- Automatic scale-down experiments
-- Automatically tune error thresholds
-- Autotuning experiments
+One specific future work is the automatic scaling down of experiments.
+Some computational experiments are difficult to independently reproduce because they require HPC systems.
+If one could scale down the computational experiment automatically while perserving as much fidelity as posisble, anyone could test and verify the scaled-down model.
+Even if the results are off, this ensures that the experiment has no _logical problem_, and it can be taken to an HPC system with more confidence.
+This automatic scaling down might even prove useful for the original inquiry to simulate higher fidelity with fewer resources.
+
+Another specific work is to tune the error thresholds on continuous results from computational experiments^[SAG: cite Saikat Dutta].
 
 # References
 
