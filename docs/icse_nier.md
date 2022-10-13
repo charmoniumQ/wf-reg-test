@@ -12,29 +12,29 @@ cite-method: citeproc
 bibliography: main.bib
 
 # LaTeX options, see template.tex
-title: A dataset of software collapse in scientific science
+title: A dataset of software collapse in scientific software
 author:
   - name: Samuel Grayson
     department: Dept. of Computer Science
     affiliation: Univerity of Illinois Urbana Champaign
-	location: Urbana, IL
-	email: \href{https://orcid.org/0000-0001-5411-356X}{0000-0001-5411-356X}
+    location: Urbana, IL
+    email: \href{https://orcid.org/0000-0001-5411-356X}{0000-0001-5411-356X}
   - name: Daniel S. Katz
     department: NCSA \& CS \& ECE \& iSchool
     affiliation: Univerity of Illinois Urbana Champaign
-	email: \href{https://orcid.org/0000-0001-5934-7525}{0000-0001-5934-7525}
-	location: Urbana, IL
+    email: \href{https://orcid.org/0000-0001-5934-7525}{0000-0001-5934-7525}
+    location: Urbana, IL
   - name: Reed Milewicz
     department: Software Engineering and Research Dept.
     affiliation: Sandia National Laboratories
-	email: \href{mailto:rmilewi@sandia.gov}{rmilewi@sandia.gov}
-	location: Albuquerque, NM
-  - name: Darko Marniov
+    email: \href{mailto:rmilewi@sandia.gov}{rmilewi@sandia.gov}
+    location: Albuquerque, NM
+  - name: Darko Marinov
     department: Dept. of Computer Science
-	affiliation: Univerity of Illinois Urbana Champaign
-	location: Urbana, IL
-	email: \href{https://orcid.org/0000-0001-5023-3492}{0000-0001-5023-3492}
-	# TODO: reformat department, affiliation, email, ORCId
+    affiliation: Univerity of Illinois Urbana Champaign
+    location: Urbana, IL
+    email: \href{https://orcid.org/0000-0001-5023-3492}{0000-0001-5023-3492}
+    # TODO: reformat department, affiliation, email, ORCId
 classoption:
   - conference
 fontsize: 10pt
@@ -60,11 +60,10 @@ abstract: |
 
 Software tends to break over time, even if it is unchanged, due to non-obvious changes in the computational environment.
 This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with unstable foundation.
-^[DSK: and all scientific software has an unstable foundation, unless it's monolithic.]
 Software collapse is not a significant problem in some domains; it is acceptable if Google returns slightly different results one day to the next.
 But in the scientific domain, software collapse could manifest as irreproducible[^1] results, which not only undermine long-term credibility of science but also hinder its day-to-day operations.
 
-[^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means that one can use the same code in a different computational environment to get the same result [DSK: this defition is a bit loose]. If the execution does not terminate successfully, one can consider the error as "the result"; if code crashes in one environment and succeeds in another, that would count as an irreproducibility. Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology.
+[^1]: In this article, we use Claerbout's terminology [@claerbout_electronic_1992]. "Reproducibility" means that one can use the same code in a different computational environment to get the same result [DSK: this defition is a bit loose]. If the execution does not terminate successfully, one can consider the error as "the result"; if code crashes in one environment and succeeds in another, that would count as an irreproducibility. Reproducibility is called "replicability" by some authors; see Plesser [@plesser_reproducibility_2018] for a discussion of terminology. [DSK: I don't think "error" is a verb. Typically, some fault occurs (in the system) or some error in the code is triggered at runtime, which is a fault event - after this fault the code might hang, a crash, or complete.  Two of these are failures. If it completes, the results might or might not be changed, and this change may or may not be significant enough to be "different" that what was expected.]
 
 <!-- TODO: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash reproducibility and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results. -->
 
@@ -73,6 +72,7 @@ TODO: Explain how nuclear national security engineers require reproducibility.
 -->
 
 1. **Undermines long-term credibility**: More than half of scientists surveyed across all fields develop software for their research [@hettrick_softwaresavedsoftware_in_research_survey_2014_2018].
+   ^[DSK: 90+% of researchers use research software, 50% develop it, research papers are filled with software mentions, research funders spend a significant fraction of their budget on software...]
    If computational experiments are allowed to collapse, scientists cannot independently verify or build on each others' results.
    This undermines two fundamental norms of science identified by Merton, organized skepticism and communalism [@merton_sociology_1974], that make science self-correcting.
    In recent years, this has manifested itself as the ongoing reproducibility crisis in computational science [@collberg_repeatability_2016], which damages the long-term credibility of science [@ritchie_science_2020].
@@ -110,8 +110,8 @@ Proactive solutions are preferred because they offer certain guarantees of deter
   For example, Nix only lets users download from the internet if they provide a hash of the expected outcome; if this hash is different, Nix errors because this execution is not going to reproduce th previous one.
   While this is useful for setting up the environment, this approach is only applied to the installation phase not the actual execution phase.
   It would be too burdensome to provide hash for every network access within the application, if the application talks to a database for example.
-
-[DSK: maybe talk about version pinning?]
+^[DSK: maybe talk about version pinning?]
+^[SAG: Refer to the literature on reproducing Jupyter/IPython notebooks]
 
 Furthermore, none of these proactive solutions can mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
 Zhao et al. showed that first of these, networked resources, is the most common cause of software collapse as well [@zhao_why_2012].
@@ -134,13 +134,14 @@ Therefore, we need both proactive _and_ reactive solutions.
 Hinsen suggests that most code should build on reliable, well-tested libraries can provide some degree of resistance to collapse [@hinsen_dealing_2019].
 In practice, many experiments fall into collapse despite their best effort to build on reliable foundations.
 If that level of reliability is insufficient, one can add continuous testing to help get more reliability.
+^[SAG: Explain why we need dataset (to improve reproducibility through continuous testing, automatic program repair, and identify best practices).]
 
-This paper will build a dataset of software collapse of computatoinal experiments and answer the following questions:
-1. What are typical rates of decay? This number is not well-known, since the last experiment to measure it was Zhao et al., and we have new reproducibility technology (NextFlow over Taverna).
-2. Can we predict the rate of decay for a project based on its history (if available) and code? A predictive model is important for the next research question. The model should function on a "cold start", where we know nothing about the computational experiments historical results, but it should be able to learn from those historical runs if they are present.
-3. Can we improve the efficiency of continuous testing by predicting the rate of decay? This could be useful for instutions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
-4. What are the best practices that improve reproducibility? This lets us make recommendations that are empirically backed.
-5. In what fraction of the cases does automatic repair work? Automatic repair could let one run old workflows off-the-shelf with no modification.
+This paper will build a dataset of software collapse of computatoinal experiments and answer the following research questions:
+- **RQ1 measure rate of software collapse:** What are typical rates of software collapse over time? This number is not well-known, since the last experiment to measure it was Zhao et al., and we have new reproducibility technology (NextFlow over Taverna).
+- **RQ2 predict rate of software collapse:**  Can we predict the rate of decay for a project based on its history (if available) and code? A predictive model is important for the next research question. The model should function on a "cold start", where we know nothing about the computational experiments historical results, but it should be able to learn from those historical runs if they are present.
+- **RQ3 optimize continuous testing:** Can we improve the efficiency of continuous testing by predicting the rate of decay? This could be useful for instutions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
+- **RQ4 identify best practices:** What are the best practices that improve reproducibility? This lets us make recommendations that are empirically backed.
+- **RQ5 attempt automatic repair:** In what fraction of the cases does automatic repair work? Automatic repair could let one run old workflows off-the-shelf with no modification.
 
 # Methods (Collecting data)
 
@@ -185,21 +186,22 @@ for registry in registries:
 
 # Analysis
 
-- **RQ1: measure rate of collapse**: We plan to replicate the quantities described by Zhao et al. [@zhao_why_2012] to see if these have changed since that work, or if they are different for workflows^[SAG: Let's simplify this]: proportion of broken experiments, and proportion of breakages due to each reason (volatile third-party resources, missing example data, missing execution environment, insufficient description).
+- **RQ1 measure rate of collapse:** We plan to replicate the quantities described by Zhao et al. [@zhao_why_2012] to see if these have changed since that work, or if they are different for workflows^[SAG: Let's simplify this]: proportion of broken experiments, and proportion of breakages due to each reason (volatile third-party resources, missing example data, missing execution environment, insufficient description).
 To this, we add "reproducible results" as a new "level" of success, beyond merely not crashing.
 We also plan to extend the failure classification of Zhao et al. by going into deeper subcategories.
 We will also study how the proportion of broken experiments changes with time.
 
-- **RQ2: predict rate of collapse**: We will develop predictive models based on the history of failures, staleness, properties of the code in the revision, and other determinants to predict the probability that a given experiment will fail.
+- **RQ2 predict rate of collapse:** We will develop predictive models based on the history of failures, staleness, properties of the code in the revision, and other determinants to predict the probability that a given experiment will fail.
 We will use information theory criteria to quantify the difference from our predicted distribution to the actual distribution.
 
-- **RQ3: improve continuous testing**: We can improve resource utilization of continuous testing by using our dataset to predict the rate of collapse of various computational experiments.
+- **RQ3 improve continuous testing:** We can improve resource utilization of continuous testing by using our dataset to predict the rate of collapse of various computational experiments.
 Testing experiments prone to failure more often than reliable ones could save computational resources while maintaining approximately the same degree of reliability in all experiments.
 
-- **RQ4: identify best practices**: We can also use this data to identify practices that improve the reproducibility and longevity of computational experiments.
+- **RQ4 identify best practices:** We can also use this data to identify practices that improve the reproducibility and longevity of computational experiments.
 We will use a "Bayes net" to test for confounding causal variables.
+^[SAG: what best practices? Try looking at workflow manager, cyclomatic complexity, SLoC, grammatical size, reproducibility tools (docker, requirements.txt with pinned packages, singularity)]
 
-- **RQ5: attempt automatic repair**: Once we know what kinds of failure are possible, we can also investigate automatic repair.
+- **RQ5 attempt automatic repair:** Once we know what kinds of failure are possible, we can also investigate automatic repair.
 Our dataset will contain the output logs for each failure.
 Therefore, we can apply similar techniques to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize many failures into a few clusters.
 
