@@ -237,3 +237,52 @@ interest: 91},
 	pages = {62--69},
 	file = {2812803.pdf:/home/sam/Zotero/storage/JGDDR733/2812803.pdf:application/pdf},
 }
+
+@inproceedings{dutta_flex_2021,
+	address = {New York, NY, USA},
+	series = {{ESEC}/{FSE} 2021},
+	title = {{FLEX}: fixing flaky tests in machine learning projects by updating assertion bounds},
+	isbn = {978-1-4503-8562-6},
+	shorttitle = {{FLEX}},
+	url = {https://doi.org/10.1145/3468264.3468615},
+	doi = {10.1145/3468264.3468615},
+	abstract = {Many machine learning (ML) algorithms are inherently random – multiple executions using the same inputs may produce slightly different results each time. Randomness impacts how developers write tests that check for end-to-end quality of their implementations of these ML algorithms. In particular, selecting the proper thresholds for comparing obtained quality metrics with the reference results is a non-intuitive task, which may lead to flaky test executions. We present FLEX, the first tool for automatically fixing flaky tests due to algorithmic randomness in ML algorithms. FLEX fixes tests that use approximate assertions to compare actual and expected values that represent the quality of the outputs of ML algorithms. We present a technique for systematically identifying the acceptable bound between the actual and expected output quality that also minimizes flakiness. Our technique is based on the Peak Over Threshold method from statistical Extreme Value Theory, which estimates the tail distribution of the output values observed from several runs. Based on the tail distribution, FLEX updates the bound used in the test, or selects the number of test re-runs, based on a desired confidence level. We evaluate FLEX on a corpus of 35 tests collected from the latest versions of 21 ML projects. Overall, FLEX identifies and proposes a fix for 28 tests. We sent 19 pull requests, each fixing one test, to the developers. So far, 9 have been accepted by the developers.},
+	urldate = {2022-10-13},
+	booktitle = {Proceedings of the 29th {ACM} {Joint} {Meeting} on {European} {Software} {Engineering} {Conference} and {Symposium} on the {Foundations} of {Software} {Engineering}},
+	publisher = {Association for Computing Machinery},
+	author = {Dutta, Saikat and Shi, August and Misailovic, Sasa},
+	month = aug,
+	year = {2021},
+	note = {interest: 97},
+	keywords = {reproducibility engineering, software testing},
+	pages = {603--614},
+	file = {Full Text PDF:/home/sam/Zotero/storage/MVEFQYJY/Dutta et al. - 2021 - FLEX fixing flaky tests in machine learning proje.pdf:application/pdf},
+}
+
+@unpublished{vu_outcome-preserving_2022,
+	address = {Rochester, MI},
+	title = {Outcome-{Preserving} {Input} {Reduction} for {Scientific} {Data} {Analysis} {Workflows}},
+	url = {https://seg.inf.unibe.ch/papers/ase22.pdf},
+	abstract = {Analysis of data is the foundation of multiple scientific disciplines,
+manifesting in complex and diverse scientific data analysis work-
+flows often involving exploratory analyses. Such analyses represent
+a particular case for traditional data engineering workflows, as re-
+sults may be hard to interpret and judge whether they are correct
+or not, and where experimentation is a central theme. Oftentimes,
+there are certain aspects of a result which are suspicious and which
+should be further investigated to increase the trustworthiness of the
+workflow’s outcome. To this end, we advocate a semi-automated
+approach to reducing a workflow’s input data while preserving a
+specified outcome of interest, facilitating irregularity localization
+by narrowing down the search space for spotting corrupted input
+data or wrong assumptions made about it. We outline our vision
+on building engineering support for outcome-preserving input re-
+duction within data analysis workflows, and report on preliminary
+results obtained from applying an early research prototype on a
+computational notebook taken from an online community of data
+scientists and machine learning practitioners.},
+	author = {Vu, Anh Duc and Kehrer, Timo and Tsigkanos, Christos},
+	month = oct,
+	year = {2022},
+	note = {interest: 99},
+}
