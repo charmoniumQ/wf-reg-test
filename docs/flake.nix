@@ -31,7 +31,6 @@
             default = nix-utils-lib.mergeDerivations {
               packageSet = nix-utils-lib.packageSetRec
                 (self: [
-                  /*
                   (nix-documents-lib.markdownDocument {
                     src = nix-utils-lib.mergeDerivations {
                       packageSet = {
@@ -44,7 +43,6 @@
                     outputFormat = "pdf";
                     date = 1665609977; # date +%s
                   })
-                  */
                   (nix-documents-lib.markdownDocument {
                     src = nix-utils-lib.mergeDerivations {
                       packageSet = {

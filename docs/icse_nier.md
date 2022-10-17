@@ -52,7 +52,7 @@ abstract: |
   Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
   Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
   We propose to create the first public dataset of automatically executable scientific experiments.
-  We explain how that data can be used to identify best practices, make continuous testing feasible, and repair broken programs.
+  This data could be used to identify best practices, make continuous testing feasible, and repair broken programs.
   These techniques increase the replicability of computational experiments.
 ---
 
@@ -141,16 +141,18 @@ Here are reactive techniques:
 **Continuous testing:**
 Automated systems can run the computational experiment continuously to assess if the experiment is both not crashing and still producing the same results (repeatability).
 Continuous testing is robust to more sources of non-determinism, including networked resources, pseudorandomness, and parallel program order.^[Non-determinism in the pseudorandom number generator and program schedule can be injected by the environment.]
-Testing is usually a part of continuous integration/continuous deployment (CI/CD), but the continuous testing we are proposing here differs from CI/CD because our proposed continuous testing is triggered periodically, while the CI/CD is triggered when the code is changed.
+The continuous testing we are proposing here differs from CI/CD because our proposed continuous testing is triggered periodically, while the CI/CD is triggered when the code is changed.
 CI/CD mitigates software regressions, which are due to _internal changes_, but continuous testing mitigates software collapse, which is due to _external changes_.
 The major drawback is increased computational cost, since running a computational experiment can be expensive.
-However, if one could predict which workflows were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive continuous testing_.
+However, if one could predict which experiments were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive maintenance_.
 
   ![Predicting the rate of software collapse can reduce resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
 
 **Automatic program repair:**
-Automatic program repair seeks to encode solutions for common sources of errors.
-This has been done successfully in other domains [@henkel_shipwright_2021]
+Automatic program repair seeks to manually encode and automatically apply solutions for common sources of errors.
+This has been done successfully in other domains [@henkel_shipwright_2021].
+This pairs well with continuous testing, since continuous testing identifies the errors, and automatic program repair can try to fix it.
+Continuous testing can help a human encode solutions for errors as well.
   
   <!--
   TODO: SAG: cite automatic program repair
@@ -191,7 +193,7 @@ This lets us make recommendations that are empirically backed.
 
 **RQ6:**
 In what fraction of the cases does automatic repair work?
-Automatic repair could let one run old workflows off-the-shelf with no modification.
+Automatic repair could let one run old experiments off-the-shelf.
 
 # Method
 
@@ -205,11 +207,12 @@ These registries include:
 - [myExperiment](https://www.myexperiment.org/)
 - [PegasusHub](https://pegasushub.io)
 - [Globus Flows](https://www.globus.org/platform/services/flows)
+- [WfCommons](https://github.com/wfcommons)
 - The internal repository of private laboratories^[These experiments can be included in our aggregated analysis, but not in the raw dataset.]
 
 We cannot take one computational experiment and simulate it one, five, and ten years into the future.
 Instead, we will look for historical versions of an experiment from one, five, or ten years ago and simulate it today.
-The registries above store historical versions of the workflow.
+The registries above store historical versions of the experiment.
 We make a _time symmetry_ assumption: historical rates of change will be like the future rate of change.
 Some will still work, and some will fail, due to software collapse.
 
@@ -237,7 +240,7 @@ for registry in registries:
 
 **RQ1:**
 We plan to replicate the experiment described by Zhao et al. [@zhao_why_2012], which assesses if the computational experiments are replicable in our environment.
-To this, we add "repeatable results" as a new column.
+To this, we add "single-threaded results repeatable" and "multi-threaded results repeatable" as a new column besides Zhao's columns of "successful" and "failure".
 We will also study how the proportion of broken experiments changes with time.
 Note that a failure could indicate collapse, or it could indicate that the experiment never worked in the first place, due to incomplete metadata.
 We can model this using a Bayesian framework that permits either possibility (never working or collapse) as an unobserved random variable.
@@ -276,7 +279,7 @@ There are two threats to the validity of our work and planned results.
 
 2. It is possible that our sample is not representative of the real world of computational experiments.
    However, we are casting the widest net we can by systematically pulling many experiments from several registries.
-   Still, there is a selection bias in which workflows end up in registries.
+   Still, there is a selection bias in which experiments end up in registries.
    The model has some factors based on the population and some based on the actual history of the experiment.
    Its initial guess when there is no history would be biased by our selection, but it would eventually learn the characteristics of the actual experiment.
 
