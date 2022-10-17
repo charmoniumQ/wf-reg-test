@@ -65,11 +65,10 @@ In the scientific domain, software collapse could manifest as an non-repeatable 
 [^repro-terms]:
 In this article, we use ACM's terminology [@plesser_reproducibility_2018]:
 **Repeatable:** one can execute the computational experiment again in the same computational environment to get an approximately equivalent result.
-**Replicability:** one can execute the computational experiment in a different computational environment to get approximately equivalent results.
-**Reproducibility:** one can execute a novel computational experiment to come to the same conclusion
+**Replicable:** one can execute the computational experiment in a different computational environment to get approximately equivalent results.
+**Reproducible:** one can execute a novel computational experiment to come to the same conclusion
 Reproducibility implies replicability, which implies repeatability, which implies that the software does not crash.
 While the converses are not true, repeatability is a necessary step towards repeatability and repeatability towards reproducibility, so achieving repeatability should make it easier to achieve reproducibility.
-
 
 <!--
 TODO: SAG: define bit-by-bit comparison, exact semantic comparison, approximate semantic comparison, and no-crash comparison. This study primarily deals with no-crash replicability and bit-by-bit repeatability, that is whether anyone can run the code without it crashing, and whether they can get identical results.
