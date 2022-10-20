@@ -207,6 +207,12 @@ This work can be completed within a month.
 
 Of these, 10% of experiments have GPU tasks. Therefore, we estimate our tasks require half a GPU-month or 3 GPUs working continuously for 6 days.
 
+<!--
+TODO:
+6 versions / exp
+30 exp / registry
+-->
+
 ## Requested start date and duration
 
 We request to begin execution on December 1 and completed that month (entirely in Q4), if possible.

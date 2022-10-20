@@ -5083,2316 +5083,6 @@
   url: https://github.com/snakemake-workflows/rna-seq-star-deseq2
   workflow_engine_name: snakemake
 - &id103 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: sandragodinhosilva/melange
-  repo_url: https://github.com/sandragodinhosilva/melange
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-16 15:00:32
-    display_name: v0.2
-    executions: []
-    tree: null
-    url: https://github.com/sandragodinhosilva/melange/tree/v0.2
-    workflow_app: *id103
-  url: https://github.com/sandragodinhosilva/melange
-  workflow_engine_name: snakemake
-- &id104 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: yeyuan98/rna_fish_analysis
-  repo_url: https://github.com/yeyuan98/rna_fish_analysis
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-06 01:52:56
-    display_name: prepublication-v6
-    executions: []
-    tree: null
-    url: https://github.com/yeyuan98/rna_fish_analysis/tree/prepublication-v6
-    workflow_app: *id104
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-25 19:29:22
-    display_name: prepublication-v5
-    executions: []
-    tree: null
-    url: https://github.com/yeyuan98/rna_fish_analysis/tree/prepublication-v5
-    workflow_app: *id104
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-22 17:07:08
-    display_name: prepublication-v4
-    executions: []
-    tree: null
-    url: https://github.com/yeyuan98/rna_fish_analysis/tree/prepublication-v4
-    workflow_app: *id104
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-13 03:09:46
-    display_name: prepublication-v3
-    executions: []
-    tree: null
-    url: https://github.com/yeyuan98/rna_fish_analysis/tree/prepublication-v3
-    workflow_app: *id104
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-11 18:58:44
-    display_name: prepublication-v2
-    executions: []
-    tree: null
-    url: https://github.com/yeyuan98/rna_fish_analysis/tree/prepublication-v2
-    workflow_app: *id104
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-01 18:30:01
-    display_name: prepublication
-    executions: []
-    tree: null
-    url: https://github.com/yeyuan98/rna_fish_analysis/tree/prepublication
-    workflow_app: *id104
-  url: https://github.com/yeyuan98/rna_fish_analysis
-  workflow_engine_name: snakemake
-- &id105 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: vembrane/vembrane-benchmark
-  repo_url: https://github.com/vembrane/vembrane-benchmark
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-10 11:26:49
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/vembrane/vembrane-benchmark/tree/v1.1.0
-    workflow_app: *id105
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-27 13:25:46
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/vembrane/vembrane-benchmark/tree/v1.0.0
-    workflow_app: *id105
-  url: https://github.com/vembrane/vembrane-benchmark
-  workflow_engine_name: snakemake
-- &id106 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: MaNyh/NTRFlows
-  repo_url: https://github.com/MaNyh/NTRFlows
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-22 23:18:59
-    display_name: preproductivealpha
-    executions: []
-    tree: null
-    url: https://github.com/MaNyh/NTRFlows/tree/preproductivealpha
-    workflow_app: *id106
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-15 00:29:08
-    display_name: prepre
-    executions: []
-    tree: null
-    url: https://github.com/MaNyh/NTRFlows/tree/prepre
-    workflow_app: *id106
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-14 00:43:21
-    display_name: pre-alpha-release
-    executions: []
-    tree: null
-    url: https://github.com/MaNyh/NTRFlows/tree/pre-alpha-release
-    workflow_app: *id106
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-18 17:49:55
-    display_name: newtag
-    executions: []
-    tree: null
-    url: https://github.com/MaNyh/NTRFlows/tree/newtag
-    workflow_app: *id106
-  url: https://github.com/MaNyh/NTRFlows
-  workflow_engine_name: snakemake
-- &id107 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/dna-seq-mtb
-  repo_url: https://github.com/snakemake-workflows/dna-seq-mtb
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-10-04 20:53:23
-    display_name: v1.3.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.3.0
-    workflow_app: *id107
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-08 07:08:09
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.2.0
-    workflow_app: *id107
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-20 14:53:20
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.1.0
-    workflow_app: *id107
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-12 13:07:20
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.0.1
-    workflow_app: *id107
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-12 09:26:29
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.0.0
-    workflow_app: *id107
-  url: https://github.com/snakemake-workflows/dna-seq-mtb
-  workflow_engine_name: snakemake
-- &id108 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: dbespiatykh/TBvar
-  repo_url: https://github.com/dbespiatykh/TBvar
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-27 20:10:54
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/dbespiatykh/TBvar/tree/v1.0.0
-    workflow_app: *id108
-  url: https://github.com/dbespiatykh/TBvar
-  workflow_engine_name: snakemake
-- &id109 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: friendsofstrandseq/ashleys-qc-pipeline
-  repo_url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-27 15:35:36
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/v1.2.0
-    workflow_app: *id109
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-02-02 10:34:17
-    display_name: v0.2.0
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/v0.2.0
-    workflow_app: *id109
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-02 14:28:26
-    display_name: 1.2.1
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.2.1
-    workflow_app: *id109
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-27 16:01:49
-    display_name: 1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.2.0
-    workflow_app: *id109
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-21 14:25:01
-    display_name: '1.1'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.1
-    workflow_app: *id109
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-21 13:40:01
-    display_name: '1.0'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.0
-    workflow_app: *id109
-  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline
-  workflow_engine_name: snakemake
-- &id110 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: solida-core/musta
-  repo_url: https://github.com/solida-core/musta
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-14 07:07:31
-    display_name: v1.2.2
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.2.2
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-07 07:22:22
-    display_name: v1.2.1
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.2.1
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-29 12:44:21
-    display_name: v1.2.0.1
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.2.0.1
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-28 10:42:02
-    display_name: v1.2
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.2
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-23 07:26:05
-    display_name: v1.1.1
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.1.1
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-21 08:48:29
-    display_name: v1.1
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.1
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-18 14:26:15
-    display_name: v1.0
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/v1.0
-    workflow_app: *id110
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-22 14:22:05
-    display_name: '1.0'
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/musta/tree/1.0
-    workflow_app: *id110
-  url: https://github.com/solida-core/musta
-  workflow_engine_name: snakemake
-- &id111 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: johnne/map_metaT
-  repo_url: https://github.com/johnne/map_metaT
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-24 06:23:43
-    display_name: v0.0.2
-    executions: []
-    tree: null
-    url: https://github.com/johnne/map_metaT/tree/v0.0.2
-    workflow_app: *id111
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-22 21:54:36
-    display_name: v0.0.1
-    executions: []
-    tree: null
-    url: https://github.com/johnne/map_metaT/tree/v0.0.1
-    workflow_app: *id111
-  url: https://github.com/johnne/map_metaT
-  workflow_engine_name: snakemake
-- &id112 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: SilkeAllmannLab/pacbio_snakemake
-  repo_url: https://github.com/SilkeAllmannLab/pacbio_snakemake
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-29 07:05:29
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/SilkeAllmannLab/pacbio_snakemake/tree/v0.1.0
-    workflow_app: *id112
-  url: https://github.com/SilkeAllmannLab/pacbio_snakemake
-  workflow_engine_name: snakemake
-- &id113 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: hzi-bifo/snakemake-workflow-univec-removal
-  repo_url: https://github.com/hzi-bifo/snakemake-workflow-univec-removal
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-03 19:28:19
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/hzi-bifo/snakemake-workflow-univec-removal/tree/v1.0.0
-    workflow_app: *id113
-  url: https://github.com/hzi-bifo/snakemake-workflow-univec-removal
-  workflow_engine_name: snakemake
-- &id114 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: plycrsk/rna-seq-star-deseq2
-  repo_url: https://github.com/plycrsk/rna-seq-star-deseq2
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-18 12:50:05
-    display_name: v1.2.1
-    executions: []
-    tree: null
-    url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.2.1
-    workflow_app: *id114
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-08-24 15:39:00
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.2.0
-    workflow_app: *id114
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-06 21:34:39
-    display_name: v1.1.2
-    executions: []
-    tree: null
-    url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.1.2
-    workflow_app: *id114
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-06 07:07:05
-    display_name: v1.1.1
-    executions: []
-    tree: null
-    url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.1.1
-    workflow_app: *id114
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-04 10:15:19
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.1.0
-    workflow_app: *id114
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-03-13 05:56:23
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.0.0
-    workflow_app: *id114
-  url: https://github.com/plycrsk/rna-seq-star-deseq2
-  workflow_engine_name: snakemake
-- &id115 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: thomasbtf/sars-cov-2-wbe
-  repo_url: https://github.com/thomasbtf/sars-cov-2-wbe
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-01 09:36:57
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/thomasbtf/sars-cov-2-wbe/tree/v0.1.0
-    workflow_app: *id115
-  url: https://github.com/thomasbtf/sars-cov-2-wbe
-  workflow_engine_name: snakemake
-- &id116 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: matinnuhamunada/genome_assembly_tryouts
-  repo_url: https://github.com/matinnuhamunada/genome_assembly_tryouts
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-21 01:18:16
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/matinnuhamunada/genome_assembly_tryouts/tree/v1.0.0
-    workflow_app: *id116
-  url: https://github.com/matinnuhamunada/genome_assembly_tryouts
-  workflow_engine_name: snakemake
-- &id117 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/cyrcular-calling
-  repo_url: https://github.com/snakemake-workflows/cyrcular-calling
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-14 12:34:53
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/cyrcular-calling/tree/v1.1.0
-    workflow_app: *id117
-  url: https://github.com/snakemake-workflows/cyrcular-calling
-  workflow_engine_name: snakemake
-- &id118 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: CVUA-RRW/FooDMe
-  repo_url: https://github.com/CVUA-RRW/FooDMe
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-13 11:43:30
-    display_name: 1.6.3
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.3
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-20 14:29:51
-    display_name: 1.6.2
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.2
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-17 10:29:23
-    display_name: 1.6.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-09 10:08:45
-    display_name: 1.6.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.0
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-03 08:33:59
-    display_name: 1.5.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.5.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-02 12:44:09
-    display_name: 1.5.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.5.0
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-24 09:18:38
-    display_name: 1.4.9
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.9
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-20 12:08:44
-    display_name: 1.4.8
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.8
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-17 15:47:23
-    display_name: 1.4.7
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.7
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-06 08:34:59
-    display_name: 1.4.6
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.6
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-11 13:53:04
-    display_name: 1.4.5
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.5
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-08 12:48:58
-    display_name: 1.4.4
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.4
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-13 12:41:31
-    display_name: 1.4.2
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.2
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-06 14:27:37
-    display_name: 1.4.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-18 10:57:43
-    display_name: 1.4.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.0
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-21 12:27:15
-    display_name: 1.3.5
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.5
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-25 15:40:31
-    display_name: 1.3.4
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.4
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-18 15:44:34
-    display_name: 1.3.2
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.2
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-18 11:38:59
-    display_name: 1.3.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-15 13:33:11
-    display_name: 1.3.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.0
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-11-09 10:41:09
-    display_name: 1.2.2
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.2.2
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-10-27 11:16:10
-    display_name: 1.2.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.2.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-10-21 13:37:57
-    display_name: 1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.2.0
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-10-20 12:05:43
-    display_name: 1.1.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.1.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-09-09 09:14:08
-    display_name: 1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.1.0
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-09-03 13:15:14
-    display_name: 1.0.2
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.0.2
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-09-03 12:33:52
-    display_name: 1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.0.1
-    workflow_app: *id118
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-09-01 13:38:01
-    display_name: 1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/CVUA-RRW/FooDMe/tree/1.0.0
-    workflow_app: *id118
-  url: https://github.com/CVUA-RRW/FooDMe
-  workflow_engine_name: snakemake
-- &id119 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: solida-core/dima
-  repo_url: https://github.com/solida-core/dima
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-13 13:33:47
-    display_name: v2.0.2
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v2.0.2
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-06 15:20:10
-    display_name: v2.0.1
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v2.0.1
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-01 06:47:40
-    display_name: v2.0
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v2.0
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-27 16:40:51
-    display_name: v1.5
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v1.5
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-11-20 13:17:07
-    display_name: v1.4
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v1.4
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-11-17 15:53:19
-    display_name: v1.3
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v1.3
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-10-13 07:58:38
-    display_name: v1.2
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v1.2
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-06-23 12:41:43
-    display_name: v1.1
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v1.1
-    workflow_app: *id119
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-02-27 10:49:40
-    display_name: v1.0
-    executions: []
-    tree: null
-    url: https://github.com/solida-core/dima/tree/v1.0
-    workflow_app: *id119
-  url: https://github.com/solida-core/dima
-  workflow_engine_name: snakemake
-- &id120 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: TLenfers/multispecies_mitochondrial_variant_analysis
-  repo_url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-30 17:40:22
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v1.0.1
-    workflow_app: *id120
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-29 14:23:02
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v1.0.0
-    workflow_app: *id120
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-28 14:32:34
-    display_name: v0.9.3
-    executions: []
-    tree: null
-    url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v0.9.3
-    workflow_app: *id120
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-28 13:34:27
-    display_name: v0.9.2
-    executions: []
-    tree: null
-    url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v0.9.2
-    workflow_app: *id120
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-28 13:34:27
-    display_name: v0.9.0
-    executions: []
-    tree: null
-    url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v0.9.0
-    workflow_app: *id120
-  url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis
-  workflow_engine_name: snakemake
-- &id121 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: mrvollger/Rhodonite
-  repo_url: https://github.com/mrvollger/Rhodonite
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 15:14:12
-    display_name: v0.12-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.12-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 04:13:40
-    display_name: v0.11-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.11-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 03:54:08
-    display_name: v0.10-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.10-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 03:37:14
-    display_name: v0.9-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.9-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 02:59:27
-    display_name: v0.8-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.8-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-14 15:41:23
-    display_name: v0.7-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.7-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-18 20:27:57
-    display_name: v0.6-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.6-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-18 19:21:32
-    display_name: v0.5-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.5-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-18 18:27:13
-    display_name: v0.4-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.4-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-10-01 15:54:26
-    display_name: v0.3-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.3-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-16 05:50:03
-    display_name: v0.2-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.2-alpha
-    workflow_app: *id121
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-11 23:56:56
-    display_name: v0.1-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/Rhodonite/tree/v0.1-alpha
-    workflow_app: *id121
-  url: https://github.com/mrvollger/Rhodonite
-  workflow_engine_name: snakemake
-- &id122 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: IMS-Bio2Core-Facility/polya_liftover
-  repo_url: https://github.com/IMS-Bio2Core-Facility/polya_liftover
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-17 11:45:42
-    display_name: v2.0.1
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v2.0.1
-    workflow_app: *id122
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-22 14:36:58
-    display_name: v2.0.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v2.0.0
-    workflow_app: *id122
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-06 17:51:02
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v1.1.0
-    workflow_app: *id122
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-06 17:24:05
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v1.0.1
-    workflow_app: *id122
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-06 14:58:04
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v1.0.0
-    workflow_app: *id122
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-22 11:14:07
-    display_name: v0.2.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v0.2.0
-    workflow_app: *id122
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-22 12:19:03
-    display_name: final_as_run
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/final_as_run
-    workflow_app: *id122
-  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover
-  workflow_engine_name: snakemake
-- &id123 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: IMS-Bio2Core-Facility/GTExSnake
-  repo_url: https://github.com/IMS-Bio2Core-Facility/GTExSnake
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-10-27 13:46:33
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.2.0
-    workflow_app: *id123
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-21 08:00:58
-    display_name: v1.1.2
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.1.2
-    workflow_app: *id123
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-20 16:08:46
-    display_name: v1.1.1
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.1.1
-    workflow_app: *id123
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-15 08:48:50
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.1.0
-    workflow_app: *id123
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-14 16:46:32
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.0.0
-    workflow_app: *id123
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-13 09:12:18
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v0.1.0
-    workflow_app: *id123
-  url: https://github.com/IMS-Bio2Core-Facility/GTExSnake
-  workflow_engine_name: snakemake
-- &id124 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: IMS-Bio2Core-Facility/single_snake_sequencing
-  repo_url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-13 14:05:12
-    display_name: v0.1.2
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing/tree/v0.1.2
-    workflow_app: *id124
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-02 12:58:27
-    display_name: v0.1.1
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing/tree/v0.1.1
-    workflow_app: *id124
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-10-27 14:24:24
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing/tree/v0.1.0
-    workflow_app: *id124
-  url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing
-  workflow_engine_name: snakemake
-- &id125 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: huzuner/Tumor-microbiome-calling
-  repo_url: https://github.com/huzuner/Tumor-microbiome-calling
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-06 12:40:56
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/huzuner/Tumor-microbiome-calling/tree/v1.0.0
-    workflow_app: *id125
-  url: https://github.com/huzuner/Tumor-microbiome-calling
-  workflow_engine_name: snakemake
-- &id126 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: nikostr/dna-seq-deepvariant-glnexus-variant-calling
-  repo_url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-06-30 12:24:27
-    display_name: v0.3.1
-    executions: []
-    tree: null
-    url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.3.1
-    workflow_app: *id126
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-06-04 08:19:14
-    display_name: v0.3.0
-    executions: []
-    tree: null
-    url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.3.0
-    workflow_app: *id126
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-06-01 14:10:45
-    display_name: v0.2.0
-    executions: []
-    tree: null
-    url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.2.0
-    workflow_app: *id126
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-03 08:48:50
-    display_name: v0.1.0-alpha
-    executions: []
-    tree: null
-    url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.1.0-alpha
-    workflow_app: *id126
-  url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling
-  workflow_engine_name: snakemake
-- &id127 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: epigen/unsupervised_analysis
-  repo_url: https://github.com/epigen/unsupervised_analysis
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-09 13:43:14
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/epigen/unsupervised_analysis/tree/v0.1.0
-    workflow_app: *id127
-  url: https://github.com/epigen/unsupervised_analysis
-  workflow_engine_name: snakemake
-- &id128 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: akcorut/kGWASflow
-  repo_url: https://github.com/akcorut/kGWASflow
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-22 16:28:20
-    display_name: v0.1.0-beta
-    executions: []
-    tree: null
-    url: https://github.com/akcorut/kGWASflow/tree/v0.1.0-beta
-    workflow_app: *id128
-  url: https://github.com/akcorut/kGWASflow
-  workflow_engine_name: snakemake
-- &id129 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/dna-seq-benchmark
-  repo_url: https://github.com/snakemake-workflows/dna-seq-benchmark
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-25 14:58:40
-    display_name: v1.4.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.4.1
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-25 09:58:16
-    display_name: v1.4.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.4.0
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-20 14:28:08
-    display_name: v1.3.6
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.6
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-08 07:58:17
-    display_name: v1.3.5
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.5
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-09 20:13:51
-    display_name: v1.3.4
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.4
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 20:00:30
-    display_name: v1.3.3
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.3
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 15:55:58
-    display_name: v1.3.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.2
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 15:51:48
-    display_name: v1.3.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.1
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 15:25:56
-    display_name: v1.3.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.0
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-15 10:43:27
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.2.0
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 13:38:35
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.1.0
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-20 11:52:03
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.0.1
-    workflow_app: *id129
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-20 09:22:11
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.0.0
-    workflow_app: *id129
-  url: https://github.com/snakemake-workflows/dna-seq-benchmark
-  workflow_engine_name: snakemake
-- &id130 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: dbespiatykh/RDscan
-  repo_url: https://github.com/dbespiatykh/RDscan
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-03 17:38:32
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/dbespiatykh/RDscan/tree/v1.0.0
-    workflow_app: *id130
-  url: https://github.com/dbespiatykh/RDscan
-  workflow_engine_name: snakemake
-- &id131 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: mrvollger/fastCN-smk
-  repo_url: https://github.com/mrvollger/fastCN-smk
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-20 18:05:40
-    display_name: v0.1-alpha
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/fastCN-smk/tree/v0.1-alpha
-    workflow_app: *id131
-  url: https://github.com/mrvollger/fastCN-smk
-  workflow_engine_name: snakemake
-- &id132 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/benchmark-giab
-  repo_url: https://github.com/snakemake-workflows/benchmark-giab
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-25 14:58:40
-    display_name: v1.4.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.4.1
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-25 09:58:16
-    display_name: v1.4.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.4.0
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-20 14:28:08
-    display_name: v1.3.6
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.6
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-08 07:58:17
-    display_name: v1.3.5
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.5
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-09 20:13:51
-    display_name: v1.3.4
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.4
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 20:00:30
-    display_name: v1.3.3
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.3
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 15:55:58
-    display_name: v1.3.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.2
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 15:51:48
-    display_name: v1.3.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.1
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-05 15:25:56
-    display_name: v1.3.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.0
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-15 10:43:27
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.2.0
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 13:38:35
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.1.0
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-20 11:52:03
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.0.1
-    workflow_app: *id132
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-20 09:22:11
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.0.0
-    workflow_app: *id132
-  url: https://github.com/snakemake-workflows/benchmark-giab
-  workflow_engine_name: snakemake
-- &id133 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/species-quantification
-  repo_url: https://github.com/snakemake-workflows/species-quantification
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-06 12:40:56
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/species-quantification/tree/v1.0.0
-    workflow_app: *id133
-  url: https://github.com/snakemake-workflows/species-quantification
-  workflow_engine_name: snakemake
-- &id134 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: sreichl/atacseq_pipeline
-  repo_url: https://github.com/sreichl/atacseq_pipeline
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-11 09:59:11
-    display_name: v0.1.1
-    executions: []
-    tree: null
-    url: https://github.com/sreichl/atacseq_pipeline/tree/v0.1.1
-    workflow_app: *id134
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-02 16:54:59
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/sreichl/atacseq_pipeline/tree/v0.1.0
-    workflow_app: *id134
-  url: https://github.com/sreichl/atacseq_pipeline
-  workflow_engine_name: snakemake
-- &id135 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: IKIM-Essen/uncovar
-  repo_url: https://github.com/IKIM-Essen/uncovar
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-25 11:46:31
-    display_name: v0.15.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.15.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-21 09:59:04
-    display_name: v0.14.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.14.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-06 13:11:52
-    display_name: v0.13.2
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.2
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-04 08:01:16
-    display_name: v0.13.1
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.1
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-03 15:47:42
-    display_name: v0.13.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-24 10:06:55
-    display_name: v0.12.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.12.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-21 12:37:47
-    display_name: v0.11.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.11.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-19 22:14:04
-    display_name: v0.10.2
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.10.2
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-19 16:40:52
-    display_name: v0.10.1
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.10.1
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-17 08:03:10
-    display_name: v0.10.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.10.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-16 07:03:36
-    display_name: v0.9.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.9.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-15 15:45:55
-    display_name: v0.8.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.8.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-14 23:31:16
-    display_name: v0.7.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.7.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-13 14:33:39
-    display_name: v0.6.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.6.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-09 14:07:46
-    display_name: v0.5.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.5.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-08 09:50:17
-    display_name: v0.4.1
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.4.1
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-02 22:02:15
-    display_name: v0.4.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.4.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-30 10:56:01
-    display_name: v0.3.1
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.3.1
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-05 13:46:55
-    display_name: v0.3.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.3.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-23 09:18:41
-    display_name: v0.2.5
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.5
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-23 08:56:00
-    display_name: v0.2.4
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.4
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-23 07:26:02
-    display_name: v0.2.3
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.3
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-22 20:22:20
-    display_name: v0.2.2
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.2
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-22 17:10:19
-    display_name: v0.2.1
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.1
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-22 15:07:23
-    display_name: v0.2.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.0
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-20 15:41:21
-    display_name: v0.1.8
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.8
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-20 15:10:21
-    display_name: v0.1.7
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.7
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-16 13:22:21
-    display_name: v0.1.6
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.6
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-15 15:01:32
-    display_name: v0.1.5
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.5
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-15 13:36:03
-    display_name: v0.1.4
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.4
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-13 15:39:42
-    display_name: v0.1.3
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.3
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-07 12:10:54
-    display_name: v0.1.2
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.2
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-01 12:48:30
-    display_name: v0.1.1
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.1
-    workflow_app: *id135
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-01 07:55:53
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.0
-    workflow_app: *id135
-  url: https://github.com/IKIM-Essen/uncovar
-  workflow_engine_name: snakemake
-- &id136 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: friendsofstrandseq/mosaicatcher-pipeline
-  repo_url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-09 12:56:52
-    display_name: 1.7.0
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.7.0
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-29 09:41:54
-    display_name: 1.6.0
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.6.0
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-22 13:50:55
-    display_name: 1.6.0_stable
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.6.0_stable
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-04 22:08:37
-    display_name: 1.5.1
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.5.1
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-30 13:04:02
-    display_name: 1.5.1-dev
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.5.1-dev
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-29 17:12:47
-    display_name: '1.5'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.5
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-04 21:55:18
-    display_name: 1.4.1
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.4.1
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-21 07:20:19
-    display_name: '1.4'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.4
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-14 15:32:45
-    display_name: '1.3'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.3
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-18 14:56:50
-    display_name: 1.2.3
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.2.3
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-18 10:47:15
-    display_name: 1.2.2
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.2.2
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-17 15:27:28
-    display_name: 1.2.1
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.2.1
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-17 14:28:22
-    display_name: '1.2'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.2
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-03 09:28:37
-    display_name: '1.1'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.1
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-09-16 08:28:22
-    display_name: '1.0'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.0
-    workflow_app: *id136
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2018-06-26 14:01:20
-    display_name: '0.1'
-    executions: []
-    tree: null
-    url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/0.1
-    workflow_app: *id136
-  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline
-  workflow_engine_name: snakemake
-- &id137 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: sneuensc/mapache
-  repo_url: https://github.com/sneuensc/mapache
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-05 08:52:54
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/sneuensc/mapache/tree/v0.1.0
-    workflow_app: *id137
-  url: https://github.com/sneuensc/mapache
-  workflow_engine_name: snakemake
-- &id138 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: epigen/atacseq_pipeline
-  repo_url: https://github.com/epigen/atacseq_pipeline
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-11 09:59:11
-    display_name: v0.1.1
-    executions: []
-    tree: null
-    url: https://github.com/epigen/atacseq_pipeline/tree/v0.1.1
-    workflow_app: *id138
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-02 16:54:59
-    display_name: v0.1.0
-    executions: []
-    tree: null
-    url: https://github.com/epigen/atacseq_pipeline/tree/v0.1.0
-    workflow_app: *id138
-  url: https://github.com/epigen/atacseq_pipeline
-  workflow_engine_name: snakemake
-- &id139 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: mrvollger/StainedGlass
-  repo_url: https://github.com/mrvollger/StainedGlass
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-02 05:01:51
-    display_name: v0.5
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/StainedGlass/tree/v0.5
-    workflow_app: *id139
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-08 08:05:15
-    display_name: v0.4
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/StainedGlass/tree/v0.4
-    workflow_app: *id139
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-24 17:48:39
-    display_name: v0.3
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/StainedGlass/tree/v0.3
-    workflow_app: *id139
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-23 02:38:54
-    display_name: v0.2
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/StainedGlass/tree/v0.2
-    workflow_app: *id139
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-08-23 15:32:52
-    display_name: v0.1
-    executions: []
-    tree: null
-    url: https://github.com/mrvollger/StainedGlass/tree/v0.1
-    workflow_app: *id139
-  url: https://github.com/mrvollger/StainedGlass
-  workflow_engine_name: snakemake
-- &id140 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: GooglingTheCancerGenome/sv-callers
-  repo_url: https://github.com/GooglingTheCancerGenome/sv-callers
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-06 14:15:56
-    display_name: v1.2.1
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.2.1
-    workflow_app: *id140
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-06-23 15:20:02
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.2.0
-    workflow_app: *id140
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-08 23:21:47
-    display_name: v1.1.3
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.3
-    workflow_app: *id140
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-10-26 16:12:08
-    display_name: v1.1.2
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.2
-    workflow_app: *id140
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-02-06 22:27:43
-    display_name: v1.1.1
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.1
-    workflow_app: *id140
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-05-06 16:36:21
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.0
-    workflow_app: *id140
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2018-04-11 18:03:07
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.0.0
-    workflow_app: *id140
-  url: https://github.com/GooglingTheCancerGenome/sv-callers
-  workflow_engine_name: snakemake
-- &id141 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/rna-seq-kallisto-sleuth
-  repo_url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-29 10:03:35
-    display_name: v2.4.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.4.0
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-01 15:43:26
-    display_name: v2.3.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.3.2
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-21 13:46:23
-    display_name: v2.3.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.3.1
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-10-08 08:47:28
-    display_name: v2.3.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.3.0
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-08-31 11:49:49
-    display_name: v2.2.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.2.1
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-08-30 13:48:18
-    display_name: v2.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.2.0
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-17 11:42:44
-    display_name: v2.1.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.1.1
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-14 13:29:13
-    display_name: v2.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.1.0
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-11 14:59:11
-    display_name: v2.0.4
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.4
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-11 13:41:46
-    display_name: v2.0.3
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.3
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-04-08 11:04:04
-    display_name: v2.0.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.2
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-14 15:57:57
-    display_name: v2.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.1
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-10-14 19:57:16
-    display_name: v2.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.0
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-04-02 12:45:38
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v1.1.0
-    workflow_app: *id141
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-04-02 09:18:30
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v1.0.0
-    workflow_app: *id141
-  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth
-  workflow_engine_name: snakemake
-- &id142 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/dna-seq-varlociraptor
-  repo_url: https://github.com/snakemake-workflows/dna-seq-varlociraptor
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-28 08:54:02
-    display_name: v3.18.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.18.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-28 08:39:08
-    display_name: v3.18.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.18.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-27 14:46:56
-    display_name: v3.17.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.17.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-23 19:45:14
-    display_name: v3.17.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.17.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-09-01 10:36:52
-    display_name: v3.16.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.16.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-08-08 06:20:09
-    display_name: v3.15.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.15.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-07-25 12:28:52
-    display_name: v3.14.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.14.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-20 14:46:00
-    display_name: v3.14.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.14.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-12 13:03:11
-    display_name: v3.13.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.13.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-12 07:36:30
-    display_name: v3.13.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.13.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-10 13:08:32
-    display_name: v3.12.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.12.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-10 11:15:22
-    display_name: v3.11.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.11.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-05-02 11:26:06
-    display_name: v3.10.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.10.2
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-30 06:46:29
-    display_name: v3.10.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.10.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-26 10:07:46
-    display_name: v3.10.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.10.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-04-08 09:11:43
-    display_name: v3.9.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.9.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-24 08:59:22
-    display_name: v3.8.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.8.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-03-14 16:10:40
-    display_name: v3.8.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.8.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-23 13:49:29
-    display_name: v3.7.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.7.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-17 15:42:17
-    display_name: v3.7.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.7.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-02-10 07:05:38
-    display_name: v3.6.3
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.3
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-20 09:27:09
-    display_name: v3.6.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.2
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-14 09:38:25
-    display_name: v3.6.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-10 16:07:24
-    display_name: v3.6.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-10 08:43:21
-    display_name: v3.5.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.5.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-12-17 07:54:59
-    display_name: v3.4.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.4.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-18 18:50:26
-    display_name: v3.3.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.3.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-11 13:15:20
-    display_name: v3.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.2.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-11-03 11:34:25
-    display_name: v3.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.1.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-09-03 11:52:55
-    display_name: v3.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.0.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-21 13:42:37
-    display_name: v2.0.6
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.6
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-19 08:34:35
-    display_name: v2.0.5
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.5
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-14 15:59:34
-    display_name: v2.0.4
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.4
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-14 15:22:57
-    display_name: v2.0.3
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.3
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-14 13:11:13
-    display_name: v2.0.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.2
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-14 10:55:41
-    display_name: v2.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-09 20:21:26
-    display_name: v2.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-07-02 13:54:47
-    display_name: v1.5.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.5.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-06-07 19:06:18
-    display_name: v1.4.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.4.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-28 10:44:51
-    display_name: v1.3.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.3.2
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-27 19:41:56
-    display_name: v1.3.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.3.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-27 19:35:05
-    display_name: v1.3.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.3.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-19 13:23:40
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.2.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-07 09:05:58
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.1.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-04-27 14:43:53
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.0.1
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-04-01 14:06:48
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.0.0
-    workflow_app: *id142
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2022-01-10 08:39:02
-    display_name: 3.5.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/3.5.0
-    workflow_app: *id142
-  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor
-  workflow_engine_name: snakemake
-- &id143 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/dna-seq-gatk-variant-calling
-  repo_url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-02 15:14:22
-    display_name: v2.1.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.1.1
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-04-30 18:11:40
-    display_name: v2.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.1.0
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-04-09 21:51:35
-    display_name: v2.0.3
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.3
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-04-09 21:39:12
-    display_name: v2.0.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.2
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-01-14 15:59:46
-    display_name: v2.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.1
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2020-06-01 19:10:53
-    display_name: v2.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.0
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-02-08 09:26:57
-    display_name: v1.0.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v1.0.1
-    workflow_app: *id143
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-02-08 09:24:57
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v1.0.0
-    workflow_app: *id143
-  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling
-  workflow_engine_name: snakemake
-- &id144 !!python/object:wf_reg_test.workflows2.WorkflowApp2
-  display_name: snakemake-workflows/rna-seq-star-deseq2
-  repo_url: https://github.com/snakemake-workflows/rna-seq-star-deseq2
-  revisions:
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-08-24 15:39:00
-    display_name: v1.2.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.2.0
-    workflow_app: *id144
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-06 21:34:39
-    display_name: v1.1.2
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.1.2
-    workflow_app: *id144
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-06 07:07:05
-    display_name: v1.1.1
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.1.1
-    workflow_app: *id144
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2021-05-04 10:15:19
-    display_name: v1.1.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.1.0
-    workflow_app: *id144
-  - !!python/object:wf_reg_test.workflows2.Revision2
-    datetime: 2019-03-13 05:56:23
-    display_name: v1.0.0
-    executions: []
-    tree: null
-    url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.0.0
-    workflow_app: *id144
-  url: https://github.com/snakemake-workflows/rna-seq-star-deseq2
-  workflow_engine_name: snakemake
-- &id145 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: airrflow
   repo_url: https://github.com/nf-core/airrflow
   revisions:
@@ -7402,52 +5092,52 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/2.3.0
-    workflow_app: *id145
+    workflow_app: *id103
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-06-03 14:01:06
     display_name: 2.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/2.2.0
-    workflow_app: *id145
+    workflow_app: *id103
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-05-02 09:28:31
     display_name: 2.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/2.1.0
-    workflow_app: *id145
+    workflow_app: *id103
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-07-19 10:53:40
     display_name: 2.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/2.0.0
-    workflow_app: *id145
+    workflow_app: *id103
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-01-14 11:02:05
     display_name: 1.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/1.2.0
-    workflow_app: *id145
+    workflow_app: *id103
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-11-07 21:14:33
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/1.1.0
-    workflow_app: *id145
+    workflow_app: *id103
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-04-16 11:59:35
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/airrflow/tree/1.0.0
-    workflow_app: *id145
+    workflow_app: *id103
   url: https://nf-co.re/airrflow
   workflow_engine_name: nextflow
-- &id146 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id104 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: bacass
   repo_url: https://github.com/nf-core/bacass
   revisions:
@@ -7457,31 +5147,31 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/bacass/tree/2.0.0
-    workflow_app: *id146
+    workflow_app: *id104
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-11-05 10:58:36
     display_name: 1.1.1
     executions: []
     tree: null
     url: https://github.com/nf-core/bacass/tree/1.1.1
-    workflow_app: *id146
+    workflow_app: *id104
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-12-13 13:06:58
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/bacass/tree/1.1.0
-    workflow_app: *id146
+    workflow_app: *id104
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-05-06 14:46:05
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/bacass/tree/1.0.0
-    workflow_app: *id146
+    workflow_app: *id104
   url: https://nf-co.re/bacass
   workflow_engine_name: nextflow
-- &id147 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id105 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: bactmap
   repo_url: https://github.com/nf-core/bactmap
   revisions:
@@ -7491,24 +5181,24 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/bactmap/tree/v0.9
-    workflow_app: *id147
+    workflow_app: *id105
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-06-18 11:57:15
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/bactmap/tree/1.0.0
-    workflow_app: *id147
+    workflow_app: *id105
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-05-10 15:14:16
     display_name: 0.9.1
     executions: []
     tree: null
     url: https://github.com/nf-core/bactmap/tree/0.9.1
-    workflow_app: *id147
+    workflow_app: *id105
   url: https://nf-co.re/bactmap
   workflow_engine_name: nextflow
-- &id148 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id106 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: cageseq
   repo_url: https://github.com/nf-core/cageseq
   revisions:
@@ -7518,24 +5208,24 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/cageseq/tree/1.0.2
-    workflow_app: *id148
+    workflow_app: *id106
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-11-23 14:47:14
     display_name: 1.0.1
     executions: []
     tree: null
     url: https://github.com/nf-core/cageseq/tree/1.0.1
-    workflow_app: *id148
+    workflow_app: *id106
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-10-16 11:07:52
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/cageseq/tree/1.0.0
-    workflow_app: *id148
+    workflow_app: *id106
   url: https://nf-co.re/cageseq
   workflow_engine_name: nextflow
-- &id149 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id107 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: circdna
   repo_url: https://github.com/nf-core/circdna
   revisions:
@@ -7545,17 +5235,17 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/circdna/tree/1.0.1
-    workflow_app: *id149
+    workflow_app: *id107
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-05-31 20:44:56
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/circdna/tree/1.0.0
-    workflow_app: *id149
+    workflow_app: *id107
   url: https://nf-co.re/circdna
   workflow_engine_name: nextflow
-- &id150 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id108 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: clipseq
   repo_url: https://github.com/nf-core/clipseq
   revisions:
@@ -7565,10 +5255,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/clipseq/tree/1.0.0
-    workflow_app: *id150
+    workflow_app: *id108
   url: https://nf-co.re/clipseq
   workflow_engine_name: nextflow
-- &id151 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id109 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: coproid
   repo_url: https://github.com/nf-core/coproid
   revisions:
@@ -7578,52 +5268,52 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/v0.6.0
-    workflow_app: *id151
+    workflow_app: *id109
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-10-11 15:50:33
     display_name: v0.6
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/v0.6
-    workflow_app: *id151
+    workflow_app: *id109
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-09-26 13:38:34
     display_name: v0.4
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/v0.4
-    workflow_app: *id151
+    workflow_app: *id109
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-09-24 16:59:14
     display_name: v0.3
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/v0.3
-    workflow_app: *id151
+    workflow_app: *id109
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-09-23 17:42:54
     display_name: v0.2
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/v0.2
-    workflow_app: *id151
+    workflow_app: *id109
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-04-29 10:43:48
     display_name: '1.1'
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/1.1
-    workflow_app: *id151
+    workflow_app: *id109
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-04-29 14:43:27
     display_name: '1.0'
     executions: []
     tree: null
     url: https://github.com/nf-core/coproid/tree/1.0
-    workflow_app: *id151
+    workflow_app: *id109
   url: https://nf-co.re/coproid
   workflow_engine_name: nextflow
-- &id152 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id110 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: cutandrun
   repo_url: https://github.com/nf-core/cutandrun
   revisions:
@@ -7633,24 +5323,24 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/cutandrun/tree/2.0
-    workflow_app: *id152
+    workflow_app: *id110
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-01-20 10:59:29
     display_name: '1.1'
     executions: []
     tree: null
     url: https://github.com/nf-core/cutandrun/tree/1.1
-    workflow_app: *id152
+    workflow_app: *id110
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-11-05 14:50:44
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/cutandrun/tree/1.0.0
-    workflow_app: *id152
+    workflow_app: *id110
   url: https://nf-co.re/cutandrun
   workflow_engine_name: nextflow
-- &id153 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id111 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: deepvariant
   repo_url: https://github.com/nf-core/deepvariant
   revisions:
@@ -7660,10 +5350,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/deepvariant/tree/1.0
-    workflow_app: *id153
+    workflow_app: *id111
   url: https://nf-co.re/deepvariant
   workflow_engine_name: nextflow
-- &id154 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id112 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: demultiplex
   repo_url: https://github.com/nf-core/demultiplex
   revisions:
@@ -7673,10 +5363,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/demultiplex/tree/1.0.0
-    workflow_app: *id154
+    workflow_app: *id112
   url: https://nf-co.re/demultiplex
   workflow_engine_name: nextflow
-- &id155 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id113 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: diaproteomics
   repo_url: https://github.com/nf-core/diaproteomics
   revisions:
@@ -7686,52 +5376,52 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.2.4
-    workflow_app: *id155
+    workflow_app: *id113
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-04-26 09:36:16
     display_name: 1.2.3
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.2.3
-    workflow_app: *id155
+    workflow_app: *id113
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-02-24 21:10:43
     display_name: 1.2.2
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.2.2
-    workflow_app: *id155
+    workflow_app: *id113
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-02-18 12:23:20
     display_name: 1.2.1
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.2.1
-    workflow_app: *id155
+    workflow_app: *id113
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-12-15 20:01:49
     display_name: 1.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.2.0
-    workflow_app: *id155
+    workflow_app: *id113
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-12-03 07:51:50
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.1.0
-    workflow_app: *id155
+    workflow_app: *id113
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-11-13 11:21:54
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/diaproteomics/tree/1.0.0
-    workflow_app: *id155
+    workflow_app: *id113
   url: https://nf-co.re/diaproteomics
   workflow_engine_name: nextflow
-- &id156 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id114 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: dualrnaseq
   repo_url: https://github.com/nf-core/dualrnaseq
   revisions:
@@ -7741,10 +5431,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/dualrnaseq/tree/1.0.0
-    workflow_app: *id156
+    workflow_app: *id114
   url: https://nf-co.re/dualrnaseq
   workflow_engine_name: nextflow
-- &id157 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id115 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: epitopeprediction
   repo_url: https://github.com/nf-core/epitopeprediction
   revisions:
@@ -7754,31 +5444,31 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/epitopeprediction/tree/2.1.0
-    workflow_app: *id157
+    workflow_app: *id115
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-12-21 12:23:48
     display_name: 2.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/epitopeprediction/tree/2.0.0
-    workflow_app: *id157
+    workflow_app: *id115
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-10-20 17:01:45
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/epitopeprediction/tree/1.1.0
-    workflow_app: *id157
+    workflow_app: *id115
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-12-05 16:30:27
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/epitopeprediction/tree/1.0.0
-    workflow_app: *id157
+    workflow_app: *id115
   url: https://nf-co.re/epitopeprediction
   workflow_engine_name: nextflow
-- &id158 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id116 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: hic
   repo_url: https://github.com/nf-core/hic
   revisions:
@@ -7788,45 +5478,45 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/hic/tree/1.3.0
-    workflow_app: *id158
+    workflow_app: *id116
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-09-03 07:10:29
     display_name: 1.2.2
     executions: []
     tree: null
     url: https://github.com/nf-core/hic/tree/1.2.2
-    workflow_app: *id158
+    workflow_app: *id116
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-07-09 11:59:07
     display_name: 1.2.1
     executions: []
     tree: null
     url: https://github.com/nf-core/hic/tree/1.2.1
-    workflow_app: *id158
+    workflow_app: *id116
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-06-19 06:34:13
     display_name: 1.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/hic/tree/1.2.0
-    workflow_app: *id158
+    workflow_app: *id116
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-10-16 14:07:09
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/hic/tree/1.1.0
-    workflow_app: *id158
+    workflow_app: *id116
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-05-06 16:50:15
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/hic/tree/1.0.0
-    workflow_app: *id158
+    workflow_app: *id116
   url: https://nf-co.re/hic
   workflow_engine_name: nextflow
-- &id159 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id117 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: hicar
   repo_url: https://github.com/nf-core/hicar
   revisions:
@@ -7836,10 +5526,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/hicar/tree/1.0.0
-    workflow_app: *id159
+    workflow_app: *id117
   url: https://nf-co.re/hicar
   workflow_engine_name: nextflow
-- &id160 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id118 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: hlatyping
   repo_url: https://github.com/nf-core/hlatyping
   revisions:
@@ -7849,73 +5539,73 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/2.0.0
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-08-21 09:20:21
     display_name: 1.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.2.0
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-06-27 09:12:36
     display_name: 1.1.5
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.1.5
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-03-07 10:06:06
     display_name: 1.1.4
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.1.4
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-02-04 13:27:58
     display_name: 1.1.3
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.1.3
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-12-12 14:31:52
     display_name: 1.1.2
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.1.2
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-08-21 07:02:17
     display_name: 1.1.1
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.1.1
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-08-15 12:05:25
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.1.0
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-07-18 13:19:57
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.0.0
-    workflow_app: *id160
+    workflow_app: *id118
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-07-18 13:19:57
     display_name: 1.0.0-rc1
     executions: []
     tree: null
     url: https://github.com/nf-core/hlatyping/tree/1.0.0-rc1
-    workflow_app: *id160
+    workflow_app: *id118
   url: https://nf-co.re/hlatyping
   workflow_engine_name: nextflow
-- &id161 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id119 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: imcyto
   repo_url: https://github.com/nf-core/imcyto
   revisions:
@@ -7925,10 +5615,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/imcyto/tree/1.0.0
-    workflow_app: *id161
+    workflow_app: *id119
   url: https://nf-co.re/imcyto
   workflow_engine_name: nextflow
-- &id162 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id120 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: isoseq
   repo_url: https://github.com/nf-core/isoseq
   revisions:
@@ -7938,24 +5628,24 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/isoseq/tree/1.1.1
-    workflow_app: *id162
+    workflow_app: *id120
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-07-12 06:48:32
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/isoseq/tree/1.1.0
-    workflow_app: *id162
+    workflow_app: *id120
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-06-28 08:46:59
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/isoseq/tree/1.0.0
-    workflow_app: *id162
+    workflow_app: *id120
   url: https://nf-co.re/isoseq
   workflow_engine_name: nextflow
-- &id163 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id121 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: kmermaid
   repo_url: https://github.com/nf-core/kmermaid
   revisions:
@@ -7965,17 +5655,17 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/kmermaid/tree/v0.1.0-alpha
-    workflow_app: *id163
+    workflow_app: *id121
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-10-21 14:59:15
     display_name: 0.1.0-alpha
     executions: []
     tree: null
     url: https://github.com/nf-core/kmermaid/tree/0.1.0-alpha
-    workflow_app: *id163
+    workflow_app: *id121
   url: https://nf-co.re/kmermaid
   workflow_engine_name: nextflow
-- &id164 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id122 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: lncpipe
   repo_url: https://github.com/nf-core/lncpipe
   revisions:
@@ -7985,59 +5675,59 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/v0.2.3
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-08-01 03:12:52
     display_name: v0.2.1
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/v0.2.1
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-03-28 04:27:43
     display_name: v0.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/v0.2.0
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-02-06 08:05:22
     display_name: v0.1.1
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/v0.1.1
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2017-12-09 06:08:45
     display_name: v0.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/v0.1.0
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-09-27 07:46:08
     display_name: V0.2.4
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/V0.2.4
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-07-30 08:11:41
     display_name: 0.2.1
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/0.2.1
-    workflow_app: *id164
+    workflow_app: *id122
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-03-28 09:44:54
     display_name: 0.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/lncpipe/tree/0.2.0
-    workflow_app: *id164
+    workflow_app: *id122
   url: https://nf-co.re/lncpipe
   workflow_engine_name: nextflow
-- &id165 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id123 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: metaboigniter
   repo_url: https://github.com/nf-core/metaboigniter
   revisions:
@@ -8047,17 +5737,17 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/metaboigniter/tree/1.0.1
-    workflow_app: *id165
+    workflow_app: *id123
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-05-08 16:19:44
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/metaboigniter/tree/1.0.0
-    workflow_app: *id165
+    workflow_app: *id123
   url: https://nf-co.re/metaboigniter
   workflow_engine_name: nextflow
-- &id166 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id124 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: mhcquant
   repo_url: https://github.com/nf-core/mhcquant
   revisions:
@@ -8067,136 +5757,136 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/2.3.1
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-04-05 19:15:08
     display_name: 2.3.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/2.3.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-01-14 16:19:15
     display_name: 2.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/2.2.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-12-09 13:58:47
     display_name: 2.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/2.1.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-09-03 06:37:58
     display_name: 2.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/2.0.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-10-06 16:57:39
     display_name: 1.6.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.6.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-04-24 09:23:47
     display_name: 1.5.1
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.5.1
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-04-21 15:07:10
     display_name: '1.5'
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.5
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2020-03-23 19:20:04
     display_name: '1.4'
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.4
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-08-03 15:52:11
     display_name: '1.3'
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.3
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-03-05 21:24:36
     display_name: 1.2.6
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.6
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-03-04 14:11:44
     display_name: 1.2.5
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.5
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-02-06 09:34:00
     display_name: 1.2.4
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.4
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-02-04 13:23:42
     display_name: 1.2.3
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.3
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-01-28 08:47:19
     display_name: 1.2.2
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.2
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-01-25 08:56:39
     display_name: 1.2.1
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.1
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-01-21 12:01:17
     display_name: 1.2.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.2.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-01-04 13:34:16
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.1.0
-    workflow_app: *id166
+    workflow_app: *id124
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2018-11-27 12:24:37
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/mhcquant/tree/1.0.0
-    workflow_app: *id166
+    workflow_app: *id124
   url: https://nf-co.re/mhcquant
   workflow_engine_name: nextflow
-- &id167 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id125 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: mnaseseq
   repo_url: https://github.com/nf-core/mnaseseq
   revisions:
@@ -8206,10 +5896,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/mnaseseq/tree/1.0.0
-    workflow_app: *id167
+    workflow_app: *id125
   url: https://nf-co.re/mnaseseq
   workflow_engine_name: nextflow
-- &id168 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id126 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: nascent
   repo_url: https://github.com/nf-core/nascent
   revisions:
@@ -8219,17 +5909,17 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/nascent/tree/snakemake
-    workflow_app: *id168
+    workflow_app: *id126
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-04-16 08:32:58
     display_name: '1.0'
     executions: []
     tree: null
     url: https://github.com/nf-core/nascent/tree/1.0
-    workflow_app: *id168
+    workflow_app: *id126
   url: https://nf-co.re/nascent
   workflow_engine_name: nextflow
-- &id169 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id127 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: neutronstar
   repo_url: https://github.com/nf-core/neutronstar
   revisions:
@@ -8239,17 +5929,17 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/neutronstar/tree/v0.5
-    workflow_app: *id169
+    workflow_app: *id127
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-12-12 08:36:26
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/neutronstar/tree/1.0.0
-    workflow_app: *id169
+    workflow_app: *id127
   url: https://nf-co.re/neutronstar
   workflow_engine_name: nextflow
-- &id170 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id128 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: pgdb
   repo_url: https://github.com/nf-core/pgdb
   revisions:
@@ -8259,10 +5949,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/pgdb/tree/1.0.0
-    workflow_app: *id170
+    workflow_app: *id128
   url: https://nf-co.re/pgdb
   workflow_engine_name: nextflow
-- &id171 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id129 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: proteomicslfq
   repo_url: https://github.com/nf-core/proteomicslfq
   revisions:
@@ -8272,10 +5962,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/proteomicslfq/tree/1.0.0
-    workflow_app: *id171
+    workflow_app: *id129
   url: https://nf-co.re/proteomicslfq
   workflow_engine_name: nextflow
-- &id172 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id130 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: quantms
   repo_url: https://github.com/nf-core/quantms
   revisions:
@@ -8285,10 +5975,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/quantms/tree/1.0
-    workflow_app: *id172
+    workflow_app: *id130
   url: https://nf-co.re/quantms
   workflow_engine_name: nextflow
-- &id173 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id131 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: rnavar
   repo_url: https://github.com/nf-core/rnavar
   revisions:
@@ -8298,10 +5988,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/rnavar/tree/1.0.0
-    workflow_app: *id173
+    workflow_app: *id131
   url: https://nf-co.re/rnavar
   workflow_engine_name: nextflow
-- &id174 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id132 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: scrnaseq
   repo_url: https://github.com/nf-core/scrnaseq
   revisions:
@@ -8311,31 +6001,31 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/scrnaseq/tree/2.1.0
-    workflow_app: *id174
+    workflow_app: *id132
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2022-06-17 11:48:05
     display_name: 2.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/scrnaseq/tree/2.0.0
-    workflow_app: *id174
+    workflow_app: *id132
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-03-29 07:55:52
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/scrnaseq/tree/1.1.0
-    workflow_app: *id174
+    workflow_app: *id132
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-12-09 16:25:11
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/scrnaseq/tree/1.0.0
-    workflow_app: *id174
+    workflow_app: *id132
   url: https://nf-co.re/scrnaseq
   workflow_engine_name: nextflow
-- &id175 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id133 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: slamseq
   repo_url: https://github.com/nf-core/slamseq
   revisions:
@@ -8345,10 +6035,10 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/slamseq/tree/1.0.0
-    workflow_app: *id175
+    workflow_app: *id133
   url: https://nf-co.re/slamseq
   workflow_engine_name: nextflow
-- &id176 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+- &id134 !!python/object:wf_reg_test.workflows2.WorkflowApp2
   display_name: smrnaseq
   repo_url: https://github.com/nf-core/smrnaseq
   revisions:
@@ -8358,20 +6048,20 @@
     executions: []
     tree: null
     url: https://github.com/nf-core/smrnaseq/tree/2.0.0
-    workflow_app: *id176
+    workflow_app: *id134
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2021-06-15 12:44:13
     display_name: 1.1.0
     executions: []
     tree: null
     url: https://github.com/nf-core/smrnaseq/tree/1.1.0
-    workflow_app: *id176
+    workflow_app: *id134
   - !!python/object:wf_reg_test.workflows2.Revision2
     datetime: 2019-09-20 15:52:42
     display_name: 1.0.0
     executions: []
     tree: null
     url: https://github.com/nf-core/smrnaseq/tree/1.0.0
-    workflow_app: *id176
+    workflow_app: *id134
   url: https://nf-co.re/smrnaseq
   workflow_engine_name: nextflow

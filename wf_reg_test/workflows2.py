@@ -20,6 +20,17 @@ class WorkflowApp2:
     def __str__(self) -> str:
         return f"WorkflowApp2 {self.display_name}"
 
+    def merge(self, other: WorkflowApp2) -> None:
+        url_to_revisions = {
+            revision.url: revision
+            for revision in self.revisions
+        }
+        for revision in other.revisions:
+            if revision.url in url_to_revisions:
+                url_to_revisions[revision.url].merge(revision)
+            else:
+                self.revisions.append(revision)
+
 
 @dataclasses.dataclass
 class Revision2:
@@ -32,6 +43,17 @@ class Revision2:
 
     def __str__(self) -> str:
         return f"Revision2 {self.display_name} of {self.workflow_app}"
+
+    def merge(self, other: Revision2) -> None:
+        machine_time_to_executions = {
+            (execution.machine, execution.datetime): execution
+            for execution in self.executions
+        }
+        for execution in other.executions:
+            if (execution.machine, execution.datetime) in machine_time_to_executions:
+                pass
+            else:
+                self.executions.append(execution)
 
 
 @dataclasses.dataclass

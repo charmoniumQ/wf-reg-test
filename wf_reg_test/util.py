@@ -1,7 +1,8 @@
 import contextlib
 import tempfile
 from pathlib import Path
-from typing import Callable, Generator, Iterable, TypeVar, Union, cast
+from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping
+import itertools
 
 import xxhash
 from gitignore_parser import parse_gitignore  # type: ignore
@@ -73,7 +74,7 @@ def sorted_and_dropped(inp: Iterable[tuple[_T, _V]], reverse: bool = False) -> l
     return [y for x, y in sorted(inp, reverse=reverse)]
 
 
-def groupby_dict(data: Iterable[_T], key: Callable[_T, _V]) -> Mapping[_V, _T]:
+def groupby_dict(data: Iterable[_T], key: Callable[[_T], _V]) -> Mapping[_V, list[_T]]:
     return {
         key: list(group)
         for key, group in itertools.groupby(data, key)
