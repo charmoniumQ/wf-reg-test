@@ -11,7 +11,7 @@ from .html_helpers import (
     html_link,
     html_table,
 )
-from .util import sorted_and_dropped
+from .util import sorted_and_dropped, groupby_dict
 from .workflows2 import WorkflowApp2 as WorkflowApp
 
 
@@ -20,12 +20,7 @@ def is_interesting(wf_app: WorkflowApp) -> bool:
 
 
 def get_stats(all_wf_apps: list[WorkflowApp]) -> html.Element:
-    engine2wf_apps = {
-        key: list(group)
-        for key, group in itertools.groupby(
-            all_wf_apps, lambda wf_app: wf_app.workflow_engine_name
-        )
-    }
+    engine2wf_apps = groupby_dict(all_wf_apps, lambda wf_app: wf_app.workflow_engine_name)
     stats: Mapping[str, Callable[[list[WorkflowApp]], int]] = {
         "N workflows": lambda wf_apps: len(wf_apps),
         "N revisions": lambda wf_apps: sum(len(wf_app.revisions) for wf_app in wf_apps),

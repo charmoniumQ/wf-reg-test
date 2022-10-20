@@ -7392,3 +7392,986 @@
     workflow_app: *id144
   url: https://github.com/snakemake-workflows/rna-seq-star-deseq2
   workflow_engine_name: snakemake
+- &id145 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: airrflow
+  repo_url: https://github.com/nf-core/airrflow
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-09-16 14:44:41
+    display_name: 2.3.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/2.3.0
+    workflow_app: *id145
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-03 14:01:06
+    display_name: 2.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/2.2.0
+    workflow_app: *id145
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-02 09:28:31
+    display_name: 2.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/2.1.0
+    workflow_app: *id145
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-07-19 10:53:40
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/2.0.0
+    workflow_app: *id145
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-01-14 11:02:05
+    display_name: 1.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/1.2.0
+    workflow_app: *id145
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-11-07 21:14:33
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/1.1.0
+    workflow_app: *id145
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-04-16 11:59:35
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/airrflow/tree/1.0.0
+    workflow_app: *id145
+  url: https://nf-co.re/airrflow
+  workflow_engine_name: nextflow
+- &id146 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: bacass
+  repo_url: https://github.com/nf-core/bacass
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-08-27 12:16:44
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bacass/tree/2.0.0
+    workflow_app: *id146
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-11-05 10:58:36
+    display_name: 1.1.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bacass/tree/1.1.1
+    workflow_app: *id146
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-12-13 13:06:58
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bacass/tree/1.1.0
+    workflow_app: *id146
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-05-06 14:46:05
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bacass/tree/1.0.0
+    workflow_app: *id146
+  url: https://nf-co.re/bacass
+  workflow_engine_name: nextflow
+- &id147 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: bactmap
+  repo_url: https://github.com/nf-core/bactmap
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-05-08 16:49:07
+    display_name: v0.9
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bactmap/tree/v0.9
+    workflow_app: *id147
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-06-18 11:57:15
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bactmap/tree/1.0.0
+    workflow_app: *id147
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-05-10 15:14:16
+    display_name: 0.9.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/bactmap/tree/0.9.1
+    workflow_app: *id147
+  url: https://nf-co.re/bactmap
+  workflow_engine_name: nextflow
+- &id148 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: cageseq
+  repo_url: https://github.com/nf-core/cageseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-01-14 07:54:14
+    display_name: 1.0.2
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/cageseq/tree/1.0.2
+    workflow_app: *id148
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-11-23 14:47:14
+    display_name: 1.0.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/cageseq/tree/1.0.1
+    workflow_app: *id148
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-16 11:07:52
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/cageseq/tree/1.0.0
+    workflow_app: *id148
+  url: https://nf-co.re/cageseq
+  workflow_engine_name: nextflow
+- &id149 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: circdna
+  repo_url: https://github.com/nf-core/circdna
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-22 14:03:42
+    display_name: 1.0.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/circdna/tree/1.0.1
+    workflow_app: *id149
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-31 20:44:56
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/circdna/tree/1.0.0
+    workflow_app: *id149
+  url: https://nf-co.re/circdna
+  workflow_engine_name: nextflow
+- &id150 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: clipseq
+  repo_url: https://github.com/nf-core/clipseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-04-27 10:25:00
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/clipseq/tree/1.0.0
+    workflow_app: *id150
+  url: https://nf-co.re/clipseq
+  workflow_engine_name: nextflow
+- &id151 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: coproid
+  repo_url: https://github.com/nf-core/coproid
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-10-11 15:50:33
+    display_name: v0.6.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/v0.6.0
+    workflow_app: *id151
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-10-11 15:50:33
+    display_name: v0.6
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/v0.6
+    workflow_app: *id151
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-09-26 13:38:34
+    display_name: v0.4
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/v0.4
+    workflow_app: *id151
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-09-24 16:59:14
+    display_name: v0.3
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/v0.3
+    workflow_app: *id151
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-09-23 17:42:54
+    display_name: v0.2
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/v0.2
+    workflow_app: *id151
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-04-29 10:43:48
+    display_name: '1.1'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/1.1
+    workflow_app: *id151
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-04-29 14:43:27
+    display_name: '1.0'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/coproid/tree/1.0
+    workflow_app: *id151
+  url: https://nf-co.re/coproid
+  workflow_engine_name: nextflow
+- &id152 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: cutandrun
+  repo_url: https://github.com/nf-core/cutandrun
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-08 13:04:07
+    display_name: '2.0'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/cutandrun/tree/2.0
+    workflow_app: *id152
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-01-20 10:59:29
+    display_name: '1.1'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/cutandrun/tree/1.1
+    workflow_app: *id152
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-11-05 14:50:44
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/cutandrun/tree/1.0.0
+    workflow_app: *id152
+  url: https://nf-co.re/cutandrun
+  workflow_engine_name: nextflow
+- &id153 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: deepvariant
+  repo_url: https://github.com/nf-core/deepvariant
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-11-19 14:32:50
+    display_name: '1.0'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/deepvariant/tree/1.0
+    workflow_app: *id153
+  url: https://nf-co.re/deepvariant
+  workflow_engine_name: nextflow
+- &id154 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: demultiplex
+  repo_url: https://github.com/nf-core/demultiplex
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-10-06 14:18:20
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/demultiplex/tree/1.0.0
+    workflow_app: *id154
+  url: https://nf-co.re/demultiplex
+  workflow_engine_name: nextflow
+- &id155 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: diaproteomics
+  repo_url: https://github.com/nf-core/diaproteomics
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-04-28 19:12:13
+    display_name: 1.2.4
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.2.4
+    workflow_app: *id155
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-04-26 09:36:16
+    display_name: 1.2.3
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.2.3
+    workflow_app: *id155
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-02-24 21:10:43
+    display_name: 1.2.2
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.2.2
+    workflow_app: *id155
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-02-18 12:23:20
+    display_name: 1.2.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.2.1
+    workflow_app: *id155
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-12-15 20:01:49
+    display_name: 1.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.2.0
+    workflow_app: *id155
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-12-03 07:51:50
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.1.0
+    workflow_app: *id155
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-11-13 11:21:54
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/diaproteomics/tree/1.0.0
+    workflow_app: *id155
+  url: https://nf-co.re/diaproteomics
+  workflow_engine_name: nextflow
+- &id156 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: dualrnaseq
+  repo_url: https://github.com/nf-core/dualrnaseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-02-14 19:34:16
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/dualrnaseq/tree/1.0.0
+    workflow_app: *id156
+  url: https://nf-co.re/dualrnaseq
+  workflow_engine_name: nextflow
+- &id157 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: epitopeprediction
+  repo_url: https://github.com/nf-core/epitopeprediction
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-08-04 10:55:55
+    display_name: 2.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/epitopeprediction/tree/2.1.0
+    workflow_app: *id157
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-12-21 12:23:48
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/epitopeprediction/tree/2.0.0
+    workflow_app: *id157
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-20 17:01:45
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/epitopeprediction/tree/1.1.0
+    workflow_app: *id157
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-12-05 16:30:27
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/epitopeprediction/tree/1.0.0
+    workflow_app: *id157
+  url: https://nf-co.re/epitopeprediction
+  workflow_engine_name: nextflow
+- &id158 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: hic
+  repo_url: https://github.com/nf-core/hic
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-05-24 19:00:38
+    display_name: 1.3.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hic/tree/1.3.0
+    workflow_app: *id158
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-09-03 07:10:29
+    display_name: 1.2.2
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hic/tree/1.2.2
+    workflow_app: *id158
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-07-09 11:59:07
+    display_name: 1.2.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hic/tree/1.2.1
+    workflow_app: *id158
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-06-19 06:34:13
+    display_name: 1.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hic/tree/1.2.0
+    workflow_app: *id158
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-10-16 14:07:09
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hic/tree/1.1.0
+    workflow_app: *id158
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-05-06 16:50:15
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hic/tree/1.0.0
+    workflow_app: *id158
+  url: https://nf-co.re/hic
+  workflow_engine_name: nextflow
+- &id159 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: hicar
+  repo_url: https://github.com/nf-core/hicar
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-03 18:41:37
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hicar/tree/1.0.0
+    workflow_app: *id159
+  url: https://nf-co.re/hicar
+  workflow_engine_name: nextflow
+- &id160 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: hlatyping
+  repo_url: https://github.com/nf-core/hlatyping
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-10-18 11:16:08
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/2.0.0
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-08-21 09:20:21
+    display_name: 1.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.2.0
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-06-27 09:12:36
+    display_name: 1.1.5
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.1.5
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-03-07 10:06:06
+    display_name: 1.1.4
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.1.4
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-02-04 13:27:58
+    display_name: 1.1.3
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.1.3
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-12-12 14:31:52
+    display_name: 1.1.2
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.1.2
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-08-21 07:02:17
+    display_name: 1.1.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.1.1
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-08-15 12:05:25
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.1.0
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-07-18 13:19:57
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.0.0
+    workflow_app: *id160
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-07-18 13:19:57
+    display_name: 1.0.0-rc1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/hlatyping/tree/1.0.0-rc1
+    workflow_app: *id160
+  url: https://nf-co.re/hlatyping
+  workflow_engine_name: nextflow
+- &id161 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: imcyto
+  repo_url: https://github.com/nf-core/imcyto
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-05-28 20:54:08
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/imcyto/tree/1.0.0
+    workflow_app: *id161
+  url: https://nf-co.re/imcyto
+  workflow_engine_name: nextflow
+- &id162 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: isoseq
+  repo_url: https://github.com/nf-core/isoseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-09-27 14:59:17
+    display_name: 1.1.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/isoseq/tree/1.1.1
+    workflow_app: *id162
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-07-12 06:48:32
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/isoseq/tree/1.1.0
+    workflow_app: *id162
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-28 08:46:59
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/isoseq/tree/1.0.0
+    workflow_app: *id162
+  url: https://nf-co.re/isoseq
+  workflow_engine_name: nextflow
+- &id163 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: kmermaid
+  repo_url: https://github.com/nf-core/kmermaid
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-21 14:59:15
+    display_name: v0.1.0-alpha
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/kmermaid/tree/v0.1.0-alpha
+    workflow_app: *id163
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-21 14:59:15
+    display_name: 0.1.0-alpha
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/kmermaid/tree/0.1.0-alpha
+    workflow_app: *id163
+  url: https://nf-co.re/kmermaid
+  workflow_engine_name: nextflow
+- &id164 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: lncpipe
+  repo_url: https://github.com/nf-core/lncpipe
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-08-17 01:07:23
+    display_name: v0.2.3
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/v0.2.3
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-08-01 03:12:52
+    display_name: v0.2.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/v0.2.1
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-03-28 04:27:43
+    display_name: v0.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/v0.2.0
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-02-06 08:05:22
+    display_name: v0.1.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/v0.1.1
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2017-12-09 06:08:45
+    display_name: v0.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/v0.1.0
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-09-27 07:46:08
+    display_name: V0.2.4
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/V0.2.4
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-07-30 08:11:41
+    display_name: 0.2.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/0.2.1
+    workflow_app: *id164
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-03-28 09:44:54
+    display_name: 0.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/lncpipe/tree/0.2.0
+    workflow_app: *id164
+  url: https://nf-co.re/lncpipe
+  workflow_engine_name: nextflow
+- &id165 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: metaboigniter
+  repo_url: https://github.com/nf-core/metaboigniter
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-05-18 07:00:38
+    display_name: 1.0.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/metaboigniter/tree/1.0.1
+    workflow_app: *id165
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-05-08 16:19:44
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/metaboigniter/tree/1.0.0
+    workflow_app: *id165
+  url: https://nf-co.re/metaboigniter
+  workflow_engine_name: nextflow
+- &id166 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: mhcquant
+  repo_url: https://github.com/nf-core/mhcquant
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-10 09:14:21
+    display_name: 2.3.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/2.3.1
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-04-05 19:15:08
+    display_name: 2.3.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/2.3.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-01-14 16:19:15
+    display_name: 2.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/2.2.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-12-09 13:58:47
+    display_name: 2.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/2.1.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-09-03 06:37:58
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/2.0.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-06 16:57:39
+    display_name: 1.6.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.6.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-04-24 09:23:47
+    display_name: 1.5.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.5.1
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-04-21 15:07:10
+    display_name: '1.5'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.5
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-03-23 19:20:04
+    display_name: '1.4'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.4
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-08-03 15:52:11
+    display_name: '1.3'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.3
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-03-05 21:24:36
+    display_name: 1.2.6
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.6
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-03-04 14:11:44
+    display_name: 1.2.5
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.5
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-02-06 09:34:00
+    display_name: 1.2.4
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.4
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-02-04 13:23:42
+    display_name: 1.2.3
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.3
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-01-28 08:47:19
+    display_name: 1.2.2
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.2
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-01-25 08:56:39
+    display_name: 1.2.1
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.1
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-01-21 12:01:17
+    display_name: 1.2.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.2.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-01-04 13:34:16
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.1.0
+    workflow_app: *id166
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-11-27 12:24:37
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mhcquant/tree/1.0.0
+    workflow_app: *id166
+  url: https://nf-co.re/mhcquant
+  workflow_engine_name: nextflow
+- &id167 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: mnaseseq
+  repo_url: https://github.com/nf-core/mnaseseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-25 15:42:13
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/mnaseseq/tree/1.0.0
+    workflow_app: *id167
+  url: https://nf-co.re/mnaseseq
+  workflow_engine_name: nextflow
+- &id168 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: nascent
+  repo_url: https://github.com/nf-core/nascent
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-01-28 04:07:40
+    display_name: snakemake
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/nascent/tree/snakemake
+    workflow_app: *id168
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-04-16 08:32:58
+    display_name: '1.0'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/nascent/tree/1.0
+    workflow_app: *id168
+  url: https://nf-co.re/nascent
+  workflow_engine_name: nextflow
+- &id169 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: neutronstar
+  repo_url: https://github.com/nf-core/neutronstar
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2018-09-06 09:01:55
+    display_name: v0.5
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/neutronstar/tree/v0.5
+    workflow_app: *id169
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-12-12 08:36:26
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/neutronstar/tree/1.0.0
+    workflow_app: *id169
+  url: https://nf-co.re/neutronstar
+  workflow_engine_name: nextflow
+- &id170 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: pgdb
+  repo_url: https://github.com/nf-core/pgdb
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-04-27 05:20:18
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/pgdb/tree/1.0.0
+    workflow_app: *id170
+  url: https://nf-co.re/pgdb
+  workflow_engine_name: nextflow
+- &id171 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: proteomicslfq
+  repo_url: https://github.com/nf-core/proteomicslfq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-10-18 21:47:43
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/proteomicslfq/tree/1.0.0
+    workflow_app: *id171
+  url: https://nf-co.re/proteomicslfq
+  workflow_engine_name: nextflow
+- &id172 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: quantms
+  repo_url: https://github.com/nf-core/quantms
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-02 14:58:27
+    display_name: '1.0'
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/quantms/tree/1.0
+    workflow_app: *id172
+  url: https://nf-co.re/quantms
+  workflow_engine_name: nextflow
+- &id173 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: rnavar
+  repo_url: https://github.com/nf-core/rnavar
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-16 13:50:17
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/rnavar/tree/1.0.0
+    workflow_app: *id173
+  url: https://nf-co.re/rnavar
+  workflow_engine_name: nextflow
+- &id174 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: scrnaseq
+  repo_url: https://github.com/nf-core/scrnaseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-10-06 09:43:40
+    display_name: 2.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/scrnaseq/tree/2.1.0
+    workflow_app: *id174
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-06-17 11:48:05
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/scrnaseq/tree/2.0.0
+    workflow_app: *id174
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-03-29 07:55:52
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/scrnaseq/tree/1.1.0
+    workflow_app: *id174
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-12-09 16:25:11
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/scrnaseq/tree/1.0.0
+    workflow_app: *id174
+  url: https://nf-co.re/scrnaseq
+  workflow_engine_name: nextflow
+- &id175 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: slamseq
+  repo_url: https://github.com/nf-core/slamseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2020-05-14 12:29:37
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/slamseq/tree/1.0.0
+    workflow_app: *id175
+  url: https://nf-co.re/slamseq
+  workflow_engine_name: nextflow
+- &id176 !!python/object:wf_reg_test.workflows2.WorkflowApp2
+  display_name: smrnaseq
+  repo_url: https://github.com/nf-core/smrnaseq
+  revisions:
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2022-05-31 19:23:13
+    display_name: 2.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/smrnaseq/tree/2.0.0
+    workflow_app: *id176
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2021-06-15 12:44:13
+    display_name: 1.1.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/smrnaseq/tree/1.1.0
+    workflow_app: *id176
+  - !!python/object:wf_reg_test.workflows2.Revision2
+    datetime: 2019-09-20 15:52:42
+    display_name: 1.0.0
+    executions: []
+    tree: null
+    url: https://github.com/nf-core/smrnaseq/tree/1.0.0
+    workflow_app: *id176
+  url: https://nf-co.re/smrnaseq
+  workflow_engine_name: nextflow

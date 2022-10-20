@@ -1,3 +1,4 @@
+import collections
 import logging
 import warnings
 from datetime import datetime as DateTime
@@ -10,7 +11,7 @@ import yaml
 from tqdm import tqdm
 
 from .engines import engines
-#from .registries import snakemake_registry
+from .registries import snakemake_registry, nf_core_registry
 from .report import report_html
 from .repos import get_repo_accessor
 from .workflows2 import Revision2, WorkflowApp2
@@ -112,6 +113,17 @@ def check_nodes_are_owned(wf_apps: list[WorkflowApp2]) -> None:
         warnings.warn(f"Orphaned data found: {orphaned_data}")
 
 
+def delete_duplicates(wf_apps: List[WorkflowApp2]):
+    workflow_apps_by_repo = dict(itertools.groupby(
+        wf_apps,
+        lambda wf_app: wf_app.repo_url,
+    ))
+    for repo_url, count in collections.Counter(existing_wf_app_repo_urls):
+        if count == 1:
+            break
+        repo_url
+
+
 @ch_time_block.decor()
 def main() -> None:
     with ch_time_block.ctx("load", print_start=False):
@@ -119,14 +131,22 @@ def main() -> None:
             list[WorkflowApp2], yaml.load(data.read_text(), Loader=yaml.Loader)
         )
         assert all(isinstance(wf_app, WorkflowApp2) for wf_app in wf_apps)
-    # with ch_time_block.ctx("process", print_start=False):
-    # wf_apps.extend(snakemake_registry())
-    # wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
-    # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)
-    # remove_phantom_executions(wf_apps)
-    # check_nodes_are_owned(wf_apps)
-    # with ch_time_block.ctx("store", print_start=False):
-    #     data.write_text(yaml.dump(wf_apps))
+    with ch_time_block.ctx("process", print_start=False):
+        existing_wf_app_repo_urls = [
+            wf_app.repo_url
+            for wf_app in wf_apps
+        ]
+        existing_wf_app_repo_urls = set(existing_wf_app_repo_urls)
+        for wf_app in tqdm(nf_core_registry()):
+            if wf_app.repo_url not in existing_wf_app_repo_urls:
+                wf_apps.append(wf_app)
+        wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
+        # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)
+        # remove_phantom_executions(wf_apps)
+        # check_nodes_are_owned(wf_apps)
+        # delete_duplicates(wf_apps)
+    with ch_time_block.ctx("store", print_start=False):
+        data.write_text(yaml.dump(wf_apps))
     with ch_time_block.ctx("report", print_start=False):
         report(wf_apps)
 

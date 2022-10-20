@@ -71,3 +71,10 @@ def walk(
 
 def sorted_and_dropped(inp: Iterable[tuple[_T, _V]], reverse: bool = False) -> list[_V]:
     return [y for x, y in sorted(inp, reverse=reverse)]
+
+
+def groupby_dict(data: Iterable[_T], key: Callable[_T, _V]) -> Mapping[_V, _T]:
+    return {
+        key: list(group)
+        for key, group in itertools.groupby(data, key)
+    }
