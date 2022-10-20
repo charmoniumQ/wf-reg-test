@@ -201,12 +201,11 @@ We plan to collect data on software collapse of computational experiments by aut
 These registries include:
 
 - [nf-core](https://nf-co.re/) <!-- TODO describe each in a sentence -->
-- [Dockstore](https://dockstore.org/)
 - [Snakemake Catalog](https://snakemake.github.io/snakemake-workflow-catalog/)
+- [Dockstore](https://dockstore.org/)
 - [WorkflowHub](https://workflowhub.eu/)
 - [myExperiment](https://www.myexperiment.org/)
 - [PegasusHub](https://pegasushub.io)
-- [Globus Flows](https://www.globus.org/platform/services/flows)
 - [WfCommons](https://github.com/wfcommons)
 - The internal repository of private laboratories^[These experiments can be included in our aggregated analysis, but not in the raw dataset.]
 

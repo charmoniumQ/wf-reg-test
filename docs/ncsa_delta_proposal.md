@@ -91,7 +91,7 @@ We would like to study the usage and efficacy of these techniques and even impro
 However, there is a dearth of data on the repeatability of computational experiments.
 There are experimental registries, but they do not store prior results, so we cannot tell if the experiment is repeatable.
 We plan to collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
-The resources of NCSA Delta are necessary because there are a large number of registries, each experiment can have many version, and each version may take a while to run.
+The resources of NCSA Delta are necessary because there are many registries, each experiment can have many versions, and each version may take a while to run.
 These registries include:
 
 - [nf-core](https://nf-co.re/) <!-- TODO describe each in a sentence -->
@@ -168,21 +168,21 @@ We plan to^[However, we are open to suggestions.] install the Spack environment 
 Among other things, our Spack environment contains Python, Singularity, OpenJDK, and common UNIX libraries.
 The code is not done yet; namely, we need to implement scanning for more registries and execution-handlers for more workflow engines.
 
-Scanning the registries for versions of experiments constitute a few HTTP requests and parsing, so the majority of the computational time is spent in the underlying computational experiments.
+Scanning the registries for versions of experiments constitutes a few HTTP requests and parsing, so the most of the computational time is spent in the underlying computational experiments.
 We have not explicitly characterized the set of experiments, but we expect they are a high-level scripting language driving a set of high-performance kernels across a large in-memory dataset.
 The tasks are usually CPU, with a some experiments having GPU tasks as well.
 CPU tasks are usually memory-bound, while GPU tasks can be either.
 
 We have yet to parallelize the application, but intend to use parallelism to take fully utilize NCSA Delta's resources and get our results in a practical time.
 While parallelism usually exists within an experiment, we will mostly exploit parallelism between experiments.
-That parallelism has low communication and synchronization overhead, because the cost of executing one experiment (order of minutes) dominates the cost of fetching and queuing work-items (order of milliseconds).
-If hundreds of workers were drawing experiments from the queue as soon as they finish, then the central server will receive a request almost twice every second, which will likely not cause a bottleneck.
+That parallelism has low communication and synchronization overhead because the cost of executing one experiment (order of minutes) dominates the cost of fetching and queuing work-items (order of milliseconds).
+If hundreds of workers were drawing experiments from the queue as soon as they finish, then the central server will receive a request twice every second, which will not cause a bottleneck.
 We think this can be implemented easily from our existing-code using the parallel-map paradigm in [Dask](https://www.dask.org/) or [Parsl](http://parsl-project.org/).
 The workers need only receive a path or a URL to a version of an experiment to test (less than a hundred of bytes).
 The workers need only respond with some statistics about the experiment (hundreds of bytes), and the rest of the output can be dumped onto a network filesystem.
 
 The output can be divided into two parts: the "small" output containing statistics regarding the execution cand a hash of the experiment's output and the "big" output containing the experiment's output.
-Each small-data record of an experiment will probably fit in hundreds of bytes, so tens of thousands of versions of experiments will yield one megabate, which will be easily processible on our resources.
+Each small-data record of an experiment will fit in hundreds of bytes, so tens of thousands of versions of experiments will yield one megabyte, which will be easily processible on our resources.
 Research questions 1, 3, 4, and 5 can be answered by just the "small" output.
 Each big-data record could be on the order of gigabytes.
 Research questions 2 and 6 require elements from the "big" output.
@@ -205,7 +205,7 @@ This work can be completed within a month.
 
 <!-- 8 * 100 * 10 * 2 * 1000 / 60/60/24/365 -->
 
-Of these, probably 10% of experiments have GPU tasks. Therefore, we estimate our tasks require half a GPU-month or 3 GPUs working continuously for 6 days.
+Of these, 10% of experiments have GPU tasks. Therefore, we estimate our tasks require half a GPU-month or 3 GPUs working continuously for 6 days.
 
 ## Requested start date and duration
 
