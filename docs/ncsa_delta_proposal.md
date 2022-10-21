@@ -99,8 +99,6 @@ These registries include:
 - [Snakemake Catalog](https://snakemake.github.io/snakemake-workflow-catalog/)
 - [WorkflowHub](https://workflowhub.eu/)
 - [myExperiment](https://www.myexperiment.org/)
-- [PegasusHub](https://pegasushub.io)
-- [Globus Flows](https://www.globus.org/platform/services/flows)
 - [WfCommons](https://github.com/wfcommons)
 
 We cannot take one computational experiment and simulate it one, five, and ten years into the future.
@@ -201,17 +199,20 @@ This work can be completed within a month.
 
 ## Resources required
 
-8 registries, 100 experiments per registry, 10 versions per experiment, 2 executions per experiment, 1000 core-seconds per execution is a total of half a core-year or 32 cores working continuously for 6 days.
+| Registry | Number of experiments
+|------|--|
+|nf-core|32|
+|Snakemake|42|
+|dockstore|~100|
+|WorkflowHub|201|
+|myExperiment|82|
+|WfCommons|7|
 
-<!-- 8 * 100 * 10 * 2 * 1000 / 60/60/24/365 -->
+We have about 500 workflows, 8 versions per experiment, 5 executions per experiment, 1000 core-seconds per execution, which amounts to 20,000,000 core-seconds or 32 cores working for 7 days.
 
-Of these, 10% of experiments have GPU tasks. Therefore, we estimate our tasks require half a GPU-month or 3 GPUs working continuously for 6 days.
+<!-- 500 * 8 * 5 * 1000 / 60/60/24 -->
 
-<!--
-TODO:
-6 versions / exp
-30 exp / registry
--->
+Of these, 5% of experiments have GPU tasks. Therefore, we estimate our tasks require 1,000,000 GPU-seconds or 2 GPUs working continuously for 7 days.
 
 ## Requested start date and duration
 
