@@ -183,9 +183,7 @@ The output can be divided into two parts: the "small" output containing statisti
 Each small-data record of an experiment will fit in hundreds of bytes, so tens of thousands of versions of experiments will yield one megabyte, which will be easily processible on our resources.
 Research questions 1, 3, 4, and 5 can be answered by just the "small" output.
 Each big-data record could be on the order of gigabytes.
-Research questions 2 and 6 require elements from the "big" output.
-However, they can be statistically sampled from the "big" output.
-
+Research questions 2 and 6 require elements from the "big" output of just the collapsed (broken) workfnlows.
 
 ## Experience, readiness, usage plans, and funding sources
 
@@ -214,9 +212,17 @@ We have about 500 workflows, 8 versions per experiment, 5 executions per experim
 
 Of these, 5% of experiments have GPU tasks. Therefore, we estimate our tasks require 1,000,000 GPU-seconds or 2 GPUs working continuously for 7 days.
 
+Each experiment emits about 300Mb of data. During execution, we need to store the full output so that we can compare their differences. If we use 32 concurrent workers and a safety factor of 10, this gives 100Gb during execution. After the execution, we only need to store the "large" results (see Description of Codes) of the failing experiments, so they can be investigated further. We estimate 10% of the 4,000 executions (i.e., 400 executions) will fail. This leaves us with 120Gb. We will likely be able to complete the analysis within a few months.
+
+|Resource|Request|
+|------|---|
+|Core-hours|20,000,000|
+|GPU-hours|1,000,000|
+|Storage|120Gb for three months|
+
 ## Requested start date and duration
 
-We request to begin execution on December 1 and completed that month (entirely in Q4), if possible.
+We request to begin execution on December 1. We request compute resources for 2022 Q4, and storage resources for 2022 Q4 and 2023 Q1.
 
 # References
 
