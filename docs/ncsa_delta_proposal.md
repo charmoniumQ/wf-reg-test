@@ -23,9 +23,9 @@ linkcolor: blue
 abstract: |
   Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
   Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
-  We want to use NCSA Delta to test computational experiments (often workflows) in storage to empirically study the nature of software collapse.
-  This would be the first public dataset of software decay in computational experiments.
-  This data could be used to identify best practices, make continuous testing feasible, and repair broken programs.
+  We plan to use Delta to test computational experiments (often workflows) in storage to empirically study the nature of software collapse.
+  We will create and share the first public dataset of software decay in computational experiments.
+  This data will be used by us and others to identify best practices, make continuous testing feasible, and repair broken programs.
   These techniques increase the replicability of computational experiments.
 ---
 
@@ -70,8 +70,8 @@ On the other hand, _reactive technique_ would wait until repeatability fails and
 Reactive tehchniques include continuous testing and automatic program repair.
 
 **Continuous testing:**
-Automated systems can run the computational experiment continuously to assess if the experiment is both not crashing and still producing the same results (repeatability).
-Continuous testing[^CI] is robust to more sources of non-determinism, including networked resources, pseudorandomness, and parallel program order.
+Automated systems can run a computational experiment continuously to assess if the experiment is both not crashing and still producing the same results (repeatability).
+Continuous testing[^CI] is robust to more sources of non-determinism, including networked resources, pseudorandomness, and parallel program order. [DSK: I'm not sure I agree with this previous statement; I don't see how CI provides this robustness.]
 The major drawback is increased computational cost, since running a computational experiment can be expensive.
 However, if one could predict which experiments were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive continuous testing_.
 
@@ -87,11 +87,11 @@ Continuous testing can help a human encode solutions for errors as well.
 
 # Target Problem
 
-We would like to study the usage and efficacy of these techniques and even improve them.
-However, there is a dearth of data on the repeatability of computational experiments.
-There are experimental registries, but they do not store prior results, so we cannot tell if the experiment is repeatable.
-We plan to collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
-The resources of NCSA Delta are necessary because there are many registries, each experiment can have many versions, and each version may take a while to run.
+We plan to study the usage and efficacy of these techniques and even improve them.
+However, to do so, we need data on the repeatability of computational experiments, and such data generally has not been collected and made public.
+Experimental registries do exist, but they do not store prior results, so we cannot tell if the experiment is repeatable.
+We will collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
+The resources of Delta are necessary because there are many registries, each experiment can have many versions, and each version may take a while to run.
 These registries include:
 
 - [nf-core](https://nf-co.re/) <!-- TODO describe each in a sentence -->
@@ -101,11 +101,11 @@ These registries include:
 - [myExperiment](https://www.myexperiment.org/)
 - [WfCommons](https://github.com/wfcommons)
 
-We cannot take one computational experiment and simulate it one, five, and ten years into the future.
-Instead, we will look for historical versions of an experiment from one, five, or ten years ago and simulate it today.
+Because wecannot take one computational experiment and simulate it one, five, and ten years into the future,
+instead we will look for historical versions of an experiment from one, five, or ten years ago and simulate it today.
 The registries above store historical versions of the workflow.
 Some will still work, and some will fail, due to software collapse.
-In either case, resulting execution will be stored in the database.
+In either case, resulting execution will be stored in our database.
 The following pseudo-code summarizes this procedure:
 
 \footnotesize
@@ -124,7 +124,7 @@ for registry in registries:
 ```
 \normalsize
 
-This data will allow us to answer the following research questions:
+This dataset will allow us to answer the following research questions (and we will share it so that others can also use it to answer their own research questions in this area of software engineering):
 
 **RQ1:**
 What are typical rates of software collapse over time?
@@ -167,19 +167,19 @@ Among other things, our Spack environment contains Python, Singularity, OpenJDK,
 The code is not done yet; namely, we need to implement scanning for more registries and execution-handlers for more workflow engines.
 
 Scanning the registries for versions of experiments constitutes a few HTTP requests and parsing, so the most of the computational time is spent in the underlying computational experiments.
-We have not explicitly characterized the set of experiments, but we expect they are a high-level scripting language driving a set of high-performance kernels across a large in-memory dataset.
+We have not explicitly characterized the set of experiments, but we expect they generally consist of a high-level scripting language driving a set of high-performance kernels across a large in-memory dataset.
 The tasks are usually CPU, with a some experiments having GPU tasks as well.
 CPU tasks are usually memory-bound, while GPU tasks can be either.
 
-We have yet to parallelize the application, but intend to use parallelism to take fully utilize NCSA Delta's resources and get our results in a practical time.
+We have yet to parallelize the application, but intend to use parallelism to take fully utilize Delta's resources and get our results in a practical time.
 While parallelism usually exists within an experiment, we will mostly exploit parallelism between experiments.
 That parallelism has low communication and synchronization overhead because the cost of executing one experiment (order of minutes) dominates the cost of fetching and queuing work-items (order of milliseconds).
 If hundreds of workers were drawing experiments from the queue as soon as they finish, then the central server will receive a request twice every second, which will not cause a bottleneck.
-We think this can be implemented easily from our existing-code using the parallel-map paradigm in [Dask](https://www.dask.org/) or [Parsl](http://parsl-project.org/).
+We think this can be implemented easily from our existing code using the parallel-map paradigm in [Dask](https://www.dask.org/) or [Parsl](http://parsl-project.org/).
 The workers need only receive a path or a URL to a version of an experiment to test (less than a hundred of bytes).
 The workers need only respond with some statistics about the experiment (hundreds of bytes), and the rest of the output can be dumped onto a network filesystem.
 
-The output can be divided into two parts: the "small" output containing statistics regarding the execution cand a hash of the experiment's output and the "big" output containing the experiment's output.
+The output can be divided into two parts: the "small" output containing statistics regarding the execution and a hash of the experiment's output, and the "big" output containing the experiment's output.
 Each small-data record of an experiment will fit in hundreds of bytes, so tens of thousands of versions of experiments will yield one megabyte, which will be easily processible on our resources.
 Research questions 1, 3, 4, and 5 can be answered by just the "small" output.
 Each big-data record could be on the order of gigabytes.
@@ -206,13 +206,15 @@ This work can be completed within a month.
 |myExperiment|82|
 |WfCommons|7|
 
-We have about 500 workflows, 8 versions per experiment, 5 executions per experiment, 1000 core-seconds per execution, which amounts to 20,000,000 core-seconds or 32 cores working for 7 days.
+We have about 500 workflows, 8 versions per experiment, 5 executions per experiment, 1000 core-seconds per execution, which amounts to 20,000,000 core-seconds or 32 cores working for 7 days. [DSK: the requirements are supposed to be in CPU core-hours and GPU hours]
 
 <!-- 500 * 8 * 5 * 1000 / 60/60/24 -->
 
 Of these, 5% of experiments have GPU tasks. Therefore, we estimate our tasks require 1,000,000 GPU-seconds or 2 GPUs working continuously for 7 days.
 
-Each experiment emits about 300Mb of data. During execution, we need to store the full output so that we can compare their differences. If we use 32 concurrent workers and a safety factor of 10, this gives 100Gb during execution. After the execution, we only need to store the "large" results (see Description of Codes) of the failing experiments, so they can be investigated further. We estimate 10% of the 4,000 executions (i.e., 400 executions) will fail. This leaves us with 120Gb. We will likely be able to complete the analysis within a few months.
+Each experiment emits about 300 Mb of data. During execution, we need to store the full output so that we can compare their differences. If we use 32 concurrent workers and a safety factor of 10, this gives 100Gb during execution. After the execution, we only need to store the "large" results (see Description of Codes) of the failing experiments, so they can be investigated further. We estimate 10% of the 4,000 executions (i.e., 400 executions) will fail. This leaves us with 120 Gb. We will likely be able to complete the analysis within a few months.
+
+[DSK: Are the numbers below in hours or seconds - they are not consistent with the text above]
 
 |Resource|Request|
 |------|---|
@@ -222,7 +224,7 @@ Each experiment emits about 300Mb of data. During execution, we need to store th
 
 ## Requested start date and duration
 
-We request to begin execution on December 1. We request compute resources for 2022 Q4, and storage resources for 2022 Q4 and 2023 Q1.
+We request to begin execution on December 1. While we expect our allocation to be valid for 1 years, we also expect to use the resources in 2022 Q4, and storage resources in 2022 Q4 and 2023 Q1. 
 
 # References
 
