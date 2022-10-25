@@ -4,7 +4,7 @@ version = "0.1.0"
 description = ""
 authors = ["Samuel Grayson <sam@samgrayson.me>"]
 license = "MIT"
-readme = "README.rst"
+readme = "README.md"
 repository = "https://github.com/charmoniumQ/wf-reg-test"
 
 

@@ -255,6 +255,12 @@ async def docs_inner() -> None:
 @coroutine_to_function
 async def all_tests(interactive: bool = True) -> None:
     await test_inner()
+    dist = Path("dist")
+    if dist.exists():
+        shutil.rmtree(dist)
+    await pretty_run(["poetry", "build", "--quiet"])
+    await pretty_run(["twine", "check", "--strict", *dist.iterdir()])
+    shutil.rmtree(dist)
 
 
 async def pytest(use_coverage: bool, show_slow: bool) -> None:
