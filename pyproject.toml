@@ -26,6 +26,9 @@ profile = "black"
 
 [tool.pytest.ini_options]
 addopts = "--quiet --numprocesses=auto --doctest-modules --doctest-glob='*.rst'"
+testpaths = [
+		  "tests"
+]
 
 [tool.coverage.run]
 branch = true

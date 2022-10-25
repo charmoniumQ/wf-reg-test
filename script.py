@@ -243,15 +243,6 @@ async def docs_inner() -> None:
             if docsrc_dir.exists()
             else []
         ),
-        pretty_run(
-            [
-                "proselint",
-                "--config",
-                "proselint.json",
-                "README.rst",
-                *docsrc_dir.glob("*.rst"),
-            ]
-        ),
     )
     if docsrc_dir.exists():
         print(f"See docs in: file://{(Path() / 'docs' / 'index.html').resolve()}")
