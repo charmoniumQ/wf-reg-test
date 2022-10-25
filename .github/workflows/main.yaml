@@ -12,12 +12,12 @@ jobs:
 
       - uses: actions/checkout@v2
 
-      - uses: actions/cache@v2
-        with:
-          path: |
-            build/
-            .tox/
-            $HOME/.cache/pypoetry/
-          key: venv-${{ hashFiles('poetry.lock') }}-${{ hashFiles('pyproject.toml') }}-2
+      # - uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       build/
+      #       .tox/
+      #       $HOME/.cache/pypoetry/
+      #     key: venv-${{ hashFiles('poetry.lock') }}-${{ hashFiles('pyproject.toml') }}-2
 
       - run: nix develop --command ./script.py all-tests --no-interactive
