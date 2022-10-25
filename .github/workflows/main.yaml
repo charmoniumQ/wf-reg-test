@@ -18,6 +18,6 @@ jobs:
             build/
             .tox/
             $HOME/.cache/pypoetry/
-          key: venv-${{ hashFiles('poetry.lock') }}-${{ hashFiles('pyproject.toml') }}
+          key: venv-${{ hashFiles('poetry.lock') }}-${{ hashFiles('pyproject.toml') }}-2
 
       - run: nix develop --command ./script.py all-tests --no-interactive

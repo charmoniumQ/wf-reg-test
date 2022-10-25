@@ -31,7 +31,7 @@ These techniques increase the replicability of computational experiments.
 
 - Tests
   - [x] Repeatable crash-freedom?
-  - [ ] If crashes, repetable error-message?
+  - [ ] If crashes, repeatable error-message?
   - [ ] If not crashes, repeatable bitwise-equivalent with holding zero, one, two, three, or four of {/dev/{,u}random, datetime, ASL, single-core}?
   - [ ] Repeatable 5--95%-ile interval?
 
