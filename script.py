@@ -267,6 +267,8 @@ async def pytest(use_coverage: bool, show_slow: bool) -> None:
     if tests_dir.exists():
         await pretty_run(
             [
+                "python",
+                "-m",
                 "pytest",
                 "--exitfirst",
                 *(["--durations=3"] if show_slow else []),
