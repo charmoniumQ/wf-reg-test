@@ -62,25 +62,30 @@ They found that 80% of the experiments in their selection did not work, for a va
 of these, change of third-party resources caused the most failures, such as when a step in an experiment referenced data from another server through the internet which was no longer available.
 
 There are many proposed techniques to mitigate collapse, of which most fall into two categories: proactive and reactive.
-A _proactive technique_ would control and preserve the environment or application to ensure repeatability as software ages,
+A _proactive technique_ would control and preserve the environment or application to ensure repeatability as software ages, whereas a _reactive technique_ would seek to detect and mitigate  nondeterminism once it occurs.
 Proactive techniques include using Docker, virtual machines, system call interposition [@guo_cde_2011].
-None of these techniques can mitigate non-determinism due to network resources, pseudorandomness, and parallel program order.
+However, at this time no mainstream proactive techniques can completely control non-determinism due to network resources, pseudorandomness, and parallel program order.
+The user would be getting possibly unrepeatable results without even knowing it.
 
-On the other hand, _reactive technique_ would wait until repeatability fails and try to fix that.
-Reactive tehchniques include continuous testing and automatic program repair.
+On the other hand, _continuous testing_[^CI] seeks to detect rather than eliminate source of non-determinism.
+Continuous testing would run the experiment multiple times to assess if the experiment is still producing the same results (repeatability).
+Continuous testing handles the "blind-spots" of proactive testing:
 
-**Continuous testing:**
-Automated systems can run a computational experiment continuously to assess if the experiment is both not crashing and still producing the same results (repeatability).
-Continuous testing[^CI] is robust to more sources of non-determinism, including networked resources, pseudorandomness, and parallel program order. [DSK: I'm not sure I agree with this previous statement; I don't see how CI provides this robustness.]
+- For non-deterministic pseudorandomness, repeated executions naturally explore the space of possible seeds.
+- For parallel program order, repeated executions on different core-counts will explore the space of possible schedules.
+- For network resources, repeated executions will identify flaky resources when they become inaccessible. It will not waste the user's time identifying resources that are still accessible, leaving them to focus on only the network resources that are actually flaky.
+
+When an experiment has non-determinism due to parallel program order, for example, continuous testing has a greater chance of detecting this.
+At least the user would know that the code is non-deterministic, so they could experimentally determine the variance of the result or attempt to fix the non-determinism.
 The major drawback is increased computational cost, since running a computational experiment can be expensive.
 However, if one could predict which experiments were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive continuous testing_.
+
 
 [^CI]: The continuous testing we are proposing here differs from CI/CD because our proposed continuous testing is triggered periodically, while CI/CD is triggered when the code is changed. CI/CD mitigates software regressions, which are due to _internal changes_, but continuous testing mitigates software collapse, which is due to _external changes_.
 
 ![Predicting the rate of software collapse can reduce resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
 
-**Automatic program repair:**
-Automatic program repair seeks to manually encode and automatically apply solutions for common sources of errors.
+Once a bug has been identified (perhaps by continuous testing), _automated program repair_ attempts seeks to apply solutions based on comparing the error-message toa library of common errors and solutions.
 This has been done successfully in other domains [@henkel_shipwright_2021].
 This pairs well with continuous testing, since continuous testing identifies the errors, and automatic program repair can try to fix it.
 Continuous testing can help a human encode solutions for errors as well.
@@ -88,8 +93,8 @@ Continuous testing can help a human encode solutions for errors as well.
 # Target Problem
 
 We plan to study the usage and efficacy of these techniques and even improve them.
-However, to do so, we need data on the repeatability of computational experiments, and such data generally has not been collected and made public.
-Experimental registries do exist, but they do not store prior results, so we cannot tell if the experiment is repeatable.
+However, to do so, we need data on the repeatability of computational experiments, and such data either has not been collected or made public.
+While many experimental registries exist, they do not store prior results, so we cannot tell if the experiment is repeatable.
 We will collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
 The resources of Delta are necessary because there are many registries, each experiment can have many versions, and each version may take a while to run.
 These registries include:
@@ -101,8 +106,8 @@ These registries include:
 - [myExperiment](https://www.myexperiment.org/)
 - [WfCommons](https://github.com/wfcommons)
 
-Because wecannot take one computational experiment and simulate it one, five, and ten years into the future,
-instead we will look for historical versions of an experiment from one, five, or ten years ago and simulate it today.
+Because we cannot take one computational experiment and simulate it one, five, and ten years into the future,
+we will instead look for historical versions of an experiment from one, five, or ten years ago and simulate it today.
 The registries above store historical versions of the workflow.
 Some will still work, and some will fail, due to software collapse.
 In either case, resulting execution will be stored in our database.
@@ -206,25 +211,30 @@ This work can be completed within a month.
 |myExperiment|82|
 |WfCommons|7|
 
-We have about 500 workflows, 8 versions per experiment, 5 executions per experiment, 1000 core-seconds per execution, which amounts to 20,000,000 core-seconds or 32 cores working for 7 days. [DSK: the requirements are supposed to be in CPU core-hours and GPU hours]
+We have about 500 workflows, 8 versions per experiment, 5 executions per experiment, 1000 core-seconds per execution, which amounts to 5,000 core-hours or 32 cores working for 7 days.
 
 <!-- 500 * 8 * 5 * 1000 / 60/60/24 -->
 
-Of these, 5% of experiments have GPU tasks. Therefore, we estimate our tasks require 1,000,000 GPU-seconds or 2 GPUs working continuously for 7 days.
+Of these, 5% of experiments have GPU tasks. Therefore, we estimate our tasks require 300 GPU-hours or 2 GPUs working continuously for 7 days.
 
-Each experiment emits about 300 Mb of data. During execution, we need to store the full output so that we can compare their differences. If we use 32 concurrent workers and a safety factor of 10, this gives 100Gb during execution. After the execution, we only need to store the "large" results (see Description of Codes) of the failing experiments, so they can be investigated further. We estimate 10% of the 4,000 executions (i.e., 400 executions) will fail. This leaves us with 120 Gb. We will likely be able to complete the analysis within a few months.
-
-[DSK: Are the numbers below in hours or seconds - they are not consistent with the text above]
+Each experiment emits about 300 Mb of data.
+During execution, we need to store the full output so that we can compare their differences.
+If we use 32 concurrent workers and a safety factor of 10, this gives 100Gb during execution.
+After the execution, we only need to store the "large" results (see Description of Codes) of the failing experiments, so they can be investigated further.
+We estimate 10% of the 4,000 executions (i.e., 400 executions) will fail.
+This leaves us with 120 Gb.
+We will likely be able to complete the analysis within a few months.
 
 |Resource|Request|
 |------|---|
-|Core-hours|20,000,000|
-|GPU-hours|1,000,000|
+|Core-hours|5,000|
+|GPU-hours|300|
 |Storage|120Gb for three months|
 
 ## Requested start date and duration
 
-We request to begin execution on December 1. While we expect our allocation to be valid for 1 years, we also expect to use the resources in 2022 Q4, and storage resources in 2022 Q4 and 2023 Q1. 
+We request to begin execution on December 1.
+While we expect our allocation to be valid for 1 years, we also expect to use the resources in 2022 Q4, and storage resources in 2022 Q4 and 2023 Q1.
 
 # References
 
