@@ -158,6 +158,9 @@ async def fmt(parallel: bool = True) -> None:
 @app.command()
 @coroutine_to_function
 async def test() -> None:
+    await test_inner()
+
+async def test_inner() -> None:
     await asyncio.gather(
         pretty_run(
             [
@@ -251,31 +254,7 @@ async def docs_inner() -> None:
 @app.command()
 @coroutine_to_function
 async def all_tests(interactive: bool = True) -> None:
-    await all_tests_inner(interactive)
-
-
-async def all_tests_inner(interactive: bool) -> None:
-    dist = Path("dist")
-    if dist.exists():
-        shutil.rmtree(dist)
-    await pretty_run(["proselint", "README.rst"])
-    await pretty_run(["rstcheck", "README.rst"])
-    await pretty_run(["poetry", "build", "--quiet"])
-    await pretty_run(["twine", "check", "--strict", *dist.iterdir()])
-    shutil.rmtree(dist)
-
-    # Tox already has its own parallelism,
-    # and it shows a nice stateus spinner.
-    # so I'll not `await pretty_run`
-    # subprocess.run(
-    #     ["tox", "--parallel", "auto"],
-    #     env={
-    #         **os.environ,
-    #         "PY_COLORS": "1",
-    #         "TOX_PARALLEL_NO_SPINNER": "" if interactive else "1",
-    #     },
-    #     check=True,
-    # )
+    await test_inner()
 
 
 async def pytest(use_coverage: bool, show_slow: bool) -> None:
