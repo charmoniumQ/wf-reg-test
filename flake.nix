@@ -37,6 +37,7 @@
           pkgs.poetry
           pkgs.hwloc
           pkgs.graphviz
+          pkgs.singularity
         ];
       in {
         packages.${name} = pkgs.poetry2nix.mkPoetryApplication {

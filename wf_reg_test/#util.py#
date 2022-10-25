@@ -81,7 +81,7 @@ def groupby_dict(data: Iterable[_T], key: Callable[[_T], _V]) -> Mapping[_V, lis
     }
 
 
-def non_unique(data: Iterable[_T]) -> Iterable[tuple[_T, _T, int, int]]:
+def non_unique(data: Iterable[_T]) -> Iterable[tuple[_T, _Tx, int, int]]:
     for ix, x in enumerate(data):
         for iy, y in enumerate(data):
             if x == y and ix != iy:

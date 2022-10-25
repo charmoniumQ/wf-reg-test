@@ -12,7 +12,7 @@ from .html_helpers import (
     html_table,
 )
 from .util import sorted_and_dropped, groupby_dict
-from .workflows2 import WorkflowApp2 as WorkflowApp
+from .workflows import WorkflowApp
 
 
 def is_interesting(wf_app: WorkflowApp) -> bool:
@@ -20,7 +20,7 @@ def is_interesting(wf_app: WorkflowApp) -> bool:
 
 
 def get_stats(all_wf_apps: list[WorkflowApp]) -> html.Element:
-    engine2wf_apps = groupby_dict(all_wf_apps, lambda wf_app: wf_app.workflow_engine_name)
+    engine2wf_apps = groupby_dict(all_wf_apps, lambda wf_app: wf_app.workflow_engine)
     stats: Mapping[str, Callable[[list[WorkflowApp]], int]] = {
         "N workflows": lambda wf_apps: len(wf_apps),
         "N revisions": lambda wf_apps: sum(len(wf_app.revisions) for wf_app in wf_apps),
@@ -71,7 +71,7 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
         [
             {
                 "Workflow": html_link(wf_app.display_name, wf_app.url),
-                "Engine": wf_app.workflow_engine_name,
+                "Engine": wf_app.workflow_engine.display_name,
                 "Repo": html_link("repo", wf_app.repo_url),
                 "Interesting?": html_emoji_bool(is_interesting(wf_app)),
                 "Revisions": collapsed(
@@ -90,15 +90,15 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                                             "Success": html_emoji_bool(
                                                 execution.status_code == 0
                                             ),
-                                            "Max RAM": f"{execution.max_rss / 2**10:.0f}KiB",
+                                            "Max RAM": f"{execution.resources.max_rss / 2**10:.0f}KiB",
                                             "CPU Time": html_timedelta(
-                                                execution.user_cpu_time
-                                                + execution.system_cpu_time,
+                                                execution.resources.user_cpu_time
+                                                + execution.resources.system_cpu_time,
                                                 unit="seconds",
                                                 digits=1,
                                             ),
                                             "Wall Time": html_timedelta(
-                                                execution.wall_time,
+                                                execution.resources.wall_time,
                                                 unit="seconds",
                                                 digits=1,
                                             ),
@@ -123,7 +123,7 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                     execution.datetime - revision.datetime,
                     {
                         "Workflow": html_link(wf_app.display_name, wf_app.url),
-                        "Engine": wf_app.workflow_engine_name,
+                        "Engine": wf_app.workflow_engine.display_name,
                         "Revision": html_link(revision.display_name, revision.url),
                         "Revision date": html_date(revision.datetime),
                         "Staleness": html_timedelta(
@@ -132,14 +132,14 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                             digits=0,
                         ),
                         "Success": html_emoji_bool(execution.status_code == 0),
-                        "Max RAM": f"{execution.max_rss / 2**10:.0f}KiB",
+                        "Max RAM": f"{execution.resources.max_rss / 2**10:.0f}KiB",
                         "CPU Time": html_timedelta(
-                            execution.user_cpu_time + execution.system_cpu_time,
+                            execution.resources.user_cpu_time + execution.resources.system_cpu_time,
                             unit="seconds",
                             digits=1,
                         ),
                         "Wall Time": html_timedelta(
-                            execution.wall_time, unit="seconds", digits=1
+                            execution.resources.wall_time, unit="seconds", digits=1
                         ),
                         "Machine": execution.machine.short_description,
                         # "Reproducible": html_emoji_bool(True),

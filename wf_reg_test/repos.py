@@ -5,18 +5,16 @@ import json
 import types
 import urllib.parse
 from pathlib import Path
-from typing import ContextManager, Optional
+from typing import ContextManager, Optional, Any
 
 import git
 import github
 import xxhash
 
-from .workflows2 import RepoAccessor
-from .workflows2 import Revision2 as Revision
-from .workflows2 import WorkflowApp2 as WorkflowApp
+from .workflows import Revision, WorkflowApp
 
 
-def get_repo_accessor(url: str) -> RepoAccessor:
+def get_repo_accessor(url: str) -> Any:
     parsed_url = urllib.parse.urlparse(url)
     path = Path(parsed_url.path)
     if parsed_url.netloc == "github.com" or "git@github:" in parsed_url.netloc:
@@ -40,7 +38,7 @@ github_client = github.Github(json.loads(Path("secrets.json").read_text())["gith
 
 
 @dataclasses.dataclass
-class GitHubRepo(RepoAccessor):
+class GitHubRepo:
     user: str
     repo: str
     only_tags: bool

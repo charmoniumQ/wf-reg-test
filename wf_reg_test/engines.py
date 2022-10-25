@@ -12,9 +12,7 @@ from datetime import timedelta as TimeDelta
 from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 
-from .workflows2 import Execution2 as Execution
-from .workflows2 import Machine2 as Machine
-from .workflows2 import Revision2 as Revision
+from .workflows import Execution, Machine, Revision
 
 try:
     import docker  # type: ignore
@@ -79,17 +77,18 @@ class WorkflowEngine:
             warnings.warn(
                 f"Could not parse time output: {time_output!r}; setting those fields to 0"
             )
-        return Execution(
-            datetime=DateTime.now(),
-            output=output_dir,
-            status_code=int(exit_status),
-            wall_time=TimeDelta(seconds=float(wall_time)),
-            user_cpu_time=TimeDelta(seconds=float(user_sec)),
-            system_cpu_time=TimeDelta(seconds=float(system_sec)),
-            max_rss=int(mem_kb) * 1024,
-            machine=Machine.current_host(),
-            revision=revision,
-        )
+        raise NotImplementedError
+        # return Execution(
+        #     datetime=DateTime.now(),
+        #     output=output_dir,
+        #     status_code=int(exit_status),
+        #     wall_time=TimeDelta(seconds=float(wall_time)),
+        #     user_cpu_time=TimeDelta(seconds=float(user_sec)),
+        #     system_cpu_time=TimeDelta(seconds=float(system_sec)),
+        #     max_rss=int(mem_kb) * 1024,
+        #     machine=Machine.current_host(),
+        #     revision=revision,
+        # )
 
 
 env_line = re.compile(
