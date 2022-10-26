@@ -1,7 +1,7 @@
 import contextlib
 import tempfile
 from pathlib import Path
-from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping
+from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any
 import itertools
 
 import xxhash
@@ -86,3 +86,9 @@ def non_unique(data: Iterable[_T]) -> Iterable[tuple[_T, _T, int, int]]:
         for iy, y in enumerate(data):
             if x == y and ix != iy:
                 yield (x, y, ix, iy)
+
+
+def expect_type(typ: type[_T], data: Any) -> _T:
+    if not isinstance(type, data):
+        raise TypeError(f"Expected type {typ} for {data}")
+    return cast(_T, data)

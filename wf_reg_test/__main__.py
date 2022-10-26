@@ -15,7 +15,7 @@ from .engines import engines
 from .registries import snakemake_registry, nf_core_registry
 from .report import report_html
 from .repos import get_repo_accessor
-from .workflows import Revision, WorkflowApp
+from .workflows import Revision, Workflow
 from .util import groupby_dict
 
 logging.basicConfig()
@@ -27,9 +27,9 @@ data = Path("data.yaml")
 
 @ch_time_block.decor()
 def ensure_revisions(
-    wf_apps: list[WorkflowApp], only_empty: bool = True, delete_empty: bool = True
-) -> list[WorkflowApp]:
-    ret_wf_apps: list[WorkflowApp] = []
+    wf_apps: list[Workflow], only_empty: bool = True, delete_empty: bool = True
+) -> list[Workflow]:
+    ret_wf_apps: list[Workflow] = []
     for wf_app in tqdm(wf_apps):
         if (not wf_app.revisions) or (not only_empty):
             repo = get_repo_accessor(wf_app.repo_url)
@@ -57,12 +57,12 @@ def ensure_revisions(
     return ret_wf_apps
 
 
-def report(wf_apps: list[WorkflowApp]) -> None:
+def report(wf_apps: list[Workflow]) -> None:
     Path("docs/results.html").write_text(report_html(wf_apps))
 
 
 def ensure_recent_executions(
-    wf_apps: list[WorkflowApp],
+    wf_apps: list[Workflow],
     period: TimeDelta,
     desired_count: int = 1,
     dry_run: bool = False,
@@ -81,7 +81,7 @@ def ensure_recent_executions(
     for revision in revisions_to_test:
         logger.info("Running %s", revision)
         if not dry_run:
-            repo = get_repo_accessor(revision.workflow_app.repo_url)
+            repo = get_repo_accessor(revision.workflow.repo_url)
             with repo.checkout(revision.url) as local_copy:
                 raise NotImplementedError
                 wf_engine = engines[revision.workflow_app.workflow_engine_name]
@@ -92,11 +92,11 @@ def ensure_recent_executions(
             data.write_text(yaml.dump(wf_apps))
 
 
-def check_nodes_are_owned(wf_apps: list[WorkflowApp]) -> None:
+def check_nodes_are_owned(wf_apps: list[Workflow]) -> None:
     raise NotImplementedError
 
 
-def merge_duplicates(wf_apps: list[WorkflowApp]) -> list[WorkflowApp]:
+def merge_duplicates(wf_apps: list[Workflow]) -> list[Workflow]:
     raise NotImplementedError
 
 
@@ -104,9 +104,9 @@ def merge_duplicates(wf_apps: list[WorkflowApp]) -> list[WorkflowApp]:
 def main() -> None:
     with ch_time_block.ctx("load", print_start=False):
         wf_apps = cast(
-            list[WorkflowApp], yaml.load(data.read_text(), Loader=yaml.Loader)
+            list[Workflow], yaml.load(data.read_text(), Loader=yaml.Loader)
         )
-        assert all(isinstance(wf_app, WorkflowApp) for wf_app in wf_apps)
+        assert all(isinstance(wf_app, Workflow) for wf_app in wf_apps)
     with ch_time_block.ctx("process", print_start=False):
         # wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
         # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)

@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-import subprocess
+import shutil
 from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
 from pathlib import Path
@@ -13,6 +13,7 @@ from .executable import Executable, ComputeResources, Machine
 @dataclasses.dataclass
 class RegistryHub:
     registries: list[Registry]
+    workflow_engines: Mapping[str, WorkflowEngine]
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} [{', '.join(str(registry) for registry in self.registries)}]"
@@ -30,8 +31,7 @@ class RegistryHub:
 class Registry:
     display_name: str
     url: str
-    workflow_apps: list[WorkflowApp] = []
-    generator: Optional[Iterable[WorkflowApp]] = None
+    workflows: list[Workflow] = []
 
     def __add__(self, other: Registry) -> Registry:
         if (other.display_name, other.url) != (self.display_name, self.url):
@@ -42,19 +42,19 @@ class Registry:
         return f"{self.__class__.__name__} {self.display_name}"
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        for wf_i, wf_j, _, _ in non_unique(wf.url for wf in self.workflow_apps):
+        for wf_i, wf_j, _, _ in non_unique(wf.url for wf in self.workflows):
             yield UserWarning("Two workflows have the same URL", wf_i, wf_j)
-        for wf_i, wf_j, _, _ in non_unique(wf.display_name for wf in self.workflow_apps):
+        for wf_i, wf_j, _, _ in non_unique(wf.display_name for wf in self.workflows):
             yield UserWarning("Two workflows have the same display_name", wf_i, wf_j)
-        for wf in self.workflow_apps:
+        for wf in self.workflows:
             if wf.registry != self:
                 yield UserWarning("Workflow does not point back to self", wf, self)
             yield from wf.check_invariants()
 
 
 @dataclasses.dataclass
-class WorkflowApp:
-    workflow_engine: WorkflowEngine
+class Workflow:
+    engine: WorkflowEngine
     url: str
     display_name: str
     repo_url: str
@@ -64,7 +64,7 @@ class WorkflowApp:
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
 
-    def __add__(self, other: WorkflowApp) -> WorkflowApp:
+    def __add__(self, other: Workflow) -> Workflow:
         raise NotImplementedError()
         url_to_revisions = {
             revision.url: revision
@@ -77,9 +77,9 @@ class WorkflowApp:
                 self.revisions.append(revision)
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        yield from self.workflow_engine.check_invariants()
+        yield from self.engine.check_invariants()
         for revision in self.revisions:
-            if revision.workflow_app != self:
+            if revision.workflow != self:
                 yield UserWarning("Revision does not point back to self", revision, self)
             yield from revision.check_invariants()
 
@@ -102,9 +102,8 @@ class Revision:
     display_name: str
     url: str
     datetime: DateTime
-    tree: Optional[Path]
     executions: list[Execution]
-    workflow_app: WorkflowApp
+    workflow: Workflow
 
     def check_invariants(self) -> Iterable[UserWarning]:
         for execution in self.executions:
@@ -113,7 +112,7 @@ class Revision:
             yield from execution.check_invariants()
 
     def __str__(self) -> str:
-        return f"{self.__class__.__name__} {self.display_name} of {self.workflow_app}"
+        return f"{self.__class__.__name__} {self.display_name} of {self.workflow}"
 
     def __add__(self, other: Revision) -> Revision:
         raise NotImplementedError

@@ -12,16 +12,16 @@ from .html_helpers import (
     html_table,
 )
 from .util import sorted_and_dropped, groupby_dict
-from .workflows import WorkflowApp
+from .workflows import Workflow
 
 
-def is_interesting(wf_app: WorkflowApp) -> bool:
+def is_interesting(wf_app: Workflow) -> bool:
     return sum(bool(revision.executions) for revision in wf_app.revisions) > 3
 
 
-def get_stats(all_wf_apps: list[WorkflowApp]) -> html.Element:
-    engine2wf_apps = groupby_dict(all_wf_apps, lambda wf_app: wf_app.workflow_engine)
-    stats: Mapping[str, Callable[[list[WorkflowApp]], int]] = {
+def get_stats(all_wf_apps: list[Workflow]) -> html.Element:
+    engine2wf_apps = groupby_dict(all_wf_apps, lambda wf_app: wf_app.engine)
+    stats: Mapping[str, Callable[[list[Workflow]], int]] = {
         "N workflows": lambda wf_apps: len(wf_apps),
         "N revisions": lambda wf_apps: sum(len(wf_app.revisions) for wf_app in wf_apps),
         "N executions": lambda wf_apps: sum(
@@ -66,12 +66,12 @@ def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
     return f"{day_diff:.{digits}f} {unit}"
 
 
-def report_html(wf_apps: list[WorkflowApp]) -> str:
+def report_html(wf_apps: list[Workflow]) -> str:
     table_by_workflows = html_table(
         [
             {
                 "Workflow": html_link(wf_app.display_name, wf_app.url),
-                "Engine": wf_app.workflow_engine.display_name,
+                "Engine": wf_app.engine.display_name,
                 "Repo": html_link("repo", wf_app.repo_url),
                 "Interesting?": html_emoji_bool(is_interesting(wf_app)),
                 "Revisions": collapsed(
@@ -123,7 +123,7 @@ def report_html(wf_apps: list[WorkflowApp]) -> str:
                     execution.datetime - revision.datetime,
                     {
                         "Workflow": html_link(wf_app.display_name, wf_app.url),
-                        "Engine": wf_app.workflow_engine.display_name,
+                        "Engine": wf_app.engine.display_name,
                         "Revision": html_link(revision.display_name, revision.url),
                         "Revision date": html_date(revision.datetime),
                         "Staleness": html_timedelta(
