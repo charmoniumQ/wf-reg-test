@@ -13,7 +13,6 @@ from .executable import Executable, ComputeResources, Machine
 @dataclasses.dataclass
 class RegistryHub:
     registries: list[Registry]
-    workflow_engines: Mapping[str, WorkflowEngine]
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} [{', '.join(str(registry) for registry in self.registries)}]"
@@ -31,7 +30,7 @@ class RegistryHub:
 class Registry:
     display_name: str
     url: str
-    workflows: list[Workflow] = []
+    workflows: list[Workflow]
 
     def __add__(self, other: Registry) -> Registry:
         if (other.display_name, other.url) != (self.display_name, self.url):
@@ -54,7 +53,7 @@ class Registry:
 
 @dataclasses.dataclass
 class Workflow:
-    engine: WorkflowEngine
+    engine: str
     url: str
     display_name: str
     repo_url: str

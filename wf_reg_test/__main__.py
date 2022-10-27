@@ -11,11 +11,12 @@ import charmonium.time_block as ch_time_block
 import yaml
 from tqdm import tqdm
 
+from .serialization import serialize, deserialize
 from .engines import engines
 from .registries import snakemake_registry, nf_core_registry
 from .report import report_html
 from .repos import get_repo_accessor
-from .workflows import Revision, Workflow
+from .workflows import RegistryHub, Revision, Workflow
 from .util import groupby_dict
 
 logging.basicConfig()
@@ -57,8 +58,8 @@ def ensure_revisions(
     return ret_wf_apps
 
 
-def report(wf_apps: list[Workflow]) -> None:
-    Path("docs/results.html").write_text(report_html(wf_apps))
+def report(hub: RegistryHub) -> None:
+    Path("docs/results.html").write_text(report_html(hub))
 
 
 def ensure_recent_executions(
@@ -92,29 +93,24 @@ def ensure_recent_executions(
             data.write_text(yaml.dump(wf_apps))
 
 
-def check_nodes_are_owned(wf_apps: list[Workflow]) -> None:
-    raise NotImplementedError
-
-
-def merge_duplicates(wf_apps: list[Workflow]) -> list[Workflow]:
+def check_nodes_are_owned(hub: RegistryHub) -> None:
     raise NotImplementedError
 
 
 @ch_time_block.decor()
 def main() -> None:
+    data_path = Path("data")
     with ch_time_block.ctx("load", print_start=False):
-        wf_apps = cast(
-            list[Workflow], yaml.load(data.read_text(), Loader=yaml.Loader)
-        )
-        assert all(isinstance(wf_app, Workflow) for wf_app in wf_apps)
+        if data.exists():
+            hub = deserialize(data_path)
+        else:
+            hub = RegistryHub(registries=[])
     with ch_time_block.ctx("process", print_start=False):
-        # wf_apps = ensure_revisions(wf_apps, only_empty=True, delete_empty=True)
-        # ensure_recent_executions(wf_apps, TimeDelta(days=100), 2, dry_run=False)
-        wf_apps = merge_duplicates(wf_apps)
+        pass
     with ch_time_block.ctx("store", print_start=False):
-        data.write_text(yaml.dump(wf_apps))
+        serialize(hub, data_path)
     with ch_time_block.ctx("report", print_start=False):
-        report(wf_apps)
+        report(hub)
 
 
 main()

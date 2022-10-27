@@ -12,7 +12,8 @@ from datetime import timedelta as TimeDelta
 from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 
-from .workflows import Execution, Machine, Revision
+from .workflows import Execution, Revision
+from .executable import Machine
 
 try:
     import docker  # type: ignore

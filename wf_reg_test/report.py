@@ -12,44 +12,48 @@ from .html_helpers import (
     html_table,
 )
 from .util import sorted_and_dropped, groupby_dict
-from .workflows import Workflow
+from .workflows import Workflow, RegistryHub
 
 
-def is_interesting(wf_app: Workflow) -> bool:
-    return sum(bool(revision.executions) for revision in wf_app.revisions) > 3
+def is_interesting(workflow: Workflow) -> bool:
+    return sum(bool(revision.executions) for revision in workflow.revisions) > 3
 
 
-def get_stats(all_wf_apps: list[Workflow]) -> html.Element:
-    engine2wf_apps = groupby_dict(all_wf_apps, lambda wf_app: wf_app.engine)
+def get_stats(hub: RegistryHub) -> html.Element:
+    all_workflows = []
+    for registry in hub.registries:
+        all_workflows.extend(registry.workflows)
+
+    engine2workflows = groupby_dict(all_workflows, lambda workflow: workflow.engine)
     stats: Mapping[str, Callable[[list[Workflow]], int]] = {
-        "N workflows": lambda wf_apps: len(wf_apps),
-        "N revisions": lambda wf_apps: sum(len(wf_app.revisions) for wf_app in wf_apps),
-        "N executions": lambda wf_apps: sum(
+        "N workflows": lambda workflows: len(workflows),
+        "N revisions": lambda workflows: sum(len(workflow.revisions) for workflow in workflows),
+        "N executions": lambda workflows: sum(
             len(revision.executions)
-            for wf_app in wf_apps
-            for revision in wf_app.revisions
+            for workflow in workflows
+            for revision in workflow.revisions
         ),
-        "N interesting workflows": lambda wf_apps: sum(
-            1 for wf_app in wf_apps if is_interesting(wf_app)
+        "N interesting workflows": lambda workflows: sum(
+            1 for workflow in workflows if is_interesting(workflow)
         ),
-        "N revisions of interesting workflows": lambda wf_apps: sum(
-            len(wf_app.revisions) for wf_app in wf_apps if is_interesting(wf_app)
+        "N revisions of interesting workflows": lambda workflows: sum(
+            len(workflow.revisions) for workflow in workflows if is_interesting(workflow)
         ),
-        "N executions of interesting workflows": lambda wf_apps: sum(
+        "N executions of interesting workflows": lambda workflows: sum(
             len(revision.executions)
-            for wf_app in wf_apps
-            if is_interesting(wf_app)
-            for revision in wf_app.revisions
+            for workflow in workflows
+            if is_interesting(workflow)
+            for revision in workflow.revisions
         ),
     }
-    engines = engine2wf_apps.keys()
+    engines = engine2workflows.keys()
     return html_table(
         [
             {
                 "Stat": stat_name,
-                "Total": str(stat_func(all_wf_apps)),
+                "Total": str(stat_func(all_workflows)),
                 **{
-                    engine: str(stat_func(engine2wf_apps[engine])) for engine in engines
+                    engine: str(stat_func(engine2workflows[engine])) for engine in engines
                 },
             }
             for stat_name, stat_func in stats.items()
@@ -66,14 +70,14 @@ def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
     return f"{day_diff:.{digits}f} {unit}"
 
 
-def report_html(wf_apps: list[Workflow]) -> str:
+def report_html(hub: RegistryHub) -> str:
     table_by_workflows = html_table(
         [
             {
-                "Workflow": html_link(wf_app.display_name, wf_app.url),
-                "Engine": wf_app.engine.display_name,
-                "Repo": html_link("repo", wf_app.repo_url),
-                "Interesting?": html_emoji_bool(is_interesting(wf_app)),
+                "Workflow": html_link(workflow.display_name, workflow.url),
+                "Engine": workflow.engine.display_name,
+                "Repo": html_link("repo", workflow.repo_url),
+                "Interesting?": html_emoji_bool(is_interesting(workflow)),
                 "Revisions": collapsed(
                     "Revisions",
                     html_table(
@@ -108,12 +112,13 @@ def report_html(wf_apps: list[Workflow]) -> str:
                                     ]
                                 ),
                             }
-                            for revision in wf_app.revisions
+                            for revision in workflow.revisions
                         ]
                     ),
                 ),
             }
-            for wf_app in wf_apps
+            for registry in hub.registries
+            for workflow in registry.workflows
         ]
     )
     table_by_executions = html_table(
@@ -122,8 +127,8 @@ def report_html(wf_apps: list[Workflow]) -> str:
                 (
                     execution.datetime - revision.datetime,
                     {
-                        "Workflow": html_link(wf_app.display_name, wf_app.url),
-                        "Engine": wf_app.engine.display_name,
+                        "Workflow": html_link(workflow.display_name, workflow.url),
+                        "Engine": workflow.engine.display_name,
                         "Revision": html_link(revision.display_name, revision.url),
                         "Revision date": html_date(revision.datetime),
                         "Staleness": html_timedelta(
@@ -145,8 +150,9 @@ def report_html(wf_apps: list[Workflow]) -> str:
                         # "Reproducible": html_emoji_bool(True),
                     },
                 )
-                for wf_app in wf_apps
-                for revision in wf_app.revisions
+                for registry in hub.registries
+                for workflow in registry.workflows
+                for revision in workflow.revisions
                 for execution in revision.executions
             ],
             reverse=True,
@@ -185,7 +191,7 @@ def report_html(wf_apps: list[Workflow]) -> str:
             ),
             html.body(
                 html.h1("Stats"),
-                get_stats(wf_apps),
+                get_stats(hub),
                 html.h1("Workflows"),
                 table_by_workflows,
                 html.h1("Executions"),

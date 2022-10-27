@@ -31,23 +31,22 @@ registries, workflows, revisions, and executions in separate files.
 # encode will escape spaces and slashes in the name.
 encode = urllib.parse.quote_plus
 
-def serialize(hub: RegistryHub, path: Path) -> None:
-    for warning in hub.check_invariants():
-        warnings.warn(warning)
+def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
+    if warn:
+        for warning in hub.check_invariants():
+            warnings.warn(warning)
 
     if path.exists():
         shutil.rmtree(path)
+    path.mkdir()
 
-    (path / "index.yaml").write_text(yaml.dump({
-        "registries": [
-            {
-                "display_name": registry.display_name,
-                "url": registry.url,
-            }
+    (path / "index.yaml").write_text(yaml.dump([
+        {
+            "display_name": registry.display_name,
+            "url": registry.url,
+        }
             for registry in hub.registries
-        ],
-        "workflow_engines": hub.workflow_engines,
-    }))
+    ]))
 
     unique_machines = {
         execution.machine
@@ -65,7 +64,7 @@ def serialize(hub: RegistryHub, path: Path) -> None:
         name = encode(registry.display_name)
         (path / f"{name}_workflows.yaml").write_text(yaml.dump([
             {
-                "engine": workflow.engine.display_name,
+                "engine": workflow.engine,
                 "url": workflow.url,
                 "display_name": workflow.display_name,
             }
@@ -100,8 +99,8 @@ def serialize(hub: RegistryHub, path: Path) -> None:
     assert deserialize(path) == hub
 
 
-def deserialize(path: Path) -> RegistryHub:
-    hub_dict = yaml.load(
+def deserialize(path: Path, warn: bool = True) -> RegistryHub:
+    registry_dicts = yaml.load(
         (path / "index.yaml").read_text(),
         Loader=yaml.FullLoader,
     )
@@ -112,9 +111,8 @@ def deserialize(path: Path) -> RegistryHub:
                 url=registry_dict["url"],
                 workflows=[],
             )
-            for registry_dict in hub_dict["registries"]
+            for registry_dict in registry_dicts
         ],
-        workflow_engines=hub_dict["workflow_engines"],
     )
     machine_map = yaml.load(
         (path / f"machines.yaml").read_text(),
@@ -130,7 +128,7 @@ def deserialize(path: Path) -> RegistryHub:
         workflows_map: dict[str, Workflow] = {}
         for workflow_dict in workflow_dicts:
             workflow = Workflow(
-                engine=hub.workflow_engines[workflow_dict["engine"]],
+                engine=workflow_dict["engine"],
                 url=workflow_dict["url"],
                 display_name=workflow_dict["display_name"],
                 repo_url=workflow_dict["repo_url"],
@@ -174,7 +172,8 @@ def deserialize(path: Path) -> RegistryHub:
             )
             revision.executions.append(execution)
 
-    for warning in hub.check_invariants():
-        warnings.warn(warning)
+    if warn:
+        for warning in hub.check_invariants():
+            warnings.warn(warning)
 
     return hub

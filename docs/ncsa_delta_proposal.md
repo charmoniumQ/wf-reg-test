@@ -247,6 +247,12 @@ We will likely be able to complete the analysis within a few months.
 |GPU-hours|300|
 |Storage|120Gb for three months|
 
+<!--
+Start-up awards of up to 1,000 GPU hours and 50,000 CPU core hours may be requested for test runs and to determine full allocation request needs.
+ypical allocation awards scale up to 25,000 GPU hours or 690,000 CPU core hours.
+More information on Delta Policies & Submissions Guidelines as well as Proposal Submission Instructions can be found on the Delta Illinois Allocation webpage: https://www.ncsa.illinois.edu/expertise/user-services/allocations/
+-->
+
 ## Requested start date and duration
 
 We request to begin execution on December 1.
