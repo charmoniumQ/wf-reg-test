@@ -97,6 +97,14 @@ def check_nodes_are_owned(hub: RegistryHub) -> None:
     raise NotImplementedError
 
 
+def regenerate() -> RegistryHub:
+    # This is an archive for my old code.
+    # One should also, theoretically, be able to reconstruct hub by rerunning all of the archived code.
+
+    hub = RegistryHub(registries=[])
+    return hub
+
+
 @ch_time_block.decor()
 def main() -> None:
     data_path = Path("data")
@@ -104,9 +112,10 @@ def main() -> None:
         if data.exists():
             hub = deserialize(data_path)
         else:
-            hub = RegistryHub(registries=[])
+            hub = regenerate()
     with ch_time_block.ctx("process", print_start=False):
-        pass
+        hub.registries.append(nf_core_registry())
+        hub.registries.append(snakemake_registry())
     with ch_time_block.ctx("store", print_start=False):
         serialize(hub, data_path)
     with ch_time_block.ctx("report", print_start=False):
@@ -114,7 +123,3 @@ def main() -> None:
 
 
 main()
-
-
-# https://snakemake.github.io/snakemake-workflow-catalog/data.js
-# https://github.com/nf-core/nf-co.re/blob/master/update_pipeline_details.php#L85

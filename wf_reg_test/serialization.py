@@ -67,6 +67,7 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
                 "engine": workflow.engine,
                 "url": workflow.url,
                 "display_name": workflow.display_name,
+                "repo_url": workflow.repo_url,
             }
             for workflow in registry.workflows
         ]))
@@ -96,7 +97,8 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
             for execution in revision.executions
         ]))
 
-    assert deserialize(path) == hub
+    if warn:
+        assert deserialize(path, warn=False) == hub
 
 
 def deserialize(path: Path, warn: bool = True) -> RegistryHub:

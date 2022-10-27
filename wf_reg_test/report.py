@@ -75,7 +75,7 @@ def report_html(hub: RegistryHub) -> str:
         [
             {
                 "Workflow": html_link(workflow.display_name, workflow.url),
-                "Engine": workflow.engine.display_name,
+                "Engine": workflow.engine,
                 "Repo": html_link("repo", workflow.repo_url),
                 "Interesting?": html_emoji_bool(is_interesting(workflow)),
                 "Revisions": collapsed(
@@ -128,7 +128,7 @@ def report_html(hub: RegistryHub) -> str:
                     execution.datetime - revision.datetime,
                     {
                         "Workflow": html_link(workflow.display_name, workflow.url),
-                        "Engine": workflow.engine.display_name,
+                        "Engine": workflow.engine,
                         "Revision": html_link(revision.display_name, revision.url),
                         "Revision date": html_date(revision.datetime),
                         "Staleness": html_timedelta(

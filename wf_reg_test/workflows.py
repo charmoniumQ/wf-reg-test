@@ -58,7 +58,7 @@ class Workflow:
     display_name: str
     repo_url: str
     revisions: list[Revision]
-    registry: Registry
+    registry: Registry = dataclasses.field(compare=False)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
@@ -76,7 +76,6 @@ class Workflow:
                 self.revisions.append(revision)
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        yield from self.engine.check_invariants()
         for revision in self.revisions:
             if revision.workflow != self:
                 yield UserWarning("Revision does not point back to self", revision, self)
@@ -84,9 +83,6 @@ class Workflow:
 
 
 class WorkflowEngine(Protocol):
-    def check_invariants(self) -> Iterable[UserWarning]:
-        pass
-
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
 
@@ -102,7 +98,7 @@ class Revision:
     url: str
     datetime: DateTime
     executions: list[Execution]
-    workflow: Workflow
+    workflow: Workflow = dataclasses.field(compare=False)
 
     def check_invariants(self) -> Iterable[UserWarning]:
         for execution in self.executions:
@@ -134,7 +130,7 @@ class Execution:
     conditions: ReproducibilityConditions
     resources: ComputeResources
     status_code: int
-    revision: Revision
+    revision: Revision = dataclasses.field(compare=False)
 
     def check_invariants(self) -> Iterable[UserWarning]:
         yield from self.output.check_invariants()
