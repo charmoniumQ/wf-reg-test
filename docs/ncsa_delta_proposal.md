@@ -1,4 +1,4 @@
----
+s---
 # See https://raw.githubusercontent.com/charmoniumQ/nix-documents/main/examples-src/markdown-bells-and-whistles/index.md
 fail-if-warnings: yes
 standalone: yes
@@ -23,10 +23,13 @@ linkcolor: blue
 abstract: |
   Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
   Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
+  <!-- of science, put science first, storage -> archive, decay -> collapse everywehere -->
   We plan to use Delta to test computational experiments (often workflows) in storage to empirically study the nature of software collapse.
   We will create and share the first public dataset of software decay in computational experiments.
   This data will be used by us and others to identify best practices, make continuous testing feasible, and repair broken programs.
   These techniques increase the replicability of computational experiments.
+
+<!-- intervention vs prediction -->
 ---
 
 <!--
@@ -37,16 +40,16 @@ https://www.ncsa.illinois.edu/expertise/user-services/allocations/delta-proposal
 
 | Name | Role | Institution | Email |
 |----|----|--------|--------|
-| Daniel S. Katz | PI | National Center for Supercomputing Applications | <dskatz@illinois.edu> |
+| Daniel S. Katz | PI | NCSA | <dskatz@illinois.edu> |
 | Darko Marinov | Co-PI | Department of Computer Science, UIUC | <marinov@illinois.edu> |
 | Reed Milewicz | Extern Collaborator | Sandia National Laboratories | <rmilewi@sandia.gov> |
-| Samuel Grayson | Student | Department of Computer Science | <grayson5@illinois.edu> |
+| Samuel Grayson | Student | Department of Computer Science, UIUC | <grayson5@illinois.edu> |
 
 # Project Overview
 
 Software tends to break over time, even if it is unchanged, due to non-obvious changes in the computational environment.
 This phenomenon is called "software collapse" [@hinsen_dealing_2019], because software with an unstable foundation is analogous to a building with an unstable foundation.
-In the scientific domain, software collapse could manifest as an non-repeatable (and thusly irreplicable) experiment[^repro-terms], which not only undermine long-term credibility of science but also hinder its day-to-day operations.
+In the scientific domain, software collapse could manifest as a non-repeatable (and thusly irreplicable) experiment[^repro-terms], which not only undermines long-term credibility of science but also hinders its day-to-day operations.
 
 [^repro-terms]:
 In this article, we use ACM's terminology [@plesser_reproducibility_2018]:
@@ -57,50 +60,61 @@ Reproducibility implies replicability, which implies repeatability, which implie
 While the converses are not true, repeatability is a necessary step towards repeatability and repeatability towards reproducibility, so achieving repeatability should make it easier to achieve reproducibility.
 
 Unfortunately, software collapse is widespread in the computational science domain.
-Zhao et al. studied software collapse computational of experiments deposited in the myExperiment registry [@zhao_why_2012].
+<!-- emphasize well-cited -->
+Zhao et al. studied software collapse of computational experiments deposited in the myExperiment registry [@zhao_why_2012].
 They found that 80% of the experiments in their selection did not work, for a variety of causes: change of third-party resources, unavailable example data, insufficient execution environment, and insufficient metadata;
 of these, change of third-party resources caused the most failures, such as when a step in an experiment referenced data from another server through the internet which was no longer available.
 
 There are many proposed techniques to mitigate collapse, of which most fall into two categories: proactive and reactive.
-A _proactive technique_ would control and preserve the environment or application to ensure repeatability as software ages, whereas a _reactive technique_ would seek to detect and mitigate  nondeterminism once it occurs.
-Proactive techniques include using Docker, virtual machines, system call interposition [@guo_cde_2011].
-However, at this time no mainstream proactive techniques can completely control non-determinism due to network resources, pseudorandomness, and parallel program order.
+A _proactive technique_ would control and preserve the environment or application to ensure repeatability as software ages, whereas a _reactive technique_ would seek to detect and mitigate  nondeterminism once it occurs. <!-- Relate "non-determinism" to "collapse" -->
+Proactive techniques include using Docker <!-- Singularity, Apptainer -->, virtual machines, system call interposition [@guo_cde_2011].
+However, at this time no mainstream proactive techniques can completely control non-determinism due to network resources, pseudorandomness, and parallel program order. <!-- Ref rr -->
 The user would be getting possibly unrepeatable results without even knowing it.
 
 On the other hand, _continuous testing_[^CI] seeks to detect rather than eliminate source of non-determinism.
 Continuous testing would run the experiment multiple times to assess if the experiment is still producing the same results (repeatability).
-Continuous testing handles the "blind-spots" of proactive testing:
+Continuous testing handles the "blind-spots" of proactive techniques:
 
 - For non-deterministic pseudorandomness, repeated executions naturally explore the space of possible seeds.
 - For parallel program order, repeated executions on different core-counts will explore the space of possible schedules.
 - For network resources, repeated executions will identify flaky resources when they become inaccessible. It will not waste the user's time identifying resources that are still accessible, leaving them to focus on only the network resources that are actually flaky.
 
-When an experiment has non-determinism due to parallel program order, for example, continuous testing has a greater chance of detecting this.
-At least the user would know that the code is non-deterministic, so they could experimentally determine the variance of the result or attempt to fix the non-determinism.
+When an experiment has non-determinism due to parallel program order, for example, continuous testing has a greater chance of detecting this. <!-- Greater than what? Is this just an example? -->
+At least the user would know that the code is non-deterministic, so they could experimentally determine the variance of the result or attempt to fix the non-determinism. <!-- whereas with proactive, you don't even know -->
 The major drawback is increased computational cost, since running a computational experiment can be expensive.
 However, if one could predict which experiments were more likely to break, one could also prioritize testing on that basis, an optimization we term _predictive continuous testing_.
 
 
 [^CI]: The continuous testing we are proposing here differs from CI/CD because our proposed continuous testing is triggered periodically, while CI/CD is triggered when the code is changed. CI/CD mitigates software regressions, which are due to _internal changes_, but continuous testing mitigates software collapse, which is due to _external changes_.
 
+<!-- non-determinism -< nonderminism -->
+
 ![Predicting the rate of software collapse can reduce resource utilization and increase efficacy of continuous testing.](predictive_maintenance.png){ width=20%, height=25% }
 
-Once a bug has been identified (perhaps by continuous testing), _automated program repair_ attempts seeks to apply solutions based on comparing the error-message toa library of common errors and solutions.
-This has been done successfully in other domains [@henkel_shipwright_2021].
-This pairs well with continuous testing, since continuous testing identifies the errors, and automatic program repair can try to fix it.
-Continuous testing can help a human encode solutions for errors as well.
+ <!-- Globally: Bug -> Collapse in figure, increase font -->
+ 
+ <!-- Check page limit -->
+
+<!-- Globally: no naked this -->
+
+Once a bug has been identified (perhaps by continuous testing), _automated program repair_ attempts to apply solutions based on comparing the error-message to a database of common errors and solutions.
+This technique has been done successfully in other domains [@henkel_shipwright_2021], and it pairs well with continuous testing, since continuous testing identifies the errors, and automated program repair can try to fix it.
 
 # Target Problem
 
+<!-- check repeatability, replicability, reproducibility -->
+
+<!-- Emphasize shareability -->
+
 We plan to study the usage and efficacy of these techniques and even improve them.
 However, to do so, we need data on the repeatability of computational experiments, and such data either has not been collected or made public.
-While many experimental registries exist, they do not store prior results, so we cannot tell if the experiment is repeatable.
+While many experimental registries exist <!-- cite registries -->, they do not store prior results, so we cannot tell if the experiment is repeatable.
 We will collect data on software collapse of computational experiments by automatically running computational experiments from public registries.
 The resources of Delta are necessary because there are many registries, each experiment can have many versions, and each version may take a while to run.
 These registries include:
 
 - [nf-core](https://nf-co.re/) <!-- TODO describe each in a sentence -->
-- [Dockstore](https://dockstore.org/)
+- [Dockstore](https://dockstore.org/) <!-- put citations -->
 - [Snakemake Catalog](https://snakemake.github.io/snakemake-workflow-catalog/)
 - [WorkflowHub](https://workflowhub.eu/)
 - [myExperiment](https://www.myexperiment.org/)
@@ -108,7 +122,7 @@ These registries include:
 
 Because we cannot take one computational experiment and simulate it one, five, and ten years into the future,
 we will instead look for historical versions of an experiment from one, five, or ten years ago and simulate it today.
-The registries above store historical versions of the workflow.
+The registries above store historical versions of the workflow. <!-- Workflow -> comp exp -->
 Some will still work, and some will fail, due to software collapse.
 In either case, resulting execution will be stored in our database.
 The following pseudo-code summarizes this procedure:
@@ -129,7 +143,7 @@ for registry in registries:
 ```
 \normalsize
 
-This dataset will allow us to answer the following research questions (and we will share it so that others can also use it to answer their own research questions in this area of software engineering):
+This dataset will allow us to answer the following research questions (and we will share the dataset so that others can also use it to answer their own research questions in this area of software engineering):
 
 **RQ1:**
 What are typical rates of software collapse over time?
@@ -149,22 +163,23 @@ The model should operate from a "cold start," where we know nothing about the co
 
 **RQ4:**
 Can we improve the efficiency of continuous testing by predicting the rate of decay?
-This could be useful for intuitions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
+This could be useful for institutions, such as national labs, wanting to ensure their computational experiments remain valid while using resources efficiently.
 Since we would have data on the computational cost (runtime and RAM) of each experiment, we can analytically simulate "what if we test X every Y days."
-Then we can simulate a system that tests each computational experiment in a frequency based on its failure rate and computational cost.
+Then we can simulate a system that tests each computational experiment in a frequency based on its failure rate and computational cost, for example processor-time and RAM.
 
 **RQ5:**
 What are the best practices that improve replicability?
-We plan to examine choice of workflow manager, cyclomatic complexity, significant lines of code, choice of replicability tools (docker, `requirements.txt` with pinned packages, singularity), and other factors.
+We plan to examine choice of workflow manager, lines of code, choice of replicability tools (docker, `requirements.txt` with pinned packages, singularity), and other factors.
 
 **RQ6:**
 In what fraction of the cases does automatic repair work?
 Automatic repair could let one run old experiments off-the-shelf.
-We can apply similar techniques to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize many failures into a few clusters.
+We can apply techniques similar to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize many failures into a few clusters.
 
 ## Description of codes
 
-We developed a [Python package](https:/github.com/charmoniumQ/wf-reg-test/) with a CLI entrypoint that finds computational experiments from the repositories and tests them.
+<!-- Concise -->
+We developed a [Python package](https:/github.com/charmoniumQ/wf-reg-test/) with a CLI entrypoint that finds computational experiments from the registries and tests them.
 We use [Spack](https://spack.io/) to build our computational environment in `environment.yaml`.
 We do not require any runtime libraries to be installed at root-level, since Spack can install these at the user-level.
 We plan to^[However, we are open to suggestions.] install the Spack environment to network filesystem that all the worker nodes can read.
@@ -176,9 +191,10 @@ We have not explicitly characterized the set of experiments, but we expect they 
 The tasks are usually CPU, with a some experiments having GPU tasks as well.
 CPU tasks are usually memory-bound, while GPU tasks can be either.
 
-We have yet to parallelize the application, but intend to use parallelism to take fully utilize Delta's resources and get our results in a practical time.
+We have yet to parallelize the application, but intend to use parallelism to fully utilize Delta's resources and get our results in a practical time.
 While parallelism usually exists within an experiment, we will mostly exploit parallelism between experiments.
 That parallelism has low communication and synchronization overhead because the cost of executing one experiment (order of minutes) dominates the cost of fetching and queuing work-items (order of milliseconds).
+<!-- say "perfectly parallel" -->
 If hundreds of workers were drawing experiments from the queue as soon as they finish, then the central server will receive a request twice every second, which will not cause a bottleneck.
 We think this can be implemented easily from our existing code using the parallel-map paradigm in [Dask](https://www.dask.org/) or [Parsl](http://parsl-project.org/).
 The workers need only receive a path or a URL to a version of an experiment to test (less than a hundred of bytes).
