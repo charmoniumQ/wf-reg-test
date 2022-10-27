@@ -1,0 +1,4 @@
+- display_name: nf-core
+  url: https://nf-co.re/
+- display_name: snakemake-workflow-catalog
+  url: https://snakemake.github.io/snakemake-workflow-catalog/

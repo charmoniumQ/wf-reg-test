@@ -5,8 +5,7 @@ __pycache__/
 /.tox/
 /.direnv/
 
-/.cache2/
-/data/
+/.repos/
 /secrets.json
 .r-mount
 .ipynb_checkpoints/
