@@ -15,19 +15,29 @@ from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 from .workflows import Execution, Revision
 from .executable import Machine
 
-try:
-    import docker  # type: ignore
-except ImportError:
-
-    class DockerClient:
-        def __getattr__(self, attr: str) -> Any:
-            raise RuntimeError("Python Docker is not installed.")
-
-else:
-    docker_client = docker.DockerClient(base_url="unix://var/run/docker.sock")
-
 
 logger = logging.getLogger("wf_reg_test")
+
+
+class SnakeMakeExecutor:
+    def run(self, workflow: Path, n_cores: int) -> Executable:
+        return Executable(
+            command=[
+                "snakemake",
+                "--cores",
+                str(n_cores),
+                "--use-conda",
+                "--use-singularity",
+                str(workflow / "workflow"),
+            ],
+        )
+        env=cached_thunk(lambda: {
+            **get_spack_env(Path() / "engines" / "snakemake"),
+        }),
+        command=lambda workflow: (
+
+        ),
+        pass
 
 
 @dataclasses.dataclass
@@ -166,16 +176,5 @@ engines = {
         ),
     ),
     "snakemake": WorkflowEngine(
-        env=cached_thunk(lambda: {
-            **get_spack_env(Path() / "engines" / "snakemake"),
-        }),
-        command=lambda workflow: (
-            "snakemake",
-            "--cores",
-            "all",
-            "--use-conda",
-            "--use-singularity",
-            str(workflow / "workflow"),
-        ),
     ),
 }

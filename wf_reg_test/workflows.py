@@ -6,7 +6,8 @@ import dataclasses
 from pathlib import Path
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 from typing_extensions import Protocol
-from .util import non_unique
+
+from .util import non_unique, concat_lists
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -16,6 +17,10 @@ class RegistryHub:
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} [{', '.join(str(registry) for registry in self.registries)}]"
+
+    @property
+    def workflows(self) -> list[Workflow]:
+        return concat_lists(registry.workflows for registry in self.registries)
 
     def check_invariants(self) -> Iterable[UserWarning]:
         for reg_i, reg_j, _, _ in non_unique(registry.url for registry in self.registries):
@@ -53,6 +58,10 @@ class Registry:
 
 @dataclasses.dataclass
 class Workflow:
+    """Note that this is termed "computational experiment" when
+    writing about this research (see docs/).
+
+    """
     engine: str
     url: str
     display_name: str
@@ -96,9 +105,10 @@ class WorkflowEngine(Protocol):
 class Revision:
     display_name: str
     url: str
+    rev: str
     datetime: DateTime
     executions: list[Execution]
-    workflow: Workflow = dataclasses.field(compare=False)
+    workflow: Optional[Workflow] = dataclasses.field(compare=False)
 
     def check_invariants(self) -> Iterable[UserWarning]:
         for execution in self.executions:

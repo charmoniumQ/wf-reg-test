@@ -89,6 +89,13 @@ def non_unique(data: Iterable[_T]) -> Iterable[tuple[_T, _T, int, int]]:
 
 
 def expect_type(typ: type[_T], data: Any) -> _T:
-    if not isinstance(type, data):
+    if not isinstance(data, typ):
         raise TypeError(f"Expected type {typ} for {data}")
     return cast(_T, data)
+
+
+def concat_lists(lists: Iterable[list[_T]]) -> list[_T]:
+    ret: list[_T] = []
+    for list_ in lists:
+        ret.extend(list_)
+    return ret

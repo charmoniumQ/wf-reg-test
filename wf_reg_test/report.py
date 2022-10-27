@@ -20,11 +20,7 @@ def is_interesting(workflow: Workflow) -> bool:
 
 
 def get_stats(hub: RegistryHub) -> html.Element:
-    all_workflows = []
-    for registry in hub.registries:
-        all_workflows.extend(registry.workflows)
-
-    engine2workflows = groupby_dict(all_workflows, lambda workflow: workflow.engine)
+    engine2workflows = groupby_dict(hub.workflows, lambda workflow: workflow.engine)
     stats: Mapping[str, Callable[[list[Workflow]], int]] = {
         "N workflows": lambda workflows: len(workflows),
         "N revisions": lambda workflows: sum(len(workflow.revisions) for workflow in workflows),
@@ -51,7 +47,7 @@ def get_stats(hub: RegistryHub) -> html.Element:
         [
             {
                 "Stat": stat_name,
-                "Total": str(stat_func(all_workflows)),
+                "Total": str(stat_func(hub.workflows)),
                 **{
                     engine: str(stat_func(engine2workflows[engine])) for engine in engines
                 },
@@ -117,8 +113,7 @@ def report_html(hub: RegistryHub) -> str:
                     ),
                 ),
             }
-            for registry in hub.registries
-            for workflow in registry.workflows
+            for workflow in hub.workflows
         ]
     )
     table_by_executions = html_table(

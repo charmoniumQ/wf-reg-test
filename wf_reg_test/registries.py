@@ -37,7 +37,7 @@ def nf_core_registry() -> Registry:
                 engine="nextflow",
                 url="https://nf-co.re/" + repo.name,
                 display_name=repo.name,
-                repo_url="https://github.com/" + repo.full_name,
+                repo_url=f"https://github.com/{repo.full_name}?revisions=releases&skip-drafts=1&skip-preleases=1",
                 revisions=[],
                 registry=registry
             ))
@@ -59,11 +59,12 @@ def snakemake_registry() -> Registry:
     )
     for repo_info in tqdm(repo_infos, desc="snakemake"):
         if repo_info["standardized"]:
+            full_name = repo_info["full_name"]
             registry.workflows.append(Workflow(
                 engine="snakemake",
-                url="https://github.com/" + repo_info["full_name"],
+                url=f"https://github.com/{full_name}",
                 display_name=repo_info["full_name"],
-                repo_url="https://github.com/" + repo_info["full_name"],
+                repo_url=f"https://github.com/{full_name}?revisions=releases&skip-drafts=1&skip-preleases=1",
                 revisions=[],
                 registry=registry,
             ))

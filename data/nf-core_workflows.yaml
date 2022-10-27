@@ -1,284 +1,284 @@
 - display_name: airrflow
   engine: nextflow
-  repo_url: https://github.com/nf-core/airrflow
+  repo_url: https://github.com/nf-core/airrflow?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/airrflow
 - display_name: ampliseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/ampliseq
+  repo_url: https://github.com/nf-core/ampliseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/ampliseq
 - display_name: atacseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/atacseq
+  repo_url: https://github.com/nf-core/atacseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/atacseq
 - display_name: bacass
   engine: nextflow
-  repo_url: https://github.com/nf-core/bacass
+  repo_url: https://github.com/nf-core/bacass?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/bacass
 - display_name: bactmap
   engine: nextflow
-  repo_url: https://github.com/nf-core/bactmap
+  repo_url: https://github.com/nf-core/bactmap?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/bactmap
 - display_name: cageseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/cageseq
+  repo_url: https://github.com/nf-core/cageseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/cageseq
 - display_name: chipseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/chipseq
+  repo_url: https://github.com/nf-core/chipseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/chipseq
 - display_name: circdna
   engine: nextflow
-  repo_url: https://github.com/nf-core/circdna
+  repo_url: https://github.com/nf-core/circdna?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/circdna
 - display_name: circrna
   engine: nextflow
-  repo_url: https://github.com/nf-core/circrna
+  repo_url: https://github.com/nf-core/circrna?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/circrna
 - display_name: clipseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/clipseq
+  repo_url: https://github.com/nf-core/clipseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/clipseq
 - display_name: coproid
   engine: nextflow
-  repo_url: https://github.com/nf-core/coproid
+  repo_url: https://github.com/nf-core/coproid?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/coproid
 - display_name: crisprseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/crisprseq
+  repo_url: https://github.com/nf-core/crisprseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/crisprseq
 - display_name: crisprvar
   engine: nextflow
-  repo_url: https://github.com/nf-core/crisprvar
+  repo_url: https://github.com/nf-core/crisprvar?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/crisprvar
 - display_name: cutandrun
   engine: nextflow
-  repo_url: https://github.com/nf-core/cutandrun
+  repo_url: https://github.com/nf-core/cutandrun?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/cutandrun
 - display_name: ddamsproteomics
   engine: nextflow
-  repo_url: https://github.com/nf-core/ddamsproteomics
+  repo_url: https://github.com/nf-core/ddamsproteomics?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/ddamsproteomics
 - display_name: deepvariant
   engine: nextflow
-  repo_url: https://github.com/nf-core/deepvariant
+  repo_url: https://github.com/nf-core/deepvariant?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/deepvariant
 - display_name: demultiplex
   engine: nextflow
-  repo_url: https://github.com/nf-core/demultiplex
+  repo_url: https://github.com/nf-core/demultiplex?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/demultiplex
 - display_name: denovohybrid
   engine: nextflow
-  repo_url: https://github.com/nf-core/denovohybrid
+  repo_url: https://github.com/nf-core/denovohybrid?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/denovohybrid
 - display_name: diaproteomics
   engine: nextflow
-  repo_url: https://github.com/nf-core/diaproteomics
+  repo_url: https://github.com/nf-core/diaproteomics?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/diaproteomics
 - display_name: differentialabundance
   engine: nextflow
-  repo_url: https://github.com/nf-core/differentialabundance
+  repo_url: https://github.com/nf-core/differentialabundance?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/differentialabundance
 - display_name: dualrnaseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/dualrnaseq
+  repo_url: https://github.com/nf-core/dualrnaseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/dualrnaseq
 - display_name: eager
   engine: nextflow
-  repo_url: https://github.com/nf-core/eager
+  repo_url: https://github.com/nf-core/eager?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/eager
 - display_name: epitopeprediction
   engine: nextflow
-  repo_url: https://github.com/nf-core/epitopeprediction
+  repo_url: https://github.com/nf-core/epitopeprediction?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/epitopeprediction
 - display_name: exoseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/exoseq
+  repo_url: https://github.com/nf-core/exoseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/exoseq
 - display_name: fastquorum
   engine: nextflow
-  repo_url: https://github.com/nf-core/fastquorum
+  repo_url: https://github.com/nf-core/fastquorum?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/fastquorum
 - display_name: fetchngs
   engine: nextflow
-  repo_url: https://github.com/nf-core/fetchngs
+  repo_url: https://github.com/nf-core/fetchngs?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/fetchngs
 - display_name: funcscan
   engine: nextflow
-  repo_url: https://github.com/nf-core/funcscan
+  repo_url: https://github.com/nf-core/funcscan?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/funcscan
 - display_name: genomeannotator
   engine: nextflow
-  repo_url: https://github.com/nf-core/genomeannotator
+  repo_url: https://github.com/nf-core/genomeannotator?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/genomeannotator
 - display_name: genomeassembler
   engine: nextflow
-  repo_url: https://github.com/nf-core/genomeassembler
+  repo_url: https://github.com/nf-core/genomeassembler?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/genomeassembler
 - display_name: genomeskim
   engine: nextflow
-  repo_url: https://github.com/nf-core/genomeskim
+  repo_url: https://github.com/nf-core/genomeskim?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/genomeskim
 - display_name: gwas
   engine: nextflow
-  repo_url: https://github.com/nf-core/gwas
+  repo_url: https://github.com/nf-core/gwas?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/gwas
 - display_name: hgtseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/hgtseq
+  repo_url: https://github.com/nf-core/hgtseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/hgtseq
 - display_name: hic
   engine: nextflow
-  repo_url: https://github.com/nf-core/hic
+  repo_url: https://github.com/nf-core/hic?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/hic
 - display_name: hicar
   engine: nextflow
-  repo_url: https://github.com/nf-core/hicar
+  repo_url: https://github.com/nf-core/hicar?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/hicar
 - display_name: hlatyping
   engine: nextflow
-  repo_url: https://github.com/nf-core/hlatyping
+  repo_url: https://github.com/nf-core/hlatyping?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/hlatyping
 - display_name: imcyto
   engine: nextflow
-  repo_url: https://github.com/nf-core/imcyto
+  repo_url: https://github.com/nf-core/imcyto?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/imcyto
 - display_name: isoseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/isoseq
+  repo_url: https://github.com/nf-core/isoseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/isoseq
 - display_name: kmermaid
   engine: nextflow
-  repo_url: https://github.com/nf-core/kmermaid
+  repo_url: https://github.com/nf-core/kmermaid?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/kmermaid
 - display_name: liverctanalysis
   engine: nextflow
-  repo_url: https://github.com/nf-core/liverctanalysis
+  repo_url: https://github.com/nf-core/liverctanalysis?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/liverctanalysis
 - display_name: lncpipe
   engine: nextflow
-  repo_url: https://github.com/nf-core/lncpipe
+  repo_url: https://github.com/nf-core/lncpipe?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/lncpipe
 - display_name: mag
   engine: nextflow
-  repo_url: https://github.com/nf-core/mag
+  repo_url: https://github.com/nf-core/mag?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/mag
 - display_name: metaboigniter
   engine: nextflow
-  repo_url: https://github.com/nf-core/metaboigniter
+  repo_url: https://github.com/nf-core/metaboigniter?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/metaboigniter
 - display_name: metapep
   engine: nextflow
-  repo_url: https://github.com/nf-core/metapep
+  repo_url: https://github.com/nf-core/metapep?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/metapep
 - display_name: methylseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/methylseq
+  repo_url: https://github.com/nf-core/methylseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/methylseq
 - display_name: mhcquant
   engine: nextflow
-  repo_url: https://github.com/nf-core/mhcquant
+  repo_url: https://github.com/nf-core/mhcquant?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/mhcquant
 - display_name: mnaseseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/mnaseseq
+  repo_url: https://github.com/nf-core/mnaseseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/mnaseseq
 - display_name: nanoseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/nanoseq
+  repo_url: https://github.com/nf-core/nanoseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/nanoseq
 - display_name: nanostring
   engine: nextflow
-  repo_url: https://github.com/nf-core/nanostring
+  repo_url: https://github.com/nf-core/nanostring?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/nanostring
 - display_name: nascent
   engine: nextflow
-  repo_url: https://github.com/nf-core/nascent
+  repo_url: https://github.com/nf-core/nascent?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/nascent
 - display_name: neutronstar
   engine: nextflow
-  repo_url: https://github.com/nf-core/neutronstar
+  repo_url: https://github.com/nf-core/neutronstar?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/neutronstar
 - display_name: pangenome
   engine: nextflow
-  repo_url: https://github.com/nf-core/pangenome
+  repo_url: https://github.com/nf-core/pangenome?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/pangenome
 - display_name: pgdb
   engine: nextflow
-  repo_url: https://github.com/nf-core/pgdb
+  repo_url: https://github.com/nf-core/pgdb?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/pgdb
 - display_name: proteinfold
   engine: nextflow
-  repo_url: https://github.com/nf-core/proteinfold
+  repo_url: https://github.com/nf-core/proteinfold?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/proteinfold
 - display_name: proteomicslfq
   engine: nextflow
-  repo_url: https://github.com/nf-core/proteomicslfq
+  repo_url: https://github.com/nf-core/proteomicslfq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/proteomicslfq
 - display_name: quantms
   engine: nextflow
-  repo_url: https://github.com/nf-core/quantms
+  repo_url: https://github.com/nf-core/quantms?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/quantms
 - display_name: raredisease
   engine: nextflow
-  repo_url: https://github.com/nf-core/raredisease
+  repo_url: https://github.com/nf-core/raredisease?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/raredisease
 - display_name: rnadnavar
   engine: nextflow
-  repo_url: https://github.com/nf-core/rnadnavar
+  repo_url: https://github.com/nf-core/rnadnavar?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/rnadnavar
 - display_name: rnafusion
   engine: nextflow
-  repo_url: https://github.com/nf-core/rnafusion
+  repo_url: https://github.com/nf-core/rnafusion?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/rnafusion
 - display_name: rnaseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/rnaseq
+  repo_url: https://github.com/nf-core/rnaseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/rnaseq
 - display_name: rnavar
   engine: nextflow
-  repo_url: https://github.com/nf-core/rnavar
+  repo_url: https://github.com/nf-core/rnavar?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/rnavar
 - display_name: sarek
   engine: nextflow
-  repo_url: https://github.com/nf-core/sarek
+  repo_url: https://github.com/nf-core/sarek?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/sarek
 - display_name: scflow
   engine: nextflow
-  repo_url: https://github.com/nf-core/scflow
+  repo_url: https://github.com/nf-core/scflow?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/scflow
 - display_name: scrnaseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/scrnaseq
+  repo_url: https://github.com/nf-core/scrnaseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/scrnaseq
 - display_name: slamseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/slamseq
+  repo_url: https://github.com/nf-core/slamseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/slamseq
 - display_name: smartseq2
   engine: nextflow
-  repo_url: https://github.com/nf-core/smartseq2
+  repo_url: https://github.com/nf-core/smartseq2?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/smartseq2
 - display_name: smrnaseq
   engine: nextflow
-  repo_url: https://github.com/nf-core/smrnaseq
+  repo_url: https://github.com/nf-core/smrnaseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/smrnaseq
 - display_name: spatialtranscriptomics
   engine: nextflow
-  repo_url: https://github.com/nf-core/spatialtranscriptomics
+  repo_url: https://github.com/nf-core/spatialtranscriptomics?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/spatialtranscriptomics
 - display_name: ssds
   engine: nextflow
-  repo_url: https://github.com/nf-core/ssds
+  repo_url: https://github.com/nf-core/ssds?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/ssds
 - display_name: taxprofiler
   engine: nextflow
-  repo_url: https://github.com/nf-core/taxprofiler
+  repo_url: https://github.com/nf-core/taxprofiler?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/taxprofiler
 - display_name: vipr
   engine: nextflow
-  repo_url: https://github.com/nf-core/vipr
+  repo_url: https://github.com/nf-core/vipr?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/vipr
 - display_name: viralrecon
   engine: nextflow
-  repo_url: https://github.com/nf-core/viralrecon
+  repo_url: https://github.com/nf-core/viralrecon?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/viralrecon

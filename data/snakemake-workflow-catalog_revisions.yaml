@@ -1,1 +1,1245 @@
-[]
+- datetime: 2022-07-14 07:07:31
+  display_name: v1.2.2
+  rev: de9d39515f33e95c3570f2fd79e9b3707c46d960
+  url: https://github.com/solida-core/musta/tree/v1.2.2
+  workflow: solida-core/musta
+- datetime: 2022-07-07 07:22:22
+  display_name: formatted!
+  rev: 5b1bfa35081b2b72f49d3f504acfe29e5e1a9767
+  url: https://github.com/solida-core/musta/tree/v1.2.1
+  workflow: solida-core/musta
+- datetime: 2022-04-29 12:44:21
+  display_name: ''
+  rev: ef908fed9e0aa3d1d93feb4af600bed825527195
+  url: https://github.com/solida-core/musta/tree/v1.2.0.1
+  workflow: solida-core/musta
+- datetime: 2022-04-28 10:42:02
+  display_name: v1.2 musta
+  rev: 8ae834a45972a58721134eac02e80cdc4f954748
+  url: https://github.com/solida-core/musta/tree/v1.2
+  workflow: solida-core/musta
+- datetime: 2022-04-22 14:22:05
+  display_name: mustapy 1.0
+  rev: c2c30c6f46cfaead8505ea8d128a4bc9ab9e6e9c
+  url: https://github.com/solida-core/musta/tree/1.0
+  workflow: solida-core/musta
+- datetime: 2022-02-23 07:26:05
+  display_name: Reviwed code!!
+  rev: 3b81eef3de66a3c0ce448a944b185cf23ee1ab84
+  url: https://github.com/solida-core/musta/tree/v1.1.1
+  workflow: solida-core/musta
+- datetime: 2022-02-21 08:48:29
+  display_name: Musta v1.1
+  rev: bab0babf76b6cff32993c5060f02405103be55d4
+  url: https://github.com/solida-core/musta/tree/v1.1
+  workflow: solida-core/musta
+- datetime: 2022-02-18 14:26:15
+  display_name: Musta version 1.0
+  rev: 699ef06821376f404b8e4ee6d400583d83e658b6
+  url: https://github.com/solida-core/musta/tree/v1.0
+  workflow: solida-core/musta
+- datetime: 2022-10-27 09:14:51
+  display_name: 1.3.2
+  rev: dee5c3e57e7be1283c994d82358903e79481362a
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.3.2
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-10-21 12:17:40
+  display_name: 1.3.1
+  rev: fd5a4b196f7f03e9473797bc57ad9784b73ffb54
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.3.1
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-10-21 09:11:56
+  display_name: 1.3.0
+  rev: 0446efc88808640fd5a174c04cd5e971e656d472
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.3.0
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-08-02 14:28:26
+  display_name: 1.2.1
+  rev: 67e4e0e68641ed0c3f0e0062dbe05ecc14aa94f0
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.2.1
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-07-27 16:01:49
+  display_name: 1.2.0
+  rev: 13badf362dcaa19e901adb13440c5965b768b151
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.2.0
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-07-21 14:25:01
+  display_name: ''
+  rev: 17fce85539f03552b9156602a003b3c0b0e20e93
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.1
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-07-21 13:40:01
+  display_name: ''
+  rev: 41ed2c9eccc8e2b66f4373ed1beabb665f55066e
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.0
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- datetime: 2022-10-04 20:53:23
+  display_name: dna-seq-mtb v1.3.0
+  rev: 7c74bcd5b4a5b861ee1f23b72ba5f4fa507ceb7a
+  url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.3.0
+  workflow: snakemake-workflows/dna-seq-mtb
+- datetime: 2022-06-08 07:08:09
+  display_name: dna-seq-mtb v1.2.0
+  rev: 23184747e05e7b3d9d77bc6abc7e79a0d5835ce2
+  url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.2.0
+  workflow: snakemake-workflows/dna-seq-mtb
+- datetime: 2022-05-20 14:53:20
+  display_name: dna-seq-mtb v1.1.0
+  rev: 12d46664e535bc5bea574a596bc9cdf50173026a
+  url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.1.0
+  workflow: snakemake-workflows/dna-seq-mtb
+- datetime: 2022-05-12 13:07:20
+  display_name: dna-seq-mtb v1.0.1
+  rev: b2f569059565a32f9fc017c136ec04ad0d3d547e
+  url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.0.1
+  workflow: snakemake-workflows/dna-seq-mtb
+- datetime: 2022-05-12 09:26:29
+  display_name: dna-seq-mtb v1.0.0
+  rev: fd45b7042846717fb9a6a44cbc9c7b1c4235f3fe
+  url: https://github.com/snakemake-workflows/dna-seq-mtb/tree/v1.0.0
+  workflow: snakemake-workflows/dna-seq-mtb
+- datetime: 2022-08-10 11:26:49
+  display_name: v1.1.0
+  rev: 5499c3336d681383577a8afe029b819780ff3335
+  url: https://github.com/vembrane/vembrane-benchmark/tree/v1.1.0
+  workflow: vembrane/vembrane-benchmark
+- datetime: 2022-07-27 13:25:46
+  display_name: v1.0.0
+  rev: 503a49b46f78b5c0b2515bd6a3979b16dcbe01ba
+  url: https://github.com/vembrane/vembrane-benchmark/tree/v1.0.0
+  workflow: vembrane/vembrane-benchmark
+- datetime: 2022-07-27 20:10:54
+  display_name: Version 1.0.0
+  rev: 76675da1c54f83f7918cffa249ce53603ff85e98
+  url: https://github.com/dbespiatykh/TBvar/tree/v1.0.0
+  workflow: dbespiatykh/TBvar
+- datetime: 2022-05-24 06:23:43
+  display_name: Version 0.0.2
+  rev: 2a67ad49dd74b8e8116d9757d8330fc5f6a64c24
+  url: https://github.com/johnne/map_metaT/tree/v0.0.2
+  workflow: johnne/map_metaT
+- datetime: 2022-05-22 21:54:36
+  display_name: Version 0.0.1
+  rev: aa147d8c855fcc7c1368e5becae7a36134afba00
+  url: https://github.com/johnne/map_metaT/tree/v0.0.1
+  workflow: johnne/map_metaT
+- datetime: 2022-07-29 07:05:29
+  display_name: Release 0.1.0
+  rev: 03bd8fa90138efd708ff7646f7eb07f1539e7da9
+  url: https://github.com/SilkeAllmannLab/pacbio_snakemake/tree/v0.1.0
+  workflow: SilkeAllmannLab/pacbio_snakemake
+- datetime: 2022-02-03 19:28:19
+  display_name: snakemake-workflow-univec-removal v1.0.0
+  rev: fb3275759f7a27088ed606a946faee6d690228bf
+  url: https://github.com/hzi-bifo/snakemake-workflow-univec-removal/tree/v1.0.0
+  workflow: hzi-bifo/snakemake-workflow-univec-removal
+- datetime: 2022-01-18 12:50:05
+  display_name: Simplified
+  rev: 7ab10b3cbad266c797a96b14cfdd6e093fbc54d9
+  url: https://github.com/plycrsk/rna-seq-star-deseq2/tree/v1.2.1
+  workflow: plycrsk/rna-seq-star-deseq2
+- datetime: 2021-12-01 09:36:57
+  display_name: v0.1.0
+  rev: 2f993b8d5040d140c952258ec6dc6457ce026ee1
+  url: https://github.com/thomasbtf/sars-cov-2-wbe/tree/v0.1.0
+  workflow: thomasbtf/sars-cov-2-wbe
+- datetime: 2022-09-14 12:34:53
+  display_name: v1.1.0
+  rev: e3997a572f3186bd8865809f181d216a3b472792
+  url: https://github.com/snakemake-workflows/cyrcular-calling/tree/v1.1.0
+  workflow: snakemake-workflows/cyrcular-calling
+- datetime: 2022-09-13 11:43:30
+  display_name: Foodme v1.6.3
+  rev: dff65a0c0562588c3e4749df3be9c411202e73f6
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.3
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-06-20 14:29:51
+  display_name: foodme v1.6.2
+  rev: 788a8ebeded68565f4928022c26caea2215ab054
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.2
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-06-17 10:29:23
+  display_name: foodme v1.6.1
+  rev: 0f13d0cca786027a41fcbd3e19599f62cd8cd0f8
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.1
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-06-09 10:08:45
+  display_name: foodme v1.6.0
+  rev: aff86489e00ff12a59cbb76ca339967d8bfad271
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.6.0
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-06-03 08:33:59
+  display_name: foodme v1.5.1
+  rev: 5b4b7819109de95cded10d32444b42e9107e3339
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.5.1
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-06-02 12:44:09
+  display_name: foodme v1.5.0
+  rev: 92375fe992935cd89831a4c4286d013f22306dc0
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.5.0
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-05-24 09:18:38
+  display_name: 1.4.9
+  rev: 48fc4df20febc5f50de73be4c99999262f595caf
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.9
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-05-20 12:08:44
+  display_name: 1.4.8
+  rev: 0fd4712c417b7b5575a46f4c4362ce1cb34ee3c0
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.8
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-05-17 15:47:23
+  display_name: 1.4.7
+  rev: 10041b2e8ffc16051af0a249b0c4ce7548cc4c7b
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.7
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-05-06 08:34:59
+  display_name: 1.4.6
+  rev: eb0b00afba0bc464a28eb23dfaf7067c86095e0f
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.6
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-04-11 13:53:04
+  display_name: 1.4.5
+  rev: 36768a4fa43b764aef67c45a1976c8c47937c525
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.5
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-04-08 12:48:58
+  display_name: Version 1.4.4
+  rev: 4eeeeec84afeb8012664a0b764c1e6e82f308a9d
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.4
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2021-12-13 12:41:31
+  display_name: 1.4.2
+  rev: f3fa8fb1ada59bb3c11529285012c9abb90b6173
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.2
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2021-12-06 14:27:37
+  display_name: 1.4.1
+  rev: 75bfff6cd08000794d13c793ee7e4baf099d12a4
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.1
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2021-11-18 10:57:43
+  display_name: Version 1.4.0
+  rev: b58554544b4537cb56497cb960fc34e6ab77ce68
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.4.0
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2021-07-21 12:27:15
+  display_name: 1.3.5
+  rev: d13b41f88268a364984d6698d31c954ab0af8ce5
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.5
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2021-01-25 15:40:31
+  display_name: ''
+  rev: ded44db3f628b51286ab10799d040d7056b7648c
+  url: https://github.com/CVUA-RRW/FooDMe/tree/1.3.4
+  workflow: CVUA-RRW/FooDMe
+- datetime: 2022-07-13 13:33:47
+  display_name: v2.0.2
+  rev: 57c1a3c15f44aa7e8bcf65babda429522e35d72a
+  url: https://github.com/solida-core/dima/tree/v2.0.2
+  workflow: solida-core/dima
+- datetime: 2022-07-06 15:20:10
+  display_name: v2.0.1
+  rev: 57db200e9bd42c80abf3fca93b7d26b6f808f671
+  url: https://github.com/solida-core/dima/tree/v2.0.1
+  workflow: solida-core/dima
+- datetime: 2022-07-01 06:47:40
+  display_name: DiMA 2.0
+  rev: 98ed8a866912fa5e48a2428599496a893ab68de1
+  url: https://github.com/solida-core/dima/tree/v2.0
+  workflow: solida-core/dima
+- datetime: 2020-10-13 07:58:38
+  display_name: Env_updates
+  rev: b4bf3ad3c6e5ec379d231c85e1510580b1472e81
+  url: https://github.com/solida-core/dima/tree/v1.2
+  workflow: solida-core/dima
+- datetime: 2020-06-23 12:41:43
+  display_name: Wrapper-free
+  rev: 487e3ab2372b1c44de17a764e99c602b8a029b26
+  url: https://github.com/solida-core/dima/tree/v1.1
+  workflow: solida-core/dima
+- datetime: 2020-02-27 10:49:40
+  display_name: DiMA stable RELEASE SE/PE
+  rev: 8aa1563f6db304fe766958edf0d89b263eb047a1
+  url: https://github.com/solida-core/dima/tree/v1.0
+  workflow: solida-core/dima
+- datetime: 2022-03-30 17:40:22
+  display_name: Release
+  rev: 0b111f97bb612dcfe6cb1d7c9da3b455a431ffc8
+  url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v1.0.1
+  workflow: TLenfers/multispecies_mitochondrial_variant_analysis
+- datetime: 2022-03-29 14:23:02
+  display_name: Release
+  rev: 28f0fb74c43a82aee49f14af7d712e20b84f0852
+  url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v1.0.0
+  workflow: TLenfers/multispecies_mitochondrial_variant_analysis
+- datetime: 2022-02-10 15:14:12
+  display_name: ''
+  rev: dde222052c0a0dbb1a7e32d7212bb123fa097e3e
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.12-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2022-01-14 15:41:23
+  display_name: Release for HPRC year 1 TRF and DNA-BRNN run
+  rev: 6d5bf04e1f6ff2cfebefa985c3a4552faffade32
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.7-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2021-11-18 20:27:57
+  display_name: ''
+  rev: dc0987936dd0217f19c035e001935109af705817
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.6-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2021-11-18 19:21:32
+  display_name: v0.5-alpha
+  rev: e2ab618c059f0bb3989b98d4db82f1f45676000c
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.5-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2021-11-18 18:27:13
+  display_name: fixing RM alu bug
+  rev: 938bff8dc9dad6e0c060b2858d6ecf0ea15f56aa
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.4-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2021-10-01 15:54:26
+  display_name: ''
+  rev: fd371564d4e9b7e29c5b9d44746fa3bd3f948ab4
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.3-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2021-09-16 05:50:03
+  display_name: Added DupMasker
+  rev: 327a65776cf5431ca84a465bf6d5572f2cad15df
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.2-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2021-09-11 23:56:56
+  display_name: ''
+  rev: 75eedec662e2d2c2df43c0f3423006b84f150ed4
+  url: https://github.com/mrvollger/Rhodonite/tree/v0.1-alpha
+  workflow: mrvollger/Rhodonite
+- datetime: 2022-01-17 11:45:42
+  display_name: v2.0.1
+  rev: 03428e070e06168c20126848fcac2f162bb0ce2b
+  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v2.0.1
+  workflow: IMS-Bio2Core-Facility/polya_liftover
+- datetime: 2021-12-22 14:36:58
+  display_name: v2.0.0
+  rev: fd1d61b4f31237b6c09a212766e48216f8b0872d
+  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v2.0.0
+  workflow: IMS-Bio2Core-Facility/polya_liftover
+- datetime: 2021-12-06 17:51:02
+  display_name: v1.1.0
+  rev: 508f4248ad93e30ae2956614bfddbe483587af31
+  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v1.1.0
+  workflow: IMS-Bio2Core-Facility/polya_liftover
+- datetime: 2021-12-06 17:24:05
+  display_name: v1.0.1
+  rev: 01ebdd922e1c0d8a603ffbb99cbdc96c30d572b1
+  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v1.0.1
+  workflow: IMS-Bio2Core-Facility/polya_liftover
+- datetime: 2021-12-06 14:58:04
+  display_name: v1.0.0
+  rev: c19f0f225f3867b6ac641a26df08075ace1f7d42
+  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v1.0.0
+  workflow: IMS-Bio2Core-Facility/polya_liftover
+- datetime: 2021-11-22 11:14:07
+  display_name: v0.2.0
+  rev: 06cac9684345fcb23583253e179c9e51899410d9
+  url: https://github.com/IMS-Bio2Core-Facility/polya_liftover/tree/v0.2.0
+  workflow: IMS-Bio2Core-Facility/polya_liftover
+- datetime: 2021-10-27 13:46:33
+  display_name: v1.2.0
+  rev: 9d4d14deb26a9fb4264cc2207924a926609339c9
+  url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.2.0
+  workflow: IMS-Bio2Core-Facility/GTExSnake
+- datetime: 2021-07-21 08:00:58
+  display_name: v1.1.2
+  rev: 06b6c8c75105294e157e76d7dbc3f201e436dcff
+  url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.1.2
+  workflow: IMS-Bio2Core-Facility/GTExSnake
+- datetime: 2021-07-20 16:08:46
+  display_name: v1.1.1
+  rev: 93e2e87c00b992abb04342f29f0fdd82abbfa7b9
+  url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.1.1
+  workflow: IMS-Bio2Core-Facility/GTExSnake
+- datetime: 2021-07-15 08:48:50
+  display_name: v1.1.0
+  rev: d1dc4f4f0b28253f78717e30c1898d26a2c16606
+  url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.1.0
+  workflow: IMS-Bio2Core-Facility/GTExSnake
+- datetime: 2021-07-14 16:46:32
+  display_name: v1.0.0
+  rev: 9b825d6248db1f96fbfdeb5cf965ce728873fd69
+  url: https://github.com/IMS-Bio2Core-Facility/GTExSnake/tree/v1.0.0
+  workflow: IMS-Bio2Core-Facility/GTExSnake
+- datetime: 2022-01-13 14:05:12
+  display_name: v0.1.2
+  rev: dddf8fc8960da8938484f98a4ea94f74a4fd5b18
+  url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing/tree/v0.1.2
+  workflow: IMS-Bio2Core-Facility/single_snake_sequencing
+- datetime: 2021-11-02 12:58:27
+  display_name: v0.1.1
+  rev: 0cf987a2407cdf248d4c3b5294b3963718c92a3c
+  url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing/tree/v0.1.1
+  workflow: IMS-Bio2Core-Facility/single_snake_sequencing
+- datetime: 2021-10-27 14:24:24
+  display_name: v0.1.0
+  rev: a6db066a4843624e1f6d40bfca540cd48a858ece
+  url: https://github.com/IMS-Bio2Core-Facility/single_snake_sequencing/tree/v0.1.0
+  workflow: IMS-Bio2Core-Facility/single_snake_sequencing
+- datetime: 2021-09-06 12:40:56
+  display_name: Version 1.0.0
+  rev: 0d15d41b3b9a1a213560be9a44ea68a3e59e5622
+  url: https://github.com/huzuner/Tumor-microbiome-calling/tree/v1.0.0
+  workflow: huzuner/Tumor-microbiome-calling
+- datetime: 2021-06-30 12:24:27
+  display_name: v0.3.1
+  rev: 80d1662ac47af59cf0e89856c1f5b573f186956b
+  url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.3.1
+  workflow: nikostr/dna-seq-deepvariant-glnexus-variant-calling
+- datetime: 2021-06-04 08:19:14
+  display_name: v0.3.0
+  rev: 1f7350c38b75f5d7fedff2303e668c58cc6dafbe
+  url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.3.0
+  workflow: nikostr/dna-seq-deepvariant-glnexus-variant-calling
+- datetime: 2021-06-01 14:10:45
+  display_name: v0.2.0
+  rev: 956c402ff6fb9926fa478d68d5e0f9d923924530
+  url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.2.0
+  workflow: nikostr/dna-seq-deepvariant-glnexus-variant-calling
+- datetime: 2021-05-03 08:48:50
+  display_name: v0.1.0-alpha
+  rev: 1e2c44fc4ef941cddc7deda6a4f7df2803ba1296
+  url: https://github.com/nikostr/dna-seq-deepvariant-glnexus-variant-calling/tree/v0.1.0-alpha
+  workflow: nikostr/dna-seq-deepvariant-glnexus-variant-calling
+- datetime: 2022-10-27 09:55:10
+  display_name: dna-seq-benchmark v1.5.0
+  rev: c19f0730e19de62b306aefa737a84f724bcd9de7
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.5.0
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-08-25 14:58:40
+  display_name: dna-seq-benchmark v1.4.1
+  rev: a3273d69623a38105d8f3b17613def65c0492c8c
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.4.1
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-08-25 09:58:16
+  display_name: dna-seq-benchmark v1.4.0
+  rev: 506471de1c0448253e5c8e2e431948786807635d
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.4.0
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-07-20 14:28:08
+  display_name: dna-seq-benchmark v1.3.6
+  rev: a567a48c241bec84fb1a314c9afe3fcf44cc2cbb
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.6
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-06-08 07:58:17
+  display_name: dna-seq-benchmark v1.3.5
+  rev: 716026c03de42ff8bc5118449b69d37acc684df1
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.5
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-05-09 20:13:51
+  display_name: dna-seq-benchmark v1.3.4
+  rev: 4c23b91310b99a991d9a76e784cccba83d610e5e
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.4
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-05-05 20:00:30
+  display_name: dna-seq-benchmark v1.3.3
+  rev: 559d1597708d6671e1ec64389a8963e0a004e8a6
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.3
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-05-05 15:55:58
+  display_name: dna-seq-benchmark v1.3.2
+  rev: 97c0d835a563034dd908a8d1615ef53547a207df
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.2
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-05-05 15:51:48
+  display_name: dna-seq-benchmark v1.3.1
+  rev: 9d5dd1878a06554010fcd7a2c17296d8a18691dc
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.1
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-05-05 15:25:56
+  display_name: dna-seq-benchmark v1.3.0
+  rev: 776564442107031f6c1f43b3443f981215c27e96
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.3.0
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-03-15 10:43:27
+  display_name: dna-seq-benchmark v1.2.0
+  rev: 67e63c5c285624332a747230d3142a187235e675
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.2.0
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-02-10 13:38:35
+  display_name: benchmark-giab v1.1.0
+  rev: 9d377df718034c92c42490011c99eb7364d4d536
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.1.0
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2021-12-20 11:52:03
+  display_name: benchmark-giab v1.0.1
+  rev: 97c0b1b9ee10d3f4b30436f24ec4ec7832c39d7e
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.0.1
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2021-12-20 09:22:11
+  display_name: benchmark-giab v1.0.0
+  rev: 5d57f44cf18a68d24b6c1fc5f54c1cb13ad5dfe1
+  url: https://github.com/snakemake-workflows/dna-seq-benchmark/tree/v1.0.0
+  workflow: snakemake-workflows/dna-seq-benchmark
+- datetime: 2022-08-03 17:38:32
+  display_name: Version 1.0.0
+  rev: 87fa21e9adf34a5a750412dae4dc12fe501892c5
+  url: https://github.com/dbespiatykh/RDscan/tree/v1.0.0
+  workflow: dbespiatykh/RDscan
+- datetime: 2021-09-20 18:05:40
+  display_name: ''
+  rev: d20e8a0d2036cfae402d2e3a7a7c19ada9570c18
+  url: https://github.com/mrvollger/fastCN-smk/tree/v0.1-alpha
+  workflow: mrvollger/fastCN-smk
+- datetime: 2022-10-27 09:55:10
+  display_name: dna-seq-benchmark v1.5.0
+  rev: c19f0730e19de62b306aefa737a84f724bcd9de7
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.5.0
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-08-25 14:58:40
+  display_name: dna-seq-benchmark v1.4.1
+  rev: a3273d69623a38105d8f3b17613def65c0492c8c
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.4.1
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-08-25 09:58:16
+  display_name: dna-seq-benchmark v1.4.0
+  rev: 506471de1c0448253e5c8e2e431948786807635d
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.4.0
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-07-20 14:28:08
+  display_name: dna-seq-benchmark v1.3.6
+  rev: a567a48c241bec84fb1a314c9afe3fcf44cc2cbb
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.6
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-06-08 07:58:17
+  display_name: dna-seq-benchmark v1.3.5
+  rev: 716026c03de42ff8bc5118449b69d37acc684df1
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.5
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-05-09 20:13:51
+  display_name: dna-seq-benchmark v1.3.4
+  rev: 4c23b91310b99a991d9a76e784cccba83d610e5e
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.4
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-05-05 20:00:30
+  display_name: dna-seq-benchmark v1.3.3
+  rev: 559d1597708d6671e1ec64389a8963e0a004e8a6
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.3
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-05-05 15:55:58
+  display_name: dna-seq-benchmark v1.3.2
+  rev: 97c0d835a563034dd908a8d1615ef53547a207df
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.2
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-05-05 15:51:48
+  display_name: dna-seq-benchmark v1.3.1
+  rev: 9d5dd1878a06554010fcd7a2c17296d8a18691dc
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.1
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-05-05 15:25:56
+  display_name: dna-seq-benchmark v1.3.0
+  rev: 776564442107031f6c1f43b3443f981215c27e96
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.3.0
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-03-15 10:43:27
+  display_name: dna-seq-benchmark v1.2.0
+  rev: 67e63c5c285624332a747230d3142a187235e675
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.2.0
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2022-02-10 13:38:35
+  display_name: benchmark-giab v1.1.0
+  rev: 9d377df718034c92c42490011c99eb7364d4d536
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.1.0
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2021-12-20 11:52:03
+  display_name: benchmark-giab v1.0.1
+  rev: 97c0b1b9ee10d3f4b30436f24ec4ec7832c39d7e
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.0.1
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2021-12-20 09:22:11
+  display_name: benchmark-giab v1.0.0
+  rev: 5d57f44cf18a68d24b6c1fc5f54c1cb13ad5dfe1
+  url: https://github.com/snakemake-workflows/benchmark-giab/tree/v1.0.0
+  workflow: snakemake-workflows/benchmark-giab
+- datetime: 2021-09-06 12:40:56
+  display_name: Version 1.0.0
+  rev: 0d15d41b3b9a1a213560be9a44ea68a3e59e5622
+  url: https://github.com/snakemake-workflows/species-quantification/tree/v1.0.0
+  workflow: snakemake-workflows/species-quantification
+- datetime: 2022-10-12 12:43:18
+  display_name: v0.2.0 - enhancements, new features and a full example added
+  rev: 61e13281337e013c96ad44f01fa2837d5c7a94b7
+  url: https://github.com/epigen/unsupervised_analysis/tree/v0.2.0
+  workflow: epigen/unsupervised_analysis
+- datetime: 2022-09-09 13:43:14
+  display_name: v0.1.0 - first stable version with PCA, UMAP and 2D visualizations
+  rev: 01849e409e0d8efbc78368632be10274e9bcc703
+  url: https://github.com/epigen/unsupervised_analysis/tree/v0.1.0
+  workflow: epigen/unsupervised_analysis
+- datetime: 2022-03-11 09:59:11
+  display_name: 'v0.1.1 - transfer to epigen, updated and extended documentation '
+  rev: 863b19fcabd756c9ef0d17b5cfbdf758db954c6c
+  url: https://github.com/sreichl/atacseq_pipeline/tree/v0.1.1
+  workflow: sreichl/atacseq_pipeline
+- datetime: 2022-03-02 16:54:59
+  display_name: v0.1.0 - first stable and internally used version
+  rev: 56e734de929f5d2efe0a038651ab7951e5a97ab0
+  url: https://github.com/sreichl/atacseq_pipeline/tree/v0.1.0
+  workflow: sreichl/atacseq_pipeline
+- datetime: 2022-10-23 09:06:50
+  display_name: 1.8.1
+  rev: 85910a8fa5b5df232ff60ed6d76983d1f328bb90
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.8.1
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2022-09-09 12:56:52
+  display_name: 1.7.0
+  rev: 39d42115e9085a032432807034a9354d78f9c281
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.7.0
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2022-07-29 09:41:54
+  display_name: 1.6.0
+  rev: 676469eb4e0cc742dee5ed0fe8054e6209ddc0dc
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.6.0
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2022-06-30 13:04:02
+  display_name: 1.5.1-dev
+  rev: 683def96662dccd6df44afb1ded0029face30ea7
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.5.1-dev
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2022-07-04 22:08:37
+  display_name: 1.5.1
+  rev: 80a0436139fefd4eea3cdc25bd4d09acffe24bfd
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.5.1
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2022-06-14 15:32:45
+  display_name: mosaicatcher-pipeline 1.3
+  rev: 4daa46cb4ef78e02233759153e90737dca046fb3
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.3
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2020-09-16 08:28:22
+  display_name: mosaicatcher-pipeline 1.0
+  rev: 5baa0a2a7655cc4ef1c47803572293da37ea13ab
+  url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.0
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- datetime: 2022-03-25 11:46:31
+  display_name: v0.15.0
+  rev: d3bb01b3d6d2bff47a844ae64b2d06b00786fcf3
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.15.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2022-03-21 09:59:04
+  display_name: v0.14.0
+  rev: 97fdaac7967e8c2af3a2cc39f5234308e150b661
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.14.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2022-01-06 13:11:52
+  display_name: null
+  rev: 074d3d42eae88b9f6f2cdcf6dd750dc6ca51c619
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.2
+  workflow: IKIM-Essen/uncovar
+- datetime: 2022-01-04 08:01:16
+  display_name: null
+  rev: 385ddb3eb2fa177af88fa2ebbcff86ec8f33e8d5
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.1
+  workflow: IKIM-Essen/uncovar
+- datetime: 2022-01-03 15:47:42
+  display_name: null
+  rev: 0e8f9934f68e056e6f3829ec5767752fe46e9b52
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-24 10:06:55
+  display_name: v0.12.0
+  rev: 5ffe5307845c26bc64123baec496c7651e4fc513
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.12.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-21 12:37:47
+  display_name: v0.11.0
+  rev: 300decd6cb6d9bd493638d85ac53ba50e698292a
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.11.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-19 22:14:04
+  display_name: v0.10.2
+  rev: 37ba15635a1c08e6652fd8d31897b66e12e7b1c1
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.10.2
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-19 16:40:52
+  display_name: v0.10.1
+  rev: cf9ec16060c685fd20edb835e08f7cf949250c2e
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.10.1
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-17 08:03:10
+  display_name: v0.10.0
+  rev: 0347249d80bb664df7402f73e6519cc36571fefd
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.10.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-16 07:03:36
+  display_name: v0.9.0
+  rev: 4691ceedeb9c480c6ce118e0f9286aaa77c9a9a7
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.9.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-15 15:45:55
+  display_name: v0.8.0
+  rev: 74f3077b9b652b54d72a1159551b6ef7fc2eb176
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.8.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-14 23:31:16
+  display_name: v0.7.0
+  rev: d7cd30b8e706081c57e5df4c30c0d8f9318a3136
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.7.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-13 14:33:39
+  display_name: v0.6.0
+  rev: fab93725005010050eff361d0e0ede027bddbef2
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.6.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-09 14:07:46
+  display_name: v0.5.0
+  rev: 0f97fead889856bac0d32c1629455ef56af7ba14
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.5.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-08 09:50:17
+  display_name: v0.4.1
+  rev: 855061bd9ee2b2c3cc93238e2224da42208179a1
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.4.1
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-12-02 22:02:15
+  display_name: v0.4.0
+  rev: 390348be8209a4ca22c9b1fd9bf4d32a8a5e2e31
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.4.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-11-30 10:56:01
+  display_name: v0.3.1
+  rev: 9da0e33e8f8719559c4e85da238b71b73fe50419
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.3.1
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-11-05 13:46:55
+  display_name: v0.3.0
+  rev: e7086ea4a8fed4da42ed42ba61ed3c0dd3c15aa0
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.3.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-23 09:18:41
+  display_name: v0.2.5
+  rev: 07d7a956f4330511555dc9bad763650c2d9d20d3
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.5
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-23 08:56:00
+  display_name: v0.2.4
+  rev: 43464f0eec492eff5e5f3c2396a24ebcc53924f6
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.4
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-23 07:26:02
+  display_name: v0.2.3
+  rev: 61bf40bda5831cc70d2566d525775595a40a8a5a
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.3
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-22 20:22:20
+  display_name: v0.2.2
+  rev: afff64290f61893ff729ec7daaf2548c32cf34b3
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.2
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-22 17:10:19
+  display_name: v0.2.1
+  rev: 3c481ff52843eed4d96cd82f0d73fd4f2ce956c6
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.1
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-22 15:07:23
+  display_name: v0.2.0
+  rev: c0c4a55059fdd281ee414d7a430ec13237e8a8be
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.2.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-20 15:41:21
+  display_name: v0.1.8
+  rev: eeae325134121ee5676932460b57bf6fd7ed2c15
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.8
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-20 15:10:21
+  display_name: v0.1.7
+  rev: 73e10b2ac4d60303526d4dd39eded518fcf89fdc
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.7
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-16 13:22:21
+  display_name: v0.1.6
+  rev: a09718e635260129e3c9e6a51491b3df36249928
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.6
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-15 15:01:32
+  display_name: v0.1.5
+  rev: f73e17efe70f05db8ad30c03077a70a7880f6127
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.5
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-15 13:36:03
+  display_name: v0.1.4
+  rev: 3f39d5e483d38d74f614725684eff47529ca1769
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.4
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-13 15:39:42
+  display_name: v0.1.3
+  rev: b603f11160f668606a1eb547eb26ffbd77f5e2c6
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.3
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-07 12:10:54
+  display_name: v0.1.2
+  rev: 042d0c0baed1c715b3c7aec57e22eca5f67c49e7
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.2
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-01 12:48:30
+  display_name: v0.1.1
+  rev: 12b2e925d558788c69cd66cd61a8b8fbe60afa81
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.1
+  workflow: IKIM-Essen/uncovar
+- datetime: 2021-09-01 07:55:53
+  display_name: v0.1.0
+  rev: 881f5d2749984d949e2ce78c052e0d9e4c778ffb
+  url: https://github.com/IKIM-Essen/uncovar/tree/v0.1.0
+  workflow: IKIM-Essen/uncovar
+- datetime: 2022-09-23 15:04:12
+  display_name: submission
+  rev: 033a21ffef85a5f915a4a1270b72564fd217bde4
+  url: https://github.com/sneuensc/mapache/tree/v0.2.0
+  workflow: sneuensc/mapache
+- datetime: 2021-11-05 08:52:54
+  display_name: 'standardized usage '
+  rev: ece29aa04f163957cb84f2ed69ee838fe1f4536e
+  url: https://github.com/sneuensc/mapache/tree/v0.1.0
+  workflow: sneuensc/mapache
+- datetime: 2022-03-11 09:59:11
+  display_name: 'v0.1.1 - transfer to epigen, updated and extended documentation '
+  rev: 863b19fcabd756c9ef0d17b5cfbdf758db954c6c
+  url: https://github.com/epigen/atacseq_pipeline/tree/v0.1.1
+  workflow: epigen/atacseq_pipeline
+- datetime: 2022-03-02 16:54:59
+  display_name: v0.1.0 - first stable and internally used version
+  rev: 56e734de929f5d2efe0a038651ab7951e5a97ab0
+  url: https://github.com/epigen/atacseq_pipeline/tree/v0.1.0
+  workflow: epigen/atacseq_pipeline
+- datetime: 2022-08-02 05:01:51
+  display_name: v0.5
+  rev: 2307b12bb67298e833f2f9b22017b72bb7192f39
+  url: https://github.com/mrvollger/StainedGlass/tree/v0.5
+  workflow: mrvollger/StainedGlass
+- datetime: 2021-12-08 08:05:15
+  display_name: v0.4
+  rev: 03cd2ecc42bfd36719623b02161a6ee53f68fbd3
+  url: https://github.com/mrvollger/StainedGlass/tree/v0.4
+  workflow: mrvollger/StainedGlass
+- datetime: 2021-11-24 17:48:39
+  display_name: Update to use source_path
+  rev: 2c0738d9261a142c072acbfbd522e811fe0c09b0
+  url: https://github.com/mrvollger/StainedGlass/tree/v0.3
+  workflow: mrvollger/StainedGlass
+- datetime: 2021-11-23 02:38:54
+  display_name: Publication release for StainedGlass
+  rev: 25a37904cdffd31c37260fec35bd6cc9706de1bb
+  url: https://github.com/mrvollger/StainedGlass/tree/v0.2
+  workflow: mrvollger/StainedGlass
+- datetime: 2021-08-23 15:32:52
+  display_name: v0.1
+  rev: de28316355aa5cf58946318975a49915ae0b208e
+  url: https://github.com/mrvollger/StainedGlass/tree/v0.1
+  workflow: mrvollger/StainedGlass
+- datetime: 2022-09-06 14:15:56
+  display_name: v1.2.1
+  rev: 870c48d7ae2b158d65e15bae87cad93419f3b3fa
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.2.1
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2022-06-23 15:20:02
+  display_name: v1.2.0
+  rev: 86083f7b9d46b7f34eb02214ee9f01fafa2c9198
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.2.0
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2022-02-08 23:21:47
+  display_name: v1.1.3
+  rev: c45ba25ec64db073fc343f722d8434604aff6976
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.3
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2020-10-26 16:12:08
+  display_name: v1.1.2
+  rev: 8415db11b0d8b9dd705ab8bcac3737e92b4f8e57
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.2
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2020-02-06 22:27:43
+  display_name: v1.1.1
+  rev: 6054bf857403fe54bf4317ada7deafc5c0d195d7
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.1
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2019-05-06 16:36:21
+  display_name: Version 1.1.0
+  rev: d84a0f346aaa1b955315e1dbcf7296232ef619d5
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.1.0
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2018-04-11 18:03:07
+  display_name: Version 1.0.0
+  rev: a25c8a53709da2f2287a8ed282010eb7b2a12787
+  url: https://github.com/GooglingTheCancerGenome/sv-callers/tree/v1.0.0
+  workflow: GooglingTheCancerGenome/sv-callers
+- datetime: 2022-03-29 10:03:35
+  display_name: v2.4.0
+  rev: f8f3648af9cc1b372faa46bb9e1eafe3b21ee96b
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.4.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-12-01 15:43:26
+  display_name: Version 2.3.2
+  rev: 0159228cf49e8a651fb69f07e83b8fa3d3f87ff9
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.3.2
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-11-21 13:46:23
+  display_name: Version 2.3.1
+  rev: db28f97e9db958ed95263bbf634050792c911e25
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.3.1
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-10-08 08:47:28
+  display_name: Version 2.3.0
+  rev: 40e9aed1e2534ae6d262b6f7a05e8b625f127682
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.3.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-08-31 11:49:49
+  display_name: Version 2.2.1
+  rev: 68b8817974063fbb4d1c36cf8515ecdfa7de514c
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.2.1
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-08-30 13:48:18
+  display_name: Version 2.2.0
+  rev: 6661fafec85e81c9f61072b5b73e8f92133cbff8
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.2.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-05-17 11:42:44
+  display_name: Version 2.1.1
+  rev: e51c7428b8f3344c97fb21ce8ae9088836ae96a5
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.1.1
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-05-14 13:29:13
+  display_name: Version 2.1.0
+  rev: 33a562a3e65cd38a29e253f383ef1c1d66c7d5e0
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.1.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-05-11 14:59:11
+  display_name: Version 2.0.4
+  rev: 98605bc0042658d2f589c4217abbee2597dbc093
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.4
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-05-11 13:41:46
+  display_name: Version 2.0.3
+  rev: e640a4d769f82b18b684211519d070ac5f8f0dfb
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.3
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-04-08 11:04:04
+  display_name: Version 2.0.2
+  rev: c1f9adb367f67401726ebdcf1198821e5e6b8778
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.2
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2021-01-14 15:57:57
+  display_name: Version 2.0.1
+  rev: d3696d1e2dcb641984c97413a057049325dd0f53
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.1
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2019-10-14 19:57:16
+  display_name: Version 2.0.0
+  rev: 41a4e6ec4c35b4296264d9adef51a24a72c77da1
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v2.0.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2019-04-02 12:45:38
+  display_name: Version 1.1.0
+  rev: e9880a7390dcfee59447303f984270a2d0aed588
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v1.1.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2019-04-02 09:18:30
+  display_name: Version 1.0.0
+  rev: 56768868e8e4159a8445961a8df7f5abc5779b51
+  url: https://github.com/snakemake-workflows/rna-seq-kallisto-sleuth/tree/v1.0.0
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- datetime: 2022-10-25 06:59:21
+  display_name: v3.18.2
+  rev: ca433263ba192b6d2886c3a093cfa880c8946e1a
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.18.2
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-09-28 08:54:02
+  display_name: v3.18.1
+  rev: c5324c95bad6def15b15bb9070b8eef208a21b33
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.18.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-09-28 08:39:08
+  display_name: v3.18.0
+  rev: 03617d7b5412169f7556f431a5eea200b11fc4cc
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.18.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-09-27 14:46:56
+  display_name: v3.17.1
+  rev: 9c042313af0d6b24ebea315fd2f3c4523a538ef9
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.17.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-09-23 19:45:14
+  display_name: v3.17.0
+  rev: ecef04b348dab4cace841bda0acc4995dee7e42e
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.17.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-09-01 10:36:52
+  display_name: v3.16.0
+  rev: d13d8b8b2742a632b3d020fb809bfb81c80a91ad
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.16.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-08-08 06:20:09
+  display_name: v3.15.0
+  rev: f220733554f1c060403d95a0f4f3c0d35924ae44
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.15.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-07-25 12:28:52
+  display_name: v3.14.1
+  rev: b7d96484f85f4ef725949e095d7e1658aa7bd5bb
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.14.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-05-20 14:46:00
+  display_name: v3.14.0
+  rev: 87997e4321f35af3ec268724a02999a62309bf9b
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.14.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-05-12 13:03:11
+  display_name: v3.13.1
+  rev: 50c7a3943c0fa90dab76cf32d8df1b7c85711841
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.13.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-05-12 07:36:30
+  display_name: v3.13.0
+  rev: 8c6bc678d77cdc999599c9cbd3f0069886c6d301
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.13.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-05-10 13:08:32
+  display_name: v3.12.0
+  rev: 192483014b588d395f7f7f004d49ac4361bbde99
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.12.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-05-10 11:15:22
+  display_name: v3.11.0
+  rev: 33563bdd4bc266c4d3e4ac9756330572ea93cd2c
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.11.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-05-02 11:26:06
+  display_name: v3.10.2
+  rev: 7d0081de5c7824959b747343e07a005f0030e363
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.10.2
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-04-30 06:46:29
+  display_name: v3.10.1
+  rev: a1a20f76138bad037feb6050f9c71d99fc853b22
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.10.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-04-26 10:07:46
+  display_name: v3.10.0
+  rev: 97c495533058f85255091d9e5041f8746a866c3b
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.10.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-04-08 09:11:43
+  display_name: v3.9.0
+  rev: e6ef1fe2b9dd7dc8ab0ccc34741b8aa46b8a2d6f
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.9.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-03-24 08:59:22
+  display_name: v3.8.1
+  rev: 9a00e02681a38e571e8e514c122ef170e082fa4b
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.8.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-03-14 16:10:40
+  display_name: v3.8.0
+  rev: 0c09ed63fa6e4808df01bac2837ce08006104531
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.8.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-02-23 13:49:29
+  display_name: v3.7.1
+  rev: 9055de876c8f203cf6846d96be0c4614e0041b89
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.7.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-02-17 15:42:17
+  display_name: v3.7.0
+  rev: 1e00013a7ecb26dd4971036fe185e0331abb88d9
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.7.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-02-10 07:05:38
+  display_name: Version 3.6.3
+  rev: cf9ec12611fb2d7cd7eedfe8e3f43033949e5a2c
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.3
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-01-20 09:27:09
+  display_name: Version 3.6.2
+  rev: dc56d67399a71e98fa38f256308ca2871a7f24e9
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.2
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-01-14 09:38:25
+  display_name: Version 3.6.1
+  rev: e9331a1bd8bbdf6592383353a0301148eea65e0c
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-01-10 16:07:24
+  display_name: Version 3.6.0
+  rev: 133a8c390587e50c3348c8975c2746219671071e
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.6.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2022-01-10 08:43:21
+  display_name: Version 3.5.0
+  rev: d38675c5b604420689ec579807d00ccc8052d8d9
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.5.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-12-17 07:54:59
+  display_name: Version 3.4.0
+  rev: a8f51672d7edb11d12b17b432900030219bdd002
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.4.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-11-18 18:50:26
+  display_name: Version 3.3.0
+  rev: cb7c9dcdf50025f74b86c65bfb787e2be5bc976c
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.3.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-11-11 13:15:20
+  display_name: Version 3.2.0
+  rev: f943ad3bc3361de1a12231a124ae3f974c8729da
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.2.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-11-03 11:34:25
+  display_name: Version 3.1.0
+  rev: d66ec65af327d7f9b9374432be6b0229b40e7a19
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.1.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-09-03 11:52:55
+  display_name: Version 3.0.0
+  rev: 58245945ab091c74606c26f63a2863fba6442ab6
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v3.0.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-21 13:42:37
+  display_name: Version 2.0.6
+  rev: 36f719def61bcd908ef49be1463c9a6debc06038
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.6
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-19 08:34:35
+  display_name: Version 2.0.5
+  rev: 9650cb395df3710474d2f74776842eb6b9dadf06
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.5
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-14 15:59:34
+  display_name: Version 2.0.4
+  rev: 14a1d47ba3ebefb18d47f8b93074bdaba9ba3c9a
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.4
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-14 15:22:57
+  display_name: Version 2.0.3
+  rev: 42af2f52a8810dd08dc6ca0401f3e7e9e2065d2e
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.3
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-14 13:11:13
+  display_name: Version 2.0.2
+  rev: c026888f85e83dbaabccb651233b2523681dc509
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.2
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-14 10:55:41
+  display_name: Version 2.0.1
+  rev: 80e82c210f8bfba9dd603d5618f177bc04cb9948
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-09 20:21:26
+  display_name: Version 2.0.0
+  rev: 5bb283dce29ab3afedc719088e540cb6c6d81bbd
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v2.0.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-07-02 13:54:47
+  display_name: Version 1.5.0
+  rev: 934456f621a368672023b3b3062af381998be219
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.5.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-06-07 19:06:18
+  display_name: Version 1.4.0
+  rev: 52a139f04bc03dbb9c05db3dbfaa723f1f603092
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.4.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-05-28 10:44:51
+  display_name: Version 1.3.2
+  rev: 066c954e79bd7c07656ff58d1af78b63aaed09e7
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.3.2
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-05-27 19:41:56
+  display_name: Version 1.3.1
+  rev: 03a97e84efc308efc96bee5cf5fa93fc19a84096
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.3.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-05-27 19:35:05
+  display_name: Version 1.3.0
+  rev: 40643ef1d5019a5ec742b96fed6d59fa4fed99a8
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.3.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-05-19 13:23:40
+  display_name: Version 1.2.0
+  rev: 844532f62ea1c118bca9d5aac8e996183f6a1448
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.2.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-05-07 09:05:58
+  display_name: Version 1.1.0
+  rev: 811609903254419cfbf9ab445f4dbb1ad2c5d6c8
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.1.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-04-27 14:43:53
+  display_name: Version 1.0.1
+  rev: 00057655036f35dd5f5ce8806cf443b9180bb493
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.0.1
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-04-01 14:06:48
+  display_name: v1.0.0
+  rev: 87709354b54391aee5dbb01a64cacfc20aed5ec3
+  url: https://github.com/snakemake-workflows/dna-seq-varlociraptor/tree/v1.0.0
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- datetime: 2021-05-02 15:14:22
+  display_name: Version 2.1.1
+  rev: cffa77a9634801152971448bd41d0687cf765723
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.1.1
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2021-04-30 18:11:40
+  display_name: Version 2.1.0
+  rev: 9ce3e4a0df8e01d4e08ef9a9c614ccc8fe263417
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.1.0
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2021-04-09 21:51:35
+  display_name: Version 2.0.3
+  rev: 0207b455b23154411355f4d250a1a196ceeb58d1
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.3
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2021-04-09 21:39:12
+  display_name: Version 2.0.2
+  rev: 168070fa72d8639f15a249de748f85ec789971f6
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.2
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2021-01-14 15:59:46
+  display_name: Version 2.0.1
+  rev: 28f5a7704805450d437a499ae907228f375f97ca
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.1
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2020-06-01 19:10:53
+  display_name: Version 2.0.0
+  rev: 37f41128e13582b2ed3fe7ab7715f62ac8553661
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v2.0.0
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2019-02-08 09:26:57
+  display_name: Version 1.0.1
+  rev: 806fba597889f0af4c6b15881aaa4ea902a73cf4
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v1.0.1
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2019-02-08 09:24:57
+  display_name: Version 1.0.0
+  rev: 495f2b682a4414c4c243e967a49ed5736980e558
+  url: https://github.com/snakemake-workflows/dna-seq-gatk-variant-calling/tree/v1.0.0
+  workflow: snakemake-workflows/dna-seq-gatk-variant-calling
+- datetime: 2021-08-24 15:39:00
+  display_name: Version 1.2.0
+  rev: dfd0b9cb8c1ef8607505aef8baf885632227e8ac
+  url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.2.0
+  workflow: snakemake-workflows/rna-seq-star-deseq2
+- datetime: 2021-05-06 21:34:39
+  display_name: Version 1.1.2
+  rev: e76fcfbb5d0532d060d61526e2332f2e1c75c7f2
+  url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.1.2
+  workflow: snakemake-workflows/rna-seq-star-deseq2
+- datetime: 2021-05-06 07:07:05
+  display_name: Version 1.1.1
+  rev: e13c52cd6d4a321224f02c6a42b5a5875f561c25
+  url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.1.1
+  workflow: snakemake-workflows/rna-seq-star-deseq2
+- datetime: 2021-05-04 10:15:19
+  display_name: Version 1.1.0
+  rev: dff0ea848de6959e4b8d3d112cdfe99fcf343039
+  url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.1.0
+  workflow: snakemake-workflows/rna-seq-star-deseq2
+- datetime: 2019-03-13 05:56:23
+  display_name: Version 1.0.0
+  rev: e078b1a809ff3bdb967f727dec9a5dff3e2f538f
+  url: https://github.com/snakemake-workflows/rna-seq-star-deseq2/tree/v1.0.0
+  workflow: snakemake-workflows/rna-seq-star-deseq2

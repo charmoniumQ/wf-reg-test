@@ -12,7 +12,7 @@ from .util import expect_type
 """
 
 I used to do something like `yaml.dump(hub)`. No de/serialization
-code needed! This has two disadvantages:
+code needed! This has several disadvantages:
 
 - All the data ends up in one file. I can't tell if a diff adds an
   execution or adds a workflow. One time I accidentally re-added the
@@ -22,6 +22,10 @@ code needed! This has two disadvantages:
   it is hard to do migrations. You have to read the data from disk
   into the data in RAM, using one model and then write it back using
   another model.
+
+- It is difficult to re-scan the registries without throwing out
+  existing executions, since executions were stored in workflow
+  objects in the same file.
 
 So I define a de/serialization routine here, which stores the
 registries, workflows, revisions, and executions in separate files.
@@ -75,6 +79,7 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
             {
                 "display_name": revision.display_name,
                 "url": revision.url,
+                "rev": revision.rev,
                 "datetime": revision.datetime,
                 "workflow": workflow.display_name,
             }
@@ -151,6 +156,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
                 display_name=revision_dict["display_name"],
                 url=revision_dict["url"],
                 datetime=expect_type(DateTime, revision_dict["datetime"]),
+                rev=revision_dict["rev"],
                 executions=[],
                 workflow=workflow,
             )
