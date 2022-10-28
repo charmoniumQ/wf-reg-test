@@ -61,3 +61,7 @@ These techniques increase the replicability of computational experiments.
   - [ ] Compositional testing?
 
 See [`CONTRIBUTING.md`](CONTRIBUTING.md) for instructions on setting up a development environment.
+
+- Feedback
+  - Organize dag left to right?
+  - For every pair of nodes, think about confounds
