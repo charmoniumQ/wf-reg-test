@@ -90,7 +90,8 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
             {
                 "machine": execution.machine.short_description,
                 "datetime": execution.datetime,
-                "output": execution.output,
+                "outputs": execution.outputs,
+                "logs": execution.logs,
                 "conditions": execution.conditions,
                 "resources": execution.resources,
                 "status_code": execution.status_code,
@@ -172,7 +173,8 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
             execution = Execution(
                 machine=machine_map[execution_dict["machine"]],
                 datetime=expect_type(DateTime, revision_dict["datetime"]),
-                output=execution_dict["output"],
+                outputs=execution_dict["outputs"],
+                logs=execution_dict["logs"],
                 conditions=execution_dict["conditions"],
                 resources=execution_dict["resources"],
                 status_code=execution_dict["status_code"],

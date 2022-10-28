@@ -47,7 +47,7 @@ def ensure_recent_executions(
     desired_count: int = 1,
     dry_run: bool = False,
 ) -> None:
-    from .engines import engines
+    from .engines import get_engine
     now = DateTime.now()
     revisions_to_test: list[Revision] = []
     for wf_app in wf_apps:

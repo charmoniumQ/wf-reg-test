@@ -1,4 +1,5 @@
 import dataclasses
+import functools
 import logging
 import os
 import random
@@ -12,17 +13,24 @@ from datetime import datetime as DateTime, timedelta as TimeDelta
 from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 
-from .util import create_temp_dir
-from .workflows import Execution, Revision, ReproducibilityConditions
-from .executable import Machine, Executable
+from .util import create_temp_dir, expect_type
+from .workflows import Execution, Revision, ReproducibilityConditions, FileBundle
+from .executable import Machine, Executable, ComputeResources
 from .repos import get_repo
 
 
 logger = logging.getLogger("wf_reg_test")
 
 
-class Engine(Protocol):
-    def get_executable(self, workflow: Path, log_dir: Path, out_dir: Path, n_cores: int) -> Executables: ...
+class Engine:
+    def get_executable(
+            self,
+            workflow: Path,
+            log_dir: Path,
+            out_dir: Path,
+            n_cores: int,
+    ) -> Executable: ...
+
 
     def run(
             self,
@@ -32,30 +40,48 @@ class Engine(Protocol):
             wall_time_hard_limit: TimeDelta,
             wall_time_soft_limit: TimeDelta,
     ) -> Execution:
+        if revision.workflow is None:
+            raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
         repo = get_repo(revision.workflow.repo_url)
         with repo.checkout(revision) as local_copy, create_temp_dir() as log_dir, create_temp_dir() as out_dir:
+            now = DateTime.now()
             executable = self.get_executable(local_copy, log_dir, out_dir, len(which_cores))
-            executable = taskset_executable(executable, which_cores)
-            executable = timeout_executable(executable, wall_time_hard_limit, wall_time_soft_limit)
-            proc, resources = executable.time_local_executable()
+            executable = executable.taskset_executable(which_cores)
+            executable = executable.timeout_executable(wall_time_hard_limit, wall_time_soft_limit)
+            proc = executable.local_execute()
             (log_dir / "stdout.txt").write_bytes(proc.stdout)
             (log_dir / "stderr.txt").write_bytes(proc.stdout)
+        return Execution(
+            machine=Machine.current_machine(),
+            datetime=now,
+            outputs=FileBundle.create(out_dir),
+            logs=FileBundle.create(log_dir),
+            conditions=conditions,
+            resources=expect_type(ComputeResources, proc.resources),
+            status_code=proc.returncode,
+            revision=revision,
+        )
 
 
-class SnakeMakeExecutor:
+class SnakemakeEngine(Engine):
     def __init__(self) -> None:
         self.env = get_spack_env(Path() / "engines" / "snakemake")
 
-    def run(self, workflow: Path, log_dir: Path, out_dir: Path, n_cores: int) -> Executable:
+    def get_executable(
+            self,
+            workflow: Path,
+            log_dir: Path,
+            out_dir: Path,
+            n_cores: int,
+    ) -> Executable:
         return Executable(
             command=[
-                b"snakemake",
-                b"--cores",
-                str(n_cores).encode(),
-                b"--use-singularity",
-                b"--forcerun",
+                "snakemake",
+                f"--cores={n_cores}",
+                "--use-singularity",
+                "--forcerun",
                 # TODO: determine out_dir bundle
-                bytes(workflow / "workflow"),
+                str(workflow / "workflow"),
             ],
             cwd=log_dir,
             env=self.env,
@@ -67,20 +93,26 @@ class SnakeMakeExecutor:
         )
 
 
-class NextflowExecutor:
+class NextflowEngine(Engine):
     def __init__(self) -> None:
         self.env = get_spack_env(Path() / "engines" / "nextflow")
 
-    def run(self, workflow: Path, log_dir: Path, out_dir: Path, n_cores: int) -> Executable:
+    def get_executable(
+            self,
+            workflow: Path,
+            log_dir: Path,
+            out_dir: Path,
+            n_cores: int,
+    ) -> Executable:
         return Executable(
             command=[
-                b"nextflow",
-                b"run",
-                str(workflow).encode(),
-                f"-head-cpus={n_cores}".encode(),
-                b"-cache=false",
-                b"-profile=test,singularity",
-                f"--out_dirdir={out_dir}".encode(),
+                "nextflow",
+                "run",
+                f"{workflow}",
+                f"-head-cpus={n_cores}",
+                "-cache=false",
+                "-profile=test,singularity",
+                f"--out_dirdir={out_dir}",
             ],
             cwd=log_dir,
             read_write_mounts={
@@ -92,11 +124,11 @@ class NextflowExecutor:
 
 
 env_line = re.compile(
-    b"^(?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE
+    "^(?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE
 )
 
 
-def parse_env(env: bytes) -> Mapping[bytes, bytes]:
+def parse_env(env: str) -> Mapping[str, str]:
     return {
         match.group("var"): match.group("val")
         for match in env_line.finditer(env)
@@ -104,33 +136,46 @@ def parse_env(env: bytes) -> Mapping[bytes, bytes]:
 
 
 bashrc_line = re.compile(
-    b"^export (?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*);?$", flags=re.MULTILINE
+    "^export (?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*);?$", flags=re.MULTILINE
 )
 
 
-def parse_bashrc(env: bytes) -> Mapping[bytes, bytes]:
+def parse_bashrc(env: str) -> Mapping[str, str]:
     return {
         match.group("var"): match.group("val")
         for match in bashrc_line.finditer(env)
     }
 
 
-def get_nix_flake_env(flake: str) -> Mapping[bytes, bytes]:
+def get_nix_flake_env(flake: str) -> Mapping[str, str]:
     return parse_env(
         subprocess.run(
             ["nix", "develop", flake, "--command", "env"],
             check=True,
             capture_output=True,
+            text=True,
         ).stdout
     )
 
 
-def get_spack_env(env: Path) -> Mapping[bytes, bytes]:
+def get_spack_env(env: Path) -> Mapping[str, str]:
     # TOOD: check that env is installed first
     return parse_bashrc(
         subprocess.run(
             ["spack", "env", "activate", "--dir", str(env), "--sh"],
             check=True,
             capture_output=True,
+            text=True,
         ).stdout
     )
+
+
+engine_constructors: Mapping[str, type[Engine]] = {
+    "snakemake": SnakemakeEngine,
+    "nextflow": NextflowEngine,
+}
+
+
+@functools.cache
+def get_engine(engine: str) -> Engine:
+    return engine_constructors[engine]()

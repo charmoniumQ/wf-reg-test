@@ -10,8 +10,8 @@ from gitignore_parser import parse_gitignore  # type: ignore
 
 @contextlib.contextmanager
 def create_temp_dir() -> Generator[Path, None, None]:
-    with tempfile.TemporaryDirectory() as tmpdir:
-        yield Path(tmpdir)
+    with tempfile.TemporaryDirectory() as temp_dir:
+        yield Path(temp_dir)
 
 
 def hash_path(path: Union[Path, str, bytes], size: int = 128) -> int:
@@ -91,7 +91,10 @@ def non_unique(data: Iterable[_T]) -> Iterable[tuple[_T, _T, int, int]]:
 def expect_type(typ: type[_T], data: Any) -> _T:
     if not isinstance(data, typ):
         raise TypeError(f"Expected type {typ} for {data}")
-    return cast(_T, data)
+    # mypy considers this a redundant cast.
+    # Apparently they're pretty smart.
+    # return cast(_T, data)
+    return data
 
 
 def concat_lists(lists: Iterable[list[_T]]) -> list[_T]:

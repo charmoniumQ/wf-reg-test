@@ -5,9 +5,8 @@ from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
 from pathlib import Path
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
-from typing_extensions import Protocol
 
-from .util import non_unique, concat_lists
+from .util import non_unique, concat_lists, hash_path
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -91,16 +90,6 @@ class Workflow:
             yield from revision.check_invariants()
 
 
-class WorkflowEngine(Protocol):
-    def __str__(self) -> str:
-        return f"{self.__class__.__name__} {self.display_name}"
-
-    @property
-    def display_name(self) -> str: ...
-
-    def run(self, path: Path) -> Executable: ...
-
-
 @dataclasses.dataclass
 class Revision:
     display_name: str
@@ -136,14 +125,15 @@ class Revision:
 class Execution:
     machine: Machine
     datetime: DateTime
-    output: FileTree
+    outputs: FileBundle
+    logs: FileBundle
     conditions: ReproducibilityConditions
     resources: ComputeResources
     status_code: int
     revision: Revision = dataclasses.field(compare=False)
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        yield from self.output.check_invariants()
+        yield from self.outputs.check_invariants()
         yield from self.machine.check_invariants()
         yield from self.resources.check_invariants()
         yield from self.conditions.check_invariants()
@@ -170,24 +160,54 @@ class RandomStream:
 
 
 @dataclasses.dataclass(frozen=True)
-class FileTree:
-    hash_algorithm: str
+class FileBundle:
+    contents: Mapping[Path, File]
+
+    @staticmethod
+    def create(root: Path) -> FileBundle:
+        contents: dict[Path, File] = {}
+        for dir_ in root.glob("**"):
+            for path in dir_.iterdir():
+                # note that root.glob already handles recursing into subdirs.
+                if path.is_file() and not path.is_symlink():
+                    contents[path.relative_to(root)] = File.create(path)
+        return FileBundle(contents)
+
+    def total_size(self) -> int:
+        return sum(file.size for file in self.contents.values())
+
+    def check_invariants(self) -> Iterable[UserWarning]:
+        for file in self.contents.values():
+            yield from file.check_invariants()
+
+
+@dataclasses.dataclass(frozen=True)
+class File:
+    hash_algo: str
     hash_bits: int
-    hashes: Mapping[Path, int]
-    contents: Mapping[Path, FileBytesObject]
+    hash_val: int
+    size: int
+    contents_url: Optional[str] = dataclasses.field(compare=False, hash=False)
+
+    @staticmethod
+    def create(path: Path) -> File:
+        if not path.is_file() or path.is_symlink():
+            raise ValueError(f"{path} is not a regular file")
+        return File(
+            hash_algo="xxhash",
+            hash_bits=64,
+            hash_val=hash_path(path, size=64),
+            size=path.stat().st_size,
+            contents_url=None,
+        )
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        for path, hash_val in self.hashes.items():
-            if 0 <= hash_val < (1 << self.hash_bits):
-                yield UserWarning("hash is bigger than hash_bits", self, path, hash_val, self.hash_bits)
+        if 0 <= self.hash_val < (1 << self.hash_bits):
+            yield UserWarning("hash is bigger than hash_bits", self, self.hash_val, self.hash_bits)
+        if self.size < 0:
+            yield UserWarning("File cannot have negative size")
 
-        remainder = self.contents.keys() - self.hashes.keys()
-        if remainder:
-            yield UserWarning("contents has paths which are not hashed", self, remainder)
-
-
-class FileBytesObject(Protocol):
-    def read_bytes(self) -> bytes: ...
-
-    def check_invariants(self) -> Iterable[UserWarning]:
-        pass
+    def read_bytes(self) -> Optional[bytes]:
+        """Return the bytes of this file, if we have them, else None."""
+        # I guess we never have them :/
+        return None

@@ -11,16 +11,31 @@ import warnings
 from .util import create_temp_dir
 
 
+"""
+str vs bytes:
+I prefer a mixed approach rather than all str or all bytes. Here is why:
+
+- I don't think it is common or possible to have non-ANSI bytes in
+  `os.environ`, `Path`, or executable strings. As such, these can be
+  `str`, which interact better with Python (especially f-strings)
+
+- It is quite possible to have non-ANSI bytes in stdout. I don't trust
+  programs to be "nice". Therefore, these are bytes.
+
+"""
+
+
 @dataclasses.dataclass(frozen=True)
 class Executable:
-    command: list[bytes]
+    command: list[str]
     cwd: Path = Path()
     read_only_mounts: Mapping[Path, Path] = dataclasses.field(default_factory=dict)
     read_write_mounts: Mapping[Path, Path] = dataclasses.field(default_factory=dict)
-    env: Mapping[bytes, bytes] = dataclasses.field(default_factory=os.environ.copy)
+    env: Mapping[str, str] = dataclasses.field(default_factory=os.environ.copy)
+    check: bool = False
     image: Optional[str] = None
 
-    def prefix_command(self, prefix: list[bytes]) -> Executable:
+    def prefix_command(self, prefix: list[str]) -> Executable:
         return Executable(
             command=prefix + self.command,
             cwd=self.cwd,
@@ -36,9 +51,9 @@ class Executable:
             wall_time_hard_limit: TimeDelta,
     ) -> Executable:
         return self.prefix_command([
-            b"timeout",
-            "--kill-after={:.0f}".format(wall_time_hard_limit.total_seconds()).encode(),
-            "{:.0f}".format(wall_time_soft_limit.total_seconds()).encode(),
+            "timeout",
+            "--kill-after={:.0f}".format(wall_time_hard_limit.total_seconds()),
+            "{:.0f}".format(wall_time_soft_limit.total_seconds()),
         ])
 
 
@@ -46,21 +61,15 @@ class Executable:
             self,
             which_cores: list[int],
     ) -> Executable:
-        core_list = b",".join(str(core).encode() for core in which_cores)
-        return self.prefix_command([b"taskset", b"--cpu-list", core_list,])
+        core_list = ",".join(str(core) for core in which_cores)
+        return self.prefix_command(["taskset", "--cpu-list", core_list])
 
 
-    def time_local_execute(self) -> tuple[subprocess.CompletedProcess, ComputeResources]:
-        with create_temp_dir() as temp_dir:
-            executable = self.prefix([
-                "time", f"--output={temp_dir!s}/time", "--format=%F %S %U %e %x",
-            ])
-            if executable.image is not None:
-                raise NotImplementedError("This is not implemented for containerized images yet")
-            proc = self.local_execute()
-            time_output = (
-                Path(temp_dir / "time").read_text().strip().split("\n")[-1].split(" ")
-            )
+    @staticmethod
+    def _parse_time_file(temp_dir: Path) -> ComputeResources:
+        time_output = (
+            Path(temp_dir / "time").read_text().strip().split("\n")[-1].split(" ")
+        )
         try:
             mem_kb, system_sec, user_sec, wall_time, exit_status = time_output
         except ValueError:
@@ -72,23 +81,45 @@ class Executable:
             warnings.warn(
                 f"Could not parse time output: {time_output!r}; setting those fields to 0"
             )
-        return (proc, ComputeResources(
+        return ComputeResources(
             wall_time=TimeDelta(seconds=float(wall_time)),
             user_cpu_time=TimeDelta(seconds=float(user_sec)),
             system_cpu_time=TimeDelta(seconds=float(system_sec)),
             max_rss=int(mem_kb) * 1024,
-        ))
-
-    def local_execute(self: Executable) -> subprocess.CompletedProcess:
-        proc = subprocess.run(
-            self.command,
-            cwd=self.cwd,
-            env=self.env,
-            check=False,
-            capture_output=True,
         )
-        return proc
 
+    def local_execute(
+            self: Executable,
+            check: bool = True,
+            capture_output: bool = True,
+            time: int = False,
+    ) -> CompletedProcess:
+        with create_temp_dir() as temp_dir:
+            if time:
+                executable = self.prefix_command([
+                    "time", f"--output={temp_dir!s}/time", "--format=%F %S %U %e %x",
+                ])
+            proc = subprocess.run(
+                self.command,
+                cwd=self.cwd,
+                env=self.env,
+                check=check,
+                capture_output=capture_output,
+            )
+            return CompletedProcess(
+                returncode=proc.returncode,
+                stdout=proc.stdout,
+                stderr=proc.stderr,
+                resources=self._parse_time_file(temp_dir) if time else None,
+            )
+
+
+@dataclasses.dataclass(frozen=True)
+class CompletedProcess:
+    returncode: int
+    stdout: bytes
+    stderr: bytes
+    resources: Optional[ComputeResources]
 
 
 @dataclasses.dataclass(frozen=True)
