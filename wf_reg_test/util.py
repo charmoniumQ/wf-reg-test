@@ -1,7 +1,7 @@
 import contextlib
 import tempfile
 from pathlib import Path
-from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any
+from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional
 import itertools
 
 import xxhash
@@ -99,3 +99,16 @@ def concat_lists(lists: Iterable[list[_T]]) -> list[_T]:
     for list_ in lists:
         ret.extend(list_)
     return ret
+
+
+def cached_thunk(thunk: Callable[[], _T]) -> Callable[[], _T]:
+    result: Optional[_T] = None
+    valid = False
+    def thunk_wrapper() -> _T:
+        nonlocal result
+        nonlocal valid
+        if not valid:
+            result = thunk()
+            valid = True
+        return cast(_T, result)
+    return thunk_wrapper

@@ -7,174 +7,130 @@ import shlex
 import subprocess
 import sys
 import warnings
-from datetime import datetime as DateTime
-from datetime import timedelta as TimeDelta
+from typing_extensions import Protocol
+from datetime import datetime as DateTime, timedelta as TimeDelta
 from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 
-from .workflows import Execution, Revision
-from .executable import Machine
+from .util import create_temp_dir
+from .workflows import Execution, Revision, ReproducibilityConditions
+from .executable import Machine, Executable
+from .repos import get_repo
 
 
 logger = logging.getLogger("wf_reg_test")
 
 
-class SnakeMakeExecutor:
-    def run(self, workflow: Path, n_cores: int) -> Executable:
-        return Executable(
-            command=[
-                "snakemake",
-                "--cores",
-                str(n_cores),
-                "--use-conda",
-                "--use-singularity",
-                str(workflow / "workflow"),
-            ],
-        )
-        env=cached_thunk(lambda: {
-            **get_spack_env(Path() / "engines" / "snakemake"),
-        }),
-        command=lambda workflow: (
-
-        ),
-        pass
-
-
-@dataclasses.dataclass
-class WorkflowEngine:
-    env: Callable[[], Mapping[str, str]]
-    command: Callable[[Path], tuple[str, ...]]
+class Engine(Protocol):
+    def get_executable(self, workflow: Path, log_dir: Path, out_dir: Path, n_cores: int) -> Executables: ...
 
     def run(
-        self,
-        workflow: Path,
-        revision: Revision,
-        walltime_limit: TimeDelta = TimeDelta(hours=1, minutes=30),
+            self,
+            revision: Revision,
+            conditions: ReproducibilityConditions,
+            which_cores: list[int],
+            wall_time_hard_limit: TimeDelta,
+            wall_time_soft_limit: TimeDelta,
     ) -> Execution:
-        output_dir = Path("data") / f"{random.randint(0, 1 << (16 << 2)):016x}"
-        output_dir.mkdir()
-        time_command = [
-            "time",
-            f"--output={output_dir!s}/time",
-            "--format=%F %S %U %e %x",
-            "timeout",
-            "--kill-after={:.0f}".format(1.2 * walltime_limit.total_seconds()),
-            "{:.0f}".format(walltime_limit.total_seconds()),
-            *self.command(workflow),
-        ]
-        if logger.isEnabledFor(logging.INFO):
-            logger.info("Running: %s", shlex.join(time_command))
-        proc = subprocess.run(
-            time_command,
-            check=False,
-            capture_output=True,
-            cwd=output_dir,
-            env=self.env(),
+        repo = get_repo(revision.workflow.repo_url)
+        with repo.checkout(revision) as local_copy, create_temp_dir() as log_dir, create_temp_dir() as out_dir:
+            executable = self.get_executable(local_copy, log_dir, out_dir, len(which_cores))
+            executable = taskset_executable(executable, which_cores)
+            executable = timeout_executable(executable, wall_time_hard_limit, wall_time_soft_limit)
+            proc, resources = executable.time_local_executable()
+            (log_dir / "stdout.txt").write_bytes(proc.stdout)
+            (log_dir / "stderr.txt").write_bytes(proc.stdout)
+
+
+class SnakeMakeExecutor:
+    def __init__(self) -> None:
+        self.env = get_spack_env(Path() / "engines" / "snakemake")
+
+    def run(self, workflow: Path, log_dir: Path, out_dir: Path, n_cores: int) -> Executable:
+        return Executable(
+            command=[
+                b"snakemake",
+                b"--cores",
+                str(n_cores).encode(),
+                b"--use-singularity",
+                b"--forcerun",
+                # TODO: determine out_dir bundle
+                bytes(workflow / "workflow"),
+            ],
+            cwd=log_dir,
+            env=self.env,
+            read_write_mounts={
+                workflow: workflow,
+                log_dir: log_dir,
+                out_dir: out_dir,
+            },
         )
-        (output_dir / "stdout").write_bytes(proc.stdout)
-        (output_dir / "stderr").write_bytes(proc.stderr)
-        sys.stderr.buffer.write(proc.stderr)
-        time_output = (
-            Path(output_dir / "time").read_text().strip().split("\n")[-1].split(" ")
+
+
+class NextflowExecutor:
+    def __init__(self) -> None:
+        self.env = get_spack_env(Path() / "engines" / "nextflow")
+
+    def run(self, workflow: Path, log_dir: Path, out_dir: Path, n_cores: int) -> Executable:
+        return Executable(
+            command=[
+                b"nextflow",
+                b"run",
+                str(workflow).encode(),
+                f"-head-cpus={n_cores}".encode(),
+                b"-cache=false",
+                b"-profile=test,singularity",
+                f"--out_dirdir={out_dir}".encode(),
+            ],
+            cwd=log_dir,
+            read_write_mounts={
+                workflow: workflow,
+                log_dir: log_dir,
+                out_dir: out_dir,
+            },
         )
-        try:
-            mem_kb, system_sec, user_sec, wall_time, exit_status = time_output
-        except ValueError:
-            mem_kb = "0"
-            system_sec = "0.0"
-            user_sec = "0.0"
-            wall_time = "0.0"
-            exit_status = "0"
-            warnings.warn(
-                f"Could not parse time output: {time_output!r}; setting those fields to 0"
-            )
-        raise NotImplementedError
-        # return Execution(
-        #     datetime=DateTime.now(),
-        #     output=output_dir,
-        #     status_code=int(exit_status),
-        #     wall_time=TimeDelta(seconds=float(wall_time)),
-        #     user_cpu_time=TimeDelta(seconds=float(user_sec)),
-        #     system_cpu_time=TimeDelta(seconds=float(system_sec)),
-        #     max_rss=int(mem_kb) * 1024,
-        #     machine=Machine.current_host(),
-        #     revision=revision,
-        # )
 
 
 env_line = re.compile(
-    "^(?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE
+    b"^(?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE
 )
 
 
-def parse_env(env: str) -> Mapping[str, str]:
-    return {match.group("var"): match.group("val") for match in env_line.finditer(env)}
-
-
-bashrc_line = re.compile(
-    "^export (?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE
-)
-
-
-def parse_bashrc(env: str) -> Mapping[str, str]:
+def parse_env(env: bytes) -> Mapping[bytes, bytes]:
     return {
-        match.group("var"): match.group("val") for match in bashrc_line.finditer(env)
+        match.group("var"): match.group("val")
+        for match in env_line.finditer(env)
     }
 
 
-def get_nix_flake_env(flake: str) -> Mapping[str, str]:
+bashrc_line = re.compile(
+    b"^export (?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*);?$", flags=re.MULTILINE
+)
+
+
+def parse_bashrc(env: bytes) -> Mapping[bytes, bytes]:
+    return {
+        match.group("var"): match.group("val")
+        for match in bashrc_line.finditer(env)
+    }
+
+
+def get_nix_flake_env(flake: str) -> Mapping[bytes, bytes]:
     return parse_env(
         subprocess.run(
             ["nix", "develop", flake, "--command", "env"],
             check=True,
             capture_output=True,
-            text=True,
         ).stdout
     )
 
 
-def get_spack_env(env: Path) -> Mapping[str, str]:
+def get_spack_env(env: Path) -> Mapping[bytes, bytes]:
     # TOOD: check that env is installed first
     return parse_bashrc(
         subprocess.run(
             ["spack", "env", "activate", "--dir", str(env), "--sh"],
             check=True,
             capture_output=True,
-            text=True,
         ).stdout
     )
-
-
-T = TypeVar("T")
-def cached_thunk(thunk: Callable[[], T]) -> Callable[[], T]:
-    result: Optional[T] = None
-    valid = False
-    def thunk_wrapper() -> T:
-        nonlocal result
-        nonlocal valid
-        if not valid:
-            result = thunk()
-            valid = True
-        return cast(T, result)
-    return thunk_wrapper
-
-
-engines = {
-    "nextflow": WorkflowEngine(
-        env=cached_thunk(lambda: {
-            **get_spack_env(Path() / "engines" / "nextflow"),
-            "HOME": os.environ["HOME"],
-        }),
-        command=lambda workflow: (
-            "nextflow",
-            "run",
-            str(workflow),
-            "-profile",
-            "test,singularity",
-            "--outdir",
-            ".",
-        ),
-    ),
-    "snakemake": WorkflowEngine(
-    ),
-}

@@ -147,8 +147,6 @@ class Execution:
         yield from self.machine.check_invariants()
         yield from self.resources.check_invariants()
         yield from self.conditions.check_invariants()
-        if self.conditions.single_core == (self.resources.n_cores == 1):
-            yield UserWarning("self.conditions.single_core != (self.resources.n_cores == 1)", self, self.conditions, self.resources)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} of {self.revision}"

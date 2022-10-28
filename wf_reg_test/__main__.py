@@ -62,15 +62,9 @@ def ensure_recent_executions(
     for revision in revisions_to_test:
         logger.info("Running %s", revision)
         if not dry_run:
+            execution = None
             raise NotImplementedError
-            repo = get_repo(revision.workflow.repo_url)
-            with repo.checkout(revision) as local_copy:
-                engine = engines[revision.workflow_app.workflow_engine_name]
-                execution = engine.run(local_copy, revision)
-                revision.executions.append(execution)
-        if not dry_run:
-            report(wf_apps)
-            data.write_text(yaml.dump(wf_apps))
+            revision.executions.append(execution)
 
 
 def check_nodes_are_owned(hub: RegistryHub) -> None:
