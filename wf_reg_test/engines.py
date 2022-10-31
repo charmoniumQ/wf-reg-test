@@ -15,7 +15,7 @@ from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 
 from .util import create_temp_dir, expect_type
 from .workflows import Execution, Revision, ReproducibilityConditions, FileBundle
-from .executable import Machine, Executable, ComputeResources
+from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
 
 
@@ -46,9 +46,11 @@ class Engine:
         with repo.checkout(revision) as local_copy, create_temp_dir() as log_dir, create_temp_dir() as out_dir:
             now = DateTime.now()
             executable = self.get_executable(local_copy, log_dir, out_dir, len(which_cores))
-            executable = executable.taskset_executable(which_cores)
-            executable = executable.timeout_executable(wall_time_hard_limit, wall_time_soft_limit)
-            proc = executable.local_execute()
+            executable = taskset(executable, which_cores)
+            executable = timeout(executable, wall_time_hard_limit, wall_time_soft_limit)
+            with time(executable) as (executable, time_file):
+                proc = executable.local_execute()
+                resources = parse_time_file(time_file)
             (log_dir / "stdout.txt").write_bytes(proc.stdout)
             (log_dir / "stderr.txt").write_bytes(proc.stdout)
         return Execution(
@@ -57,16 +59,13 @@ class Engine:
             outputs=FileBundle.create(out_dir),
             logs=FileBundle.create(log_dir),
             conditions=conditions,
-            resources=expect_type(ComputeResources, proc.resources),
+            resources=resources,
             status_code=proc.returncode,
             revision=revision,
         )
 
 
 class SnakemakeEngine(Engine):
-    def __init__(self) -> None:
-        self.env = get_spack_env(Path() / "engines" / "snakemake")
-
     def get_executable(
             self,
             workflow: Path,
@@ -81,10 +80,9 @@ class SnakemakeEngine(Engine):
                 "--use-singularity",
                 "--forcerun",
                 # TODO: determine out_dir bundle
-                str(workflow / "workflow"),
+                workflow / "workflow",
             ],
             cwd=log_dir,
-            env=self.env,
             read_write_mounts={
                 workflow: workflow,
                 log_dir: log_dir,
@@ -94,9 +92,6 @@ class SnakemakeEngine(Engine):
 
 
 class NextflowEngine(Engine):
-    def __init__(self) -> None:
-        self.env = get_spack_env(Path() / "engines" / "nextflow")
-
     def get_executable(
             self,
             workflow: Path,
@@ -108,11 +103,12 @@ class NextflowEngine(Engine):
             command=[
                 "nextflow",
                 "run",
-                f"{workflow}",
+                workflow,
                 f"-head-cpus={n_cores}",
                 "-cache=false",
                 "-profile=test,singularity",
-                f"--out_dirdir={out_dir}",
+                f"--out_dirdir",
+                out_dir,
             ],
             cwd=log_dir,
             read_write_mounts={
@@ -123,59 +119,11 @@ class NextflowEngine(Engine):
         )
 
 
-env_line = re.compile(
-    "^(?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*)$", flags=re.MULTILINE
-)
-
-
-def parse_env(env: str) -> Mapping[str, str]:
-    return {
-        match.group("var"): match.group("val")
-        for match in env_line.finditer(env)
-    }
-
-
-bashrc_line = re.compile(
-    "^export (?P<var>[a-zA-Z_][a-zA-Z_0-9]*)=(?P<val>.*);?$", flags=re.MULTILINE
-)
-
-
-def parse_bashrc(env: str) -> Mapping[str, str]:
-    return {
-        match.group("var"): match.group("val")
-        for match in bashrc_line.finditer(env)
-    }
-
-
-def get_nix_flake_env(flake: str) -> Mapping[str, str]:
-    return parse_env(
-        subprocess.run(
-            ["nix", "develop", flake, "--command", "env"],
-            check=True,
-            capture_output=True,
-            text=True,
-        ).stdout
-    )
-
-
-def get_spack_env(env: Path) -> Mapping[str, str]:
-    # TOOD: check that env is installed first
-    return parse_bashrc(
-        subprocess.run(
-            ["spack", "env", "activate", "--dir", str(env), "--sh"],
-            check=True,
-            capture_output=True,
-            text=True,
-        ).stdout
-    )
-
-
 engine_constructors: Mapping[str, type[Engine]] = {
     "snakemake": SnakemakeEngine,
     "nextflow": NextflowEngine,
 }
 
 
-@functools.cache
 def get_engine(engine: str) -> Engine:
     return engine_constructors[engine]()

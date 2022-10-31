@@ -1,9 +1,53 @@
+import pytest
 from pathlib import Path
 import wf_reg_test.util
+import wf_reg_test.repos
+import wf_reg_test.registries
+import wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
 
 
-def test_main() -> None:
+@pytest.fixture
+def hub() -> RegistryHub:
+    return RegistryHub([
+        wf_reg_test.registries.snakemake_registry(),
+        wf_reg_test.registries.nf_core_registry(5),
+    ])
+
+
+def test_hub(hub: RegistryHub) -> None:
+    # test that hub() works.
+    pass
+
+
+@pytest.fixture
+def hub_with_repos(hub: RegistryHub) -> None:
+    count = 0
+    for registry in hub.registries:
+        for workflow in registry.workflows:
+            repo = wf_reg_test.repos.get_repo(workflow.repo_url)
+            revisions = list(repo.get_revisions())
+            if revisions:
+                count += 1
+            for revision in revisions:
+                revision.workflow = workflow
+                workflow.revisions.append(revision)
+                count += 1
+            if count > 2:
+                break
+    return hub
+
+
+def test_hub_with_repos(hub_with_repos):
+    pass
+
+
+@pytest.fixture
+def hub_with_executions(hub_with_repos: RegistryHub):
+    pass
+
+
+def test_file_bundle() -> None:
     with wf_reg_test.util.create_temp_dir() as temp_dir:
         (temp_dir / "foo").write_text("hi")
         (temp_dir / "blah").mkdir()

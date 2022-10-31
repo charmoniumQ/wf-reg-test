@@ -1,7 +1,8 @@
 import re
 import json
 from pathlib import Path
-from typing import Iterable
+from typing import Iterable, Optional
+import itertools
 
 from tqdm import tqdm
 import github
@@ -13,7 +14,7 @@ from .workflows import Workflow, Registry
 github_client = github.Github(json.loads(Path("secrets.json").read_text())["github"])
 
 
-def nf_core_registry() -> Registry:
+def nf_core_registry(limit: Optional[int] = None) -> Registry:
     """Takes ~1s to retrieve all ~90 wfs in the nf-core registry.
 
     Source: https://github.com/nf-core/nf-co.re/blob/master/update_pipeline_details.php#L90
@@ -30,7 +31,9 @@ def nf_core_registry() -> Registry:
         url="https://nf-co.re/",
         workflows=[],
     )
-    repos = github_client.get_user("nf-core").get_repos()
+    repos = iter(github_client.get_user("nf-core").get_repos())
+    if limit is not None:
+        repos = itertools.islice(repos, limit)
     for repo in tqdm(repos, desc="nf-core"):
         if repo.name not in ignored_repos:
             registry.workflows.append(Workflow(
