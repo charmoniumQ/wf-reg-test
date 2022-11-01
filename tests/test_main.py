@@ -3,7 +3,7 @@ from pathlib import Path
 import wf_reg_test.util
 import wf_reg_test.repos
 import wf_reg_test.registries
-import wf_reg_test.workflows import RegistryHub
+from wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
 
 
@@ -21,7 +21,7 @@ def test_hub(hub: RegistryHub) -> None:
 
 
 @pytest.fixture
-def hub_with_repos(hub: RegistryHub) -> None:
+def hub_with_repos(hub: RegistryHub) -> RegistryHub:
     count = 0
     for registry in hub.registries:
         for workflow in registry.workflows:
@@ -38,13 +38,13 @@ def hub_with_repos(hub: RegistryHub) -> None:
     return hub
 
 
-def test_hub_with_repos(hub_with_repos):
+def test_hub_with_repos(hub_with_repos: RegistryHub) -> None:
     pass
 
 
 @pytest.fixture
-def hub_with_executions(hub_with_repos: RegistryHub):
-    pass
+def hub_with_executions(hub_with_repos: RegistryHub) -> RegistryHub:
+    return hub_with_repos
 
 
 def test_file_bundle() -> None:

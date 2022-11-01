@@ -46,5 +46,5 @@ def get_spack_executable(env: Path, executable: str, args: list[str]) -> Executa
         raise ValueError(f"{executable} is not on any of {paths}")
     return Executable(
         command=[str(path_to_executable), *args],
-        env=env_vars,
+        env_override=env_vars,
     )

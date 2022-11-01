@@ -29,7 +29,8 @@ class Engine:
             log_dir: Path,
             out_dir: Path,
             n_cores: int,
-    ) -> Executable: ...
+    ) -> Executable:
+        raise NotImplementedError
 
 
     def run(
