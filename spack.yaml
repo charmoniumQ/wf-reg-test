@@ -16,8 +16,9 @@ spack:
   - py-requests
   - py-rich
   - snakemake
-  - nextflow
   - py-tomli@2.0.1
+  - nextflow
+  - java
   view: true
   concretizer:
     unify: when_possible
