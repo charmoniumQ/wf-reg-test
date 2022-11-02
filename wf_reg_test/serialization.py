@@ -58,6 +58,7 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
         for workflow in registry.workflows
         for revision in workflow.revisions
         for execution in revision.executions
+        if execution.machine
     }
     (path / f"machines.yaml").write_text(yaml.dump({
         machine.short_description: machine
@@ -88,11 +89,11 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
         ]))
         (path / f"{name}_executions.yaml").write_text(yaml.dump([
             {
-                "machine": execution.machine.short_description,
+                "machine": execution.machine.short_description if execution.machine else "<unknown>",
                 "datetime": execution.datetime,
                 "outputs": execution.outputs,
                 "logs": execution.logs,
-                "conditions": execution.conditions,
+                "condition": execution.condition,
                 "resources": execution.resources,
                 "status_code": execution.status_code,
                 "revision": revision.display_name,
@@ -120,7 +121,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
                 workflows=[],
             )
             for registry_dict in registry_dicts
-        ],
+        ]
     )
     machine_map = yaml.load(
         (path / f"machines.yaml").read_text(),
@@ -171,11 +172,11 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
         for execution_dict in execution_dicts:
             revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
             execution = Execution(
-                machine=machine_map[execution_dict["machine"]],
+                machine=machine_map.get(execution_dict["machine"]),
                 datetime=expect_type(DateTime, revision_dict["datetime"]),
                 outputs=execution_dict["outputs"],
                 logs=execution_dict["logs"],
-                conditions=execution_dict["conditions"],
+                condition=execution_dict["condition"],
                 resources=execution_dict["resources"],
                 status_code=execution_dict["status_code"],
                 revision=revision,
