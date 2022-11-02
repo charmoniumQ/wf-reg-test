@@ -5,11 +5,12 @@ import subprocess
 import dataclasses
 from datetime import timedelta as TimeDelta
 import contextlib
-from typing import Mapping, Optional, Iterable, Iterator, ClassVar, Union
+from typing import Mapping, Optional, Iterable, Iterator, ClassVar, Union, Any
 from pathlib import Path
 import warnings
+import xml.etree.ElementTree
 
-from .util import create_temp_dir
+from .util import create_temp_dir, xml_to_dict
 
 
 """
@@ -92,7 +93,7 @@ class CompletedProcess:
 @dataclasses.dataclass(frozen=True)
 class Machine:
     short_description: str
-    long_description: str
+    details: Mapping[str, Any]
 
     @staticmethod
     def current_machine() -> Machine:
@@ -104,12 +105,16 @@ class Machine:
                         platform.platform(),
                     ]
                 ),
-                long_description=subprocess.run(
-                    ["lstopo", "--output-format", "xml"],
-                    check=True,
-                    capture_output=True,
-                    text=True,
-                ).stdout,
+                details=xml_to_dict(
+                    xml.etree.ElementTree.fromstring(
+                        subprocess.run(
+                            ["lstopo", "--output-format", "xml"],
+                            check=True,
+                            capture_output=True,
+                            text=True,
+                        ).stdout
+                    )
+                ),
             )
         return Machine._CURRENT_MACHINE
 

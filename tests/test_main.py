@@ -8,6 +8,7 @@ import wf_reg_test.registries
 from wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
 from wf_reg_test.parallel_execute import parallel_map, ResourcePool
+from wf_reg_test.executable import Machine
 
 
 @pytest.fixture
@@ -43,6 +44,10 @@ def hub_with_repos(hub: RegistryHub) -> RegistryHub:
 
 def test_hub_with_repos(hub_with_repos: RegistryHub) -> None:
     pass
+
+
+def test_current_machine() -> None:
+    m = Machine.current_machine()
 
 
 def test_parallel_map() -> None:

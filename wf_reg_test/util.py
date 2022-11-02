@@ -4,6 +4,7 @@ import tempfile
 from pathlib import Path
 from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional
 import itertools
+import xml.etree.ElementTree
 
 import xxhash
 
@@ -123,3 +124,18 @@ def functional_shuffle(lst: list[_T], seed: int = 0) -> list[_T]:
     lst = lst[:]
     rand.shuffle(lst)
     return lst
+
+
+def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
+    text = elem.text.strip() if elem.text else ""
+    tail = elem.tail.strip() if elem.tail else ""
+    children = [xml_to_dict(child) for child in elem]
+    return (
+        elem.tag,
+        {
+            **({"text": text} if text else {}),
+            **({"tail": tail} if tail else {}),
+            **elem.attrib,
+        },
+        *((children,) if children else ()),
+    )
