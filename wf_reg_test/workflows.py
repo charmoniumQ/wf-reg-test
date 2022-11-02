@@ -169,8 +169,6 @@ class Execution:
     def check_invariants(self) -> Iterable[UserWarning]:
         if self.machine is None:
             yield UserWarning("machine not set")
-        else:
-            yield from self.machine.check_invariants()
         if self.revision is None:
             yield UserWarning("revision not set")
         elif self not in self.revision.executions:
@@ -202,7 +200,7 @@ class Condition:
         return f"single_core={self.single_core},aslr={self.aslr},faketime_set={bool(self.faketime)},dev_random_set={bool(self.dev_random)},rr_record={self.rr_record},rr_replay_set={bool(self.rr_replay)}"
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        pass
+        yield from []
 
     NO_CONTROLS: ClassVar[Condition]
     EASY_CONTROLS: ClassVar[Condition]

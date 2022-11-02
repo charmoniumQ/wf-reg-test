@@ -118,9 +118,6 @@ class Machine:
 
     _CURRENT_MACHINE: ClassVar[Optional[Machine]] = None
 
-    def check_invariants(self) -> Iterable[UserWarning]:
-        pass
-
 
 def taskset(
         executable: Executable,
@@ -156,7 +153,7 @@ def time(executable: Executable) -> Iterator[tuple[Executable, Path]]:
                 "time",
                 "--output",
                 time_file,
-                "--format=%F %S %U %e %x",
+                "--format=%M %S %U %e %x",
                 *executable.to_env_command(),
             ],
         ), time_file
@@ -193,9 +190,9 @@ class ComputeResources:
 
     def check_invariants(self) -> Iterable[UserWarning]:
         if not all([
-                self.user_cpu_time > TimeDelta(seconds=0),
-                self.system_cpu_time > TimeDelta(seconds=0),
-                self.wall_time > TimeDelta(seconds=0),
-                self.max_rss > 0,
+                self.user_cpu_time >= TimeDelta(seconds=0),
+                self.system_cpu_time >= TimeDelta(seconds=0),
+                self.wall_time >= TimeDelta(seconds=0),
+                self.max_rss >= 0,
         ]):
             yield UserWarning("Negative values", self)

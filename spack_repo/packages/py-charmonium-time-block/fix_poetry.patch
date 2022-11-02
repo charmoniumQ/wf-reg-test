@@ -1,0 +1,8 @@
+--- a/pyproject.toml	2022-11-01 22:13:33.682349000 -0600
++++ b/pyproject.toml	2022-11-02 00:00:47.875953000 -0600
+@@ -60,4 +60,4 @@
+ 
+ [build-system]
+ requires = ["poetry>=0.12"]
+-build-backend = "poetry.masonry.api"
++build-backend = "poetry.core.masonry.api"

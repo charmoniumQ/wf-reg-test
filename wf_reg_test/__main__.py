@@ -22,6 +22,7 @@ from .executable import Machine
 from .parallel_execute import parallel_execute
 
 logging.basicConfig()
+logging.getLogger("parsl").setLevel(logging.WARNING)
 logger = logging.getLogger("wf_reg_test")
 logger.setLevel(logging.INFO)
 ch_time_block.disable_stderr()
@@ -94,17 +95,17 @@ def main() -> None:
             hub=hub,
             time_bound=DateTime(2022, 8, 1),
             conditions=[Condition.NO_CONTROLS],
-            execution_limit=5,
             desired_execution_count=1,
+            execution_limit=1,
         )
         # for revision, condition in revisions_conditions:
         #     print("would run", revision, condition)
-        # parallel_execute(
-        #     hub,
-        #     revisions_conditions,
-        #     processes=expect_type(int, os.cpu_count()) - 3,
-        #     data_path=data_path,
-        # )
+        parallel_execute(
+            hub,
+            revisions_conditions,
+            processes=(expect_type(int, os.cpu_count()) - 4) // 2,
+            data_path=data_path,
+        )
     with ch_time_block.ctx("store", print_start=False):
         serialize(hub, data_path)
     with ch_time_block.ctx("report", print_start=False):

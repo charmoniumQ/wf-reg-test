@@ -1,6 +1,8 @@
 from pathlib import Path
 from datetime import timedelta as TimeDelta, datetime as DateTime
 from typing import Optional, Iterable, TypeVar, Callable, Generic, cast
+import logging
+import time
 
 import parsl
 import parsl.dataflow.futures
@@ -13,6 +15,9 @@ from .engines import engines
 from .util import expect_type
 
 
+logging.getLogger("parsl").setLevel(logging.WARNING)
+logger = logging.getLogger("wf_reg_test")
+
 _T = TypeVar("_T")
 _U = TypeVar("_U")
 _V = TypeVar("_V")
@@ -23,7 +28,11 @@ class ResourcePool(Generic[_T]):
         self.pool = pool
 
     def get(self) -> _T:
-        return self.pool.pop()
+        while True:
+            try:
+                return self.pool.pop()
+            except IndexError:
+                time.sleep(1)
 
     def put(self, elem: _T) -> None:
         self.pool.append(elem)
@@ -76,6 +85,7 @@ def parallel_execute(
             machine=Machine.current_machine(),
             revision=revision,
         )
+        revision.executions.append(execution)
         for warning in execution.check_invariants():
             # Halt execution quickly if something is wrong.
             raise warning
@@ -95,6 +105,7 @@ def execute_one(worker_ids: ResourcePool[int], revision: Revision, condition: Co
     which_cores = [worker_id * 2] if condition.single_core else [worker_id * 2, worker_id * 2 + 1]
     workflow = expect_type(Workflow, revision.workflow)
     engine = engines[workflow.engine]
+    logger.info("Running %s", revision)
     ret = engine.run(
         revision=revision,
         condition=condition,

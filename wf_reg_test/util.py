@@ -6,7 +6,6 @@ from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping,
 import itertools
 
 import xxhash
-from gitignore_parser import parse_gitignore  # type: ignore
 
 
 @contextlib.contextmanager
@@ -54,6 +53,7 @@ def walk(
     path: Path,
     ignore_preds: tuple[Callable[[str], bool], ...] = (_ignore_vcs,),
 ) -> _T:
+    from gitignore_parser import parse_gitignore  # type: ignore
     if path.is_dir():
         ignore_file = path / ".gitignore"
         if ignore_file.exists():

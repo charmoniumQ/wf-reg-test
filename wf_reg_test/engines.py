@@ -55,7 +55,7 @@ class Engine:
             executable = taskset(executable, which_cores)
             executable = timeout(executable, wall_time_hard_limit, wall_time_soft_limit)
             with time(executable) as (executable, time_file):
-                proc = executable.local_execute()
+                proc = executable.local_execute(check=False)
                 resources = parse_time_file(time_file)
             (log_dir / "stdout.txt").write_bytes(proc.stdout)
             (log_dir / "stderr.txt").write_bytes(proc.stdout)

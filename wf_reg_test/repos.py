@@ -97,7 +97,11 @@ class GitHubRepo(Repo):
             raise ValueError(f"Don't know how to list {self.revisions}")
 
     def checkout(self, revision: Revision, cache_path: Path) -> ContextManager[Path]:
-        return GitHubRevision(repo_url=revision.url, revision=revision.rev, cache_path=cache_path)
+        return GitHubRevision(
+            repo_url=self.url,
+            revision=revision.rev,
+            cache_path=cache_path,
+        )
 
 
 @dataclasses.dataclass
