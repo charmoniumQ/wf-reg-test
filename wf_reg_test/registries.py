@@ -5,13 +5,10 @@ from typing import Iterable, Optional
 import itertools
 
 from tqdm import tqdm
-import github
 import requests
 
 from .workflows import Workflow, Registry
-
-
-github_client = github.Github(json.loads(Path("secrets.json").read_text())["github"])
+from .secrets import github_client
 
 
 def nf_core_registry(limit: Optional[int] = None) -> Registry:

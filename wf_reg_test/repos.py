@@ -13,6 +13,7 @@ import github
 import xxhash
 
 from .workflows import Revision, Workflow
+from .secrets import github_client
 
 
 def get_repo(url: str) -> Repo:
@@ -40,13 +41,7 @@ def get_repo(url: str) -> Repo:
 
 class Repo(Protocol):
     def get_revisions(self) -> Iterable[Revision]: ...
-    def checkout(self, revision: Revision) -> ContextManager[Path]: ...
-
-
-cache_path = Path(".repos")
-
-
-github_client = github.Github(json.loads(Path("secrets.json").read_text())["github"])
+    def checkout(self, revision: Revision, cache_path: Path) -> ContextManager[Path]: ...
 
 
 @dataclasses.dataclass
@@ -101,18 +96,19 @@ class GitHubRepo(Repo):
         else:
             raise ValueError(f"Don't know how to list {self.revisions}")
 
-    def checkout(self, revision: Revision) -> ContextManager[Path]:
-        return GitHubRevision(repo_url=revision.url, revision=revision.rev)
+    def checkout(self, revision: Revision, cache_path: Path) -> ContextManager[Path]:
+        return GitHubRevision(repo_url=revision.url, revision=revision.rev, cache_path=cache_path)
 
 
 @dataclasses.dataclass
 class GitHubRevision:
     repo_url: str
     revision: str
+    cache_path: Path
 
     def __enter__(self) -> Path:
         url_hash = xxhash.xxh32(self.repo_url.encode("utf-8")).hexdigest()
-        repo_path = cache_path / url_hash
+        repo_path = self.cache_path / url_hash
         if not repo_path.exists():
             repo = git.repo.Repo.clone_from(self.repo_url, repo_path)
         else:

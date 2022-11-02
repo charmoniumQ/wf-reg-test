@@ -188,30 +188,6 @@ async def test_inner() -> None:
             checker=lambda proc: proc.returncode & (1 | 2) == 0,
         ),
         pytest(use_coverage=True, show_slow=True),
-        pretty_run(
-            [
-                "radon",
-                "cc",
-                "--min",
-                "b",
-                "--show-complexity",
-                "--no-assert",
-                main_package_dir,
-                tests_dir,
-            ]
-        ),
-        pretty_run(
-            [
-                "radon",
-                "mi",
-                "--min",
-                "b",
-                "--show",
-                "--sort",
-                main_package_dir,
-                tests_dir,
-            ]
-        ),
     )
 
 

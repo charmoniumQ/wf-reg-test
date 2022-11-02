@@ -102,7 +102,7 @@ def report_html(hub: RegistryHub) -> str:
                                                 unit="seconds",
                                                 digits=1,
                                             ),
-                                            "Machine": execution.machine.short_description,
+                                            "Machine": execution.machine.short_description if execution.machine else "",
                                         }
                                         for execution in revision.executions
                                     ]
@@ -141,7 +141,7 @@ def report_html(hub: RegistryHub) -> str:
                         "Wall Time": html_timedelta(
                             execution.resources.wall_time, unit="seconds", digits=1
                         ),
-                        "Machine": execution.machine.short_description,
+                        "Machine": execution.machine.short_description if execution.machine else "",
                         # "Reproducible": html_emoji_bool(True),
                     },
                 )

@@ -1,3 +1,4 @@
+import random
 import contextlib
 import tempfile
 from pathlib import Path
@@ -115,3 +116,10 @@ def cached_thunk(thunk: Callable[[], _T]) -> Callable[[], _T]:
             valid = True
         return cast(_T, result)
     return thunk_wrapper
+
+
+def functional_shuffle(lst: list[_T], seed: int = 0) -> list[_T]:
+    rand = random.Random(seed)
+    lst = lst[:]
+    rand.shuffle(lst)
+    return lst

@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast
 
 from .util import create_temp_dir, expect_type
-from .workflows import Execution, Revision, ReproducibilityConditions, FileBundle
+from .workflows import Execution, Revision, Condition, FileBundle
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
 
@@ -36,15 +36,20 @@ class Engine:
     def run(
             self,
             revision: Revision,
-            conditions: ReproducibilityConditions,
+            condition: Condition,
+            repo_cache_path: Path,
             which_cores: list[int],
             wall_time_hard_limit: TimeDelta,
             wall_time_soft_limit: TimeDelta,
     ) -> Execution:
         if revision.workflow is None:
             raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
+        if condition.single_core != (len(which_cores) == 1):
+            raise ValueError(f"Requested single-core={condition.single_core}, but assigned {len(which_cores)} cores")
+        if condition.aslr or condition.faketime or condition.dev_random is not None or condition.rr_record or condition.rr_replay is not None:
+            raise NotImplementedError()
         repo = get_repo(revision.workflow.repo_url)
-        with repo.checkout(revision) as local_copy, create_temp_dir() as log_dir, create_temp_dir() as out_dir:
+        with repo.checkout(revision, repo_cache_path) as local_copy, create_temp_dir() as log_dir, create_temp_dir() as out_dir:
             now = DateTime.now()
             executable = self.get_executable(local_copy, log_dir, out_dir, len(which_cores))
             executable = taskset(executable, which_cores)
@@ -55,14 +60,14 @@ class Engine:
             (log_dir / "stdout.txt").write_bytes(proc.stdout)
             (log_dir / "stderr.txt").write_bytes(proc.stdout)
         return Execution(
-            machine=Machine.current_machine(),
+            machine=None,
             datetime=now,
             outputs=FileBundle.create(out_dir),
             logs=FileBundle.create(log_dir),
-            conditions=conditions,
+            condition=condition,
             resources=resources,
             status_code=proc.returncode,
-            revision=revision,
+            revision=None,
         )
 
 
@@ -120,11 +125,7 @@ class NextflowEngine(Engine):
         )
 
 
-engine_constructors: Mapping[str, type[Engine]] = {
-    "snakemake": SnakemakeEngine,
-    "nextflow": NextflowEngine,
+engines = {
+    "snakemake": SnakemakeEngine(),
+    "nextflow": NextflowEngine(),
 }
-
-
-def get_engine(engine: str) -> Engine:
-    return engine_constructors[engine]()

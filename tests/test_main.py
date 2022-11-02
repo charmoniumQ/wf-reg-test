@@ -1,10 +1,13 @@
-import pytest
+import operator
 from pathlib import Path
+
+import pytest
 import wf_reg_test.util
 import wf_reg_test.repos
 import wf_reg_test.registries
 from wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
+from wf_reg_test.parallel_execute import parallel_map, ResourcePool
 
 
 @pytest.fixture
@@ -33,7 +36,7 @@ def hub_with_repos(hub: RegistryHub) -> RegistryHub:
                 revision.workflow = workflow
                 workflow.revisions.append(revision)
                 count += 1
-            if count > 2:
+            if count > 1:
                 break
     return hub
 
@@ -42,10 +45,17 @@ def test_hub_with_repos(hub_with_repos: RegistryHub) -> None:
     pass
 
 
-@pytest.fixture
-def hub_with_executions(hub_with_repos: RegistryHub) -> RegistryHub:
-    return hub_with_repos
-
+def test_parallel_map() -> None:
+    def worker(resource_pool: ResourcePool[int], arg0: int, arg1: int) -> tuple[int, int]:
+        worker_id = resource_pool.get()
+        ret = arg0 + arg1
+        resource_pool.put(worker_id)
+        return (worker_id, ret)
+    args_list = [(i, i**2) for i in range(40)]
+    max_workers = 4
+    results = parallel_map(worker, args_list, max_workers=max_workers)
+    for i, (worker_id, ret) in enumerate(results):
+        assert ret == i + i**2
 
 def test_file_bundle() -> None:
     with wf_reg_test.util.create_temp_dir() as temp_dir:

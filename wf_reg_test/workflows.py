@@ -68,6 +68,18 @@ class Workflow:
     revisions: list[Revision]
     registry: Registry = dataclasses.field(compare=False)
 
+    def max_wall_time_estimate(self) -> TimeDelta:
+        wall_times_of_successes = [
+            execution.resources.wall_time.total_seconds()
+            for revision in self.revisions
+            for execution in revision.executions
+            if execution.successful
+        ]
+        if wall_times_of_successes:
+            return TimeDelta(seconds=int(max(wall_times_of_successes) * 3))
+        else:
+            return TimeDelta(hours=1)
+
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
 
@@ -84,6 +96,8 @@ class Workflow:
                 self.revisions.append(revision)
 
     def check_invariants(self) -> Iterable[UserWarning]:
+        if self not in self.registry.workflows:
+            yield UserWarning("Not in own registry")
         for revision in self.revisions:
             if revision.workflow != self:
                 yield UserWarning("Revision does not point back to self", revision, self)
@@ -100,6 +114,10 @@ class Revision:
     workflow: Optional[Workflow] = dataclasses.field(compare=False)
 
     def check_invariants(self) -> Iterable[UserWarning]:
+        if not self.workflow:
+            yield UserWarning("workflow not set")
+        elif self not in self.workflow.revisions:
+            yield UserWarning("Not in own workflow")
         for execution in self.executions:
             if execution.revision != self:
                 yield UserWarning("Execution does not point back to self", execution, self)
@@ -121,42 +139,101 @@ class Revision:
                 self.executions.append(execution)
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class Execution:
-    machine: Machine
+    machine: Optional[Machine]
     datetime: DateTime
     outputs: FileBundle
     logs: FileBundle
-    conditions: ReproducibilityConditions
+    condition: Condition
     resources: ComputeResources
     status_code: int
-    revision: Revision = dataclasses.field(compare=False)
+    revision: Optional[Revision] = dataclasses.field(compare=False)
+
+    def with_pointers(self, machine: Machine, revision: Revision) -> Execution:
+        return Execution(
+            machine=machine,
+            revision=revision,
+            datetime=self.datetime,
+            outputs=self.outputs,
+            logs=self.logs,
+            condition=self.condition,
+            resources=self.resources,
+            status_code=self.status_code,
+        )
+
+    @property
+    def successful(self) -> bool:
+        return self.status_code == 0
 
     def check_invariants(self) -> Iterable[UserWarning]:
+        if self.machine is None:
+            yield UserWarning("machine not set")
+        else:
+            yield from self.machine.check_invariants()
+        if self.revision is None:
+            yield UserWarning("revision not set")
+        elif self not in self.revision.executions:
+            yield UserWarning("Not in own revision")
         yield from self.outputs.check_invariants()
-        yield from self.machine.check_invariants()
         yield from self.resources.check_invariants()
-        yield from self.conditions.check_invariants()
+        yield from self.condition.check_invariants()
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} of {self.revision}"
 
 
 @dataclasses.dataclass(frozen=True)
-class ReproducibilityConditions:
+class RandomStream:
+    seed: int
+    method: str = "stdlib"
+
+
+@dataclasses.dataclass(frozen=True)
+class Condition:
     single_core: bool
     aslr: bool
     faketime: Optional[DateTime]
     dev_random: Optional[RandomStream]
+    rr_record: bool
+    rr_replay: Optional[object]
+
+    def __str__(self) -> str:
+        return f"single_core={self.single_core},aslr={self.aslr},faketime_set={bool(self.faketime)},dev_random_set={bool(self.dev_random)},rr_record={self.rr_record},rr_replay_set={bool(self.rr_replay)}"
 
     def check_invariants(self) -> Iterable[UserWarning]:
         pass
 
+    NO_CONTROLS: ClassVar[Condition]
+    EASY_CONTROLS: ClassVar[Condition]
+    HARD_CONTROLS: ClassVar[Condition]
 
-@dataclasses.dataclass(frozen=True)
-class RandomStream:
-    seed: int
-    method: str = "stdlib"
+Condition.NO_CONTROLS = Condition(
+        single_core=False,
+        aslr=False,
+        faketime=None,
+        dev_random=None,
+        rr_record=False,
+        rr_replay=None,
+    )
+
+Condition.EASY_CONTROLS = Condition(
+        single_core=False,
+        aslr=True,
+        faketime=DateTime(2020, 1, 1),
+        dev_random=RandomStream(seed=0, method="stdlib"),
+        rr_record=False,
+        rr_replay=None,
+    )
+
+Condition.HARD_CONTROLS = Condition(
+        single_core=True,
+        aslr=True,
+        faketime=DateTime(2020, 1, 1),
+        dev_random=RandomStream(seed=0, method="stdlib"),
+        rr_record=False,
+        rr_replay=None,
+    )
 
 
 @dataclasses.dataclass(frozen=True)
