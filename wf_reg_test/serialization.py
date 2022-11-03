@@ -1,13 +1,16 @@
 from datetime import datetime as DateTime
 from pathlib import Path
+import pickle
 import shutil
+import sys
 import urllib.parse
 import warnings
 
 import yaml
+import charmonium.freeze
 
 from .workflows import RegistryHub, Registry, Workflow, Revision, Execution
-from .util import expect_type, summarize_diff
+from .util import expect_type
 
 """
 
@@ -106,7 +109,10 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
 
     if warn:
         stored_hub = deserialize(path, warn=False)
-        assert hub == stored_hub, summarize_diff(hub, stored_hub)
+        charmonium.freeze.config.ignore_all_code = True
+        charmonium.freeze.config.ignore_all_classes = True
+        charmonium.freeze.config.ignore_dict_order = True
+        assert hub == stored_hub, charmonium.freeze.summarize_diff(hub, stored_hub)
 
 
 def deserialize(path: Path, warn: bool = True) -> RegistryHub:
@@ -174,7 +180,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
             revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
             execution = Execution(
                 machine=machine_map.get(execution_dict["machine"]),
-                datetime=expect_type(DateTime, revision_dict["datetime"]),
+                datetime=expect_type(DateTime, execution_dict["datetime"]),
                 outputs=execution_dict["outputs"],
                 logs=execution_dict["logs"],
                 condition=execution_dict["condition"],

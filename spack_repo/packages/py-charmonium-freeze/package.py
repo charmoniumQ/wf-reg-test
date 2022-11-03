@@ -13,7 +13,7 @@ class PyCharmoniumFreeze(PythonPackage):
 
     maintainers = ["charmoniumQ"]
 
-    version("0.5.8", sha256="8b4d4eb6ba5046b185ead060abb17f21a9f07ab6ee49579893a41fb46b28529e")
+    version("0.6.0", sha256="7e804c6753f13827df480498d6858e051914d8a4a020b0cb1190af06e90ad4e0")
 
     depends_on("python@3.7:", type=("build", "run"))
     depends_on("py-psutil@5.7:", type=("build", "run"))

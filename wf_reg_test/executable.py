@@ -126,7 +126,7 @@ class Machine:
     _CURRENT_MACHINE: ClassVar[Optional[Machine]] = None
 
 
-charmonium.freeze.config.constant_classes.add(("wf_reg_test.executable", "Machine"))
+charmonium.freeze.config.ignore_classes.add(("wf_reg_test.executable", "Machine"))
 
 
 def taskset(
