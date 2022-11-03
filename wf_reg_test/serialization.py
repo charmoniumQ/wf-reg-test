@@ -7,7 +7,7 @@ import warnings
 import yaml
 
 from .workflows import RegistryHub, Registry, Workflow, Revision, Execution
-from .util import expect_type
+from .util import expect_type, summarize_diff
 
 """
 
@@ -105,13 +105,14 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
         ]))
 
     if warn:
-        assert deserialize(path, warn=False) == hub
+        stored_hub = deserialize(path, warn=False)
+        assert hub == stored_hub, summarize_diff(hub, stored_hub)
 
 
 def deserialize(path: Path, warn: bool = True) -> RegistryHub:
     registry_dicts = yaml.load(
         (path / "index.yaml").read_text(),
-        Loader=yaml.FullLoader,
+        Loader=yaml.Loader,
     )
     hub = RegistryHub(
         registries=[
@@ -125,14 +126,14 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
     )
     machine_map = yaml.load(
         (path / f"machines.yaml").read_text(),
-        Loader=yaml.FullLoader,
+        Loader=yaml.Loader,
     )
     for registry in hub.registries:
         name = encode(registry.display_name)
 
         workflow_dicts = yaml.load(
             (path / f"{name}_workflows.yaml").read_text(),
-            Loader=yaml.FullLoader,
+            Loader=yaml.Loader,
         )
         workflows_map: dict[str, Workflow] = {}
         for workflow_dict in workflow_dicts:
@@ -149,7 +150,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
 
         revision_dicts = yaml.load(
             (path / f"{name}_revisions.yaml").read_text(),
-            Loader=yaml.FullLoader,
+            Loader=yaml.Loader,
         )
         revision_map: dict[tuple[str, str], Revision] = {}
         for revision_dict in revision_dicts:
@@ -167,7 +168,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
 
         execution_dicts = yaml.load(
             (path / f"{name}_executions.yaml").read_text(),
-            Loader=yaml.FullLoader,
+            Loader=yaml.Loader,
         )
         for execution_dict in execution_dicts:
             revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]

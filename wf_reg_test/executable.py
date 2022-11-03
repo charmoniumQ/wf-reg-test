@@ -10,6 +10,8 @@ from pathlib import Path
 import warnings
 import xml.etree.ElementTree
 
+import charmonium.freeze
+
 from .util import create_temp_dir, xml_to_dict
 
 
@@ -122,6 +124,9 @@ class Machine:
         return f"{self.__class__.__name__} {self.short_description}"
 
     _CURRENT_MACHINE: ClassVar[Optional[Machine]] = None
+
+
+charmonium.freeze.config.constant_classes.add(("wf_reg_test.executable", "Machine"))
 
 
 def taskset(

@@ -1,6 +1,7 @@
 import operator
 from pathlib import Path
 
+import yaml
 import pytest
 import wf_reg_test.util
 import wf_reg_test.repos
@@ -8,8 +9,18 @@ import wf_reg_test.registries
 from wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
 from wf_reg_test.parallel_execute import parallel_map, ResourcePool
-from wf_reg_test.executable import Machine
+from wf_reg_test.executable import Machine, ComputeResources, parse_time_file, time, Executable
 
+
+def test_summarize_diff() -> None:
+    assert wf_reg_test.util.summarize_diff(
+        [1, 2, {"a": 3, "b": [4, 5]}],
+        [1, 2, {"a": 3, "b": [4, 5, 6], "c": 7}],
+    ) != "no differences"
+    assert not wf_reg_test.util.summarize_diff(
+        [1, 2, {"a": 3, "b": [4, 5]}],
+        [1, 2, {"a": 3, "b": [4, 5]}],
+    ) == "no differences"
 
 @pytest.fixture
 def hub() -> RegistryHub:
@@ -46,8 +57,32 @@ def test_hub_with_repos(hub_with_repos: RegistryHub) -> None:
     pass
 
 
-def test_current_machine() -> None:
-    m = Machine.current_machine()
+@pytest.fixture
+def machine() -> Machine:
+    return Machine.current_machine()
+
+
+def test_machine(machine: Machine) -> None:
+    pass
+
+
+@pytest.fixture
+def compute_resources() -> ComputeResources:
+    with time(Executable(["ls", "-ahlt"])) as (executable, time_file):
+        executable.local_execute()
+        return parse_time_file(time_file)
+
+
+def test_time(compute_resources: ComputeResources) -> None:
+    pass
+
+
+def test_serialize(compute_resources: ComputeResources, machine: Machine) -> None:
+    compute_resources2 = yaml.load(yaml.dump(compute_resources), Loader=yaml.Loader)
+    assert compute_resources == compute_resources2
+    machine2 = yaml.load(yaml.dump(machine), Loader=yaml.Loader)
+    assert machine2 == machine
+    assert type(machine2) is type(machine)
 
 
 def test_parallel_map() -> None:
