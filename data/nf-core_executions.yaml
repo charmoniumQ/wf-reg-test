@@ -5,6 +5,60 @@
     rr_record: false
     rr_replay: null
     single_core: false
+  datetime: 2022-11-10 11:47:32.487865
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 774144
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3720
+    - 0
+  revision: 2.0.0 - Han Solo
+  status_code: 137
+  workflow: hlatyping
+- condition: *id001
+  datetime: 2022-11-10 13:51:55.989111
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 774144
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3720
+    - 0
+  revision: nf-core/nanoseq v2.0.1 - Steel Sloth
+  status_code: 137
+  workflow: nanoseq
+- condition: &id002 !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
   datetime: 2022-11-09 22:46:07.634110
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
@@ -28,7 +82,37 @@
   revision: nf-core/rnaseq v3.7 - Iron Iguana
   status_code: 137
   workflow: rnaseq
-- condition: *id001
+- condition: &id003 !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2022-11-10 10:19:34.842777
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 774144
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3720
+    - 0
+  revision: nf-core/rnaseq v3.6 - Platinum Platypus
+  status_code: 137
+  workflow: rnaseq
+- condition: *id002
   datetime: 2022-11-09 22:45:58.116641
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
@@ -52,3 +136,51 @@
   revision: nf-core/rnaseq v2.0 - Titanium Tiger
   status_code: 1
   workflow: rnaseq
+- condition: *id003
+  datetime: 2022-11-10 09:17:30.806984
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 770048
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3720
+    - 10000
+  revision: nf-core/rnaseq version 1.4.1
+  status_code: 137
+  workflow: rnaseq
+- condition: *id001
+  datetime: 2022-11-10 12:49:38.241837
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 774144
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3720
+    - 0
+  revision: v2.1.0 - 2022-10-25 Maroon Tin Dalmatian
+  status_code: 137
+  workflow: smrnaseq
