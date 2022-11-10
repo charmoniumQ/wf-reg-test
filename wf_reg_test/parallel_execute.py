@@ -1,25 +1,28 @@
 import contextlib
-from pathlib import Path
+import dataclasses
 from datetime import timedelta as TimeDelta, datetime as DateTime
-from typing import Optional, Iterable, TypeVar, Callable, Generic, cast
+import itertools
 import logging
-import time
+import multiprocessing
+from pathlib import Path
+import pickle
 import queue
+import random
+from typing import Optional, Iterable, Iterator, TypeVar, Callable, Generic, cast
+import time
+import urllib
 
-import parsl
-import parsl.dataflow.futures
+import fasteners  # type: ignore
+import dask
+import dask.distributed
 import tqdm
 
 from .workflows import RegistryHub, Workflow, Revision, Condition, Execution
 from .serialization import serialize
 from .executable import Machine
 from .engines import engines
-from .util import expect_type
+from .util import expect_type, get_unused_path, create_temp_dir
 
-
-parsl_logger = logging.getLogger("parsl")
-parsl_logger.setLevel(logging.WARNING)
-parsl_logger.propagate = False
 
 logger = logging.getLogger("wf_reg_test")
 
@@ -29,73 +32,84 @@ _V = TypeVar("_V")
 
 
 class ResourcePool(Generic[_T]):
-    def __init__(self, pool: list[_T]) -> None:
-        self.pool = queue.Queue(len(pool))
-        for elem in pool:
-            self.pool.put_nowait(elem)
+    path: Path
+
+    def __init__(self, path: Path, items: list[_T]) -> None:
+        self.path = path
+        self.path.mkdir(exist_ok=True, parents=True)
+        with fasteners.InterProcessLock(self.path / "lock"):
+            (self.path / "data").write_bytes(pickle.dumps(items))
 
     @contextlib.contextmanager
-    def get(self) -> Iterable[_T]:
-        while True:
-            try:
-                elem = self.pool.get_nowait()
-                break
-            except queue.Empty:
-                logger.info(f"Waiting on resource; queue has approx {self.pool.qsize()}")
-                time.sleep(1)
-        yield elem
-        self.pool.put_nowait(elem)
+    def get_many(self, count: int) -> Iterator[list[int]]:
+        used_items = None
+        while used_items is not None:
+            with fasteners.InterProcessLock(self.path / "lock"):
+                unused_items = pickle.loads((self.path / "data").read_bytes())
+                if len(unused_items) < count:
+                    break
+                else:
+                    used_items = [unused_items.pop() for _ in range(count)]
+                    (self.path / "data").write_bytes(pickle.dumps(unused_items))
+            time.sleep(10 * random.random())
+        yield used_items
+        with fasteners.InterProcessLock(self.path / "lock"):
+            unused_items = pickle.loads((self.path / "data").read_bytes())
+            unused_items.extend(used_items)
+            (self.path / "data").write_bytes(pickle.dumps(unused_items))
 
 
-def parsl_parallel_map(
-        func: Callable[[ResourcePool[int], _T, _U], _V],
-        args: list[tuple[_T, _U]],
-        max_workers: int,
+def parallel_map_with_id(
+        execute_one: Callable[..., _V],
+        revisions_conditions: list[tuple[_T, _U]],
+        parallelism: int,
 ) -> Iterable[_V]:
-    parsl.load(parsl.config.Config(
-        executors=[
-            parsl.executors.ThreadPoolExecutor(
-                max_threads=max_workers,
-            ),
-        ],
-        app_cache=False,
-    ))
-    resource_pool = ResourcePool(list(range(max_workers)))
-    futures: list[parsl.dataflow.futures.AppFuture] = [
-        parsl.python_app(func)(resource_pool, *arg)
-        for arg in args
-    ]
-    for i, future in enumerate(futures):
-        print(i, len(futures))
-        yield future.result()
-
-
-def single_map(
-        func: Callable[[ResourcePool[int], _T, _U], _V],
-        args: list[tuple[_T, _U]],
-        max_workers: int,
-) -> Iterable[_V]:
-    resource_pool = ResourcePool(list(range(max_workers)))
-    return (
-        func(resource_pool, arg0, arg1)
-        for arg0, arg1 in args
-    )
+    with dask.distributed.LocalCluster(n_workers=parallelism, processes=True) as cluster, dask.distributed.Client(cluster) as client:
+        running_procs: list[_T, _V, int, ] = [
+            (
+                revision,
+                condition,
+                c,
+                client.submit(execute_one, revision, condition, c),
+            )
+            for c, (revision, condition) in enumerate(revisions_conditions[:parallelism])
+        ]
+        waiting = revisions_conditions[parallelism:]
+        all_done = False
+        while not all_done:
+            all_done = True
+            for i, (revision, condition, c, future) in enumerate(running_procs):
+                if future is not None:
+                    all_done = False
+                    if future.status == "finished":
+                        yield (revision, condition, future.result())
+                        if waiting:
+                            revision, condition = waiting.pop()
+                            running_procs[i] = (
+                                revision,
+                                condition,
+                                c,
+                                client.submit(execute_one, revision, condition, c)
+                            )
+                        else:
+                            running_procs[i] = (revision, condition, c, None)
+            time.sleep(0.5)
 
 
 def parallel_execute(
     hub: RegistryHub,
     revisions_conditions: list[tuple[Revision, Condition]],
     data_path: Path,
-    processes: int,
+    parallelism: int,
     serialize_every: TimeDelta = TimeDelta(minutes=5),
 ) -> None:
     iterator = tqdm.tqdm(
         zip(
             revisions_conditions,
-            single_map(
+            parallel_map_with_id(
                 execute_one,
                 revisions_conditions,
-                max_workers=processes // 2,
+                parallelism=parallelism,
             ),
         ),
         total=len(revisions_conditions),
@@ -120,19 +134,35 @@ def parallel_execute(
 hard_wall_time_buffer = TimeDelta(minutes=2)
 
 
-def execute_one(worker_ids: ResourcePool[int], revision: Revision, condition: Condition) -> Execution:
-    with worker_ids.get() as worker_id:
-        cache_path = Path(".repos") / str(worker_id)
-        cache_path.mkdir(exist_ok=True, parents=True)
-        which_cores = [worker_id * 2] if condition.single_core else [worker_id * 2, worker_id * 2 + 1]
-        workflow = expect_type(Workflow, revision.workflow)
-        engine = engines[workflow.engine]
-        ret = engine.run(
-            revision=revision,
-            condition=condition,
-            repo_cache_path=cache_path,
-            which_cores=which_cores,
-            wall_time_soft_limit=workflow.max_wall_time_estimate(),
-            wall_time_hard_limit=workflow.max_wall_time_estimate() + hard_wall_time_buffer,
-        )
-        return ret
+escape = urllib.parse.quote_plus
+
+
+repo_path = Path(".repos")
+
+
+def execute_one(
+        revision: Revision,
+        condition: Condition,
+        worker_id: int,
+) -> Execution:
+    workflow = expect_type(Workflow, revision.workflow)
+    registry = workflow.registry
+    path = get_unused_path(
+        repo_path / Path(
+            escape(registry.display_name),
+            escape(workflow.display_name),
+            escape(revision.display_name),
+        ),
+        map(str, itertools.count()),
+    )
+    workflow = expect_type(Workflow, revision.workflow)
+    engine = engines[workflow.engine]
+    ret = engine.run(
+        revision=revision,
+        condition=condition,
+        path=path,
+        which_cores=[worker_id] if condition.single_core else [worker_id, multiprocessing.cpu_count() - worker_id],
+        wall_time_soft_limit=workflow.max_wall_time_estimate(),
+        wall_time_hard_limit=workflow.max_wall_time_estimate() + hard_wall_time_buffer,
+    )
+    return ret

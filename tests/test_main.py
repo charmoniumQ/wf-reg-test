@@ -1,4 +1,5 @@
-import operator
+import time
+from datetime import datetime as DateTime
 from pathlib import Path
 
 import yaml
@@ -8,8 +9,8 @@ import wf_reg_test.repos
 import wf_reg_test.registries
 from wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
-from wf_reg_test.parallel_execute import parallel_map, ResourcePool
-from wf_reg_test.executable import Machine, ComputeResources, parse_time_file, time, Executable
+from wf_reg_test.parallel_execute import parallel_map_with_id, ResourcePool
+from wf_reg_test.executable import Machine, ComputeResources, parse_time_file, time as time_ex, Executable
 from charmonium.freeze import summarize_diff
 
 @pytest.fixture
@@ -58,7 +59,7 @@ def test_machine(machine: Machine) -> None:
 
 @pytest.fixture
 def compute_resources() -> ComputeResources:
-    with time(Executable(["ls", "-ahlt"])) as (executable, time_file):
+    with time_ex(Executable(["ls", "-ahlt"])) as (executable, time_file):
         executable.local_execute()
         return parse_time_file(time_file)
 
@@ -74,18 +75,24 @@ def test_serialize(compute_resources: ComputeResources, machine: Machine) -> Non
     assert machine2 == machine
     assert type(machine2) is type(machine)
 
+wait = 1
+def worker(arg0: int, arg1: int, worker_id: int) -> tuple[int, int]:
+    ret = arg0 + arg1
+    # time.sleep(wait)
+    return (ret, worker_id)
 
 def test_parallel_map() -> None:
-    def worker(resource_pool: ResourcePool[int], arg0: int, arg1: int) -> tuple[int, int]:
-        worker_id = resource_pool.get()
-        ret = arg0 + arg1
-        resource_pool.put(worker_id)
-        return (worker_id, ret)
-    args_list = [(i, i**2) for i in range(40)]
-    max_workers = 4
-    results = parallel_map(worker, args_list, max_workers=max_workers)
-    for i, (worker_id, ret) in enumerate(results):
-        assert ret == i + i**2
+    total_items = 30
+    parallelism = 4
+    args_list = [(i, i**2) for i in range(total_items)]
+    start = DateTime.now()
+    results = list(parallel_map_with_id(worker, args_list, parallelism=parallelism))
+    elapsed = (DateTime.now() - start).total_seconds()
+    # assert elapsed < wait * total_items
+    assert len(results) == total_items
+    for (arg0, arg1, (ret, worker_id)) in results:
+        assert ret == arg0 + arg1
+        assert 0 <= worker_id < parallelism
 
 def test_file_bundle() -> None:
     with wf_reg_test.util.create_temp_dir() as temp_dir:
@@ -125,3 +132,7 @@ def test_walk_files() -> None:
 
 def test_random_path() -> None:
     assert not wf_reg_test.util.persistent_random_path().exists()
+
+
+if __name__ == "__main__":
+    test_parallel_map()

@@ -134,3 +134,6 @@ graphviz = "^0.20.1"
 pymc = "^4.2.1"
 jupyter = "^1.0.0"
 parsl = "^2022.10.31"
+"charmonium.freeze" = "^0.6.0"
+dask = {extras = ["distributed"], version = "^2022.10.2"}
+fasteners = "^0.18"

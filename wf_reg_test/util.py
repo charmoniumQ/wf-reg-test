@@ -1,5 +1,8 @@
 from __future__ import annotations
 import random
+import string
+from pathlib import Path
+import random
 import dataclasses
 import contextlib
 import tempfile
@@ -16,6 +19,21 @@ import xxhash
 def create_temp_dir() -> Generator[Path, None, None]:
     with tempfile.TemporaryDirectory() as temp_dir:
         yield Path(temp_dir)
+
+
+def random_str(
+        length: int,
+        alphabet: str = string.ascii_lowercase + string.digits,
+) -> str:
+    return "".join(random.choice(alphabet) for _ in range(length))
+
+
+def get_unused_path(prefix: Path, suffixes: Iterable[str]) -> Path:
+    for suffix in suffixes:
+        candidate = prefix / suffix
+        if not candidate.exists():
+            return candidate
+    raise RuntimeError(f"None of {suffixes} are unused in {prefix}")
 
 
 def hash_path(path: Union[Path, str, bytes], size: int = 128) -> int:
@@ -146,10 +164,3 @@ def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
         *((children,) if children else ()),
         *((tail,) if tail else ()),
     )
-
-
-persistent_data = Path(".persistent")
-persistent_data.mkdir(exist_ok=True)
-def persistent_random_path() -> Path:
-    digits = 10
-    return persistent_data / "{:0{digits}x}".format(random.randint(16**digits))

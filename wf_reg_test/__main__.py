@@ -2,7 +2,7 @@ import collections
 import logging
 import warnings
 import itertools
-import os
+import multiprocessing
 import random
 from datetime import datetime as DateTime
 from datetime import timedelta as TimeDelta
@@ -100,7 +100,7 @@ def main() -> None:
         parallel_execute(
             hub,
             revisions_conditions,
-            processes=expect_type(int, os.cpu_count()) - 2,
+            parallelism=multiprocessing.cpu_count() // 2 - 2,
             data_path=data_path,
         )
     with ch_time_block.ctx("store", print_start=False):

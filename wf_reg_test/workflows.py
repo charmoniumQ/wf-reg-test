@@ -239,10 +239,10 @@ class FileBundle:
     contents: Mapping[Path, File]
 
     @staticmethod
-    def create(root: Path, exclude: set[Path] = {}) -> FileBundle:
+    def create(root: Path) -> FileBundle:
         contents: dict[Path, File] = {}
         for path in walk_files(root):
-            if path not in exclude and (root / path).is_file() and not (root / path).is_symlink():
+            if (root / path).is_file() and not (root / path).is_symlink():
                 contents[path] = File.create(root / path)
         return FileBundle(contents)
 

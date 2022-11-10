@@ -41,7 +41,7 @@ def get_repo(url: str) -> Repo:
 
 class Repo(Protocol):
     def get_revisions(self) -> Iterable[Revision]: ...
-    def checkout(self, revision: Revision, cache_path: Path) -> ContextManager[Path]: ...
+    def checkout(self, revision: Revision, dest_path: Path) -> None: ...
 
 
 @dataclasses.dataclass
@@ -96,41 +96,10 @@ class GitHubRepo(Repo):
         else:
             raise ValueError(f"Don't know how to list {self.revisions}")
 
-    def checkout(self, revision: Revision, cache_path: Path) -> ContextManager[Path]:
-        return GitHubRevision(
-            repo_url=f"git@github.com:{self.user}/{self.repo}",
-            revision=revision.rev,
-            cache_path=cache_path,
-        )
-
-
-@dataclasses.dataclass
-class GitHubRevision:
-    repo_url: str
-    revision: str
-    cache_path: Path
-
-    def __enter__(self) -> Path:
-        url_hash = xxhash.xxh32(self.repo_url.encode("utf-8")).hexdigest()
-        repo_path = self.cache_path / url_hash
-        if not repo_path.exists():
-            repo = git.repo.Repo.clone_from(self.repo_url, repo_path)
-        else:
-            repo = git.repo.Repo(repo_path)
-        with repo:
-            repo.head.reset(self.revision, index=True, working_tree=True)
-            for untracked_file_str in repo.untracked_files:
-                untracked_file = Path(untracked_file_str)
-                if untracked_file.is_dir():
-                    shutil.rmtree(untracked_file)
-                else:
-                    untracked_file.unlink()
-            return repo_path
-
-    def __exit__(
-        self,
-        _exc_type: Optional[type[BaseException]],
-        _exc_value: Optional[BaseException],
-        _traceback: Optional[types.TracebackType],
+    def checkout(
+            self,
+            revision: Revision,
+            dest_path: Path,
     ) -> None:
-        pass
+        repo = git.repo.Repo.clone_from(self.url, dest_path)
+        repo.head.reset(revision.rev, index=True, working_tree=True)
