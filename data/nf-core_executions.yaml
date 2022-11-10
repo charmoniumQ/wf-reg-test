@@ -1,1 +1,54 @@
-[]
+- condition: &id001 !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2022-11-09 22:46:07.634110
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 774144
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3720
+    - 0
+  revision: nf-core/rnaseq v3.7 - Iron Iguana
+  status_code: 137
+  workflow: rnaseq
+- condition: *id001
+  datetime: 2022-11-09 22:45:58.116641
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 540372992
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 440000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 9
+    - 70000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 6
+    - 340000
+  revision: nf-core/rnaseq v2.0 - Titanium Tiger
+  status_code: 1
+  workflow: rnaseq

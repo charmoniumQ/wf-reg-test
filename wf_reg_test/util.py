@@ -52,23 +52,29 @@ _T = TypeVar("_T")
 _V = TypeVar("_V")
 
 
-def walk(
+def walk_files(path: Path) -> Iterable[Path]:
+    yield from _walk_files(path, path)
+
+
+def _walk_files(
+    path: Path,
+    root_path: Path,
+) -> Iterable[Path]:
+    if path.is_dir():
+        for subpath in path.iterdir():
+            yield from _walk_files(subpath, root_path)
+    else:
+        yield path.relative_to(root_path)
+
+
+def map_dirs(
     mapper: Callable[[Path, list[_T]], _T],
     path: Path,
-    ignore_preds: tuple[Callable[[str], bool], ...] = (_ignore_vcs,),
 ) -> _T:
-    from gitignore_parser import parse_gitignore  # type: ignore
     if path.is_dir():
-        ignore_file = path / ".gitignore"
-        if ignore_file.exists():
-            ignore_preds = (
-                *ignore_preds,
-                cast(Callable[[str], bool], parse_gitignore(ignore_file)),
-            )
         children = [
-            walk(mapper, subpath, ignore_preds)
+            map_dirs(mapper, subpath)
             for subpath in path.iterdir()
-            if not any(ignore_pred(str(subpath)) for ignore_pred in ignore_preds)
         ]
     else:
         children = []
@@ -140,3 +146,10 @@ def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
         *((children,) if children else ()),
         *((tail,) if tail else ()),
     )
+
+
+persistent_data = Path(".persistent")
+persistent_data.mkdir(exist_ok=True)
+def persistent_random_path() -> Path:
+    digits = 10
+    return persistent_data / "{:0{digits}x}".format(random.randint(16**digits))

@@ -21,12 +21,9 @@ from .util import groupby_dict, functional_shuffle, expect_type
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
-logging.basicConfig()
-logging.getLogger("parsl").setLevel(logging.WARNING)
-logger = logging.getLogger("wf_reg_test")
-logger.setLevel(logging.INFO)
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 ch_time_block.disable_stderr()
-data = Path("data.yaml")
 
 
 @ch_time_block.decor()
@@ -96,14 +93,14 @@ def main() -> None:
             time_bound=DateTime(2022, 8, 1),
             conditions=[Condition.NO_CONTROLS],
             desired_execution_count=1,
-            execution_limit=1,
+            # execution_limit=1,
         )
         # for revision, condition in revisions_conditions:
         #     print("would run", revision, condition)
         parallel_execute(
             hub,
             revisions_conditions,
-            processes=(expect_type(int, os.cpu_count()) - 4) // 2,
+            processes=expect_type(int, os.cpu_count()) - 2,
             data_path=data_path,
         )
     with ch_time_block.ctx("store", print_start=False):

@@ -1,8 +1,10 @@
+import contextlib
 from pathlib import Path
 from datetime import timedelta as TimeDelta, datetime as DateTime
 from typing import Optional, Iterable, TypeVar, Callable, Generic, cast
 import logging
 import time
+import queue
 
 import parsl
 import parsl.dataflow.futures
@@ -15,7 +17,10 @@ from .engines import engines
 from .util import expect_type
 
 
-logging.getLogger("parsl").setLevel(logging.WARNING)
+parsl_logger = logging.getLogger("parsl")
+parsl_logger.setLevel(logging.WARNING)
+parsl_logger.propagate = False
+
 logger = logging.getLogger("wf_reg_test")
 
 _T = TypeVar("_T")
@@ -25,20 +30,24 @@ _V = TypeVar("_V")
 
 class ResourcePool(Generic[_T]):
     def __init__(self, pool: list[_T]) -> None:
-        self.pool = pool
+        self.pool = queue.Queue(len(pool))
+        for elem in pool:
+            self.pool.put_nowait(elem)
 
-    def get(self) -> _T:
+    @contextlib.contextmanager
+    def get(self) -> Iterable[_T]:
         while True:
             try:
-                return self.pool.pop()
-            except IndexError:
+                elem = self.pool.get_nowait()
+                break
+            except queue.Empty:
+                logger.info(f"Waiting on resource; queue has approx {self.pool.qsize()}")
                 time.sleep(1)
+        yield elem
+        self.pool.put_nowait(elem)
 
-    def put(self, elem: _T) -> None:
-        self.pool.append(elem)
 
-
-def parallel_map(
+def parsl_parallel_map(
         func: Callable[[ResourcePool[int], _T, _U], _V],
         args: list[tuple[_T, _U]],
         max_workers: int,
@@ -56,8 +65,21 @@ def parallel_map(
         parsl.python_app(func)(resource_pool, *arg)
         for arg in args
     ]
-    for future in futures:
+    for i, future in enumerate(futures):
+        print(i, len(futures))
         yield future.result()
+
+
+def single_map(
+        func: Callable[[ResourcePool[int], _T, _U], _V],
+        args: list[tuple[_T, _U]],
+        max_workers: int,
+) -> Iterable[_V]:
+    resource_pool = ResourcePool(list(range(max_workers)))
+    return (
+        func(resource_pool, arg0, arg1)
+        for arg0, arg1 in args
+    )
 
 
 def parallel_execute(
@@ -70,7 +92,7 @@ def parallel_execute(
     iterator = tqdm.tqdm(
         zip(
             revisions_conditions,
-            parallel_map(
+            single_map(
                 execute_one,
                 revisions_conditions,
                 max_workers=processes // 2,
@@ -95,24 +117,22 @@ def parallel_execute(
 
 
 # time for SIGTERM to propagate before issuing SIGKILL
-hard_wall_time_buffer = TimeDelta(minutes=1)
+hard_wall_time_buffer = TimeDelta(minutes=2)
 
 
 def execute_one(worker_ids: ResourcePool[int], revision: Revision, condition: Condition) -> Execution:
-    worker_id = worker_ids.get()
-    cache_path = Path(".repos") / str(worker_id)
-    cache_path.mkdir(exist_ok=True, parents=True)
-    which_cores = [worker_id * 2] if condition.single_core else [worker_id * 2, worker_id * 2 + 1]
-    workflow = expect_type(Workflow, revision.workflow)
-    engine = engines[workflow.engine]
-    logger.info("Running %s", revision)
-    ret = engine.run(
-        revision=revision,
-        condition=condition,
-        repo_cache_path=cache_path,
-        which_cores=which_cores,
-        wall_time_soft_limit=workflow.max_wall_time_estimate(),
-        wall_time_hard_limit=workflow.max_wall_time_estimate() + hard_wall_time_buffer,
-    )
-    worker_ids.put(worker_id)
-    return ret
+    with worker_ids.get() as worker_id:
+        cache_path = Path(".repos") / str(worker_id)
+        cache_path.mkdir(exist_ok=True, parents=True)
+        which_cores = [worker_id * 2] if condition.single_core else [worker_id * 2, worker_id * 2 + 1]
+        workflow = expect_type(Workflow, revision.workflow)
+        engine = engines[workflow.engine]
+        ret = engine.run(
+            revision=revision,
+            condition=condition,
+            repo_cache_path=cache_path,
+            which_cores=which_cores,
+            wall_time_soft_limit=workflow.max_wall_time_estimate(),
+            wall_time_hard_limit=workflow.max_wall_time_estimate() + hard_wall_time_buffer,
+        )
+        return ret

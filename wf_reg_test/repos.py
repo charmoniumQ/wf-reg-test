@@ -98,7 +98,7 @@ class GitHubRepo(Repo):
 
     def checkout(self, revision: Revision, cache_path: Path) -> ContextManager[Path]:
         return GitHubRevision(
-            repo_url=self.url,
+            repo_url=f"git@github.com:{self.user}/{self.repo}",
             revision=revision.rev,
             cache_path=cache_path,
         )
@@ -119,6 +119,12 @@ class GitHubRevision:
             repo = git.repo.Repo(repo_path)
         with repo:
             repo.head.reset(self.revision, index=True, working_tree=True)
+            for untracked_file_str in repo.untracked_files:
+                untracked_file = Path(untracked_file_str)
+                if untracked_file.is_dir():
+                    shutil.rmtree(untracked_file)
+                else:
+                    untracked_file.unlink()
             return repo_path
 
     def __exit__(

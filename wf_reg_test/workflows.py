@@ -6,7 +6,7 @@ import dataclasses
 from pathlib import Path
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 
-from .util import non_unique, concat_lists, hash_path
+from .util import non_unique, concat_lists, hash_path, walk_files
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -78,7 +78,7 @@ class Workflow:
         if wall_times_of_successes:
             return TimeDelta(seconds=int(max(wall_times_of_successes) * 3))
         else:
-            return TimeDelta(hours=1)
+            return TimeDelta(minutes=30)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
@@ -239,13 +239,11 @@ class FileBundle:
     contents: Mapping[Path, File]
 
     @staticmethod
-    def create(root: Path) -> FileBundle:
+    def create(root: Path, exclude: set[Path] = {}) -> FileBundle:
         contents: dict[Path, File] = {}
-        for dir_ in root.glob("**"):
-            for path in dir_.iterdir():
-                # note that root.glob already handles recursing into subdirs.
-                if path.is_file() and not path.is_symlink():
-                    contents[path.relative_to(root)] = File.create(path)
+        for path in walk_files(root):
+            if path not in exclude and (root / path).is_file() and not (root / path).is_symlink():
+                contents[path] = File.create(root / path)
         return FileBundle(contents)
 
     def total_size(self) -> int:
@@ -273,7 +271,7 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
-            contents_url=None,
+            contents_url="file://{path.resolve()!s}",
         )
 
     def check_invariants(self) -> Iterable[UserWarning]:

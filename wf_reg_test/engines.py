@@ -1,3 +1,4 @@
+import contextlib
 import dataclasses
 import functools
 import logging
@@ -11,9 +12,11 @@ import warnings
 from typing_extensions import Protocol
 from datetime import datetime as DateTime, timedelta as TimeDelta
 from pathlib import Path
-from typing import Any, Callable, Mapping, Optional, TypeVar, cast
+from typing import Any, Callable, Mapping, Optional, TypeVar, cast, ContextManager, Iterable
 
-from .util import create_temp_dir, expect_type
+import charmonium.time_block as ch_time_block
+
+from .util import create_temp_dir, expect_type, walk_files
 from .workflows import Execution, Revision, Condition, FileBundle
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
@@ -29,7 +32,7 @@ class Engine:
             log_dir: Path,
             out_dir: Path,
             n_cores: int,
-    ) -> Executable:
+    ) -> ContextManager[Executable]:
         raise NotImplementedError
 
 
@@ -51,19 +54,20 @@ class Engine:
         repo = get_repo(revision.workflow.repo_url)
         with repo.checkout(revision, repo_cache_path) as local_copy, create_temp_dir() as log_dir, create_temp_dir() as out_dir:
             now = DateTime.now()
-            executable = self.get_executable(local_copy, log_dir, out_dir, len(which_cores))
-            executable = taskset(executable, which_cores)
-            executable = timeout(executable, wall_time_hard_limit, wall_time_soft_limit)
-            with time(executable) as (executable, time_file):
-                proc = executable.local_execute(check=False)
-                resources = parse_time_file(time_file)
+            with self.get_executable(local_copy, log_dir, out_dir, len(which_cores)) as executable:
+                executable = taskset(executable, which_cores)
+                executable = timeout(executable, wall_time_hard_limit, wall_time_soft_limit)
+                with time(executable) as (executable, time_file):
+                    with ch_time_block.ctx(f"execute {revision.workflow}"):
+                        proc = executable.local_execute(check=False, capture_output=True)
+                    resources = parse_time_file(time_file)
             (log_dir / "stdout.txt").write_bytes(proc.stdout)
             (log_dir / "stderr.txt").write_bytes(proc.stdout)
         return Execution(
             machine=None,
             datetime=now,
             outputs=FileBundle.create(out_dir),
-            logs=FileBundle.create(log_dir),
+            logs=FileBundle.create(log_dir, exclude={Path(".git")}),
             condition=condition,
             resources=resources,
             status_code=proc.returncode,
@@ -72,51 +76,61 @@ class Engine:
 
 
 class SnakemakeEngine(Engine):
+    @contextlib.contextmanager
     def get_executable(
             self,
             workflow: Path,
             log_dir: Path,
             out_dir: Path,
             n_cores: int,
-    ) -> Executable:
-        return Executable(
+    ) -> Iterable[Executable]:
+        test_file = log_dir / "test"
+        test_file.touch()
+        now = test_file.stat().st_mtime
+        test_file.unlink()
+        yield Executable(
             command=[
                 "snakemake",
                 f"--cores={n_cores}",
                 "--use-singularity",
-                "--forcerun",
-                # TODO: determine out_dir bundle
-                workflow / "workflow",
+                "--forceall",
+                "--shadow-prefix",
+                log_dir.resolve(),
+                "--snakefile",
+                (workflow / "workflow/snakefile").resolve(),
             ],
-            cwd=log_dir,
+            cwd=workflow,
             read_write_mounts={
                 workflow: workflow,
                 log_dir: log_dir,
                 out_dir: out_dir,
             },
         )
+        for fil in walk_files(workflow):
+            if fil.stat().st_mtime >= now:
+                shutil.move(workflow / fil, out_dir / fil)
 
 
 class NextflowEngine(Engine):
+    @contextlib.contextmanager
     def get_executable(
             self,
             workflow: Path,
             log_dir: Path,
             out_dir: Path,
             n_cores: int,
-    ) -> Executable:
-        return Executable(
+    ) -> Iterable[Executable]:
+        yield Executable(
             command=[
                 "nextflow",
                 "run",
-                workflow,
-                f"-head-cpus={n_cores}",
-                "-cache=false",
-                "-profile=test,singularity",
-                f"--out_dirdir",
-                out_dir,
+                workflow.resolve(),
+                "-profile",
+                "test,singularity",
+                f"--outdir",
+                out_dir.resolve(),
             ],
-            cwd=log_dir,
+            cwd=log_dir.resolve(),
             read_write_mounts={
                 workflow: workflow,
                 log_dir: log_dir,

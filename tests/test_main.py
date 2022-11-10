@@ -10,17 +10,7 @@ from wf_reg_test.workflows import RegistryHub
 from wf_reg_test.workflows import FileBundle, File
 from wf_reg_test.parallel_execute import parallel_map, ResourcePool
 from wf_reg_test.executable import Machine, ComputeResources, parse_time_file, time, Executable
-
-
-def test_summarize_diff() -> None:
-    assert wf_reg_test.util.summarize_diff(
-        [1, 2, {"a": 3, "b": [4, 5]}],
-        [1, 2, {"a": 3, "b": [4, 5, 6], "c": 7}],
-    ) != "no differences"
-    assert not wf_reg_test.util.summarize_diff(
-        [1, 2, {"a": 3, "b": [4, 5]}],
-        [1, 2, {"a": 3, "b": [4, 5]}],
-    ) == "no differences"
+from charmonium.freeze import summarize_diff
 
 @pytest.fixture
 def hub() -> RegistryHub:
@@ -104,9 +94,34 @@ def test_file_bundle() -> None:
         (temp_dir / "blah/foo").write_text("hello")
         (temp_dir / "bar").symlink_to("foo")
         (temp_dir / "baz").hardlink_to(temp_dir / "foo")
-        expected = FileBundle(contents={
-            Path('foo'): File(hash_algo='xxhash', hash_bits=64, hash_val=16899831174130972922, size=2, contents_url=None),
-            Path('baz'): File(hash_algo='xxhash', hash_bits=64, hash_val=16899831174130972922, size=2, contents_url=None),
-            Path('blah/foo'): File(hash_algo='xxhash', hash_bits=64, hash_val=2794345569481354659, size=5, contents_url=None),
-        })
-        assert FileBundle.create(temp_dir) == expected
+        common_args = dict(
+            hash_algo='xxhash',
+            hash_bits=64,
+            contents_url=None,
+        )
+        actual = FileBundle.create(temp_dir)
+    expected = FileBundle(contents={
+        Path('foo'): File(hash_val=16899831174130972922, size=2, **common_args),
+        Path('baz'): File(hash_val=16899831174130972922, size=2, **common_args),
+        Path('blah/foo'): File(hash_val=2794345569481354659, size=5, **common_args),
+    })
+    assert actual == expected, summarize_diff(actual, expected)
+
+
+def test_walk_files() -> None:
+    with wf_reg_test.util.create_temp_dir() as temp_dir:
+        (temp_dir / "foo").write_text("hi")
+        (temp_dir / "blah").mkdir()
+        (temp_dir / "blah/foo").write_text("hello")
+        (temp_dir / "bar").symlink_to("foo")
+        (temp_dir / "baz").hardlink_to(temp_dir / "foo")
+        assert set(wf_reg_test.util.walk_files(temp_dir)) == {
+            Path("foo"),
+            Path("blah/foo"),
+            Path("bar"),
+            Path("baz"),
+        }
+
+
+def test_random_path() -> None:
+    assert not wf_reg_test.util.persistent_random_path().exists()
