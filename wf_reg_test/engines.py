@@ -110,7 +110,8 @@ class SnakemakeEngine(Engine):
             },
         )
         for fil in walk_files(workflow):
-            if fil.stat().st_mtime >= now:
+            if fil.exists() and fil.is_file() and fil.stat().st_mtime >= now:
+                (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(workflow / fil, out_dir / fil)
 
 
