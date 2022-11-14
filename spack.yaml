@@ -31,6 +31,9 @@ spack:
   - miniconda3
   - xxhash
   - py-ipython
+  - py-dask
+  - py-distributed
+  - py-fasteners
   view: true
   concretizer:
     unify: when_possible
