@@ -16,7 +16,7 @@ from charmonium.freeze import summarize_diff
 @pytest.fixture
 def hub() -> RegistryHub:
     return RegistryHub([
-        wf_reg_test.registries.snakemake_registry(),
+        wf_reg_test.registries.snakemake_registry(5),
         wf_reg_test.registries.nf_core_registry(5),
     ])
 
@@ -101,16 +101,11 @@ def test_file_bundle() -> None:
         (temp_dir / "blah/foo").write_text("hello")
         (temp_dir / "bar").symlink_to("foo")
         (temp_dir / "baz").hardlink_to(temp_dir / "foo")
-        common_args = dict(
-            hash_algo='xxhash',
-            hash_bits=64,
-            contents_url=None,
-        )
         actual = FileBundle.create(temp_dir)
     expected = FileBundle(contents={
-        Path('foo'): File(hash_val=16899831174130972922, size=2, **common_args),
-        Path('baz'): File(hash_val=16899831174130972922, size=2, **common_args),
-        Path('blah/foo'): File(hash_val=2794345569481354659, size=5, **common_args),
+        Path('foo'): File(hash_val=16899831174130972922, size=2, hash_algo='xxhash', hash_bits=64, contents_url=None),
+        Path('baz'): File(hash_val=16899831174130972922, size=2, hash_algo='xxhash', hash_bits=64, contents_url=None),
+        Path('blah/foo'): File(hash_val=2794345569481354659, size=5, hash_algo='xxhash', hash_bits=64, contents_url=None),
     })
     assert actual == expected, summarize_diff(actual, expected)
 
@@ -131,7 +126,11 @@ def test_walk_files() -> None:
 
 
 def test_random_path() -> None:
-    assert not wf_reg_test.util.persistent_random_path().exists()
+    with wf_reg_test.util.create_temp_dir() as tmp_dir:
+        assert tmp_dir.exists()
+    assert not tmp_dir.exists()
+    assert wf_reg_test.util.random_str(15) != wf_reg_test.util.random_str(15)
+    assert not wf_reg_test.util.get_unused_path(Path(), suffixes=map(str, range(10))).exists()
 
 
 if __name__ == "__main__":

@@ -8,7 +8,7 @@ from pathlib import Path
 import pickle
 import queue
 import random
-from typing import Optional, Iterable, Iterator, TypeVar, Callable, Generic, cast
+from typing import Any,Optional, Iterable, Iterator, TypeVar, Callable, Generic, cast
 import time
 import urllib
 
@@ -42,16 +42,17 @@ class ResourcePool(Generic[_T]):
 
     @contextlib.contextmanager
     def get_many(self, count: int) -> Iterator[list[int]]:
-        used_items = None
-        while used_items is not None:
+        used_items: Optional[list[int]] = None
+        while True:
             with fasteners.InterProcessLock(self.path / "lock"):
-                unused_items = pickle.loads((self.path / "data").read_bytes())
+                unused_items = cast(list[int], pickle.loads((self.path / "data").read_bytes()))
                 if len(unused_items) < count:
                     break
                 else:
                     used_items = [unused_items.pop() for _ in range(count)]
                     (self.path / "data").write_bytes(pickle.dumps(unused_items))
             time.sleep(10 * random.random())
+        assert used_items is not None
         yield used_items
         with fasteners.InterProcessLock(self.path / "lock"):
             unused_items = pickle.loads((self.path / "data").read_bytes())
@@ -63,9 +64,9 @@ def parallel_map_with_id(
         execute_one: Callable[..., _V],
         revisions_conditions: list[tuple[_T, _U]],
         parallelism: int,
-) -> Iterable[_V]:
-    with dask.distributed.LocalCluster(n_workers=parallelism, processes=True) as cluster, dask.distributed.Client(cluster) as client:
-        running_procs: list[_T, _V, int, ] = [
+) -> Iterable[tuple[_T, _U, _V]]:
+    with dask.distributed.LocalCluster(n_workers=parallelism, processes=True) as cluster, dask.distributed.Client(cluster) as client:  # type: ignore
+        running_procs: list[tuple[_T, _U, int, Any]] = [
             (
                 revision,
                 condition,
@@ -104,19 +105,16 @@ def parallel_execute(
     serialize_every: TimeDelta = TimeDelta(minutes=5),
 ) -> None:
     iterator = tqdm.tqdm(
-        zip(
+        parallel_map_with_id(
+            execute_one,
             revisions_conditions,
-            parallel_map_with_id(
-                execute_one,
-                revisions_conditions,
-                parallelism=parallelism,
-            ),
+            parallelism=parallelism,
         ),
         total=len(revisions_conditions),
         desc="executing",
     )
     last_serialization = DateTime.now()
-    for (revision, _), execution in iterator:
+    for (revision, _condition, execution) in iterator:
         execution = execution.with_pointers(
             machine=Machine.current_machine(),
             revision=revision,

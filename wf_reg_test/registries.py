@@ -43,7 +43,7 @@ def nf_core_registry(limit: Optional[int] = None) -> Registry:
             ))
     return registry
 
-def snakemake_registry() -> Registry:
+def snakemake_registry(limit: Optional[int] = None) -> Registry:
     """
     Takes <1s to get all 1781 workflows in the Snakemake-workflow-catalog
 
@@ -52,6 +52,8 @@ def snakemake_registry() -> Registry:
     """
     url = "https://raw.githubusercontent.com/snakemake/snakemake-workflow-catalog/main/data.js"
     repo_infos = json.loads(requests.get(url, timeout=10).text.partition("\n")[2])
+    if limit is not None:
+        repo_infos = repo_infos[:limit]
     registry = Registry(
         display_name="snakemake-workflow-catalog",
         url="https://snakemake.github.io/snakemake-workflow-catalog/",
