@@ -13,8 +13,6 @@ import time
 import urllib
 
 import fasteners  # type: ignore
-import dask
-import dask.distributed
 import tqdm
 
 from .workflows import RegistryHub, Workflow, Revision, Condition, Execution

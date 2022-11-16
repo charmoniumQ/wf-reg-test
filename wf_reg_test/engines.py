@@ -51,13 +51,17 @@ class Engine:
             raise ValueError(f"Requested single-core={condition.single_core}, but assigned {len(which_cores)} cores")
         if condition.aslr or condition.faketime or condition.dev_random is not None or condition.rr_record or condition.rr_replay is not None:
             raise NotImplementedError()
+        assert not path.exists()
+        path.mkdir(parents=True)
         repo = get_repo(revision.workflow.repo_url)
-        code = path / "code"
+        code_dir = path / "code"
         log_dir = path / "log"
         out_dir = path / "out"
+        for dir in [code_dir, log_dir, out_dir]:
+            dir.mkdir()
         now = DateTime.now()
-        repo.checkout(revision, code)
-        with self.get_executable(code, log_dir, out_dir, len(which_cores)) as executable:
+        repo.checkout(revision, code_dir)
+        with self.get_executable(code_dir, log_dir, out_dir, len(which_cores)) as executable:
             executable = taskset(executable, which_cores)
             executable = timeout(executable, wall_time_hard_limit, wall_time_soft_limit)
             with time(executable) as (executable, time_file):
