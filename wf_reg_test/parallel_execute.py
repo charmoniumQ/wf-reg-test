@@ -113,7 +113,7 @@ def parsl_parallel_map_with_id(
             run_dir=str(temp_dir),
         ))
         @parsl.python_app
-        def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[_T, _U, _V]:
+        def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:
             t, v = ts_vs[idx]
             return idx, execute_one(t, v, pool)
         core_pool = ResourcePool(temp_dir, list(range(multiprocessing.cpu_count())))
