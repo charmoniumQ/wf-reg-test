@@ -16,6 +16,12 @@ import xxhash
 
 
 @contextlib.contextmanager
+def create_temp_file() -> Generator[Path, None, None]:
+    with create_temp_dir() as temp_dir:
+        yield Path(temp_dir / "file")
+
+
+@contextlib.contextmanager
 def create_temp_dir() -> Generator[Path, None, None]:
     with tempfile.TemporaryDirectory() as temp_dir:
         yield Path(temp_dir)

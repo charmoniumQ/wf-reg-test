@@ -1,3 +1,4 @@
+import math
 import time
 from datetime import datetime as DateTime
 from pathlib import Path
@@ -75,20 +76,22 @@ def test_serialize(compute_resources: ComputeResources, machine: Machine) -> Non
     assert machine2 == machine
     assert type(machine2) is type(machine)
 
-wait = 1
-def worker(arg0: int, arg1: int, worker_id: int) -> tuple[int, int]:
-    ret = arg0 + arg1
-    # time.sleep(wait)
-    return (ret, worker_id)
+wait = 0.2
+def worker(arg0: int, arg1: int, core_pool: ResourcePool[int]) -> tuple[int, int]:
+    with core_pool.get_many(1, delay=wait) as (core_id,):
+        ret = arg0 + arg1
+        time.sleep(wait)
+        return (ret, core_id)
 
 def test_parallel_map() -> None:
-    total_items = 30
+    total_items = 20
     parallelism = 4
     args_list = [(i, i**2) for i in range(total_items)]
     start = DateTime.now()
     results = list(parallel_map_with_id(worker, args_list, parallelism=parallelism))
     elapsed = (DateTime.now() - start).total_seconds()
-    # assert elapsed < wait * total_items
+    print(wait * math.ceil(total_items / parallelism), elapsed, wait * math.ceil(total_items / (parallelism - 1)))
+    assert wait * math.ceil(total_items / parallelism) < elapsed < wait * math.ceil(total_items / (parallelism - 1))
     assert len(results) == total_items
     for (arg0, arg1, (ret, worker_id)) in results:
         assert ret == arg0 + arg1
