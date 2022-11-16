@@ -133,9 +133,9 @@ py-dask
 
 Concretized
 --------------------------------
-py-dask@2021.6.2%gcc@12.2.0+array+bag+dataframe+delayed~diagnostics~distributed+yaml build_system=python_pip arch=linux-rhel7-x86_64_v4
+py-dask@2022.10.2%gcc@12.2.0+array+bag+dataframe+delayed~diagnostics~distributed+yaml build_system=python_pip arch=linux-rhel7-x86_64_v4
     ^py-cloudpickle@1.6.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-fsspec@2021.7.0%gcc@12.2.0~http arch=linux-rhel7-x86_64_v4
+    ^py-fsspec@2022.11.0%gcc@12.2.0~http build_system=python_pip arch=linux-rhel7-x86_64_v4
     ^py-numpy@1.23.3%gcc@12.2.0+blas+lapack patches=873745d arch=linux-rhel7-x86_64_v4
         ^openblas@0.3.20%gcc@12.2.0~bignuma~consistent_fpcsr~ilp64+locking+pic+shared patches=9f12903 symbol_suffix=none threads=none arch=linux-rhel7-x86_64_v4
             ^perl@5.34.1%gcc@12.2.0+cpanm+shared+threads arch=linux-rhel7-x86_64_v4
@@ -154,7 +154,7 @@ py-dask@2021.6.2%gcc@12.2.0+array+bag+dataframe+delayed~diagnostics~distributed+
                 ^py-typing-extensions@4.3.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
             ^py-six@1.16.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^py-pytz@2022.2.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-partd@1.1.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-partd@1.1.0%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
         ^py-locket@0.2.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-pip@22.1.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-pyyaml@6.0%gcc@12.2.0+libyaml arch=linux-rhel7-x86_64_v4
@@ -162,7 +162,7 @@ py-dask@2021.6.2%gcc@12.2.0+array+bag+dataframe+delayed~diagnostics~distributed+
         ^py-cython@0.29.32%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^py-setuptools@65.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-setuptools@59.4.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-toolz@0.9.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-toolz@0.12.0%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
     ^py-wheel@0.37.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^python@3.10.6%gcc@12.2.0+bz2+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tix~tkinter~ucs4+uuid+zlib patches=0d98e93,7d40923,f2fd060 arch=linux-rhel7-x86_64_v4
         ^bzip2@1.0.8%gcc@12.2.0~debug~pic+shared arch=linux-rhel7-x86_64_v4
@@ -190,33 +190,41 @@ py-dask@2021.6.2%gcc@12.2.0+array+bag+dataframe+delayed~diagnostics~distributed+
 
 Input spec
 --------------------------------
-py-distributed
+py-dask@2022.10.2~distributed
 
 Concretized
 --------------------------------
-py-distributed@2022.2.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-click@8.1.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+py-dask@2022.10.2%gcc@12.2.0+array+bag+dataframe+delayed~diagnostics~distributed+yaml build_system=python_pip arch=linux-rhel7-x86_64_v4
     ^py-cloudpickle@1.6.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-jinja2@3.1.2%gcc@12.2.0~i18n arch=linux-rhel7-x86_64_v4
-        ^py-markupsafe@2.0.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-msgpack@1.0.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-packaging@21.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-        ^py-pyparsing@3.0.9%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-            ^py-flit-core@3.7.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-        ^py-setuptools@65.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-fsspec@2022.11.0%gcc@12.2.0~http build_system=python_pip arch=linux-rhel7-x86_64_v4
+    ^py-numpy@1.23.3%gcc@12.2.0+blas+lapack patches=873745d arch=linux-rhel7-x86_64_v4
+        ^openblas@0.3.20%gcc@12.2.0~bignuma~consistent_fpcsr~ilp64+locking+pic+shared patches=9f12903 symbol_suffix=none threads=none arch=linux-rhel7-x86_64_v4
+            ^perl@5.34.1%gcc@12.2.0+cpanm+shared+threads arch=linux-rhel7-x86_64_v4
+                ^berkeley-db@18.1.40%gcc@12.2.0+cxx~docs+stl patches=26090f4,b231fcc arch=linux-rhel7-x86_64_v4
+        ^py-cython@0.29.32%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-pandas@1.5.1%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
+        ^py-bottleneck@1.3.5%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-versioneer@0.26%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-numexpr@2.8.3%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
+            ^py-packaging@21.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+                ^py-pyparsing@3.0.9%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+                    ^py-flit-core@3.7.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-python-dateutil@2.8.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-setuptools-scm@7.0.5%gcc@12.2.0+toml arch=linux-rhel7-x86_64_v4
+                ^py-tomli@2.0.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+                ^py-typing-extensions@4.3.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-six@1.16.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-pytz@2022.2.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-partd@1.1.0%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
+        ^py-locket@0.2.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-pip@22.1.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-psutil@5.8.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-pyyaml@6.0%gcc@12.2.0+libyaml arch=linux-rhel7-x86_64_v4
         ^libyaml@0.2.5%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^py-cython@0.29.32%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-setuptools@65.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-setuptools@59.4.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-sortedcontainers@2.1.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-tblib@1.6.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-toolz@0.9.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-tornado@6.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-toolz@0.12.0%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
     ^py-wheel@0.37.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-    ^py-zict@1.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-        ^py-heapdict@1.0.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^python@3.10.6%gcc@12.2.0+bz2+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tix~tkinter~ucs4+uuid+zlib patches=0d98e93,7d40923,f2fd060 arch=linux-rhel7-x86_64_v4
         ^bzip2@1.0.8%gcc@12.2.0~debug~pic+shared arch=linux-rhel7-x86_64_v4
             ^diffutils@3.8%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
@@ -234,8 +242,6 @@ py-distributed@2022.2.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^ncurses@6.3%gcc@12.2.0~symlinks+termlib abi=none arch=linux-rhel7-x86_64_v4
         ^openssl@1.1.1q%gcc@12.2.0~docs~shared certs=mozilla patches=3fdcf2d arch=linux-rhel7-x86_64_v4
             ^ca-certificates-mozilla@2022-07-19%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-            ^perl@5.34.1%gcc@12.2.0+cpanm+shared+threads arch=linux-rhel7-x86_64_v4
-                ^berkeley-db@18.1.40%gcc@12.2.0+cxx~docs+stl patches=26090f4,b231fcc arch=linux-rhel7-x86_64_v4
         ^pkgconf@1.8.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^readline@8.1.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^sqlite@3.39.2%gcc@12.2.0+column_metadata+dynamic_extensions+fts~functions+rtree arch=linux-rhel7-x86_64_v4
@@ -430,7 +436,7 @@ py-parsl
 
 Concretized
 --------------------------------
-py-parsl@1.1.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+py-parsl@1.1.0%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
     ^py-dill@0.3.4%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^py-setuptools@65.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-globus-sdk@3.10.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
@@ -460,10 +466,10 @@ py-parsl@1.1.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
                 ^libssh2@1.10.0%gcc@12.2.0~ipo+shared build_type=RelWithDebInfo crypto=openssl arch=linux-rhel7-x86_64_v4
                 ^ninja@1.11.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^py-pyjwt@2.4.0%gcc@12.2.0+crypto arch=linux-rhel7-x86_64_v4
-    ^py-paramiko@2.7.1%gcc@12.2.0~invoke arch=linux-rhel7-x86_64_v4
+    ^py-paramiko@2.12.0%gcc@12.2.0~invoke build_system=python_pip arch=linux-rhel7-x86_64_v4
         ^py-bcrypt@3.2.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
-            ^py-six@1.16.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
         ^py-pynacl@1.5.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-six@1.16.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-pip@22.1.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-psutil@5.8.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-pyzmq@22.3.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
@@ -648,6 +654,55 @@ py-pytest@7.1.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-setuptools-scm@7.0.5%gcc@12.2.0+toml arch=linux-rhel7-x86_64_v4
         ^py-typing-extensions@4.3.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-tomli@2.0.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-wheel@0.37.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^python@3.10.6%gcc@12.2.0+bz2+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tix~tkinter~ucs4+uuid+zlib patches=0d98e93,7d40923,f2fd060 arch=linux-rhel7-x86_64_v4
+        ^bzip2@1.0.8%gcc@12.2.0~debug~pic+shared arch=linux-rhel7-x86_64_v4
+            ^diffutils@3.8%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^expat@2.4.8%gcc@12.2.0+libbsd arch=linux-rhel7-x86_64_v4
+            ^libbsd@0.11.5%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+                ^libmd@1.0.4%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^gdbm@1.19%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^gettext@0.21%gcc@12.2.0+bzip2+curses+git~libunistring+libxml2+tar+xz arch=linux-rhel7-x86_64_v4
+            ^libiconv@1.16%gcc@12.2.0 libs=shared,static arch=linux-rhel7-x86_64_v4
+            ^libxml2@2.10.1%gcc@12.2.0~python arch=linux-rhel7-x86_64_v4
+            ^tar@1.34%gcc@12.2.0 zip=pigz arch=linux-rhel7-x86_64_v4
+                ^pigz@2.7%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+                ^zstd@1.5.2%gcc@12.2.0+programs compression=none libs=shared,static arch=linux-rhel7-x86_64_v4
+        ^libffi@3.4.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^ncurses@6.3%gcc@12.2.0~symlinks+termlib abi=none arch=linux-rhel7-x86_64_v4
+        ^openssl@1.1.1q%gcc@12.2.0~docs~shared certs=mozilla patches=3fdcf2d arch=linux-rhel7-x86_64_v4
+            ^ca-certificates-mozilla@2022-07-19%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^perl@5.34.1%gcc@12.2.0+cpanm+shared+threads arch=linux-rhel7-x86_64_v4
+                ^berkeley-db@18.1.40%gcc@12.2.0+cxx~docs+stl patches=26090f4,b231fcc arch=linux-rhel7-x86_64_v4
+        ^pkgconf@1.8.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^readline@8.1.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^sqlite@3.39.2%gcc@12.2.0+column_metadata+dynamic_extensions+fts~functions+rtree arch=linux-rhel7-x86_64_v4
+        ^util-linux-uuid@2.37.4%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^xz@5.2.5%gcc@12.2.0~pic libs=shared,static arch=linux-rhel7-x86_64_v4
+        ^zlib@1.2.12%gcc@12.2.0+optimize+pic+shared patches=0d38234 arch=linux-rhel7-x86_64_v4
+
+Input spec
+--------------------------------
+py-pytest-asyncio
+
+Concretized
+--------------------------------
+py-pytest-asyncio@0.18.3%gcc@12.2.0 build_system=python_pip arch=linux-rhel7-x86_64_v4
+    ^py-pip@22.1.2%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-pytest@7.1.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-attrs@22.1.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-setuptools@65.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-iniconfig@1.1.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-packaging@21.3%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-pyparsing@3.0.9%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-pluggy@1.0.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-setuptools-scm@7.0.5%gcc@12.2.0+toml arch=linux-rhel7-x86_64_v4
+        ^py-py@1.11.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+        ^py-tomli@2.0.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-setuptools@59.4.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+    ^py-setuptools-scm@7.0.5%gcc@12.2.0+toml arch=linux-rhel7-x86_64_v4
+        ^py-typing-extensions@4.3.0%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
+            ^py-flit-core@3.7.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^py-wheel@0.37.1%gcc@12.2.0 arch=linux-rhel7-x86_64_v4
     ^python@3.10.6%gcc@12.2.0+bz2+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic+pyexpat+pythoncmd+readline+shared+sqlite3+ssl~tix~tkinter~ucs4+uuid+zlib patches=0d98e93,7d40923,f2fd060 arch=linux-rhel7-x86_64_v4
         ^bzip2@1.0.8%gcc@12.2.0~debug~pic+shared arch=linux-rhel7-x86_64_v4
@@ -945,7 +1000,6 @@ python@3.10.6%gcc@12.2.0+bz2+ctypes+dbm~debug+libxml2+lzma~nis~optimizations+pic
 Input spec
 --------------------------------
 singularity
-    ^python@3.10
 
 Concretized
 --------------------------------

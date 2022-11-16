@@ -8,6 +8,5 @@ __pycache__/
 /.repos/
 /secrets.json
 /.spack-env
-/spack.lock
 .r-mount
 .ipynb_checkpoints/
