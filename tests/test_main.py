@@ -91,8 +91,7 @@ def test_parallel_map() -> None:
     results = list(parallel_map_with_id(worker, args_list, parallelism=parallelism))
     elapsed = (DateTime.now() - start).total_seconds()
     print(wait * math.ceil(total_items / parallelism), elapsed, wait * math.ceil(total_items / (parallelism - 1)))
-    assert wait * math.ceil(total_items / parallelism) < elapsed
-    assert elapsed < wait * math.ceil(total_items / (parallelism - 1))
+    assert wait * math.ceil(total_items / parallelism) < elapsed < wait * total_items
     assert len(results) == total_items
     for (arg0, arg1, (ret, worker_id)) in results:
         assert ret == arg0 + arg1
