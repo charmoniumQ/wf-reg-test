@@ -64,12 +64,12 @@
   url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.2.0
   workflow: friendsofstrandseq/ashleys-qc-pipeline
 - datetime: 2022-07-21 14:25:01
-  display_name: ''
+  display_name: '2022-07-21 14:25:01'
   rev: 17fce85539f03552b9156602a003b3c0b0e20e93
   url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.1
   workflow: friendsofstrandseq/ashleys-qc-pipeline
 - datetime: 2022-07-21 13:40:01
-  display_name: ''
+  display_name: '2022-07-21 13:40:01'
   rev: 41ed2c9eccc8e2b66f4373ed1beabb665f55066e
   url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline/tree/1.0
   workflow: friendsofstrandseq/ashleys-qc-pipeline
@@ -264,17 +264,17 @@
   url: https://github.com/solida-core/dima/tree/v1.0
   workflow: solida-core/dima
 - datetime: 2022-03-30 17:40:22
-  display_name: Release
+  display_name: v1.0.1
   rev: 0b111f97bb612dcfe6cb1d7c9da3b455a431ffc8
   url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v1.0.1
   workflow: TLenfers/multispecies_mitochondrial_variant_analysis
 - datetime: 2022-03-29 14:23:02
-  display_name: Release
+  display_name: v1.0.0
   rev: 28f0fb74c43a82aee49f14af7d712e20b84f0852
   url: https://github.com/TLenfers/multispecies_mitochondrial_variant_analysis/tree/v1.0.0
   workflow: TLenfers/multispecies_mitochondrial_variant_analysis
 - datetime: 2022-02-10 15:14:12
-  display_name: ''
+  display_name: '2022-02-10 15:14:12'
   rev: dde222052c0a0dbb1a7e32d7212bb123fa097e3e
   url: https://github.com/mrvollger/Rhodonite/tree/v0.12-alpha
   workflow: mrvollger/Rhodonite
@@ -284,7 +284,7 @@
   url: https://github.com/mrvollger/Rhodonite/tree/v0.7-alpha
   workflow: mrvollger/Rhodonite
 - datetime: 2021-11-18 20:27:57
-  display_name: ''
+  display_name: '2021-11-18 20:27:57'
   rev: dc0987936dd0217f19c035e001935109af705817
   url: https://github.com/mrvollger/Rhodonite/tree/v0.6-alpha
   workflow: mrvollger/Rhodonite
@@ -299,7 +299,7 @@
   url: https://github.com/mrvollger/Rhodonite/tree/v0.4-alpha
   workflow: mrvollger/Rhodonite
 - datetime: 2021-10-01 15:54:26
-  display_name: ''
+  display_name: '2021-10-01 15:54:26'
   rev: fd371564d4e9b7e29c5b9d44746fa3bd3f948ab4
   url: https://github.com/mrvollger/Rhodonite/tree/v0.3-alpha
   workflow: mrvollger/Rhodonite
@@ -309,7 +309,7 @@
   url: https://github.com/mrvollger/Rhodonite/tree/v0.2-alpha
   workflow: mrvollger/Rhodonite
 - datetime: 2021-09-11 23:56:56
-  display_name: ''
+  display_name: '2021-09-11 23:56:56'
   rev: 75eedec662e2d2c2df43c0f3423006b84f150ed4
   url: https://github.com/mrvollger/Rhodonite/tree/v0.1-alpha
   workflow: mrvollger/Rhodonite
@@ -629,17 +629,17 @@
   url: https://github.com/IKIM-Essen/uncovar/tree/v0.14.0
   workflow: IKIM-Essen/uncovar
 - datetime: 2022-01-06 13:11:52
-  display_name: null
+  display_name: v0.13.2
   rev: 074d3d42eae88b9f6f2cdcf6dd750dc6ca51c619
   url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.2
   workflow: IKIM-Essen/uncovar
 - datetime: 2022-01-04 08:01:16
-  display_name: null
+  display_name: v0.13.1
   rev: 385ddb3eb2fa177af88fa2ebbcff86ec8f33e8d5
   url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.1
   workflow: IKIM-Essen/uncovar
 - datetime: 2022-01-03 15:47:42
-  display_name: null
+  display_name: v0.13.0
   rev: 0e8f9934f68e056e6f3829ec5767752fe46e9b52
   url: https://github.com/IKIM-Essen/uncovar/tree/v0.13.0
   workflow: IKIM-Essen/uncovar
