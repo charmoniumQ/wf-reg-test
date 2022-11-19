@@ -93,7 +93,7 @@ def main() -> None:
             time_bound=DateTime(2022, 8, 1),
             conditions=[Condition.NO_CONTROLS],
             desired_execution_count=1,
-            execution_limit=10,
+            execution_limit=300,
         )
         # for revision, condition in revisions_conditions:
         #     print("would run", revision, condition)

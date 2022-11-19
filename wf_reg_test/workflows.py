@@ -6,7 +6,7 @@ import dataclasses
 from pathlib import Path
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 
-from .util import non_unique, concat_lists, hash_path, walk_files
+from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -22,10 +22,9 @@ class RegistryHub:
         return concat_lists(registry.workflows for registry in self.registries)
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        for reg_i, reg_j, _, _ in non_unique(registry.url for registry in self.registries):
-            yield UserWarning("Two registries have the same URL", reg_i, reg_j)
-        for reg_i, reg_j, _, _ in non_unique(registry.display_name for registry in self.registries):
-            yield UserWarning("Two registries have the same display_name", reg_i, reg_j)
+        for attr in ["url", "display_name"]:
+            for reg_i, reg_j, i, j in non_unique(self.registries, curried_getattr(attr)):
+                yield UserWarning(f"Two registries have the same {attr}: {i} \"{reg_i!s}\", {j} \"{reg_j!s}\"")
         for registry in self.registries:
             yield from registry.check_invariants()
 
@@ -45,10 +44,9 @@ class Registry:
         return f"{self.__class__.__name__} {self.display_name}"
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        for wf_i, wf_j, _, _ in non_unique(wf.url for wf in self.workflows):
-            yield UserWarning("Two workflows have the same URL", wf_i, wf_j)
-        for wf_i, wf_j, _, _ in non_unique(wf.display_name for wf in self.workflows):
-            yield UserWarning("Two workflows have the same display_name", wf_i, wf_j)
+        for attr in ["url", "display_name"]:
+            for wf_i, wf_j, i, j in non_unique(self.workflows, curried_getattr(attr)):
+                yield UserWarning(f"Two workflows have the same {attr}: {i} \"{wf_i!s}\", {j} \"{wf_j!s}\"")
         for wf in self.workflows:
             if wf.registry != self:
                 yield UserWarning("Workflow does not point back to self", wf, self)
@@ -98,6 +96,9 @@ class Workflow:
     def check_invariants(self) -> Iterable[UserWarning]:
         if self not in self.registry.workflows:
             yield UserWarning("Not in own registry")
+        for attr in ["url", "display_name", "rev"]:
+            for rev_i, rev_j, i, j in non_unique(self.revisions, curried_getattr(attr)):
+                yield UserWarning(f"Two revisions have the same {attr}: {i} \"{rev_i!s}\", {j} \"{rev_j!s}\"")
         for revision in self.revisions:
             if revision.workflow != self:
                 yield UserWarning("Revision does not point back to self", revision, self)
@@ -271,11 +272,11 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
-            contents_url="file://{path.resolve()!s}",
+            contents_url=f"file://{path.resolve()!s}",
         )
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        if 0 <= self.hash_val < (1 << self.hash_bits):
+        if not (0 <= self.hash_val < (1 << self.hash_bits)):
             yield UserWarning("hash is bigger than hash_bits", self, self.hash_val, self.hash_bits)
         if self.size < 0:
             yield UserWarning("File cannot have negative size")

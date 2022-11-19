@@ -77,7 +77,7 @@ class GitHubRepo(Repo):
                     tag = tags[release.tag_name]
                     yield Revision(
                         rev=tag.commit.sha,
-                        display_name=release.title,
+                        display_name=tag.name,
                         url=f"{self.url}/tree/{tag.name}",
                         datetime=tag.commit.commit.committer.date,
                         executions=[],
