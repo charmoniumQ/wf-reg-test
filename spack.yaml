@@ -15,7 +15,12 @@ spack:
   - py-pyyaml
   - py-requests
   - py-rich
-  - snakemake
+  - snakemake@7.18.2
+
+
+  
+  # Note that many Snakemake repositories require snakemake@7.5:
+  # E.g., https://github.com/friendsofstrandseq/mosaicatcher-pipeline/
   - py-tomli@2.0.1
   - nextflow
   - java
