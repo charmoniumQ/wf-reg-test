@@ -6,7 +6,7 @@
   },
   "roots": [
     {
-      "hash": "hdwl66el4yfhfwcanygsyyvgug4uvffo",
+      "hash": "vjomge442apwybl7afdj6m7x3ph3bq4w",
       "spec": "coreutils"
     },
     {
@@ -18,7 +18,7 @@
       "spec": "java"
     },
     {
-      "hash": "a5rliitgne74r7kaoqux552tsvxeimdp",
+      "hash": "s5vfphfdl5d335cqpazmas6q7e7zd3ub",
       "spec": "miniconda3"
     },
     {
@@ -32,6 +32,10 @@
     {
       "hash": "sty5ztkjtqez53vxtjcwadeidf2omil6",
       "spec": "py-charmonium-time-block patches=2ca26cf"
+    },
+    {
+      "hash": "wvaibwawhrtyf72zwkd4zh24fhq3p6ex",
+      "spec": "py-click"
     },
     {
       "hash": "vkl6ixg2moqqri2hnbuysookupic5644",
@@ -102,15 +106,15 @@
       "spec": "python@3.10"
     },
     {
-      "hash": "skm6ta5esvvhhjyrj7umv3efad2dexbf",
+      "hash": "tn7z6qn4r7gsfckucez2pwxnxw4sn5wu",
       "spec": "singularity"
     },
     {
-      "hash": "mxajis3fa7gmjisyyt52civccsp7bxmi",
-      "spec": "snakemake@7.18.2"
+      "hash": "je32oxbbre7oqrgyd5d3spkycl2ix5yf",
+      "spec": "snakemake@7.18.2+ftp+http+s3"
     },
     {
-      "hash": "7yngn72gt6h7en5ia3kbstmvhmltk4cm",
+      "hash": "z2pqpfqlzibakhdqpe33vz4pl6jiztqm",
       "spec": "time"
     },
     {
@@ -123,7 +127,7 @@
     }
   ],
   "concrete_specs": {
-    "hdwl66el4yfhfwcanygsyyvgug4uvffo": {
+    "vjomge442apwybl7afdj6m7x3ph3bq4w": {
       "name": "coreutils",
       "version": "9.1",
       "arch": {
@@ -137,6 +141,7 @@
       },
       "namespace": "builtin",
       "parameters": {
+        "build_system": "autotools",
         "gprefix": false,
         "patches": [
           "8f50e8a894950f007aba0707697eb5b67a673d2ce8cb39b4733438a918e4f644"
@@ -152,7 +157,7 @@
         "8f50e8a894950f007aba0707697eb5b67a673d2ce8cb39b4733438a918e4f644"
       ],
       "package_hash": "mpr6ym6holv64uy7qonbfnzucayxy6p5uakad7lsgcqfmiwegtza====",
-      "hash": "hdwl66el4yfhfwcanygsyyvgug4uvffo"
+      "hash": "vjomge442apwybl7afdj6m7x3ph3bq4w"
     },
     "omubcsh6qiwxekwlya437sgaelvsenm5": {
       "name": "hwloc",
@@ -670,7 +675,7 @@
       "package_hash": "c3bs6k7sxzomcasbxd5ko7hlj4y5slxaxxj5ycdutziguzpu423q====",
       "hash": "di42caheoizl67o5n5xtjzh2opxtdoul"
     },
-    "a5rliitgne74r7kaoqux552tsvxeimdp": {
+    "s5vfphfdl5d335cqpazmas6q7e7zd3ub": {
       "name": "miniconda3",
       "version": "4.10.3",
       "arch": {
@@ -684,6 +689,7 @@
       },
       "namespace": "builtin",
       "parameters": {
+        "build_system": "generic",
         "cflags": [],
         "cppflags": [],
         "cxxflags": [],
@@ -692,7 +698,7 @@
         "ldlibs": []
       },
       "package_hash": "53uvad7ig6bjbovn723spxnhvia4cljs2qqxxmqwkcev6cua4oaq====",
-      "hash": "a5rliitgne74r7kaoqux552tsvxeimdp"
+      "hash": "s5vfphfdl5d335cqpazmas6q7e7zd3ub"
     },
     "g5lecrn6avsp2atpqcgytxxg2disg3qf": {
       "name": "nextflow",
@@ -1928,6 +1934,102 @@
       ],
       "hash": "sty5ztkjtqez53vxtjcwadeidf2omil6"
     },
+    "wvaibwawhrtyf72zwkd4zh24fhq3p6ex": {
+      "name": "py-click",
+      "version": "8.1.3",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "o3pani7izkhxslobv22p3urcbqhelec3ky5jcjm37rutvoaje3ua====",
+      "dependencies": [
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-setuptools",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "iwu7s52hy5yu24kgsumgpxgrf2nn2buc",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "wvaibwawhrtyf72zwkd4zh24fhq3p6ex"
+    },
+    "wv5h4wiwmizg54dllzcdr7neldxkbtnh": {
+      "name": "py-setuptools",
+      "version": "59.4.0",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "72cm6cjkdrpaqioa2gez62357bnq4nurobn4scz5m5hwbv7s5fqa====",
+      "dependencies": [
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh"
+    },
     "vkl6ixg2moqqri2hnbuysookupic5644": {
       "name": "py-dask",
       "version": "2022.10.2",
@@ -2101,47 +2203,6 @@
         }
       ],
       "hash": "vvhfhvmdkyy374jeopfunmfvlwxththd"
-    },
-    "wv5h4wiwmizg54dllzcdr7neldxkbtnh": {
-      "name": "py-setuptools",
-      "version": "59.4.0",
-      "arch": {
-        "platform": "linux",
-        "platform_os": "rhel7",
-        "target": "x86_64_v4"
-      },
-      "compiler": {
-        "name": "gcc",
-        "version": "12.2.0"
-      },
-      "namespace": "builtin",
-      "parameters": {
-        "cflags": [],
-        "cppflags": [],
-        "cxxflags": [],
-        "fflags": [],
-        "ldflags": [],
-        "ldlibs": []
-      },
-      "package_hash": "72cm6cjkdrpaqioa2gez62357bnq4nurobn4scz5m5hwbv7s5fqa====",
-      "dependencies": [
-        {
-          "name": "py-pip",
-          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
-          "type": [
-            "build"
-          ]
-        },
-        {
-          "name": "python",
-          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
-          "type": [
-            "build",
-            "run"
-          ]
-        }
-      ],
-      "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh"
     },
     "7pidv3xycsriopyoxkujxe4xmi55szc3": {
       "name": "py-fsspec",
@@ -8848,7 +8909,7 @@
       "package_hash": "oqk5v7ec6akhzjzq2ruvgiwpww24dc5hpcegl56jp6xycipadnjq====",
       "hash": "2aczlwkzgdqex46x6357jlyndafrlumz"
     },
-    "skm6ta5esvvhhjyrj7umv3efad2dexbf": {
+    "tn7z6qn4r7gsfckucez2pwxnxw4sn5wu": {
       "name": "singularity",
       "version": "3.8.7",
       "arch": {
@@ -8908,14 +8969,14 @@
         },
         {
           "name": "pkgconf",
-          "hash": "4zor2sf635hi6xnyztg6gzlccaem3iex",
+          "hash": "izv5le7iekkdwi2vs4zckurassasdliq",
           "type": [
             "build"
           ]
         },
         {
           "name": "shadow",
-          "hash": "eedhhpqbabhnuio3mvgbmztbukuntwd4",
+          "hash": "hsi42tsnz5qb5nqplahz2fxkle3mqtce",
           "type": [
             "run"
           ]
@@ -8936,7 +8997,7 @@
           ]
         }
       ],
-      "hash": "skm6ta5esvvhhjyrj7umv3efad2dexbf"
+      "hash": "tn7z6qn4r7gsfckucez2pwxnxw4sn5wu"
     },
     "jps56spnc6fxusu3obpni5mo4g2oo37r": {
       "name": "cryptsetup",
@@ -9972,7 +10033,32 @@
       ],
       "hash": "nulhbo22lvuvhi46ozo5rjb7io4ijdqm"
     },
-    "eedhhpqbabhnuio3mvgbmztbukuntwd4": {
+    "izv5le7iekkdwi2vs4zckurassasdliq": {
+      "name": "pkgconf",
+      "version": "1.8.0",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "autotools",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "olr5zscvqru56pgiiqlnzc4ud5e7iuyntj6fsplcrjh3jngqjpja====",
+      "hash": "izv5le7iekkdwi2vs4zckurassasdliq"
+    },
+    "hsi42tsnz5qb5nqplahz2fxkle3mqtce": {
       "name": "shadow",
       "version": "4.8.1",
       "arch": {
@@ -9986,6 +10072,7 @@
       },
       "namespace": "builtin",
       "parameters": {
+        "build_system": "autotools",
         "cflags": [],
         "cppflags": [],
         "cxxflags": [],
@@ -9994,7 +10081,7 @@
         "ldlibs": []
       },
       "package_hash": "3xylupn6nmqa4j7o3gkkqr5lfn7hx36j5brdfmu4don5p5agaqlq====",
-      "hash": "eedhhpqbabhnuio3mvgbmztbukuntwd4"
+      "hash": "hsi42tsnz5qb5nqplahz2fxkle3mqtce"
     },
     "2ehhcbfc6hxt5vkvifc5ir6gn6w2uwwj": {
       "name": "squashfs",
@@ -10036,7 +10123,7 @@
       ],
       "hash": "2ehhcbfc6hxt5vkvifc5ir6gn6w2uwwj"
     },
-    "mxajis3fa7gmjisyyt52civccsp7bxmi": {
+    "je32oxbbre7oqrgyd5d3spkycl2ix5yf": {
       "name": "snakemake",
       "version": "7.18.2",
       "arch": {
@@ -10051,8 +10138,11 @@
       "namespace": "builtin",
       "parameters": {
         "build_system": "python_pip",
+        "ftp": true,
         "google-cloud": false,
+        "http": true,
         "reports": false,
+        "s3": true,
         "cflags": [],
         "cppflags": [],
         "cxxflags": [],
@@ -10068,6 +10158,22 @@
           "type": [
             "build",
             "run"
+          ]
+        },
+        {
+          "name": "py-boto3",
+          "hash": "gs4qk3kb27bikmayefnrn2fppdlmq4us",
+          "type": [
+            "build",
+            "link"
+          ]
+        },
+        {
+          "name": "py-botocore",
+          "hash": "7vzgafss6ua26ykaeyvxucomlpta5f6c",
+          "type": [
+            "build",
+            "link"
           ]
         },
         {
@@ -10108,6 +10214,14 @@
           "type": [
             "build",
             "run"
+          ]
+        },
+        {
+          "name": "py-ftputil",
+          "hash": "khbbqhaa5kolybrxuikqng37vxdomzu6",
+          "type": [
+            "build",
+            "link"
           ]
         },
         {
@@ -10178,12 +10292,13 @@
           "hash": "g5767flrc3i3k5k2k5ij4yood4l2hkd2",
           "type": [
             "build",
+            "link",
             "run"
           ]
         },
         {
-          "name": "py-retry",
-          "hash": "gvqnq6javai7w7jcqowfwbr4wjvrtrk7",
+          "name": "py-reretry",
+          "hash": "hdeh5qgyab5lifpkdbngdr2ru7dwjgf4",
           "type": [
             "build",
             "run"
@@ -10270,7 +10385,7 @@
           ]
         }
       ],
-      "hash": "mxajis3fa7gmjisyyt52civccsp7bxmi"
+      "hash": "je32oxbbre7oqrgyd5d3spkycl2ix5yf"
     },
     "we7pmoinvytsj4tm333n36phtzgvj6of": {
       "name": "py-appdirs",
@@ -10332,6 +10447,286 @@
         }
       ],
       "hash": "we7pmoinvytsj4tm333n36phtzgvj6of"
+    },
+    "gs4qk3kb27bikmayefnrn2fppdlmq4us": {
+      "name": "py-boto3",
+      "version": "1.18.12",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "python_pip",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "hnj3co6u7nhhptxlej3ytkzown7cqmjmh3ehxjbc4agn5igzmwja====",
+      "dependencies": [
+        {
+          "name": "py-botocore",
+          "hash": "7vzgafss6ua26ykaeyvxucomlpta5f6c",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-jmespath",
+          "hash": "smj5hpsuwfjt6oruh2ihu5klqq4tu3qy",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-s3transfer",
+          "hash": "qcmtrrkwqjspywvqyfcgcld5yhzvjrfi",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-setuptools",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "iwu7s52hy5yu24kgsumgpxgrf2nn2buc",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "gs4qk3kb27bikmayefnrn2fppdlmq4us"
+    },
+    "7vzgafss6ua26ykaeyvxucomlpta5f6c": {
+      "name": "py-botocore",
+      "version": "1.21.12",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "python_pip",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "qeqrficglejcge2t56ijpdztlmhprvrwq6vlqkn6emxg4meucvtq====",
+      "dependencies": [
+        {
+          "name": "py-jmespath",
+          "hash": "smj5hpsuwfjt6oruh2ihu5klqq4tu3qy",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-python-dateutil",
+          "hash": "rb7yrtsxf5ghqitexzil2j3zzutxaevi",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-setuptools",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-urllib3",
+          "hash": "mu7k54ykn2riwtcbpviidcaihzwgmjpx",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "iwu7s52hy5yu24kgsumgpxgrf2nn2buc",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "7vzgafss6ua26ykaeyvxucomlpta5f6c"
+    },
+    "smj5hpsuwfjt6oruh2ihu5klqq4tu3qy": {
+      "name": "py-jmespath",
+      "version": "0.10.0",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "python_pip",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "vcn6cvvf73tzfx63e5ublcy5dycunbrsnuhn2aw47p5j4p7omt3a====",
+      "dependencies": [
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-setuptools",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "iwu7s52hy5yu24kgsumgpxgrf2nn2buc",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "smj5hpsuwfjt6oruh2ihu5klqq4tu3qy"
+    },
+    "qcmtrrkwqjspywvqyfcgcld5yhzvjrfi": {
+      "name": "py-s3transfer",
+      "version": "0.5.0",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "python_pip",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "45bxdlmugfodiqaeuffity7w3hthgprdqlhckgrjiomvi4n6mwjq====",
+      "dependencies": [
+        {
+          "name": "py-botocore",
+          "hash": "7vzgafss6ua26ykaeyvxucomlpta5f6c",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-setuptools",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "iwu7s52hy5yu24kgsumgpxgrf2nn2buc",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "qcmtrrkwqjspywvqyfcgcld5yhzvjrfi"
     },
     "u2wmc5iudet5cbe4oyjzxfyowdgec7tg": {
       "name": "py-configargparse",
@@ -10691,6 +11086,62 @@
         }
       ],
       "hash": "noe4trbgp244pmz6icag33t6ceoqfuxl"
+    },
+    "khbbqhaa5kolybrxuikqng37vxdomzu6": {
+      "name": "py-ftputil",
+      "version": "5.0.4",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "rhel7",
+        "target": "x86_64_v4"
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "12.2.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "python_pip",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "hw44rdxmexdu226aqkklrw34wiey2z3hewfh4ph2i64vx3mvwfva====",
+      "dependencies": [
+        {
+          "name": "py-pip",
+          "hash": "vmgt25n5yipv6e3fxkhvf57gunjc5vr4",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-setuptools",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "iwu7s52hy5yu24kgsumgpxgrf2nn2buc",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "wfpfhj5ip3i6u366qurvdbtdl4okebmx",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "khbbqhaa5kolybrxuikqng37vxdomzu6"
     },
     "udvuj4pdjdlkbt2w4xtkc5e4z3igviun": {
       "name": "py-jsonschema",
@@ -11277,9 +11728,9 @@
       ],
       "hash": "uoo3wpdqmzmyfr4wb7ww3d7nc5w57h77"
     },
-    "gvqnq6javai7w7jcqowfwbr4wjvrtrk7": {
-      "name": "py-retry",
-      "version": "0.9.2",
+    "hdeh5qgyab5lifpkdbngdr2ru7dwjgf4": {
+      "name": "py-reretry",
+      "version": "0.11.1",
       "arch": {
         "platform": "linux",
         "platform_os": "rhel7",
@@ -11299,16 +11750,8 @@
         "ldflags": [],
         "ldlibs": []
       },
-      "package_hash": "m3czmap76ieaifz4tcygfv3nxkaddsw7p2abbb64tfsbyt337kvq====",
+      "package_hash": "2pljbswemjmxxop4rdir2clcm3wvn3uyezaqeyjm7flgphzlp6ta====",
       "dependencies": [
-        {
-          "name": "py-decorator",
-          "hash": "2tmhl24kdalu4ktzv3wbdylpzlfj4gwo",
-          "type": [
-            "build",
-            "run"
-          ]
-        },
         {
           "name": "py-pbr",
           "hash": "ki5prowwnf56qv5s4n6qaslnirohxgx2",
@@ -11324,16 +11767,8 @@
           ]
         },
         {
-          "name": "py-py",
-          "hash": "7ficynhrpax3xdaed6fv7qmcre5gd5kq",
-          "type": [
-            "build",
-            "run"
-          ]
-        },
-        {
           "name": "py-setuptools",
-          "hash": "nhfqgvzojr3nkcqu7sc2von7fqdne7gf",
+          "hash": "wv5h4wiwmizg54dllzcdr7neldxkbtnh",
           "type": [
             "build"
           ]
@@ -11354,7 +11789,7 @@
           ]
         }
       ],
-      "hash": "gvqnq6javai7w7jcqowfwbr4wjvrtrk7"
+      "hash": "hdeh5qgyab5lifpkdbngdr2ru7dwjgf4"
     },
     "ki5prowwnf56qv5s4n6qaslnirohxgx2": {
       "name": "py-pbr",
@@ -11898,7 +12333,7 @@
       ],
       "hash": "xciulq53u3az4fhum2fcfgadqda4cchm"
     },
-    "7yngn72gt6h7en5ia3kbstmvhmltk4cm": {
+    "z2pqpfqlzibakhdqpe33vz4pl6jiztqm": {
       "name": "time",
       "version": "1.9",
       "arch": {
@@ -11912,6 +12347,7 @@
       },
       "namespace": "builtin",
       "parameters": {
+        "build_system": "autotools",
         "cflags": [],
         "cppflags": [],
         "cxxflags": [],
@@ -11920,7 +12356,7 @@
         "ldlibs": []
       },
       "package_hash": "sqebra7hchrtnuwxvcfrthvcsemcsqoagjsxceuxqr6livd3kbja====",
-      "hash": "7yngn72gt6h7en5ia3kbstmvhmltk4cm"
+      "hash": "z2pqpfqlzibakhdqpe33vz4pl6jiztqm"
     }
   }
 }
