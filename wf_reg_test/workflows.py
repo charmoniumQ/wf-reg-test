@@ -21,6 +21,14 @@ class RegistryHub:
     def workflows(self) -> list[Workflow]:
         return concat_lists(registry.workflows for registry in self.registries)
 
+    @property
+    def revisions(self) -> list[Revision]:
+        return concat_lists(
+            workflow.revisions
+            for registry in self.registries
+            for workflow in registry.workflows
+        )
+
     def check_invariants(self) -> Iterable[UserWarning]:
         for attr in ["url", "display_name"]:
             for reg_i, reg_j, i, j in non_unique(self.registries, curried_getattr(attr)):
@@ -68,15 +76,15 @@ class Workflow:
 
     def max_wall_time_estimate(self) -> TimeDelta:
         wall_times_of_successes = [
-            execution.resources.wall_time.total_seconds()
+            execution.resources.wall_time
             for revision in self.revisions
             for execution in revision.executions
             if execution.successful
         ]
         if wall_times_of_successes:
-            return TimeDelta(seconds=int(max(wall_times_of_successes) * 3))
+            return max(wall_times_of_successes) * 3 // 2 + TimeDelta(minutes=10)
         else:
-            return TimeDelta(minutes=30)
+            return TimeDelta(minutes=60)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"

@@ -42,6 +42,7 @@ def get_repo(url: str) -> Repo:
 class Repo(Protocol):
     def get_revisions(self) -> Iterable[Revision]: ...
     def checkout(self, revision: Revision, dest_path: Path) -> None: ...
+    def get_checkout_cmd(self, revision: Revision, dest_path: Path) -> list[str]: ...
 
 
 @dataclasses.dataclass
@@ -103,3 +104,9 @@ class GitHubRepo(Repo):
     ) -> None:
         repo = git.repo.Repo.clone_from(self.url, dest_path)
         repo.head.reset(revision.rev, index=True, working_tree=True)
+
+    def get_checkout_cmd(self, revision: Revision, dest_path: Path) -> list[list[str]]:
+        return [
+            ["git", "clone", self.url, str(dest_path)],
+            ["git", "-C", str(dest_path), "checkout", revision.rev],
+        ]

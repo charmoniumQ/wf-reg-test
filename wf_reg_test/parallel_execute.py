@@ -162,10 +162,6 @@ def parallel_execute(
             serialize(hub, data_path)
 
 
-# time for SIGTERM to propagate before issuing SIGKILL
-hard_wall_time_buffer = TimeDelta(minutes=2)
-
-
 escape = urllib.parse.quote_plus
 
 
@@ -186,7 +182,10 @@ def execute_one(
             escape(workflow.display_name),
             escape(revision.display_name),
         ),
-        map(str, itertools.count()),
+        (
+            "{:016x}".format(random.randint(0, 2**64))
+            for _ in range(2**64)
+        ),
     )
     workflow = expect_type(Workflow, revision.workflow)
     engine = engines[workflow.engine]
@@ -196,6 +195,5 @@ def execute_one(
             condition=condition,
             path=path,
             which_cores=cores,
-            wall_time_soft_limit=workflow.max_wall_time_estimate(),
-            wall_time_hard_limit=workflow.max_wall_time_estimate() + hard_wall_time_buffer,
+            wall_time_limit=workflow.max_wall_time_estimate(),
         )
