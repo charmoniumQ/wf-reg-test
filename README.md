@@ -52,8 +52,13 @@ for registry in registries:
   - [ ] Repeatable 5--95%-ile interval?
 
 - Code analysis
-  - [ ] SLoC by type?
+  - [ ] SLoC by type
+  - [ ] Code-to-comment by type
+  - [ ] Cyclomatic
+  - [ ] Function length distribution
   - [ ] Dependency graph?
+      - Imports per file
+      - Total transitive dependencies
   - [ ] Component graph?
   - [ ] Similarity of experiments?
   - [ ] Detect presence of best practices?
