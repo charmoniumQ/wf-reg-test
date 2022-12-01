@@ -4,6 +4,7 @@ from datetime import timedelta as TimeDelta, datetime as DateTime
 import itertools
 import logging
 import multiprocessing
+import os
 from pathlib import Path
 import pickle
 import queue
@@ -35,14 +36,16 @@ class ResourcePool(Generic[_T]):
     def __init__(self, path: Path, items: list[_T]) -> None:
         self.path = path
         self.path.mkdir(exist_ok=True, parents=True)
-        (self.path / "data").write_bytes(pickle.dumps(items))
         self.thread_lock = fasteners.ReaderWriterLock()
+        self.process_lock = fasteners.InterProcessLock(self.path / "lock")
+        with self.thread_lock.write_lock(), self.process_lock:
+            (self.path / "data").write_bytes(pickle.dumps(items))
 
     @contextlib.contextmanager
     def get_many(self, count: int, delay: float) -> Iterator[list[int]]:
         used_items: Optional[list[int]] = None
         while True:
-            with self.thread_lock.write_lock(), fasteners.InterProcessLock(self.path / "lock"):
+            with self.thread_lock.write_lock(), self.process_lock:
                 unused_items = cast(list[int], pickle.loads((self.path / "data").read_bytes()))
                 if len(unused_items) >= count:
                     used_items = unused_items[:count]
@@ -50,10 +53,11 @@ class ResourcePool(Generic[_T]):
                     (self.path / "data").write_bytes(pickle.dumps(unused_items))
                     break
             logger.info(f"Spinning, while waiting for {count} resources")
+            os.sync()
             time.sleep(delay * random.random())
         assert used_items is not None
         yield used_items
-        with self.thread_lock.write_lock(), fasteners.InterProcessLock(self.path / "lock"):
+        with self.thread_lock.write_lock(), self.process_lock:
             unused_items = pickle.loads((self.path / "data").read_bytes())
             unused_items.extend(used_items)
             (self.path / "data").write_bytes(pickle.dumps(unused_items))
@@ -158,10 +162,6 @@ def parallel_execute(
             serialize(hub, data_path)
 
 
-# time for SIGTERM to propagate before issuing SIGKILL
-hard_wall_time_buffer = TimeDelta(minutes=2)
-
-
 escape = urllib.parse.quote_plus
 
 
@@ -175,13 +175,17 @@ def execute_one(
 ) -> Execution:
     workflow = expect_type(Workflow, revision.workflow)
     registry = workflow.registry
+    print(workflow.display_name, registry.display_name, revision.display_name)
     path = get_unused_path(
         repo_path / Path(
             escape(registry.display_name),
             escape(workflow.display_name),
             escape(revision.display_name),
         ),
-        map(str, itertools.count()),
+        (
+            "{:016x}".format(random.randint(0, 2**64))
+            for _ in range(2**64)
+        ),
     )
     workflow = expect_type(Workflow, revision.workflow)
     engine = engines[workflow.engine]
@@ -191,6 +195,5 @@ def execute_one(
             condition=condition,
             path=path,
             which_cores=cores,
-            wall_time_soft_limit=workflow.max_wall_time_estimate(),
-            wall_time_hard_limit=workflow.max_wall_time_estimate() + hard_wall_time_buffer,
+            wall_time_limit=workflow.max_wall_time_estimate(),
         )

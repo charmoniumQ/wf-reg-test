@@ -5,12 +5,129 @@
     rr_record: false
     rr_replay: null
     single_core: false
-  datetime: 2022-11-10 11:47:32.487865
+  datetime: 2022-11-23 11:13:56.991991
   logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - d17ab0d5-03ea-4b1c-b60d-db100937bdb6
+      - db
+      - 000003.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow/cache/d17ab0d5-03ea-4b1c-b60d-db100937bdb6/db/000003.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9787062747061960433
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - d17ab0d5-03ea-4b1c-b60d-db100937bdb6
+      - db
+      - CURRENT
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow/cache/d17ab0d5-03ea-4b1c-b60d-db100937bdb6/db/CURRENT
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 587986641601737328
+        size: 16
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - d17ab0d5-03ea-4b1c-b60d-db100937bdb6
+      - db
+      - LOCK
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow/cache/d17ab0d5-03ea-4b1c-b60d-db100937bdb6/db/LOCK
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - d17ab0d5-03ea-4b1c-b60d-db100937bdb6
+      - db
+      - MANIFEST-000002
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow/cache/d17ab0d5-03ea-4b1c-b60d-db100937bdb6/db/MANIFEST-000002
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15220002017410315055
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - d17ab0d5-03ea-4b1c-b60d-db100937bdb6
+      - index.angry_majorana
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow/cache/d17ab0d5-03ea-4b1c-b60d-db100937bdb6/index.angry_majorana
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - history
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow/history
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1498563149085769916
+        size: 424
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/.nextflow.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7144853075308097893
+        size: 12690
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/command.sh
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 11405183480117841870
+        size: 899
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/status.yaml
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9100092441195561220
+        size: 326
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/stderr.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/log/stdout.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 11962024847883464693
+        size: 1813
+  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - pipeline_info
+      - execution_trace.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/diaproteomics/nf-core%2Fdiaproteomics+1.1.0+-+%22Manali-Leh-Highway%22/d0536264400bd162/out/pipeline_info/execution_trace.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5938360776786373931
+        size: 101
   resources: !!python/object:wf_reg_test.executable.ComputeResources
     max_rss: 774144
     system_cpu_time: !!python/object/apply:datetime.timedelta
@@ -23,20 +140,137 @@
     - 0
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 3720
+    - 3630
     - 0
-  revision: 2.0.0 - Han Solo
+  revision: nf-core/diaproteomics 1.1.0 - "Manali-Leh-Highway"
   status_code: 137
-  workflow: hlatyping
+  workflow: diaproteomics
 - condition: *id001
-  datetime: 2022-11-10 13:51:55.989111
+  datetime: 2022-11-23 11:13:56.983724
   logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 031da194-2c2b-4d40-91bc-9955c5c3b49c
+      - db
+      - 000003.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow/cache/031da194-2c2b-4d40-91bc-9955c5c3b49c/db/000003.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9787062747061960433
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 031da194-2c2b-4d40-91bc-9955c5c3b49c
+      - db
+      - CURRENT
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow/cache/031da194-2c2b-4d40-91bc-9955c5c3b49c/db/CURRENT
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 587986641601737328
+        size: 16
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 031da194-2c2b-4d40-91bc-9955c5c3b49c
+      - db
+      - LOCK
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow/cache/031da194-2c2b-4d40-91bc-9955c5c3b49c/db/LOCK
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 031da194-2c2b-4d40-91bc-9955c5c3b49c
+      - db
+      - MANIFEST-000002
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow/cache/031da194-2c2b-4d40-91bc-9955c5c3b49c/db/MANIFEST-000002
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15220002017410315055
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 031da194-2c2b-4d40-91bc-9955c5c3b49c
+      - index.deadly_panini
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow/cache/031da194-2c2b-4d40-91bc-9955c5c3b49c/index.deadly_panini
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - history
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow/history
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7981412564247335681
+        size: 309
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/.nextflow.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10998128047514656572
+        size: 19187
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/command.sh
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12576307237381282568
+        size: 602
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/status.yaml
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 924953109866185797
+        size: 326
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/stderr.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/log/stdout.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 13184769715788567399
+        size: 3220
+  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - pipeline_info
+      - execution_trace_2022-11-23_11-14-07.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/mag/mag+2.2.1/5d240a3ffdae9e4e/out/pipeline_info/execution_trace_2022-11-23_11-14-07.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5938360776786373931
+        size: 101
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 774144
+    max_rss: 778240
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
@@ -47,26 +281,137 @@
     - 0
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 3720
+    - 3630
     - 0
-  revision: nf-core/nanoseq v2.0.1 - Steel Sloth
+  revision: mag 2.2.1
   status_code: 137
-  workflow: nanoseq
-- condition: &id002 !!python/object:wf_reg_test.workflows.Condition
-    aslr: false
-    dev_random: null
-    faketime: null
-    rr_record: false
-    rr_replay: null
-    single_core: false
-  datetime: 2022-11-09 22:46:07.634110
+  workflow: mag
+- condition: *id001
+  datetime: 2022-11-23 11:13:56.981220
   logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 51e488f2-ba3d-4453-b795-a33cc441c99a
+      - db
+      - 000003.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow/cache/51e488f2-ba3d-4453-b795-a33cc441c99a/db/000003.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9787062747061960433
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 51e488f2-ba3d-4453-b795-a33cc441c99a
+      - db
+      - CURRENT
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow/cache/51e488f2-ba3d-4453-b795-a33cc441c99a/db/CURRENT
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 587986641601737328
+        size: 16
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 51e488f2-ba3d-4453-b795-a33cc441c99a
+      - db
+      - LOCK
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow/cache/51e488f2-ba3d-4453-b795-a33cc441c99a/db/LOCK
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 51e488f2-ba3d-4453-b795-a33cc441c99a
+      - db
+      - MANIFEST-000002
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow/cache/51e488f2-ba3d-4453-b795-a33cc441c99a/db/MANIFEST-000002
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15220002017410315055
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 51e488f2-ba3d-4453-b795-a33cc441c99a
+      - index.hungry_kimura
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow/cache/51e488f2-ba3d-4453-b795-a33cc441c99a/index.hungry_kimura
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - history
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow/history
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2278159442785711487
+        size: 367
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/.nextflow.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10220237074918508328
+        size: 16780
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/command.sh
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17714142498481104846
+        size: 750
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/status.yaml
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 924953109866185797
+        size: 326
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/stderr.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/log/stdout.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 8034831727043590002
+        size: 4121
+  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - pipeline_info
+      - execution_trace_2022-11-23_11-14-09.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v3.7+-+Iron+Iguana/9c38892e02bb48ce/out/pipeline_info/execution_trace_2022-11-23_11-14-09.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5938360776786373931
+        size: 101
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 774144
+    max_rss: 778240
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
@@ -77,98 +422,278 @@
     - 0
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 3720
+    - 3630
     - 0
   revision: nf-core/rnaseq v3.7 - Iron Iguana
   status_code: 137
   workflow: rnaseq
-- condition: &id003 !!python/object:wf_reg_test.workflows.Condition
-    aslr: false
-    dev_random: null
-    faketime: null
-    rr_record: false
-    rr_replay: null
-    single_core: false
-  datetime: 2022-11-10 10:19:34.842777
+- condition: *id001
+  datetime: 2022-11-23 11:13:56.977601
   logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 1a0524e8-e95c-42e6-8845-4383e3f9f186
+      - db
+      - 000003.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow/cache/1a0524e8-e95c-42e6-8845-4383e3f9f186/db/000003.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9787062747061960433
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 1a0524e8-e95c-42e6-8845-4383e3f9f186
+      - db
+      - CURRENT
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow/cache/1a0524e8-e95c-42e6-8845-4383e3f9f186/db/CURRENT
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 587986641601737328
+        size: 16
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 1a0524e8-e95c-42e6-8845-4383e3f9f186
+      - db
+      - LOCK
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow/cache/1a0524e8-e95c-42e6-8845-4383e3f9f186/db/LOCK
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 1a0524e8-e95c-42e6-8845-4383e3f9f186
+      - db
+      - MANIFEST-000002
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow/cache/1a0524e8-e95c-42e6-8845-4383e3f9f186/db/MANIFEST-000002
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15220002017410315055
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - 1a0524e8-e95c-42e6-8845-4383e3f9f186
+      - index.reverent_ekeblad
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow/cache/1a0524e8-e95c-42e6-8845-4383e3f9f186/index.reverent_ekeblad
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - history
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow/history
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1558395778412425641
+        size: 376
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/.nextflow.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 687384224799595309
+        size: 14190
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/command.sh
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3957744072367890378
+        size: 765
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/status.yaml
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12310723110676540212
+        size: 340
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/stderr.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/log/stdout.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16775300283608053351
+        size: 3668
+  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - pipeline_info
+      - execution_trace.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/rnaseq/nf-core%2Frnaseq+v2.0+-+Titanium+Tiger/ac4e2666422d54c9/out/pipeline_info/execution_trace.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5938360776786373931
+        size: 101
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 774144
+    max_rss: 588742656
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 0
+    - 970000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 0
-    - 0
-    wall_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 3720
-    - 0
-  revision: nf-core/rnaseq v3.6 - Platinum Platypus
-  status_code: 137
-  workflow: rnaseq
-- condition: *id002
-  datetime: 2022-11-09 22:45:58.116641
-  logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
-  outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 540372992
-    system_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 0
-    - 440000
-    user_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 9
-    - 70000
+    - 10
+    - 600000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
     - 6
-    - 340000
+    - 620000
   revision: nf-core/rnaseq v2.0 - Titanium Tiger
   status_code: 1
   workflow: rnaseq
-- condition: *id003
-  datetime: 2022-11-10 09:17:30.806984
-  logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
-  outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 770048
-    system_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 0
-    - 0
-    user_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 0
-    - 0
-    wall_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 3720
-    - 10000
-  revision: nf-core/rnaseq version 1.4.1
-  status_code: 137
-  workflow: rnaseq
 - condition: *id001
-  datetime: 2022-11-10 12:49:38.241837
+  datetime: 2022-11-23 11:13:57.003040
   logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  machine: ecw00303-Linux-3.10.0-1062.1.2.el7.x86_64-x86_64-with-glibc2.17
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - a68aab7b-2332-4237-aec3-717bdabb4a26
+      - db
+      - 000003.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow/cache/a68aab7b-2332-4237-aec3-717bdabb4a26/db/000003.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9787062747061960433
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - a68aab7b-2332-4237-aec3-717bdabb4a26
+      - db
+      - CURRENT
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow/cache/a68aab7b-2332-4237-aec3-717bdabb4a26/db/CURRENT
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 587986641601737328
+        size: 16
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - a68aab7b-2332-4237-aec3-717bdabb4a26
+      - db
+      - LOCK
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow/cache/a68aab7b-2332-4237-aec3-717bdabb4a26/db/LOCK
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - a68aab7b-2332-4237-aec3-717bdabb4a26
+      - db
+      - MANIFEST-000002
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow/cache/a68aab7b-2332-4237-aec3-717bdabb4a26/db/MANIFEST-000002
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15220002017410315055
+        size: 1048576
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - cache
+      - a68aab7b-2332-4237-aec3-717bdabb4a26
+      - index.deadly_kare
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow/cache/a68aab7b-2332-4237-aec3-717bdabb4a26/index.deadly_kare
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow
+      - history
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow/history
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2513601126861470081
+        size: 379
+      ? !!python/object/apply:pathlib.PosixPath
+      - .nextflow.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/.nextflow.log
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17439066204360854038
+        size: 17419
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/command.sh
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3327026972954194222
+        size: 789
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/status.yaml
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 924953109866185797
+        size: 326
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/stderr.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/log/stdout.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 81385588923032919
+        size: 3174
+  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - pipeline_info
+      - execution_trace_2022-11-23_11-14-05.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: file:///home/sagrays/wf-reg-test/.repos/nf-core/smrnaseq/v2.1.0+-+2022-10-25+Maroon+Tin+Dalmatian/cce75a3b88d17310/out/pipeline_info/execution_trace_2022-11-23_11-14-05.txt
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5938360776786373931
+        size: 101
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 774144
+    max_rss: 778240
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
@@ -179,7 +704,7 @@
     - 0
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 3720
+    - 3630
     - 0
   revision: v2.1.0 - 2022-10-25 Maroon Tin Dalmatian
   status_code: 137

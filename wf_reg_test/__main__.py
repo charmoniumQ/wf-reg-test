@@ -4,11 +4,14 @@ import warnings
 import itertools
 import multiprocessing
 import random
+import shutil
+import sys
 from datetime import datetime as DateTime
 from datetime import timedelta as TimeDelta
 from pathlib import Path
 from typing import cast, Optional
 
+import click
 import charmonium.time_block as ch_time_block
 import yaml
 import tqdm
@@ -17,7 +20,7 @@ from .serialization import serialize, deserialize
 from .report import report_html
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
-from .util import groupby_dict, functional_shuffle, expect_type
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
@@ -71,6 +74,30 @@ def check_nodes_are_owned(hub: RegistryHub) -> None:
     raise NotImplementedError
 
 
+def review_failures(hub: RegistryHub) -> None:
+    revisions = sorted(hub.revisions, key=curried_getattr("datetime"), reverse=True)
+    n_total = sum(len(revision.executions) for revision in revisions)
+    n_broken = sum(int(execution.status_code != 0) for revision in revisions for execution in revision.executions)
+    print(f"{n_total} total, {n_broken} broken executions")
+    for revision in revisions:
+        for i, execution in enumerate(revision.executions):
+            if execution.status_code != 0:
+                print(revision.workflow.registry.display_name, revision.workflow.display_name, revision.display_name)
+                for path in [Path("stderr.txt"), Path("stdout.txt")]:
+                    if path in execution.logs.contents:
+                        url = execution.logs.contents[path].contents_url
+                        if url.startswith("file:///"):
+                            path = Path(url[7:])
+                            cwd = Path().resolve()
+                            if path.is_relative_to(cwd):
+                                print(path.relative_to(cwd))
+                            else:
+                                print(path)
+                        else:
+                            print(url)
+                input(":")
+
+
 def regenerate() -> RegistryHub:
     # This is an archive for my old code.
     # One should also, theoretically, be able to reconstruct hub by rerunning all of the archived code.
@@ -82,9 +109,25 @@ def regenerate() -> RegistryHub:
     return hub
 
 
-@ch_time_block.decor()
+data_path = Path("data")
+
+
+@click.group()
 def main() -> None:
-    data_path = Path("data")
+    pass
+
+
+@main.command()
+@ch_time_block.decor()
+def clear() -> None:
+    (data_path / "nf-core_executions.yaml").write_text("[]")
+    (data_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
+    shutil.rmtree(".repos")
+
+
+@main.command()
+@ch_time_block.decor()
+def test() -> None:
     with ch_time_block.ctx("load", print_start=False):
         hub = deserialize(data_path)
     with ch_time_block.ctx("process", print_start=False):
@@ -93,20 +136,25 @@ def main() -> None:
             time_bound=DateTime(2022, 8, 1),
             conditions=[Condition.NO_CONTROLS],
             desired_execution_count=1,
-            execution_limit=10,
+            execution_limit=15,
         )
-        # for revision, condition in revisions_conditions:
-        #     print("would run", revision, condition)
         parallel_execute(
             hub,
             revisions_conditions,
             parallelism=multiprocessing.cpu_count() // 2 - 2,
             data_path=data_path,
+            serialize_every=TimeDelta(seconds=0),
         )
     with ch_time_block.ctx("store", print_start=False):
         serialize(hub, data_path)
     with ch_time_block.ctx("report", print_start=False):
         report(hub)
+
+@main.command()
+def review() -> None:
+    with ch_time_block.ctx("load", print_start=False):
+        hub = deserialize(data_path)
+    review_failures(hub)
 
 
 main()

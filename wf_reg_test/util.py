@@ -3,6 +3,7 @@ import random
 import string
 from pathlib import Path
 import random
+import datetime
 import dataclasses
 import contextlib
 import tempfile
@@ -13,6 +14,13 @@ import itertools
 import xml.etree.ElementTree
 
 import xxhash
+import toolz
+
+
+def curried_getattr(attr: str) -> Callable[[_T], _V]:
+    def inner(obj: _T) -> _V:
+        return cast(_V, getattr(obj, attr))
+    return inner
 
 
 @contextlib.contextmanager
@@ -116,10 +124,13 @@ def groupby_dict(data: Iterable[_T], key: Callable[[_T], _V]) -> Mapping[_V, lis
     }
 
 
-def non_unique(data: Iterable[_T]) -> Iterable[tuple[_T, _T, int, int]]:
+def non_unique(
+    data: Iterable[_T],
+    key: Callable[[_T], Any] = toolz.identity,
+) -> Iterable[tuple[_T, _T, int, int]]:
     for ix, x in enumerate(data):
         for iy, y in enumerate(data):
-            if x == y and ix != iy:
+            if key(x) == key(y) and ix != iy:
                 yield (x, y, ix, iy)
 
 

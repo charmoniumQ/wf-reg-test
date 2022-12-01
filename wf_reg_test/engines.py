@@ -15,6 +15,7 @@ from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast, ContextManager, Iterator
 
 import charmonium.time_block as ch_time_block
+import yaml
 
 from .util import create_temp_dir, expect_type, walk_files
 from .workflows import Execution, Revision, Condition, FileBundle
@@ -42,8 +43,7 @@ class Engine:
             condition: Condition,
             path: Path,
             which_cores: list[int],
-            wall_time_hard_limit: TimeDelta,
-            wall_time_soft_limit: TimeDelta,
+            wall_time_limit: TimeDelta,
     ) -> Execution:
         if revision.workflow is None:
             raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
@@ -63,13 +63,23 @@ class Engine:
         repo.checkout(revision, code_dir)
         with self.get_executable(code_dir, log_dir, out_dir, len(which_cores)) as executable:
             executable = taskset(executable, which_cores)
-            executable = timeout(executable, wall_time_hard_limit, wall_time_soft_limit)
+            executable = timeout(executable, wall_time_limit)
             with time(executable) as (executable, time_file):
                 with ch_time_block.ctx(f"execute {revision.workflow}"):
                     proc = executable.local_execute(check=False, capture_output=True)
                     resources = parse_time_file(time_file)
             (log_dir / "stdout.txt").write_bytes(proc.stdout)
-            (log_dir / "stderr.txt").write_bytes(proc.stdout)
+            (log_dir / "stderr.txt").write_bytes(proc.stderr)
+            (log_dir / "command.sh").write_text("\n".join([
+                *map(shlex.join, repo.get_checkout_cmd(revision, code_dir)),
+                shlex.join(executable.to_env_command())
+            ]))
+            (log_dir / "status.yaml").write_text(yaml.dump({
+                "status": proc.returncode,
+                "resources": resources,
+            }))
+        # This is too much data to save the code.
+        shutil.rmtree(code_dir)
         return Execution(
             machine=None,
             datetime=now,
@@ -86,44 +96,65 @@ class SnakemakeEngine(Engine):
     @contextlib.contextmanager
     def get_executable(
             self,
-            workflow: Path,
+            code_dir: Path,
             log_dir: Path,
             out_dir: Path,
             n_cores: int,
     ) -> Iterator[Executable]:
-        test_file = log_dir / "test"
-        test_file.touch()
-        now = test_file.stat().st_mtime
-        test_file.unlink()
-        yield Executable(
-            command=[
-                "snakemake",
-                f"--cores={n_cores}",
-                "--use-singularity",
-                "--forceall",
-                "--shadow-prefix",
-                log_dir.resolve(),
-                "--snakefile",
-                (workflow / "workflow/snakefile").resolve(),
-            ],
-            cwd=workflow,
-            read_write_mounts={
-                workflow: workflow,
-                log_dir: log_dir,
-                out_dir: out_dir,
-            },
-        )
-        for fil in walk_files(workflow):
-            if fil.exists() and fil.is_file() and fil.stat().st_mtime >= now:
-                (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
-                shutil.move(workflow / fil, out_dir / fil)
+        start_time = datetime.datetime.now()
+        # See for typical snakefile locations:
+        # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.4.1/ -> ./Snakefile
+        # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.8.4/ -> ./workflow/Snakefile
+        possible_snakefiles = ["snakefile", "Snakefile", "workflow/snakefile", "workflow/Snakefile"]
+        try:
+            snakefile = next(
+                path
+                for path in possible_snakefiles
+                if (code_dir / path).exists()
+            )
+        except StopIteration as exc:
+            yield Executable(
+                command=["/usr/bin/echo", "Could not find [Ss]nakefile"],
+                cwd=code_dir,
+            )
+        else:
+            yield Executable(
+                command=[
+                    "snakemake",
+                    f"--cores={n_cores}",
+                    "--use-singularity",
+                    "--forceall",
+                    "--snakefile",
+                    snakefile,
+                ],
+                cwd=code_dir,
+                read_write_mounts={
+                    code_dir: code_dir,
+                    log_dir: log_dir,
+                    out_dir: out_dir,
+                },
+            )
+            # See https://github.com/snakemake-workflows/dna-seq-benchmark
+            # do `snakemake workflow/Snakefile --summary` for typical outputs
+            # do `snakemake workflow/Snakefile` for typical logs
+            for log_file in [".snakemake", "logs"]:
+                if (code_dir / log_file).exists():
+                    shutil.move(code_dir / log_file, log_dir / log_file)
+            for out_file in ["results", "resources"]:
+                if (code_dir / out_file).exists():
+                    shutil.move(code_dir / out_file, out_dir / out_file)
+            # Fallthrough, everything else goes to results.
+            for fil in walk_files(code_dir):
+                if fil.exists() and fil.is_file() and datetime.datetime.from_timestamp(fil.stat().st_mtime) >= start_time:
+                    (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
+                    shutil.move(code_dir / fil, out_dir / fil)
 
 
 class NextflowEngine(Engine):
     @contextlib.contextmanager
     def get_executable(
             self,
-            workflow: Path,
+            code_dir: Path,
             log_dir: Path,
             out_dir: Path,
             n_cores: int,
@@ -132,7 +163,7 @@ class NextflowEngine(Engine):
             command=[
                 "nextflow",
                 "run",
-                workflow.resolve(),
+                code_dir.resolve(),
                 "-profile",
                 "test,singularity",
                 f"--outdir",
@@ -140,7 +171,7 @@ class NextflowEngine(Engine):
             ],
             cwd=log_dir.resolve(),
             read_write_mounts={
-                workflow: workflow,
+                code_dir: code_dir,
                 log_dir: log_dir,
                 out_dir: out_dir,
             },

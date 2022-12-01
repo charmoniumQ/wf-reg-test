@@ -48,6 +48,12 @@ class Executable:
             capture_output: bool = True,
             time: int = False,
     ) -> CompletedProcess:
+        # TODO: Reengineer this
+        # Support fresh_env, env_override (renamed to env)
+        # Support cwd
+        # Support timeout, soft and hard
+        # Ensure termination
+        # Take stdout/stderr
         proc = subprocess.run(
             [str(arg) for arg in self.command],
             cwd=self.cwd,
@@ -141,14 +147,14 @@ def taskset(
 
 def timeout(
         executable: Executable,
-        wall_time_soft_limit: TimeDelta,
-        wall_time_hard_limit: TimeDelta,
+        wall_time_limit: TimeDelta,
+        kill_after: TimeDelta = TimeDelta(seconds=30),
 ) -> Executable:
     return Executable(
         command=[
             "timeout",
-            "--kill-after={:.0f}".format(wall_time_hard_limit.total_seconds()),
-            "{:.0f}".format(wall_time_soft_limit.total_seconds()),
+            f"--kill-after={kill_after.total_seconds():.0f}",
+            f"{wall_time_limit.total_seconds():.0f}",
             *executable.to_env_command(),
         ],
     )
