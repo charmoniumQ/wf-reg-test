@@ -248,11 +248,21 @@ class FileBundle:
     contents: Mapping[Path, File]
 
     @staticmethod
-    def create(root: Path) -> FileBundle:
+    def create_on_disk(root: Path) -> FileBundle:
         contents: dict[Path, File] = {}
         for path in walk_files(root):
             if (root / path).is_file() and not (root / path).is_symlink():
-                contents[path] = File.create(root / path)
+                contents[path] = File.create(root / path, url=f"file://{path.resolve()!s}")
+        return FileBundle(contents)
+
+    @staticmethod
+    def create_in_storage(root: Path, storage: str) -> FileBundle:
+        archive_name = storage / "archive.tar.xz"
+        archive = tarfile.open(storage / "archive.tar.xz", "w:xz")
+        contents: dict[Path, File] = {}
+        for path in walk_files(root):
+            if (root / path).is_file() and not (root / path).is_symlink():
+                contents[path] = File.create(root / path, url=f"zip://{path!s}::{archive_name}")
         return FileBundle(contents)
 
     def total_size(self) -> int:

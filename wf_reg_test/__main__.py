@@ -141,9 +141,12 @@ def test() -> None:
         parallel_execute(
             hub,
             revisions_conditions,
-            parallelism=multiprocessing.cpu_count() // 2 - 2,
+            parallelism=10,
             data_path=data_path,
             serialize_every=TimeDelta(seconds=0),
+            oversubscribe=False,
+            remote=True,
+            storage="adl://something/something"
         )
     with ch_time_block.ctx("store", print_start=False):
         serialize(hub, data_path)

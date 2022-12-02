@@ -44,6 +44,7 @@ class Engine:
             path: Path,
             which_cores: list[int],
             wall_time_limit: TimeDelta,
+            storage: str,
     ) -> Execution:
         if revision.workflow is None:
             raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
@@ -51,8 +52,6 @@ class Engine:
             raise ValueError(f"Requested single-core={condition.single_core}, but assigned {len(which_cores)} cores")
         if condition.aslr or condition.faketime or condition.dev_random is not None or condition.rr_record or condition.rr_replay is not None:
             raise NotImplementedError()
-        assert not path.exists()
-        path.mkdir(parents=True)
         repo = get_repo(revision.workflow.repo_url)
         code_dir = path / "code"
         log_dir = path / "log"
@@ -78,13 +77,11 @@ class Engine:
                 "status": proc.returncode,
                 "resources": resources,
             }))
-        # This is too much data to save the code.
-        shutil.rmtree(code_dir)
         return Execution(
             machine=None,
             datetime=now,
-            outputs=FileBundle.create(out_dir),
-            logs=FileBundle.create(log_dir),
+            outputs=FileBundle.create_in_storage(out_dir, storage),
+            logs=FileBundle.create_in_storage(log_dir, storage),
             condition=condition,
             resources=resources,
             status_code=proc.returncode,

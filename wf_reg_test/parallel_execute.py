@@ -106,22 +106,58 @@ def parsl_parallel_map_with_id(
         execute_one: Callable[[_T, _U, ResourcePool[int]], _V],
         ts_vs: list[tuple[_T, _U]],
         parallelism: int,
+        oversubscribe: bool,
+        remote: bool,
 ) -> Iterable[tuple[_T, _U, _V]]:
     with create_temp_dir() as temp_dir:
-        parsl.load(parsl.config.Config(
-            executors=[
+        if remote:
+            executors = [
+                parsl.executors.HighThroughputExecutor(
+                    address="",
+                    provider=parsl.providers.azure.azure.AzureProvider(
+                        vm_reference=dict(
+                            publisher=os.environ["AZURE_VM_IMAGE_PUBLISHER"],
+                            offer=os.environ["AZURE_VM_IMAGE_OFFER"],
+                            sku=os.environ["AZURE_VM_IMAGE_SKU"],
+                            version=os.environ["AZURE_VM_IMAGE_VERSION"],
+                            vm_size=os.environ["AZURE_VM_SIZE"],
+                            disk_size_gb=os.environ["AZURE_VM_DISK_SIZE"],
+                            admin_username=os.environ["AZURE_VM_ADMIN"],
+                            password=os.environ["AZURE_VM_PASSWORD"],
+                        ),
+                        worker_init=Path(os.environ["AZURE_VM_INIT"]).read_text(),
+                        region=os.environ["AZURE_REGION"],
+                        min_blocks=1,
+                        max_blocks=1,
+                        init_blocks=1,
+                    ),
+                    cores_per_worker=1 if oversubscribe else 2,
+                    max_workers=parallelism,
+                ),
+            ]
+        else:
+            executors = [
                 parsl.executors.ThreadPoolExecutor(
                     max_threads=parallelism,
                 ),
-            ],
+            ]
+        parsl.load(parsl.config.Config(
+            executors=executors,
             run_dir=str(temp_dir),
         ))
-        @parsl.python_app
-        def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:
-            t, v = ts_vs[idx]
-            return idx, execute_one(t, v, pool)
-        core_pool = ResourcePool(temp_dir, list(range(multiprocessing.cpu_count())))
-        futures = [_execute_one(idx, core_pool) for idx in range(len(ts_vs))]
+        if oversubscribe:
+            @parsl.python_app
+            def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:
+                t, v = ts_vs[idx]
+                return idx, execute_one(t, v, pool)
+            core_pool = ResourcePool(temp_dir, list(range(multiprocessing.cpu_count())))
+            futures = [_execute_one(idx, core_pool) for idx in range(len(ts_vs))]
+        else:
+            @parsl.python_app
+            def _execute_one(idx: int) -> tuple[int, _V]:
+                t, v = ts_vs[idx]
+                return idx, execute_one(t, v, None)
+            futures = [_execute_one(idx) for idx in range(len(ts_vs))]
         for future in concurrent.futures.as_completed(futures):
             idx, u = future.result()
             t, v = ts_vs[idx]
@@ -137,12 +173,17 @@ def parallel_execute(
     data_path: Path,
     parallelism: int,
     serialize_every: TimeDelta = TimeDelta(minutes=5),
+    oversubscribe: bool,
+    remote: bool,
+    storage: str,
 ) -> None:
     iterator = tqdm.tqdm(
         parallel_map_with_id(
             execute_one,
             revisions_conditions,
             parallelism=parallelism,
+            oversubscribe=oversubscribe,
+            remote=remote,
         ),
         total=len(revisions_conditions),
         desc="executing",
@@ -171,29 +212,28 @@ repo_path = Path(".repos")
 def execute_one(
         revision: Revision,
         condition: Condition,
-        core_pool: ResourcePool[int],
+        core_pool: Optional[ResourcePool[int]],
 ) -> Execution:
     workflow = expect_type(Workflow, revision.workflow)
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
-    path = get_unused_path(
-        repo_path / Path(
-            escape(registry.display_name),
-            escape(workflow.display_name),
-            escape(revision.display_name),
-        ),
-        (
-            "{:016x}".format(random.randint(0, 2**64))
-            for _ in range(2**64)
-        ),
-    )
-    workflow = expect_type(Workflow, revision.workflow)
-    engine = engines[workflow.engine]
-    with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:
-        return engine.run(
-            revision=revision,
-            condition=condition,
-            path=path,
-            which_cores=cores,
-            wall_time_limit=workflow.max_wall_time_estimate(),
-        )
+    with create_temp_dir() as path:
+        if core_pool:
+            with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:
+                return engine.run(
+                    revision=revision,
+                    condition=condition,
+                    path=path,
+                    which_cores=cores,
+                    wall_time_limit=workflow.max_wall_time_estimate(),
+                    storage=storage,
+                )
+        else:
+            return engine.run(
+                revision=revision,
+                condition=condition,
+                path=path,
+                which_cores=[0] if condition.single_core else [0, 1],
+                wall_time_limit=workflow.max_wall_time_estimate(),
+                storage=storage,
+            )
