@@ -1959,6 +1959,14 @@ portalocker = [
 ]
 
 [[package]]
+name = "msgraph-core"
+version = "0.2.2"
+description = "Core component of the Microsoft Graph Python SDK consisting of HTTP/Graph Client and a configurable middleware pipeline (Preview)."
+category = "main"
+optional = false
+python-versions = ">=3.5"
+
+[[package]]
 name = "msrest"
 version = "0.7.1"
 description = "AutoRest swagger generator Python client runtime."
@@ -2651,6 +2659,20 @@ optional = false
 python-versions = ">=3.7"
 
 [[package]]
+name = "universal-pathlib"
+version = "0.0.21"
+description = "Pathlib API extended to use fsspec backends"
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+fsspec = "*"
+
+[package.extras]
+test = ["aiohttp", "adlfs", "flake8", "gcsfs", "hadoop-test-cluster", "ipython", "jupyter", "moto", "pyarrow", "pylint", "pytest", "requests", "s3fs", "webdav4"]
+
+[[package]]
 name = "urllib3"
 version = "1.26.13"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -2745,7 +2767,7 @@ multidict = ">=4.0"
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.12"
-content-hash = "600c3176c6a63539fd9ec2d4f5da1c3169d87d99d1061aa2243263b967f835a4"
+content-hash = "ccd0edf016c8816987560f4c8013aff6a834d9de52ce0ce5a256b1649aba1f7a"
 
 [metadata.files]
 adal = [
@@ -3329,6 +3351,10 @@ msal-extensions = [
     {file = "msal-extensions-1.0.0.tar.gz", hash = "sha256:c676aba56b0cce3783de1b5c5ecfe828db998167875126ca4b47dc6436451354"},
     {file = "msal_extensions-1.0.0-py2.py3-none-any.whl", hash = "sha256:91e3db9620b822d0ed2b4d1850056a0f133cba04455e62f11612e40f5502f2ee"},
 ]
+msgraph-core = [
+    {file = "msgraph-core-0.2.2.tar.gz", hash = "sha256:147324246788abe8ed7e05534cd9e4e0ec98b33b30e011693b8d014cebf97f63"},
+    {file = "msgraph_core-0.2.2-py3-none-any.whl", hash = "sha256:e297564b9a0ca228493d8851f95cb2de9522143d82efa40ce3a6ad286e21392e"},
+]
 msrest = [
     {file = "msrest-0.7.1-py3-none-any.whl", hash = "sha256:21120a810e1233e5e6cc7fe40b474eeb4ec6f757a15d7cf86702c369f9567c32"},
     {file = "msrest-0.7.1.zip", hash = "sha256:6e7661f46f3afd88b75667b7187a92829924446c7ea1d169be8c4bb7eeb788b9"},
@@ -3815,6 +3841,7 @@ typing-extensions = [
     {file = "typing_extensions-4.4.0-py3-none-any.whl", hash = "sha256:16fa4864408f655d35ec496218b85f79b3437c829e93320c7c9215ccfd92489e"},
     {file = "typing_extensions-4.4.0.tar.gz", hash = "sha256:1511434bb92bf8dd198c12b1cc812e800d4181cfcb867674e0f8279cc93087aa"},
 ]
+universal-pathlib = []
 urllib3 = [
     {file = "urllib3-1.26.13-py2.py3-none-any.whl", hash = "sha256:47cc05d99aaa09c9e72ed5809b60e7ba354e64b59c9c173ac3018642d8bb41fc"},
     {file = "urllib3-1.26.13.tar.gz", hash = "sha256:c083dd0dce68dbfbe1129d5271cb90f9447dea7d52097c6e0126120c521ddea8"},

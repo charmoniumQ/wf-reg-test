@@ -62,7 +62,7 @@ strict = true
 pretty = true
 error_summary = true
 color_output = true
-#mypy_path = stubs
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 
 [tool.poetry.dev-dependencies]
 isort = "^5.10.0"
@@ -101,3 +101,5 @@ parsl = "^2022.10.31"
 #dask = {extras = ["distributed"], version = "^2022.10.2"}
 fasteners = "^0.18"
 adlfs = "^2022.11.2"
+msgraph-core = "^0.2.2"
+universal-pathlib = "^0.0.21"
