@@ -32,12 +32,15 @@
         name-test = "${name}-test";
         default-python = pkgs.python310;
         nix-dev-dependencies = [
-          # Alternative Pythons for Tox
-          (pkgs.python310.withPackages(ps: [ps.scipy ps.numpy ps.matplotlib]))
-          pkgs.poetry
           pkgs.hwloc
-          pkgs.graphviz
+          pkgs.util-linux
+          pkgs.coreutils
+          pkgs.time
+          pkgs.nextflow
           pkgs.singularity
+          pkgs.micromamba
+          pkgs.terraform
+          (pkgs.python310.withPackages(ps: [ps.poetry]))
         ];
       in {
         packages.${name} = pkgs.poetry2nix.mkPoetryApplication {
@@ -67,20 +70,8 @@
         packages.${name-shell} = pkgs.mkShell {
           buildInputs = nix-dev-dependencies ++ [default-python];
           shellHook = ''
-            if [ ! -f poetry.lock ] || [ ! -f build/poetry-$(sha1sum poetry.lock | cut -f1 -d' ') ]; then
-                poetry install --remove-untracked
-                if [ ! -d build ]; then
-                    mkdir build
-                fi
-                touch build/poetry-$(sha1sum poetry.lock | cut -f1 -d' ')
-            fi
             export PREPEND_TO_PS1="(${name}) "
-            export PYTHONNOUSERSITE=true
-            export VIRTUAL_ENV=$(poetry env info --path)
-            export PATH=$VIRTUAL_ENV/bin:$PATH
-            export LD_LIBRARY_PATH=${pkgs.lapack}/lib:${pkgs.blas}/lib:${pkgs.gcc-unwrapped.lib}/lib
           '';
-          # TODO: write a check expression (`nix flake check`)
         };
 
         devShell = self.packages.${system}.${name-shell};

@@ -9,12 +9,13 @@ from pathlib import Path
 import pickle
 import queue
 import random
-from typing import Any,Optional, Iterable, Iterator, TypeVar, Callable, Generic, cast
+from typing import Any, Optional, Iterable, Iterator, TypeVar, Callable, Generic, cast
 import time
 import urllib
 
 import fasteners  # type: ignore
 import tqdm
+from upath import UPath
 
 from .workflows import RegistryHub, Workflow, Revision, Condition, Execution
 from .serialization import serialize
@@ -103,60 +104,28 @@ def dask_parallel_map_with_id(
 import concurrent
 import parsl
 def parsl_parallel_map_with_id(
-        execute_one: Callable[[_T, _U, ResourcePool[int]], _V],
+        execute_one: Callable[[_T, _U, Optional[ResourcePool[int]]], _V],
         ts_vs: list[tuple[_T, _U]],
         parallelism: int,
         oversubscribe: bool,
         remote: bool,
+        **kwargs: Any,
 ) -> Iterable[tuple[_T, _U, _V]]:
     with create_temp_dir() as temp_dir:
-        if remote:
-            executors = [
-                parsl.executors.HighThroughputExecutor(
-                    address="",
-                    provider=parsl.providers.azure.azure.AzureProvider(
-                        vm_reference=dict(
-                            publisher=os.environ["AZURE_VM_IMAGE_PUBLISHER"],
-                            offer=os.environ["AZURE_VM_IMAGE_OFFER"],
-                            sku=os.environ["AZURE_VM_IMAGE_SKU"],
-                            version=os.environ["AZURE_VM_IMAGE_VERSION"],
-                            vm_size=os.environ["AZURE_VM_SIZE"],
-                            disk_size_gb=os.environ["AZURE_VM_DISK_SIZE"],
-                            admin_username=os.environ["AZURE_VM_ADMIN"],
-                            password=os.environ["AZURE_VM_PASSWORD"],
-                        ),
-                        worker_init=Path(os.environ["AZURE_VM_INIT"]).read_text(),
-                        region=os.environ["AZURE_REGION"],
-                        min_blocks=1,
-                        max_blocks=1,
-                        init_blocks=1,
-                    ),
-                    cores_per_worker=1 if oversubscribe else 2,
-                    max_workers=parallelism,
-                ),
-            ]
-        else:
-            executors = [
-                parsl.executors.ThreadPoolExecutor(
-                    max_threads=parallelism,
-                ),
-            ]
-        parsl.load(parsl.config.Config(
-            executors=executors,
-            run_dir=str(temp_dir),
-        ))
+        # Note, I am using a tuple instead of a list because tuples are covariant.
+        exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
         if oversubscribe:
             @parsl.python_app
             def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:
                 t, v = ts_vs[idx]
-                return idx, execute_one(t, v, pool)
+                return idx, execute_one(t, v, pool, **kwargs)
             core_pool = ResourcePool(temp_dir, list(range(multiprocessing.cpu_count())))
             futures = [_execute_one(idx, core_pool) for idx in range(len(ts_vs))]
         else:
             @parsl.python_app
             def _execute_one(idx: int) -> tuple[int, _V]:
                 t, v = ts_vs[idx]
-                return idx, execute_one(t, v, None)
+                return idx, execute_one(t, v, None, **kwargs)
             futures = [_execute_one(idx) for idx in range(len(ts_vs))]
         for future in concurrent.futures.as_completed(futures):
             idx, u = future.result()
@@ -172,10 +141,10 @@ def parallel_execute(
     revisions_conditions: list[tuple[Revision, Condition]],
     data_path: Path,
     parallelism: int,
-    serialize_every: TimeDelta = TimeDelta(minutes=5),
     oversubscribe: bool,
     remote: bool,
-    storage: str,
+    storage: UPath,
+    serialize_every: TimeDelta = TimeDelta(minutes=5),
 ) -> None:
     iterator = tqdm.tqdm(
         parallel_map_with_id(
@@ -184,6 +153,7 @@ def parallel_execute(
             parallelism=parallelism,
             oversubscribe=oversubscribe,
             remote=remote,
+            storage=storage,
         ),
         total=len(revisions_conditions),
         desc="executing",
@@ -213,12 +183,16 @@ def execute_one(
         revision: Revision,
         condition: Condition,
         core_pool: Optional[ResourcePool[int]],
+        storage: Optional[UPath] = None,
 ) -> Execution:
+    if storage is None:
+        raise RuntimeError()
     workflow = expect_type(Workflow, revision.workflow)
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
+    engine = engines[workflow.engine]
     with create_temp_dir() as path:
-        if core_pool:
+        if core_pool is not None:
             with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:
                 return engine.run(
                     revision=revision,

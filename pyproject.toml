@@ -62,48 +62,18 @@ strict = true
 pretty = true
 error_summary = true
 color_output = true
-#mypy_path = stubs
-
-[tool.bump2version]
-current_version = "0.1.0"
-commit = true
-tag = true
-
-[tool.tox]
-legacy_tox_ini = """
-[tox]
-envlist = py{310}
-# Make sure to install the Python versions listed here in the Nix flake.
-isolated_build = True
-
-[testenv]
-whitelist_externals = poetry
-skip_install = true
-commands =
-    poetry install
-    {toxinidir}/script.py per-env-tests
-"""
-
+mypy_path = "$MYPY_CONFIG_FILE_DIR/stubs"
 
 [tool.poetry.dev-dependencies]
-autoimport = "^0.7.5"
 isort = "^5.10.0"
 black = "^22.3.0"
 pylint = "^2.11.1"
 mypy = "^0.930"
 pytest = "^6.2.5"
-pytest-xdist = "^2.4.0"
-pytest-cov = "^3.0.0"
-coverage = "^6.1.2"
-tox = "^3.24.4"
 radon = "^5.1.0"
-twine = "^3.5.0"
-proselint = "^0.13.0"
-rstcheck = "^3.3.1"
-bump2version = "^1.0.1"
 "charmonium.async-subprocess" = "^0.1.7"
 typer = "^0.4.0"
-termcolor = "^1.1.0"
+# termcolor = "^1.1.0"
 typing-extensions = "^4.1.1"
 # ipython = "^7.29.0"
 # ipdb = "^0.13.9"
@@ -111,11 +81,10 @@ types-setuptools = "^57.4.10"
 types-toml = "^0.10.4"
 types-termcolor = "^1.1.3"
 # rest
-removestar = "^1.3.1"
-ipython = "^8.5.0"
 types-requests = "^2.28.10"
 types-PyYAML = "^6.0.11"
 tqdm-stubs = "^0.2.1"
+azure-cli = "^2.43.0"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.12"
@@ -124,16 +93,13 @@ PyGithub = "^1.55"
 GitPython = "^3.1.27"
 xxhash = {git = "https://github.com/charmoniumQ/python-xxhash", rev = "add-types"}
 PyYAML = "^6.0"
-pip = "^22.2.2"
 install = "^1.3.5"
 domonic = "^0.9.11"
-gitignore-parser = "^0.1.0"
 "charmonium.time-block" = "^0.3.0"
-rich = "^12.5.1"
-graphviz = "^0.20.1"
-pymc = "^4.2.1"
-jupyter = "^1.0.0"
 parsl = "^2022.10.31"
 "charmonium.freeze" = "^0.6.0"
-dask = {extras = ["distributed"], version = "^2022.10.2"}
+#dask = {extras = ["distributed"], version = "^2022.10.2"}
 fasteners = "^0.18"
+adlfs = "^2022.11.2"
+msgraph-core = "^0.2.2"
+universal-pathlib = "^0.0.21"

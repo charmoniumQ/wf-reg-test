@@ -4,9 +4,12 @@ import shutil
 from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
 from pathlib import Path
+import tarfile
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 
-from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr
+from upath import UPath
+
+from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr, create_temp_dir
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -256,13 +259,18 @@ class FileBundle:
         return FileBundle(contents)
 
     @staticmethod
-    def create_in_storage(root: Path, storage: str) -> FileBundle:
-        archive_name = storage / "archive.tar.xz"
-        archive = tarfile.open(storage / "archive.tar.xz", "w:xz")
-        contents: dict[Path, File] = {}
-        for path in walk_files(root):
-            if (root / path).is_file() and not (root / path).is_symlink():
-                contents[path] = File.create(root / path, url=f"zip://{path!s}::{archive_name}")
+    def create_in_storage(root: Path, remote_archive: UPath) -> FileBundle:
+        if not remote_archive.name.endswith(".tar.xz"):
+            raise ValueError("Must pass a .tar.xz")
+        with create_temp_dir() as temp_dir:
+            tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
+            contents: dict[Path, File] = {}
+            for path in walk_files(root):
+                if (root / path).is_file() and not (root / path).is_symlink():
+                    contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
+                    tarball.add(root / path, path)
+            tarball.close()
+            remote_archive.fs.put_file(tarball.name, remote_archive.path)
         return FileBundle(contents)
 
     def total_size(self) -> int:
@@ -282,7 +290,7 @@ class File:
     contents_url: Optional[str] = dataclasses.field(compare=False, hash=False)
 
     @staticmethod
-    def create(path: Path) -> File:
+    def create(path: Path, url: Optional[str] = None) -> File:
         if not path.is_file() or path.is_symlink():
             raise ValueError(f"{path} is not a regular file")
         return File(
@@ -290,7 +298,7 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
-            contents_url=f"file://{path.resolve()!s}",
+            contents_url=f"file://{path.resolve()!s}" if url is None else url,
         )
 
     def check_invariants(self) -> Iterable[UserWarning]:

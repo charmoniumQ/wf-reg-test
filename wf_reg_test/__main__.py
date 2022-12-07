@@ -15,6 +15,7 @@ import click
 import charmonium.time_block as ch_time_block
 import yaml
 import tqdm
+from upath import UPath
 
 from .serialization import serialize, deserialize
 from .report import report_html
@@ -82,11 +83,13 @@ def review_failures(hub: RegistryHub) -> None:
     for revision in revisions:
         for i, execution in enumerate(revision.executions):
             if execution.status_code != 0:
+                assert revision.workflow is not None
+                assert revision.workflow.registry is not None
                 print(revision.workflow.registry.display_name, revision.workflow.display_name, revision.display_name)
                 for path in [Path("stderr.txt"), Path("stdout.txt")]:
                     if path in execution.logs.contents:
                         url = execution.logs.contents[path].contents_url
-                        if url.startswith("file:///"):
+                        if url and url.startswith("file:///"):
                             path = Path(url[7:])
                             cwd = Path().resolve()
                             if path.is_relative_to(cwd):
@@ -104,7 +107,7 @@ def regenerate() -> RegistryHub:
     hub = RegistryHub(registries=[])
     from .registries import snakemake_registry, nf_core_registry
     hub.registries.append(nf_core_registry())
-    hub.registries.append(snakemake_registry())
+    # hub.registries.append(snakemake_registry())
     ensure_revisions(hub, only_empty=True)
     return hub
 
@@ -146,7 +149,7 @@ def test() -> None:
             serialize_every=TimeDelta(seconds=0),
             oversubscribe=False,
             remote=True,
-            storage="adl://something/something"
+            storage=UPath("abfs://wfregtest.blob.core.windows.net/data"),
         )
     with ch_time_block.ctx("store", print_start=False):
         serialize(hub, data_path)

@@ -7,7 +7,7 @@ from spack.package import *
 
 
 class PyCharmoniumFreeze(PythonPackage):
-    """FIXME: Put a proper description of your package here."""
+    """Injectively, deterministically maps arbitrary objects to hashable, immutable values."""
 
     pypi = "charmonium.freeze/charmonium.freeze-0.5.8.tar.gz"
 

@@ -6,7 +6,6 @@ __pycache__/
 /.direnv/
 
 /.repos/
-/secrets.json
-/.spack-env
 .r-mount
 .ipynb_checkpoints/
+/secrets.env

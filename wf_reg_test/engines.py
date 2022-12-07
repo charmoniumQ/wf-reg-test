@@ -1,5 +1,6 @@
 import contextlib
 import dataclasses
+import datetime
 import functools
 import logging
 import random
@@ -16,6 +17,7 @@ from typing import Any, Callable, Mapping, Optional, TypeVar, cast, ContextManag
 
 import charmonium.time_block as ch_time_block
 import yaml
+from upath import UPath
 
 from .util import create_temp_dir, expect_type, walk_files
 from .workflows import Execution, Revision, Condition, FileBundle
@@ -44,7 +46,7 @@ class Engine:
             path: Path,
             which_cores: list[int],
             wall_time_limit: TimeDelta,
-            storage: str,
+            storage: UPath,
     ) -> Execution:
         if revision.workflow is None:
             raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
@@ -80,8 +82,8 @@ class Engine:
         return Execution(
             machine=None,
             datetime=now,
-            outputs=FileBundle.create_in_storage(out_dir, storage),
-            logs=FileBundle.create_in_storage(log_dir, storage),
+            outputs=FileBundle.create_in_storage(out_dir, storage / "stdout.tar.xz"),
+            logs=FileBundle.create_in_storage(log_dir, storage / "stdout.tar.xz"),
             condition=condition,
             resources=resources,
             status_code=proc.returncode,
@@ -120,8 +122,10 @@ class SnakemakeEngine(Engine):
                     "snakemake",
                     f"--cores={n_cores}",
                     "--use-singularity",
+                    "--use-conda",
                     "--forceall",
                     "--snakefile",
+                    f"--directory={log_dir!s}"
                     snakefile,
                 ],
                 cwd=code_dir,
@@ -142,7 +146,7 @@ class SnakemakeEngine(Engine):
                     shutil.move(code_dir / out_file, out_dir / out_file)
             # Fallthrough, everything else goes to results.
             for fil in walk_files(code_dir):
-                if fil.exists() and fil.is_file() and datetime.datetime.from_timestamp(fil.stat().st_mtime) >= start_time:
+                if fil.exists() and fil.is_file() and DateTime.fromtimestamp(fil.stat().st_mtime) >= start_time:
                     (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                     shutil.move(code_dir / fil, out_dir / fil)
 
