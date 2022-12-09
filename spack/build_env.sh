@@ -15,7 +15,7 @@ source ~/spack/share/spack/setup-env.sh
 set -x
 rm -rf wf-reg-test
 git clone https://github.com/charmoniumQ/wf-reg-test
-spack repo add wf-reg-test/spack_repo
+spack repo add wf-reg-test/spack/spack_repo
 set -x
 spack env create wf-reg-test wf-reg-test/spack/spack.lock
 spack env activate wf-reg-test
