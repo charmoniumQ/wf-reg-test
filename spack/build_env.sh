@@ -7,11 +7,13 @@ set -e -x
 sudo apt-get update
 sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv unzip zip tmux
 
+rm -rf spack
 git clone -c feature.manyFiles=true https://github.com/charmoniumQ/spack.git
 git -C spack checkout develop-merge
 set +x
 source ~/spack/share/spack/setup-env.sh
 set -x
+rm -rf wf-reg-test
 git clone https://github.com/charmoniumQ/wf-reg-test
 spack repo add wf-reg-test/spack_repo
 set -x
