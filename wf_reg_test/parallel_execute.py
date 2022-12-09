@@ -115,21 +115,23 @@ def parsl_parallel_map_with_id(
         # Note, I am using a tuple instead of a list because tuples are covariant.
         executors: tuple[parsl.executors.base.ParslExecutor]
         if remote:
+            # Override this: https://github.com/Parsl/parsl/blob/master/parsl/providers/azure/template.py
+            parsl.providers.azure.template.template_string = "#!/bin/bash\n$worker_init\n$user_script\nhalt\n"
             executors = (
                 parsl.executors.HighThroughputExecutor(
                     address="",
                     provider=parsl.providers.AzureProvider(  # type: ignore
                         vm_reference=dict(
-                            publisher=os.environ["AZURE_VM_IMAGE_PUBLISHER"],
-                            offer=os.environ["AZURE_VM_IMAGE_OFFER"],
-                            sku=os.environ["AZURE_VM_IMAGE_SKU"],
-                            version=os.environ["AZURE_VM_IMAGE_VERSION"],
+                            publisher="Canonical",
+                            offer="0001-com-ubuntu-minimal-jammy",
+                            sku="minimal-22_04-lts-gen2",
+                            version="22.04.202212070",
                             vm_size=os.environ["AZURE_VM_SIZE"],
                             disk_size_gb=os.environ["AZURE_VM_DISK_SIZE"],
                             admin_username=os.environ["AZURE_VM_ADMIN"],
                             password=os.environ["AZURE_VM_PASSWORD"],
                         ),
-                        worker_init=Path(os.environ["AZURE_VM_INIT"]).read_text(),
+                        worker_init="curl -output view.tar.xz http://storage.googleapis.com/data234/view.tar.xz\ntar --extract --file=view.tar.xz\nsource view/activate.sh\n",
                         region=os.environ["AZURE_REGION"],
                         min_blocks=1,
                         max_blocks=1,

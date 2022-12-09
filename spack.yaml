@@ -11,16 +11,10 @@ spack:
   - snakemake@7.18.2+s3+http+ftp
 
 
-
-
-
   
   # Note that many Snakemake repositories require snakemake@7.5:
   # E.g., https://github.com/friendsofstrandseq/mosaicatcher-pipeline/
   - python@3.10
-
-
-
 
 
   
@@ -36,6 +30,8 @@ spack:
   - py-click@8
   - py-azure-identity
   - py-pip
+  - py-tqdm
+  - unzip
   # - py-azure-cli
   view: true
   concretizer:

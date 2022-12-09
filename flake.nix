@@ -39,6 +39,7 @@
           pkgs.nextflow
           pkgs.singularity
           pkgs.micromamba
+          pkgs.terraform
           (pkgs.python310.withPackages(ps: [ps.poetry]))
         ];
       in {
