@@ -56,7 +56,7 @@ apptainer@1.1.3%gcc@11.3.0+network+suid build_system=makefile arch=linux-ubuntu2
             ^mpfr@4.1.0%gcc@11.3.0 build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
                 ^autoconf-archive@2022.02.11%gcc@11.3.0 build_system=autotools patches=139214f arch=linux-ubuntu22.04-skylake
                 ^texinfo@7.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-            ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+            ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
     ^libseccomp@2.5.3%gcc@11.3.0+python build_system=autotools arch=linux-ubuntu22.04-skylake
         ^gperf@3.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^py-cython@3.0.0a9%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
@@ -112,15 +112,6 @@ Concretized
 --------------------------------
 micromamba@1.1.0%gcc@11.3.0~ipo build_system=cmake build_type=RelWithDebInfo linkage=dynamic patches=c6b809a arch=linux-ubuntu22.04-skylake
     ^cli11@2.3.1%gcc@11.3.0~ipo build_system=cmake build_type=RelWithDebInfo arch=linux-ubuntu22.04-skylake
-        ^cmake@3.25.0%gcc@11.3.0~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-ubuntu22.04-skylake
-            ^ncurses@6.2%gcc@11.3.0~symlinks+termlib abi=none arch=linux-ubuntu22.04-skylake
-            ^openssl@1.1.1s%gcc@11.3.0~docs~shared build_system=generic certs=mozilla arch=linux-ubuntu22.04-skylake
-                ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
-                    ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl patches=b231fcc arch=linux-ubuntu22.04-skylake
-                    ^bzip2@1.0.8%gcc@11.3.0~debug~pic+shared arch=linux-ubuntu22.04-skylake
-                    ^gdbm@1.19%gcc@11.3.0 arch=linux-ubuntu22.04-skylake
-                        ^readline@8.1%gcc@11.3.0 arch=linux-ubuntu22.04-skylake
-                ^zlib@1.2.13%gcc@11.3.0+optimize+pic~shared build_system=makefile arch=linux-ubuntu22.04-skylake
     ^cmake@3.25.0%gcc@11.3.0~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-ubuntu22.04-skylake
         ^ncurses@6.3%gcc@11.3.0~symlinks+termlib abi=none build_system=autotools arch=linux-ubuntu22.04-skylake
     ^cpp-termcolor@2.0.0%gcc@11.3.0~ipo build_system=cmake build_type=RelWithDebInfo arch=linux-ubuntu22.04-skylake
@@ -128,9 +119,6 @@ micromamba@1.1.0%gcc@11.3.0~ipo build_system=cmake build_type=RelWithDebInfo lin
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^zlib@1.2.13%gcc@11.3.0+optimize+pic+shared build_system=makefile arch=linux-ubuntu22.04-skylake
     ^fmt@9.1.0%gcc@11.3.0~ipo+pic~shared build_system=cmake build_type=RelWithDebInfo cxxstd=11 patches=08fb707 arch=linux-ubuntu22.04-skylake
-        ^cmake@3.24.2%gcc@11.3.0~doc+ncurses+ownlibs~qt build_type=Release arch=linux-ubuntu22.04-skylake
-            ^openssl@1.1.1n%gcc@11.3.0~docs~shared certs=system arch=linux-ubuntu22.04-skylake
-                ^zlib@1.2.12%gcc@11.3.0+optimize+pic+shared patches=0d38234 arch=linux-ubuntu22.04-skylake
     ^libarchive@3.5.2%gcc@11.3.0+iconv build_system=autotools compression=bz2lib,lz4,lzma,lzo2,zlib,zstd crypto=mbedtls libs=shared,static programs=none xar=libxml2 arch=linux-ubuntu22.04-skylake
         ^bzip2@1.0.8%gcc@11.3.0~debug~pic+shared build_system=generic arch=linux-ubuntu22.04-skylake
             ^diffutils@3.8%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
@@ -152,10 +140,10 @@ micromamba@1.1.0%gcc@11.3.0~ipo build_system=cmake build_type=RelWithDebInfo lin
         ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
             ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
             ^gdbm@1.23%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-                ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+                ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
     ^spdlog@1.10.0%gcc@11.3.0~fmt_external~ipo+shared build_system=cmake build_type=RelWithDebInfo arch=linux-ubuntu22.04-skylake
     ^tl-expected@2022-11-24%gcc@11.3.0~ipo build_system=cmake build_type=RelWithDebInfo arch=linux-ubuntu22.04-skylake
-    ^yaml-cpp@0.7.0%gcc@11.3.0~ipo+pic~shared~tests build_system=cmake build_type=RelWithDebInfo arch=linux-ubuntu22.04-skylake
+    ^yaml-cpp@0.7.0%gcc@11.3.0~ipo+pic+shared~tests build_system=cmake build_type=RelWithDebInfo arch=linux-ubuntu22.04-skylake
 
 Input spec
 --------------------------------
@@ -187,7 +175,7 @@ py-adlfs@2022.11.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-sky
                 ^py-flit-core@3.7.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-azure-datalake-store@0.0.48%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-adal@1.2.4%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-            ^py-pyjwt@2.6.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
+            ^py-pyjwt@2.4.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-python-dateutil@2.8.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
                 ^py-setuptools-scm@7.0.5%gcc@11.3.0+toml build_system=python_pip arch=linux-ubuntu22.04-skylake
                     ^py-packaging@21.3%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
@@ -199,8 +187,9 @@ py-adlfs@2022.11.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-sky
             ^py-certifi@2022.9.14%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-urllib3@1.26.12%gcc@11.3.0~brotli~secure~socks build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-azure-storage-blob@12.9.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-        ^py-azure-core@1.21.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+        ^py-azure-core@1.26.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-six@1.16.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+            ^py-typing-extensions@4.3.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-cryptography@38.0.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^git@2.38.1%gcc@11.3.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-skylake
                 ^autoconf@2.69%gcc@11.3.0 build_system=autotools patches=35c4492,7793209,a49dd5b arch=linux-ubuntu22.04-skylake
@@ -218,7 +207,6 @@ py-adlfs@2022.11.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-sky
                 ^pcre2@10.39%gcc@11.3.0~jit+multibyte build_system=autotools arch=linux-ubuntu22.04-skylake
             ^py-setuptools-rust@1.5.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
                 ^py-semantic-version@2.10.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-                ^py-typing-extensions@4.3.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^rust@1.65.0%gcc@11.3.0+analysis+clippy~rls+rustfmt+src build_system=generic extra_targets=none arch=linux-ubuntu22.04-skylake
                 ^cmake@3.25.0%gcc@11.3.0~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-ubuntu22.04-skylake
                 ^gmake@4.3%gcc@11.3.0~guile+nls build_system=autotools patches=599f134 arch=linux-ubuntu22.04-skylake
@@ -255,7 +243,7 @@ py-adlfs@2022.11.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-sky
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -268,13 +256,14 @@ py-azure-identity
 Concretized
 --------------------------------
 py-azure-identity@1.3.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-    ^py-azure-core@1.21.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+    ^py-azure-core@1.26.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-requests@2.28.1%gcc@11.3.0~socks build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-certifi@2022.9.14%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-charset-normalizer@2.0.12%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-idna@3.4%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-                ^py-flit-core@3.7.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-urllib3@1.26.12%gcc@11.3.0~brotli~secure~socks build_system=python_pip arch=linux-ubuntu22.04-skylake
+        ^py-typing-extensions@4.3.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+            ^py-flit-core@3.7.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-cryptography@38.0.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^git@2.38.1%gcc@11.3.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-skylake
             ^autoconf@2.69%gcc@11.3.0 build_system=autotools patches=35c4492,7793209,a49dd5b arch=linux-ubuntu22.04-skylake
@@ -299,7 +288,6 @@ py-azure-identity@1.3.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.0
             ^py-pycparser@2.21%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-setuptools-rust@1.5.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-semantic-version@2.10.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-            ^py-typing-extensions@4.3.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^rust@1.65.0%gcc@11.3.0+analysis+clippy~rls+rustfmt+src build_system=generic extra_targets=none arch=linux-ubuntu22.04-skylake
             ^cmake@3.25.0%gcc@11.3.0~doc+ncurses+ownlibs~qt build_system=generic build_type=Release arch=linux-ubuntu22.04-skylake
             ^gmake@4.3%gcc@11.3.0~guile+nls build_system=autotools patches=599f134 arch=linux-ubuntu22.04-skylake
@@ -309,7 +297,7 @@ py-azure-identity@1.3.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.0
             ^ninja@1.11.1%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
                 ^re2c@2.2%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
     ^py-msal@1.20.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-        ^py-pyjwt@2.6.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
+        ^py-pyjwt@2.4.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-msal-extensions@0.1.3%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-portalocker@1.6.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-pip@22.2.2%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
@@ -332,7 +320,7 @@ py-azure-identity@1.3.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.0
         ^libxcrypt@4.4.33%gcc@11.3.0~obsolete_api build_system=autotools arch=linux-ubuntu22.04-skylake
         ^ncurses@6.3%gcc@11.3.0~symlinks+termlib abi=none build_system=autotools arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -371,7 +359,7 @@ py-charmonium-time-block@0.3.0%gcc@11.3.0 build_system=python_pip patches=2ca26c
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -408,7 +396,7 @@ py-click@8.1.3%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -445,7 +433,7 @@ py-fasteners@0.18%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skyl
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -484,7 +472,7 @@ py-gitpython@3.1.27%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-sk
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -526,7 +514,7 @@ py-parsl@1.1.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
                 ^libssh2@1.10.0%gcc@11.3.0~ipo+shared build_system=cmake build_type=RelWithDebInfo crypto=openssl arch=linux-ubuntu22.04-skylake
                 ^ninja@1.11.1%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
                     ^re2c@2.2%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
-        ^py-pyjwt@2.6.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
+        ^py-pyjwt@2.4.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-paramiko@2.7.1%gcc@11.3.0~invoke build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-bcrypt@3.2.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-six@1.16.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
@@ -577,7 +565,7 @@ py-parsl@1.1.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -611,7 +599,7 @@ py-pip@22.2.2%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -627,7 +615,7 @@ py-pygithub@1.55%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skyla
     ^py-deprecated@1.2.13%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-wrapt@1.14.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-pip@22.2.2%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
-    ^py-pyjwt@2.6.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
+    ^py-pyjwt@2.4.0%gcc@11.3.0+crypto build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-cryptography@38.0.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^git@2.38.1%gcc@11.3.0+man+nls+perl+subtree~svn~tcltk build_system=autotools arch=linux-ubuntu22.04-skylake
                 ^autoconf@2.69%gcc@11.3.0 build_system=autotools patches=35c4492,7793209,a49dd5b arch=linux-ubuntu22.04-skylake
@@ -686,7 +674,7 @@ py-pygithub@1.55%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skyla
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -725,7 +713,7 @@ py-pyyaml@6.0%gcc@11.3.0+libyaml build_system=python_pip arch=linux-ubuntu22.04-
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -768,7 +756,7 @@ py-tqdm@4.64.1%gcc@11.3.0~notebook~telegram build_system=python_pip arch=linux-u
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -805,7 +793,7 @@ py-xxhash@2.0.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylak
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -839,7 +827,7 @@ python@3.10.8%gcc@11.3.0+bz2+crypt+ctypes+dbm~debug+libxml2+lzma~nis~optimizatio
         ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
             ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
     ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-    ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+    ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
     ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
     ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
     ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -886,9 +874,11 @@ snakemake@7.18.2%gcc@11.3.0+ftp~google-cloud+http~reports+s3 build_system=python
             ^py-pathspec@0.10.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
             ^py-pluggy@1.0.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-pyrsistent@0.18.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-    ^py-nbformat@5.4.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+    ^py-nbformat@5.7.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-fastjsonschema@2.16.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
-        ^py-jupyter-core@4.11.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+        ^py-hatch-nodejs-version@0.3.1%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+        ^py-jupyter-core@5.1.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
+            ^py-platformdirs@2.5.2%gcc@11.3.0~wheel build_system=python_pip arch=linux-ubuntu22.04-skylake
         ^py-traitlets@5.3.0%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
     ^py-pip@22.2.2%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
     ^py-psutil@5.9.2%gcc@11.3.0 build_system=python_pip arch=linux-ubuntu22.04-skylake
@@ -935,7 +925,7 @@ snakemake@7.18.2%gcc@11.3.0+ftp~google-cloud+http~reports+s3 build_system=python
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
         ^pkgconf@1.8.0%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
@@ -948,14 +938,6 @@ time
 Concretized
 --------------------------------
 time@1.9%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
-
-Input spec
---------------------------------
-unzip
-
-Concretized
---------------------------------
-unzip@6.0%gcc@11.3.0 build_system=makefile arch=linux-ubuntu22.04-skylake
 
 Input spec
 --------------------------------
@@ -985,7 +967,7 @@ util-linux@2.38.1%gcc@11.3.0~bash build_system=autotools arch=linux-ubuntu22.04-
             ^ca-certificates-mozilla@2022-10-11%gcc@11.3.0 build_system=generic arch=linux-ubuntu22.04-skylake
             ^perl@5.36.0%gcc@11.3.0+cpanm+shared+threads build_system=generic arch=linux-ubuntu22.04-skylake
                 ^berkeley-db@18.1.40%gcc@11.3.0+cxx~docs+stl build_system=autotools patches=26090f4,b231fcc arch=linux-ubuntu22.04-skylake
-        ^readline@8.1.2%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
+        ^readline@8.2%gcc@11.3.0 build_system=autotools patches=bbf97f1 arch=linux-ubuntu22.04-skylake
         ^sqlite@3.40.0%gcc@11.3.0+column_metadata+dynamic_extensions+fts~functions+rtree build_system=autotools arch=linux-ubuntu22.04-skylake
         ^util-linux-uuid@2.38.1%gcc@11.3.0 build_system=autotools arch=linux-ubuntu22.04-skylake
         ^xz@5.2.7%gcc@11.3.0~pic build_system=autotools libs=shared,static arch=linux-ubuntu22.04-skylake
