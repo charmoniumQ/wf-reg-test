@@ -113,44 +113,7 @@ def parsl_parallel_map_with_id(
 ) -> Iterable[tuple[_T, _U, _V]]:
     with create_temp_dir() as temp_dir:
         # Note, I am using a tuple instead of a list because tuples are covariant.
-        executors: tuple[parsl.executors.base.ParslExecutor]
-        if remote:
-            # Override this: https://github.com/Parsl/parsl/blob/master/parsl/providers/azure/template.py
-            parsl.providers.azure.template.template_string = "#!/bin/bash\n$worker_init\n$user_script\nhalt\n"
-            executors = (
-                parsl.executors.HighThroughputExecutor(
-                    address="",
-                    provider=parsl.providers.AzureProvider(  # type: ignore
-                        vm_reference=dict(
-                            publisher="Canonical",
-                            offer="0001-com-ubuntu-minimal-jammy",
-                            sku="minimal-22_04-lts-gen2",
-                            version="22.04.202212070",
-                            vm_size=os.environ["AZURE_VM_SIZE"],
-                            disk_size_gb=os.environ["AZURE_VM_DISK_SIZE"],
-                            admin_username=os.environ["AZURE_VM_ADMIN"],
-                            password=os.environ["AZURE_VM_PASSWORD"],
-                        ),
-                        worker_init="curl -output view.tar.xz http://storage.googleapis.com/data234/view.tar.xz\ntar --extract --file=view.tar.xz\nsource view/activate.sh\n",
-                        region=os.environ["AZURE_REGION"],
-                        min_blocks=1,
-                        max_blocks=1,
-                        init_blocks=1,
-                    ),
-                    cores_per_worker=1 if oversubscribe else 2,
-                    max_workers=parallelism,
-                ),
-            )
-        else:
-            executors = (
-                parsl.executors.ThreadPoolExecutor(
-                    max_threads=parallelism,
-                ),
-            )
-        parsl.load(parsl.config.Config(
-            executors=executors,  # type: ignore
-            run_dir=str(temp_dir),
-        ))
+        execfile(os.environ["PARSL_CONFIG"], globals(), locals())
         if oversubscribe:
             @parsl.python_app
             def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:

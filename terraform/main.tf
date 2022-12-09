@@ -1,3 +1,7 @@
+#############################################
+# Variables
+#############################################
+
 variable "os_disk_size_gb" {
   type    = string
   default = "30"
@@ -6,8 +10,17 @@ variable "os_disk_size_gb" {
 
 variable "manager_vm_size" {
   type    = string
-  default = "D8s_v5"
-  #default = "Standard_DS1_v2"
+  default = "Standard_DS1_v2"
+}
+
+variable "workers" {
+  type    = int
+  default = 4
+}
+
+variable "worker_vm_size" {
+  type    = string
+  default = "Standard_DS1_v2"
 }
 
 variable "vm_image" {
@@ -30,6 +43,10 @@ variable "username" {
   default = "azureuser"
 }
 
+#############################################
+# Terraform providers
+#############################################
+
 terraform {
   required_version = ">= 1.1.0"
   required_providers {
@@ -44,16 +61,14 @@ provider "azurerm" {
   features {}
 }
 
-data "azurerm_subscription" "default" {
-}
-
-data "azurerm_client_config" "default" {
-}
-
 resource "azurerm_resource_group" "default" {
   location = "eastus"
   name     = "terraform"
 }
+
+#############################################
+# Storage resources
+#############################################
 
 resource "azurerm_storage_account" "default" {
   name                     = "wfregtest2"
@@ -74,6 +89,10 @@ resource "azurerm_storage_container" "deployment" {
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible
 }
+
+#############################################
+# Manager resources
+#############################################
 
 resource "azurerm_virtual_network" "default" {
   name                = "default"
@@ -115,12 +134,12 @@ resource "azurerm_network_security_group" "manager_nsg" {
 }
 
 resource "azurerm_network_interface" "manager_nic" {
-  name                = "default"
+  name                = "manager_nic"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
 
   ip_configuration {
-    name                          = "default"
+    name                          = "manager"
     subnet_id                     = azurerm_subnet.default.id
 	private_ip_address_allocation = "Dynamic"
 	public_ip_address_id          = azurerm_public_ip.manager_ip.id
@@ -132,7 +151,15 @@ resource "azurerm_network_interface_security_group_association" "manager" {
   network_security_group_id = azurerm_network_security_group.manager_nsg.id
 }
 
-resource "tls_private_key" "manager" {
+# Note, the TLS keys are named after the identity they represent.
+# This represents actions taken by the dev.
+resource "tls_private_key" "developer" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
+# This represents actions taken by the manager_vm
+resource "tls_private_key" "manager_vm" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
@@ -147,7 +174,7 @@ resource "azurerm_linux_virtual_machine" "manager" {
   disable_password_authentication = true
   admin_ssh_key {
 	username   = var.username
-	public_key = tls_private_key.manager.public_key_openssh
+	public_key = tls_private_key.developer.public_key_openssh
   }
   source_image_reference {
     publisher = var.vm_image.publisher
@@ -165,12 +192,6 @@ resource "azurerm_linux_virtual_machine" "manager" {
   }
 }
 
-resource azurerm_role_assignment manager-deployment {
-  scope              = azurerm_storage_container.deployment.resource_manager_id
-  role_definition_name = "Storage Blob Data Contributor"
-  principal_id       = azurerm_linux_virtual_machine.manager.identity[0].principal_id
-}
-
 resource azurerm_role_assignment manager-data {
   scope              = azurerm_storage_container.data.resource_manager_id
   role_definition_name = "Storage Blob Data Contributor"
@@ -178,35 +199,95 @@ resource azurerm_role_assignment manager-data {
 }
 
 resource "null_resource" "manager_init" {
-  depends_on = [azurerm_role_assignment.manager-deployment, azurerm_role_assignment.manager-data]
+  depends_on = [azurerm_role_assignment.manager-data]
   connection {
     type        = "ssh"
     user        = var.username
-	private_key = tls_private_key.manager.private_key_openssh
+	private_key = tls_private_key.developer.private_key_openssh
     host        = azurerm_linux_virtual_machine.manager.public_ip_address
   }
   provisioner "remote-exec" {
-    inline = [
-	  "echo hostname",
-	  "nproc",
-    ]
+	script = "setup_env.sh"
+  }
+  provisioner "file" {
+	content = tls_private_key.manager_vm.private_key_openssh
+	destination = "/home/${var.user}/.ssh/id_rsa"
   }
 }
+
+#############################################
+# Worker resources
+#############################################
+
+resource "azurerm_network_interface" "worker_nic" {
+  count               = var.workers
+  name                = "worker_nic"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+
+  ip_configuration {
+	name                          = "worker-${count.index}"
+    subnet_id                     = azurerm_subnet.default.id
+	private_ip_address_allocation = "Dynamic"
+  }
+}
+
+resource "azurerm_linux_virtual_machine" "worker" {
+  name                  = "worker-${count.index}"
+  location              = azurerm_resource_group.default.location
+  resource_group_name   = azurerm_resource_group.default.name
+  size                  = var.worker_vm_size
+  admin_username        = var.username
+  network_interface_ids = [azurerm_network_interface.worker_nic[count.index].id]
+  disable_password_authentication = true
+  admin_ssh_key {
+	username   = var.username
+	public_key = tls_private_key.manager_vm.public_key_openssh
+  }
+  source_image_reference {
+    publisher = var.vm_image.publisher
+    offer     = var.vm_image.offer
+    sku       = var.vm_image.sku
+    version   = var.vm_image.version
+  }
+  os_disk {
+    caching              = "ReadWrite"
+    storage_account_type = "StandardSSD_LRS"
+    disk_size_gb         = var.os_disk_size_gb
+  }
+  identity {
+	type = "SystemAssigned"
+  }
+}
+
+resource azurerm_role_assignment worker-data {
+  scope              = azurerm_storage_container.data.resource_manager_id
+  role_definition_name = "Storage Blob Data Contributor"
+  principal_id       = azurerm_linux_virtual_machine.worker.identity[0].principal_id
+}
+
+resource "null_resource" "worker_init" {
+  depends_on = [azurerm_role_assignment.worker-data]
+  connection {
+    type        = "ssh"
+    user        = var.username
+	private_key = tls_private_key.developer.private_key_openssh
+    host        = azurerm_linux_virtual_machine.manager.public_ip_address
+  }
+  provisioner "remote-exec" {
+	script = "setup_env.sh"
+  }
+}
+
+#############################################
+# Outputs
+#############################################
 
 output "manager_ip_address" {
   value = azurerm_linux_virtual_machine.manager.public_ip_address
 }
 
-output "manager_identity" {
-  value = azurerm_linux_virtual_machine.manager.identity
-}
-
-output "manager_ssh_key" {
-  value = tls_private_key.manager.private_key_openssh
+output "developer_ssh_key" {
+  value = tls_private_key.developer.private_key_openssh
   sensitive = true
 }
-
-# Create 1 spack builder machine
-# Run spack build
-# Delete it
-# Create N worker machines
