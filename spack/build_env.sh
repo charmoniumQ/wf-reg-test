@@ -1,38 +1,60 @@
 #!/usr/bin/env bash
 
-set -e -x
+set -e
 
-# See spack requirements here
+# See spack requirements here:
 # https://spack.readthedocs.io/en/latest/getting_started.html
-sudo apt-get update
-sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv unzip zip tmux
+sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux
 
-rm -rf spack
-git clone -c feature.manyFiles=true https://github.com/charmoniumQ/spack.git
+# Install spack
+if [ ! -d spack ]; then
+	git clone -c feature.manyFiles=true https://github.com/charmoniumQ/spack.git
+fi
 git -C spack checkout develop-merge
-set +x
 source ~/spack/share/spack/setup-env.sh
-set -x
-rm -rf wf-reg-test
-git clone https://github.com/charmoniumQ/wf-reg-test
+
+# Spack takes too long to build Rust.
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+spack external find rust
+
+# Install this environment.
+if [ ! -d wf-reg-test ]; then
+	git clone https://github.com/charmoniumQ/wf-reg-test
+fi
 spack repo add wf-reg-test/spack/spack_repo
-set -x
 spack env create wf-reg-test wf-reg-test/spack/spack.lock
 spack env activate wf-reg-test
-set +x
 spack concretize
 for i in $(seq $(nproc)); do
 	spack install --yes &
 done
 wait $(jobs -p)
+
+# Create install script:
+spack env deactviate
 spack env activate wf-reg-test --sh > spack/activate.sh
+source spack/activate.sh
+
+# Minimize installation:
+# See https://github.com/spack/spack/issues/14695
+spack-python <<EOF
+from spack.package_base import PackageStillNeededError
+from spack.cmd.uninstall import dependent_environments
+import spack.store
+installed = spack.store.db.query()
+for spec in installed:
+    if not dependent_environments([spec]):
+        print("Removing", spec.name, spec.version)
+        try:
+            spec.package.do_uninstall()
+        except PackageStillNeededError:
+            pass
+EOF
+spack clean --all
+
+# Upload to container archive:
 total=$(du --summarize --bytes spack | cut -f1)
-tar --create --file=- spack | tqdm --total $total --bytes > spack.tar
-# python -c <<EOF
-# from azure.identity import DefaultAzureCredential
-# from azure.storage.blob import BlobClient
-# cred = azure.identity.DefaultAzureCredential()
-# with open("spack.tar.gz", "rb") as f:
-#     blob = BlobClient("https://wfregtest2.blob.core.windows.net", "deployment", "spack.tar.xz", credential=cred)
-#     blob.upload_blob(f, overwrite=True)'
-# EOF
+tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar
+# Unfortunately, azure-cli in Spack is too old.
+pip install azure-cli
+az storage blob upload --account-name wfregtest2 --container-name deployment --name spack.tar.gz --file spack.tar.gz--overwrite

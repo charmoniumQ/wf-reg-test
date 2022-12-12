@@ -1,3 +1,2 @@
-curl -output spack.tar http://storage.googleapis.com/data234/spack.tar
-tar --extract --file=spack.tar
-source spack/activate.sh
+wget https://wfregtest2.blob.core.windows.net/deployment/spack.tar.gz
+tar --extract --gunzip --file=spack.tar.gz
