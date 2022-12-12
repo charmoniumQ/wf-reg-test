@@ -22,9 +22,9 @@ if [ ! -d wf-reg-test ]; then
 	git clone https://github.com/charmoniumQ/wf-reg-test
 fi
 spack repo add wf-reg-test/spack/spack_repo
-spack env create wf-reg-test wf-reg-test/spack/spack.lock
+spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test
-spack concretize
+spack concretize --fresh --force
 for i in $(seq $(nproc)); do
 	spack install --yes &
 done
