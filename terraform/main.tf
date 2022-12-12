@@ -10,7 +10,12 @@ variable "os_disk_size_gb" {
 
 variable "manager_vm_size" {
   type    = string
-  default = "Standard_DS1_v2"
+  default = "Standard_D2as_v5"
+}
+
+variable "builder_vm_size" {
+  type    = string
+  default = "Standard_D8as_v5"
 }
 
 variable "workers" {
@@ -20,7 +25,7 @@ variable "workers" {
 
 variable "worker_vm_size" {
   type    = string
-  default = "Standard_DS1_v2"
+  default = "Standard_D2as_v5"
 }
 
 variable "vm_image" {
@@ -71,7 +76,7 @@ resource "azurerm_resource_group" "default" {
 #############################################
 
 resource "azurerm_storage_account" "default" {
-  name                     = "wfregtest2"
+  name                     = "wfregtest"
   resource_group_name      = azurerm_resource_group.default.name
   location                 = azurerm_resource_group.default.location
   account_tier             = "Standard"
