@@ -14,7 +14,7 @@ git -C spack checkout develop-merge
 source ~/spack/share/spack/setup-env.sh
 
 # Spack takes too long to build Rust.
-curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 spack external find rust
 
 # Install this environment.
@@ -31,7 +31,7 @@ done
 wait $(jobs -p)
 
 # Create install script:
-spack env deactviate
+spack env deactivate
 spack env activate wf-reg-test --sh > spack/activate.sh
 source spack/activate.sh
 
@@ -57,4 +57,6 @@ total=$(du --summarize --bytes spack | cut -f1)
 tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar
 # Unfortunately, azure-cli in Spack is too old.
 pip install azure-cli
-az storage blob upload --account-name wfregtest2 --container-name deployment --name spack.tar.gz --file spack.tar.gz--overwrite
+export PATH=$PATH:$HOME/.local/bin
+az login
+az storage blob upload --account-name wfregtest2 --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite
