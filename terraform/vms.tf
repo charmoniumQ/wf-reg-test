@@ -2,11 +2,35 @@
 # Manager
 #############################################
 
+resource "azurerm_subnet" "default" {
+  name                 = "default"
+  resource_group_name  = azurerm_resource_group.default.name
+  virtual_network_name = azurerm_virtual_network.default.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
 resource "azurerm_public_ip" "manager_ip" {
   name                = "manager"
   resource_group_name = azurerm_resource_group.default.name
   location            = azurerm_resource_group.default.location
   allocation_method   = "Dynamic"
+}
+
+resource "azurerm_network_security_group" "manager_nsg" {
+  name                = "manager-nsg"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  security_rule {
+    name                       = "SSH"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
 }
 
 resource "azurerm_network_interface" "manager_nic" {
@@ -24,7 +48,7 @@ resource "azurerm_network_interface" "manager_nic" {
 
 resource "azurerm_network_interface_security_group_association" "manager" {
   network_interface_id      = azurerm_network_interface.manager_nic.id
-  network_security_group_id = azurerm_network_security_group.sshable_nsg.id
+  network_security_group_id = azurerm_network_security_group.manager_nsg.id
 }
 
 resource "azurerm_linux_virtual_machine" "manager" {
@@ -156,74 +180,3 @@ resource azurerm_role_assignment worker-data {
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_linux_virtual_machine.worker[count.index].identity[0].principal_id
 }
-
-# #############################################
-# # Builder
-# #############################################
-
-# resource "azurerm_public_ip" "builder_ip" {
-#   name                = "builder"
-#   resource_group_name = azurerm_resource_group.default.name
-#   location            = azurerm_resource_group.default.location
-#   allocation_method   = "Dynamic"
-# }
-
-
-# resource "azurerm_network_interface" "builder_nic" {
-#   name                = "builder_nic"
-#   location            = azurerm_resource_group.default.location
-#   resource_group_name = azurerm_resource_group.default.name
-
-#   ip_configuration {
-#     name                          = "builder"
-#     subnet_id                     = azurerm_subnet.default.id
-#     private_ip_address_allocation = "Dynamic"
-#     public_ip_address_id          = azurerm_public_ip.builder_ip.id
-#   }
-# }
-
-# resource "azurerm_network_interface_security_group_association" "builder" {
-#   network_interface_id      = azurerm_network_interface.builder_nic.id
-#   network_security_group_id = azurerm_network_security_group.sshable_nsg.id
-# }
-
-# resource "azurerm_linux_virtual_machine" "builder" {
-#   name                  = "builder"
-#   location              = azurerm_resource_group.default.location
-#   resource_group_name   = azurerm_resource_group.default.name
-#   size                  = var.builder_vm_size
-#   admin_username        = var.username
-#   network_interface_ids = [azurerm_network_interface.builder_nic.id]
-#   disable_password_authentication = true
-#   admin_ssh_key {
-#     username   = var.username
-#     public_key = tls_private_key.developer.public_key_openssh
-#   }
-#   source_image_reference {
-#     publisher = var.vm_image.publisher
-#     offer     = var.vm_image.offer
-#     sku       = var.vm_image.sku
-#     version   = var.vm_image.version
-#   }
-#   os_disk {
-#     caching              = "ReadWrite"
-#     storage_account_type = "StandardSSD_LRS"
-#     disk_size_gb         = var.os_disk_size_gb
-#   }
-#   identity {
-#     type = "SystemAssigned"
-#   }
-#   # connection {
-#   #   type        = "ssh"
-#   #     user        = var.username
-#   #     host        = azurerm_linux_virtual_machine.builder.public_ip_address
-#   #     private_key = tls_private_key.developer.private_key_openssh
-#   # }
-#   # provisioner "remote-exec" {
-#   #     script = "../spack/setup_env.sh"
-#   # }
-# }
-
-# output "builder_ip" {
-#   value = azurerm_linux_virtual_machine.builder.public_ip_address
-# }

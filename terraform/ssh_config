@@ -1,0 +1,9 @@
+Host manager
+	HostName 20.25.100.146
+	IdentityFile ~/box/wf-reg-test/terraform/key
+	User azureuser
+
+Host worker-0
+	IdentityFile ~/box/wf-reg-test/terraform/key
+	User azureuser
+	ProxyJump manager
