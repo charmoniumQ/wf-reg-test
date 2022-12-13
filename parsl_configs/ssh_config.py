@@ -1,7 +1,7 @@
 import parsl
 import os
 
-parallelisum = 1
+parallelism = 1
 
 parsl.load(parsl.config.Config(
     executors=[
