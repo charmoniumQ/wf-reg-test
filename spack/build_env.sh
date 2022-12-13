@@ -12,6 +12,7 @@ if [ ! -d spack ]; then
 fi
 git -C spack fetch
 git -C spack checkout develop-merge
+git -C spack pull origin develop-merge
 source ~/spack/share/spack/setup-env.sh
 
 # Spack takes too long to build Rust.
@@ -30,14 +31,20 @@ spack external find cmake
 if [ ! -d wf-reg-test ]; then
 	git clone https://github.com/charmoniumQ/wf-reg-test
 fi
-spack repo add wf-reg-test/spack/spack_repo
-spack env create wf-reg-test wf-reg-test/spack/spack.yaml
+if ! spack repo list | grep spack_repo; then
+	spack repo add wf-reg-test/spack/spack_repo
+fi
+
+if [ ! -d spack/var/spack/environments/wf-reg-test/ ]; then
+	spack env create wf-reg-test wf-reg-test/spack/spack.yaml
+fi
 spack env activate wf-reg-test
 spack concretize --fresh --force
-for i in $(seq $(nproc)); do
-	spack install --yes &
+for i in $(seq 0 2 $(nproc)); do
+	spack install --yes -j2 &
 done
 wait $(jobs -p)
+spack install --yes
 
 # Create install script:
 spack env deactivate
