@@ -10,7 +10,12 @@ variable "os_disk_size_gb" {
 
 variable "manager_vm_size" {
   type    = string
-  default = "Standard_DS1_v2"
+  default = "Standard_D2as_v5"
+}
+
+variable "builder_vm_size" {
+  type    = string
+  default = "Standard_D8as_v5"
 }
 
 variable "workers" {
@@ -20,7 +25,7 @@ variable "workers" {
 
 variable "worker_vm_size" {
   type    = string
-  default = "Standard_DS1_v2"
+  default = "Standard_D2as_v5"
 }
 
 variable "vm_image" {
@@ -71,7 +76,7 @@ resource "azurerm_resource_group" "default" {
 #############################################
 
 resource "azurerm_storage_account" "default" {
-  name                     = "wfregtest2"
+  name                     = "wfregtest"
   resource_group_name      = azurerm_resource_group.default.name
   location                 = azurerm_resource_group.default.location
   account_tier             = "Standard"
@@ -124,6 +129,29 @@ resource "azurerm_virtual_network" "default" {
   resource_group_name = azurerm_resource_group.default.name
 }
 
+resource "azurerm_subnet" "default" {
+  name                 = "default"
+  resource_group_name  = azurerm_resource_group.default.name
+  virtual_network_name = azurerm_virtual_network.default.name
+  address_prefixes     = ["10.0.2.0/24"]
+}
+
+resource "azurerm_network_security_group" "sshable_nsg" {
+  name                = "manager-nsg"
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+  security_rule {
+    name                       = "SSH"
+    priority                   = 1001
+    direction                  = "Inbound"
+    access                     = "Allow"
+    protocol                   = "Tcp"
+    source_port_range          = "*"
+    destination_port_range     = "22"
+    source_address_prefix      = "*"
+    destination_address_prefix = "*"
+  }
+}
 
 output "worker_count" {
   value = var.workers

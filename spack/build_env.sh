@@ -19,8 +19,8 @@ source ~/spack/share/spack/setup-env.sh
 if [ ! -d ~/.cargo ]; then
 	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 	source "$HOME/.cargo/env"
-	spack external find rust
 fi
+spack external find rust
 # also cmake, which we already installed with apt
 spack external find cmake
 # Note, `spack external find` will NOT work for run-time deps,
@@ -70,7 +70,7 @@ source spack/activate.sh
 spack clean --all
 
 # Until https://github.com/snakemake/snakemake/issues/1038 is resolved, micromamba should masquerade as mamba
-mv /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/micromamba /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/mamba
+cp /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/micromamba /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/mamba
 
 # Upload to container archive:
 total=$(du --summarize --bytes spack | cut -f1)
@@ -79,4 +79,4 @@ tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar.g
 export PATH=$PATH:$HOME/.local/bin
 pip install azure-cli
 az login
-az storage blob upload --account-name wfregtest2 --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite
+az storage blob upload --account-name wfregtest --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite
