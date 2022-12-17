@@ -30,6 +30,9 @@ spack:
   - py-xxhash
   - py-pyyaml@6
   - py-charmonium-time-block@0.3:0
+  - py-freeze
+  - py-universal-pathlib
+  - py-toolz
   - py-parsl
   - py-fasteners@0.18:0
   - py-adlfs@2022
@@ -40,7 +43,6 @@ spack:
   # If you need this, try `pip install azure-cli`
   # - py-azure-cli
   - py-pip
-  - py-universal-pathlib
   view: true
   concretizer:
     unify: when_possible
