@@ -70,7 +70,8 @@ source spack/activate.sh
 spack clean --all
 
 # Until https://github.com/snakemake/snakemake/issues/1038 is resolved, micromamba should masquerade as mamba
-cp /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/micromamba /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/mamba
+#cp /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/micromamba
+# rm -f /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/mamba
 
 # Upload to container archive:
 total=$(du --summarize --bytes spack | cut -f1)
@@ -79,4 +80,5 @@ tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar.g
 export PATH=$PATH:$HOME/.local/bin
 pip install azure-cli
 az login
+az ad signed-in-user show
 az storage blob upload --account-name wfregtest --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite

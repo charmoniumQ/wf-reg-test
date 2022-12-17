@@ -107,7 +107,7 @@ def regenerate() -> RegistryHub:
     hub = RegistryHub(registries=[])
     from .registries import snakemake_registry, nf_core_registry
     hub.registries.append(nf_core_registry())
-    hub.registries.append(snakemake_registry())
+    # hub.registries.append(snakemake_registry())
     ensure_revisions(hub, only_empty=True)
     return hub
 
