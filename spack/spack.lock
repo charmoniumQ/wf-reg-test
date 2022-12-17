@@ -6,7 +6,7 @@
   },
   "roots": [
     {
-      "hash": "tzw2ntsqkkeznf7h4wawegv554eerua7",
+      "hash": "nwip3hb3gyebcb63a6cuzdp5wvtyqdld",
       "spec": "apptainer"
     },
     {
@@ -14,15 +14,11 @@
       "spec": "hwloc"
     },
     {
-      "hash": "gl236bh55hvnffcp2djut2hmcaqp5ntt",
-      "spec": "java"
-    },
-    {
       "hash": "xtjpbvyhjid5g6k5zzudbgz6dqgneff4",
       "spec": "micromamba"
     },
     {
-      "hash": "3vsmnjhaatdx6uh3hroxzuh65rpjwyb2",
+      "hash": "mhtyrveziy2r53zpgv7ctrm7555xxzig",
       "spec": "nextflow"
     },
     {
@@ -54,7 +50,7 @@
       "spec": "py-pandas"
     },
     {
-      "hash": "zltkrrmdjzutl7buvlzrkom6namy7xef",
+      "hash": "wfgfit3fjgyvqzp2xw33a6rppjkk6rva",
       "spec": "py-parsl"
     },
     {
@@ -74,6 +70,10 @@
       "spec": "py-tqdm"
     },
     {
+      "hash": "ufemdr4b6fp2kfckpklgmlpwdjs57lx2",
+      "spec": "py-universal-pathlib"
+    },
+    {
       "hash": "nfv7qqf6qcs76h2ycdygolv7j6qhn6f2",
       "spec": "py-xxhash"
     },
@@ -82,22 +82,18 @@
       "spec": "python@3.10"
     },
     {
-      "hash": "rarvzqmrdtp66d7hfq3thg46oyuhgblt",
+      "hash": "sevpfmxohqq4gnd57ivhn64iqlmm5tlf",
       "spec": "snakemake@7.18.2+ftp+http+reports+s3"
     },
     {
       "hash": "ilnyamji47ixfoi23k2kldkbojuat7yu",
       "spec": "time"
-    },
-    {
-      "hash": "b6n6apyto6jitutdpjq4lmsrkry6ggz5",
-      "spec": "util-linux"
     }
   ],
   "concrete_specs": {
-    "tzw2ntsqkkeznf7h4wawegv554eerua7": {
+    "nwip3hb3gyebcb63a6cuzdp5wvtyqdld": {
       "name": "apptainer",
-      "version": "1.1.3",
+      "version": "1.1.4",
       "arch": {
         "platform": "linux",
         "platform_os": "ubuntu22.04",
@@ -150,7 +146,7 @@
         "ldflags": [],
         "ldlibs": []
       },
-      "package_hash": "l3zbgac7kjnvfxdsddk2yn55px3am4myb6nuw5wk5dldx3ewkomq====",
+      "package_hash": "t6r3qnbab4iihvh7mlrtm4mpwv6lzejzsm37bb2bof2j6owkvuuq====",
       "dependencies": [
         {
           "name": "conmon",
@@ -208,7 +204,7 @@
           ]
         }
       ],
-      "hash": "tzw2ntsqkkeznf7h4wawegv554eerua7"
+      "hash": "nwip3hb3gyebcb63a6cuzdp5wvtyqdld"
     },
     "pvfp2vpecm7gwqpfrgdbxruz5jh3ybck": {
       "name": "conmon",
@@ -5312,62 +5308,6 @@
       "package_hash": "5atggv5uirdl2trmzmewkonyvzmzg6sg46zpvurdk43wi2gpr7pa====",
       "hash": "li3zj3lenooidhmbrptap2aaqebyjdgh"
     },
-    "gl236bh55hvnffcp2djut2hmcaqp5ntt": {
-      "name": "openjdk",
-      "version": "11.0.17_8",
-      "arch": {
-        "platform": "linux",
-        "platform_os": "ubuntu22.04",
-        "target": {
-          "name": "skylake",
-          "vendor": "GenuineIntel",
-          "features": [
-            "adx",
-            "aes",
-            "avx",
-            "avx2",
-            "bmi1",
-            "bmi2",
-            "clflushopt",
-            "f16c",
-            "fma",
-            "mmx",
-            "movbe",
-            "pclmulqdq",
-            "popcnt",
-            "rdrand",
-            "rdseed",
-            "sse",
-            "sse2",
-            "sse4_1",
-            "sse4_2",
-            "ssse3",
-            "xsavec",
-            "xsaveopt"
-          ],
-          "generation": 0,
-          "parents": [
-            "broadwell"
-          ]
-        }
-      },
-      "compiler": {
-        "name": "gcc",
-        "version": "11.3.0"
-      },
-      "namespace": "builtin",
-      "parameters": {
-        "build_system": "generic",
-        "cflags": [],
-        "cppflags": [],
-        "cxxflags": [],
-        "fflags": [],
-        "ldflags": [],
-        "ldlibs": []
-      },
-      "package_hash": "cogbixjotnhfpjce2pnpjtntbe3yzy7ecjewxijcfrm456dkrqiq====",
-      "hash": "gl236bh55hvnffcp2djut2hmcaqp5ntt"
-    },
     "xtjpbvyhjid5g6k5zzudbgz6dqgneff4": {
       "name": "micromamba",
       "version": "1.1.0",
@@ -6577,9 +6517,9 @@
       ],
       "hash": "nycjdf2avg7fndtbvunhysbeomosssgy"
     },
-    "3vsmnjhaatdx6uh3hroxzuh65rpjwyb2": {
+    "mhtyrveziy2r53zpgv7ctrm7555xxzig": {
       "name": "nextflow",
-      "version": "22.10.1",
+      "version": "22.10.4",
       "arch": {
         "platform": "linux",
         "platform_os": "ubuntu22.04",
@@ -6630,7 +6570,7 @@
         "ldflags": [],
         "ldlibs": []
       },
-      "package_hash": "flby5trtcc7lh3vwzv366ifhjktsvj73a4rjp2k4j7hm7qnpsscq====",
+      "package_hash": "kfdaco2usg4a763ffr5mlc32jzqlh4qx4je6pnyhgkyi2pjv7p3a====",
       "dependencies": [
         {
           "name": "openjdk",
@@ -6641,7 +6581,63 @@
           ]
         }
       ],
-      "hash": "3vsmnjhaatdx6uh3hroxzuh65rpjwyb2"
+      "hash": "mhtyrveziy2r53zpgv7ctrm7555xxzig"
+    },
+    "gl236bh55hvnffcp2djut2hmcaqp5ntt": {
+      "name": "openjdk",
+      "version": "11.0.17_8",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "ubuntu22.04",
+        "target": {
+          "name": "skylake",
+          "vendor": "GenuineIntel",
+          "features": [
+            "adx",
+            "aes",
+            "avx",
+            "avx2",
+            "bmi1",
+            "bmi2",
+            "clflushopt",
+            "f16c",
+            "fma",
+            "mmx",
+            "movbe",
+            "pclmulqdq",
+            "popcnt",
+            "rdrand",
+            "rdseed",
+            "sse",
+            "sse2",
+            "sse4_1",
+            "sse4_2",
+            "ssse3",
+            "xsavec",
+            "xsaveopt"
+          ],
+          "generation": 0,
+          "parents": [
+            "broadwell"
+          ]
+        }
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "11.3.0"
+      },
+      "namespace": "builtin",
+      "parameters": {
+        "build_system": "generic",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "cogbixjotnhfpjce2pnpjtntbe3yzy7ecjewxijcfrm456dkrqiq====",
+      "hash": "gl236bh55hvnffcp2djut2hmcaqp5ntt"
     },
     "bry3rgf7rsdzi6er5n3vsk6vgsfkpbuu": {
       "name": "py-adlfs",
@@ -12535,7 +12531,7 @@
       ],
       "hash": "xxbsiewnkqxbfkcmdfti5ooir27s53g7"
     },
-    "zltkrrmdjzutl7buvlzrkom6namy7xef": {
+    "wfgfit3fjgyvqzp2xw33a6rppjkk6rva": {
       "name": "py-parsl",
       "version": "1.1.0",
       "arch": {
@@ -12592,7 +12588,7 @@
       "dependencies": [
         {
           "name": "py-dill",
-          "hash": "tvn57f2yzk5vrxucl4obj7oyofkhnn63",
+          "hash": "wjyb27auuttehkvnmwwa4nnpk6gjuvhv",
           "type": [
             "build",
             "run"
@@ -12608,7 +12604,7 @@
         },
         {
           "name": "py-paramiko",
-          "hash": "3z24lqzd77pdlhqlghkmeirrsmwxwnpl",
+          "hash": "jlvvntsm7nwqwkzgidwqrnbedr3wflek",
           "type": [
             "build",
             "run"
@@ -12631,7 +12627,7 @@
         },
         {
           "name": "py-pyzmq",
-          "hash": "cb4ctxukf7unibduquvadnfritezznlh",
+          "hash": "dyqhxhok7z2fydixlcnqdmbb2hys5frd",
           "type": [
             "build",
             "run"
@@ -12692,11 +12688,11 @@
           ]
         }
       ],
-      "hash": "zltkrrmdjzutl7buvlzrkom6namy7xef"
+      "hash": "wfgfit3fjgyvqzp2xw33a6rppjkk6rva"
     },
-    "tvn57f2yzk5vrxucl4obj7oyofkhnn63": {
+    "wjyb27auuttehkvnmwwa4nnpk6gjuvhv": {
       "name": "py-dill",
-      "version": "0.3.5.1",
+      "version": "0.3.6",
       "arch": {
         "platform": "linux",
         "platform_os": "ubuntu22.04",
@@ -12740,6 +12736,9 @@
       "namespace": "builtin",
       "parameters": {
         "build_system": "python_pip",
+        "patches": [
+          "daf79b1c6cb4846e16e4be936608e081627c6f3f8eb1518a70579ed34968fc11"
+        ],
         "cflags": [],
         "cppflags": [],
         "cxxflags": [],
@@ -12747,7 +12746,10 @@
         "ldflags": [],
         "ldlibs": []
       },
-      "package_hash": "apmbnsvsg7aqn4onf5m6swkbrnwujgxyb3xk4yyzo5eonuydsgoa====",
+      "patches": [
+        "daf79b1c6cb4846e16e4be936608e081627c6f3f8eb1518a70579ed34968fc11"
+      ],
+      "package_hash": "lht24recdqbme25msvkt4ik5pdmbwn43ygxncqvci6y5b22riwyq====",
       "dependencies": [
         {
           "name": "py-pip",
@@ -12779,7 +12781,7 @@
           ]
         }
       ],
-      "hash": "tvn57f2yzk5vrxucl4obj7oyofkhnn63"
+      "hash": "wjyb27auuttehkvnmwwa4nnpk6gjuvhv"
     },
     "kfzgx4zo7n64ds6jocm6hufwelca4ts7": {
       "name": "py-globus-sdk",
@@ -12892,7 +12894,7 @@
       ],
       "hash": "kfzgx4zo7n64ds6jocm6hufwelca4ts7"
     },
-    "3z24lqzd77pdlhqlghkmeirrsmwxwnpl": {
+    "jlvvntsm7nwqwkzgidwqrnbedr3wflek": {
       "name": "py-paramiko",
       "version": "2.12.0",
       "arch": {
@@ -12987,6 +12989,14 @@
           ]
         },
         {
+          "name": "py-six",
+          "hash": "ry5sl75ybxlinqu5eycb2svpf5svmlng",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
           "name": "py-wheel",
           "hash": "vrjigyw5ns72e2i3j6ntsynsoybrrwof",
           "type": [
@@ -13002,7 +13012,7 @@
           ]
         }
       ],
-      "hash": "3z24lqzd77pdlhqlghkmeirrsmwxwnpl"
+      "hash": "jlvvntsm7nwqwkzgidwqrnbedr3wflek"
     },
     "uzj7vsb7slhpaq5hd4dbqkgxbp4tbxi6": {
       "name": "py-bcrypt",
@@ -13202,7 +13212,7 @@
       ],
       "hash": "556swszrzzi2oj6yqm2xr6ktluhfhgg7"
     },
-    "cb4ctxukf7unibduquvadnfritezznlh": {
+    "dyqhxhok7z2fydixlcnqdmbb2hys5frd": {
       "name": "py-pyzmq",
       "version": "24.0.1",
       "arch": {
@@ -13259,7 +13269,7 @@
       "dependencies": [
         {
           "name": "libzmq",
-          "hash": "gefqdyukj2oixybhszldn4palwvp5wuz",
+          "hash": "gwuk5al6amglbrsx2qjyfjjc6ehylfbt",
           "type": [
             "build",
             "link"
@@ -13317,9 +13327,9 @@
           ]
         }
       ],
-      "hash": "cb4ctxukf7unibduquvadnfritezznlh"
+      "hash": "dyqhxhok7z2fydixlcnqdmbb2hys5frd"
     },
-    "gefqdyukj2oixybhszldn4palwvp5wuz": {
+    "gwuk5al6amglbrsx2qjyfjjc6ehylfbt": {
       "name": "libzmq",
       "version": "4.3.4",
       "arch": {
@@ -13383,7 +13393,7 @@
       "patches": [
         "310b8aa57a8ea77b7ac74debb3bf928cbafdef5e7ca35beaac5d9c61c7edd239"
       ],
-      "package_hash": "xygwowr3d4bxrwxq2f65fxxv6ayaxs25tl5lreethergwi3yhlga====",
+      "package_hash": "ylbikx7frjj72faws5kvicdn262j4iqsx357jkynclr7bc4dxnvq====",
       "dependencies": [
         {
           "name": "libbsd",
@@ -13409,7 +13419,7 @@
           ]
         }
       ],
-      "hash": "gefqdyukj2oixybhszldn4palwvp5wuz"
+      "hash": "gwuk5al6amglbrsx2qjyfjjc6ehylfbt"
     },
     "mppiugfdcadx766szmnqfy3qnajhgfui": {
       "name": "libsodium",
@@ -14403,6 +14413,101 @@
       ],
       "hash": "hnptppkkiznv5kd6iwedphberk7i6vul"
     },
+    "ufemdr4b6fp2kfckpklgmlpwdjs57lx2": {
+      "name": "py-universal-pathlib",
+      "version": "0.0.21",
+      "arch": {
+        "platform": "linux",
+        "platform_os": "ubuntu22.04",
+        "target": {
+          "name": "skylake",
+          "vendor": "GenuineIntel",
+          "features": [
+            "adx",
+            "aes",
+            "avx",
+            "avx2",
+            "bmi1",
+            "bmi2",
+            "clflushopt",
+            "f16c",
+            "fma",
+            "mmx",
+            "movbe",
+            "pclmulqdq",
+            "popcnt",
+            "rdrand",
+            "rdseed",
+            "sse",
+            "sse2",
+            "sse4_1",
+            "sse4_2",
+            "ssse3",
+            "xsavec",
+            "xsaveopt"
+          ],
+          "generation": 0,
+          "parents": [
+            "broadwell"
+          ]
+        }
+      },
+      "compiler": {
+        "name": "gcc",
+        "version": "11.3.0"
+      },
+      "namespace": "spack_repo",
+      "parameters": {
+        "build_system": "python_pip",
+        "cflags": [],
+        "cppflags": [],
+        "cxxflags": [],
+        "fflags": [],
+        "ldflags": [],
+        "ldlibs": []
+      },
+      "package_hash": "4ucf7xtaes26gnjoxfk3u6omkmzlllbydaxmwpfroo5fijounkca====",
+      "dependencies": [
+        {
+          "name": "py-flit-core",
+          "hash": "cvvvq25ye5mkidtwnevr5qrrxx7fq3ky",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-fsspec",
+          "hash": "w2wsckxcnpgx7exbxj4blscrs2tj3shx",
+          "type": [
+            "build",
+            "run"
+          ]
+        },
+        {
+          "name": "py-pip",
+          "hash": "bsegodnwqflbn3bfj5dbbgo2mvimepac",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "py-wheel",
+          "hash": "vrjigyw5ns72e2i3j6ntsynsoybrrwof",
+          "type": [
+            "build"
+          ]
+        },
+        {
+          "name": "python",
+          "hash": "w3fvbz2ztvhq6uoo3uovqlefct2nlkaw",
+          "type": [
+            "build",
+            "run"
+          ]
+        }
+      ],
+      "hash": "ufemdr4b6fp2kfckpklgmlpwdjs57lx2"
+    },
     "nfv7qqf6qcs76h2ycdygolv7j6qhn6f2": {
       "name": "py-xxhash",
       "version": "2.0.2",
@@ -14554,7 +14659,7 @@
       "package_hash": "oqk5v7ec6akhzjzq2ruvgiwpww24dc5hpcegl56jp6xycipadnjq====",
       "hash": "g4vdtndxbsifjzhy2guvjkdozuk7tnym"
     },
-    "rarvzqmrdtp66d7hfq3thg46oyuhgblt": {
+    "sevpfmxohqq4gnd57ivhn64iqlmm5tlf": {
       "name": "snakemake",
       "version": "7.18.2",
       "arch": {
@@ -14704,7 +14809,7 @@
         },
         {
           "name": "py-nbformat",
-          "hash": "4f4bk5gkbck3dobolqfs2j4tp2bvy4ik",
+          "hash": "4nmllow5fugdizjfpg4g6w5ouiu2xg4n",
           "type": [
             "build",
             "run"
@@ -14861,7 +14966,7 @@
           ]
         }
       ],
-      "hash": "rarvzqmrdtp66d7hfq3thg46oyuhgblt"
+      "hash": "sevpfmxohqq4gnd57ivhn64iqlmm5tlf"
     },
     "tfyfvc2v6zn2z4m5pfsxdkyel762fyo7": {
       "name": "py-appdirs",
@@ -16872,7 +16977,7 @@
       ],
       "hash": "f6rth7fwbcmlvfiwhhqr5zjknv3vzpaw"
     },
-    "4f4bk5gkbck3dobolqfs2j4tp2bvy4ik": {
+    "4nmllow5fugdizjfpg4g6w5ouiu2xg4n": {
       "name": "py-nbformat",
       "version": "5.7.0",
       "arch": {
@@ -16959,7 +17064,7 @@
         },
         {
           "name": "py-jupyter-core",
-          "hash": "6cymokxd2e6t66bpwj4vx3vskhmzhja6",
+          "hash": "vwqfw2mtwgwdrjd3cfxl3hxnw6rg5pch",
           "type": [
             "build",
             "run"
@@ -16974,7 +17079,7 @@
         },
         {
           "name": "py-traitlets",
-          "hash": "xpy2tdsy7r5nviqa3i6bbmncn67xny3c",
+          "hash": "c3amkeq6wiuwgm4ijqyyja5kj6o7zsot",
           "type": [
             "build",
             "run"
@@ -16996,7 +17101,7 @@
           ]
         }
       ],
-      "hash": "4f4bk5gkbck3dobolqfs2j4tp2bvy4ik"
+      "hash": "4nmllow5fugdizjfpg4g6w5ouiu2xg4n"
     },
     "ajtpaipbakmftoseukm4u7h7mqllt4ie": {
       "name": "py-fastjsonschema",
@@ -17173,7 +17278,7 @@
       ],
       "hash": "aduasvy4ahchoclm4le5l65v7gjqlhts"
     },
-    "6cymokxd2e6t66bpwj4vx3vskhmzhja6": {
+    "vwqfw2mtwgwdrjd3cfxl3hxnw6rg5pch": {
       "name": "py-jupyter-core",
       "version": "5.1.0",
       "arch": {
@@ -17252,7 +17357,7 @@
         },
         {
           "name": "py-traitlets",
-          "hash": "xpy2tdsy7r5nviqa3i6bbmncn67xny3c",
+          "hash": "c3amkeq6wiuwgm4ijqyyja5kj6o7zsot",
           "type": [
             "build",
             "run"
@@ -17274,7 +17379,7 @@
           ]
         }
       ],
-      "hash": "6cymokxd2e6t66bpwj4vx3vskhmzhja6"
+      "hash": "vwqfw2mtwgwdrjd3cfxl3hxnw6rg5pch"
     },
     "nxhdanmljcweqtxv564ixufsv5f2mpzh": {
       "name": "py-platformdirs",
@@ -17371,9 +17476,9 @@
       ],
       "hash": "nxhdanmljcweqtxv564ixufsv5f2mpzh"
     },
-    "xpy2tdsy7r5nviqa3i6bbmncn67xny3c": {
+    "c3amkeq6wiuwgm4ijqyyja5kj6o7zsot": {
       "name": "py-traitlets",
-      "version": "5.3.0",
+      "version": "5.7.1",
       "arch": {
         "platform": "linux",
         "platform_os": "ubuntu22.04",
@@ -17424,7 +17529,7 @@
         "ldflags": [],
         "ldlibs": []
       },
-      "package_hash": "nqivgjlkgsgjbdfvg422yguqdi53nnvdl2bbpkz5kh26duylgaza====",
+      "package_hash": "47ti226ukvw54mnlg36fpb6j3l7s6eibfjsu3txyhx2euiq3rcia====",
       "dependencies": [
         {
           "name": "py-hatchling",
@@ -17456,7 +17561,7 @@
           ]
         }
       ],
-      "hash": "xpy2tdsy7r5nviqa3i6bbmncn67xny3c"
+      "hash": "c3amkeq6wiuwgm4ijqyyja5kj6o7zsot"
     },
     "j6awec6jp3tkwluh3gcjptky7a3rdzow": {
       "name": "py-networkx",
@@ -21352,100 +21457,6 @@
       },
       "package_hash": "sqebra7hchrtnuwxvcfrthvcsemcsqoagjsxceuxqr6livd3kbja====",
       "hash": "ilnyamji47ixfoi23k2kldkbojuat7yu"
-    },
-    "b6n6apyto6jitutdpjq4lmsrkry6ggz5": {
-      "name": "util-linux",
-      "version": "2.38.1",
-      "arch": {
-        "platform": "linux",
-        "platform_os": "ubuntu22.04",
-        "target": {
-          "name": "skylake",
-          "vendor": "GenuineIntel",
-          "features": [
-            "adx",
-            "aes",
-            "avx",
-            "avx2",
-            "bmi1",
-            "bmi2",
-            "clflushopt",
-            "f16c",
-            "fma",
-            "mmx",
-            "movbe",
-            "pclmulqdq",
-            "popcnt",
-            "rdrand",
-            "rdseed",
-            "sse",
-            "sse2",
-            "sse4_1",
-            "sse4_2",
-            "ssse3",
-            "xsavec",
-            "xsaveopt"
-          ],
-          "generation": 0,
-          "parents": [
-            "broadwell"
-          ]
-        }
-      },
-      "compiler": {
-        "name": "gcc",
-        "version": "11.3.0"
-      },
-      "namespace": "builtin",
-      "parameters": {
-        "bash": false,
-        "build_system": "autotools",
-        "cflags": [],
-        "cppflags": [],
-        "cxxflags": [],
-        "fflags": [],
-        "ldflags": [],
-        "ldlibs": []
-      },
-      "package_hash": "kfwodoimhdryf2jiiwg5g3k5cmdl7joibnfjer5y2bzsjuqmnouq====",
-      "dependencies": [
-        {
-          "name": "libxcrypt",
-          "hash": "a65fnkkfwmm6uw2kqs45i7zxm55dbjjx",
-          "type": [
-            "link"
-          ]
-        },
-        {
-          "name": "ncurses",
-          "hash": "53qvql3d6phfosdinhjdvmdv6735slq3",
-          "type": [
-            "link"
-          ]
-        },
-        {
-          "name": "pkgconf",
-          "hash": "n7veb2ootjreyewjx6wnmtdjwbsq2cdd",
-          "type": [
-            "build"
-          ]
-        },
-        {
-          "name": "python",
-          "hash": "w3fvbz2ztvhq6uoo3uovqlefct2nlkaw",
-          "type": [
-            "build"
-          ]
-        },
-        {
-          "name": "zlib",
-          "hash": "rcig5et6juu4y42r6v5z6fvkakzygdox",
-          "type": [
-            "link"
-          ]
-        }
-      ],
-      "hash": "b6n6apyto6jitutdpjq4lmsrkry6ggz5"
     }
   }
 }

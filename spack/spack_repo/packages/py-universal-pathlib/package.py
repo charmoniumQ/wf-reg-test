@@ -16,6 +16,8 @@ class PyUniversalPathlib(PythonPackage):
 
     maintainers = ["charmoniumQ"]
 
+    version("0.0.21", sha256="ed18290f2ded33481a754aac3da94fb6bf78f628027b10c3e95ceb6075415e69")
+
     # https://github.com/fsspec/universal_pathlib/blob/v0.0.21/pyproject.toml#L19
     depends_on("python@3.7:", type=("build", "run"))
 

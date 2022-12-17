@@ -113,7 +113,7 @@ def parsl_parallel_map_with_id(
 ) -> Iterable[tuple[_T, _U, _V]]:
     with create_temp_dir() as temp_dir:
         # Note, I am using a tuple instead of a list because tuples are covariant.
-        execfile(os.environ["PARSL_CONFIG"], globals(), locals())
+        exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
         if oversubscribe:
             @parsl.python_app
             def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:

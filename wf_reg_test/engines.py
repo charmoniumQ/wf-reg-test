@@ -122,8 +122,10 @@ class SnakemakeEngine(Engine):
                     "snakemake",
                     f"--cores={n_cores}",
                     "--use-singularity",
+                    "--use-conda",
                     "--forceall",
                     "--snakefile",
+                    f"--directory={log_dir!s}"
                     snakefile,
                 ],
                 cwd=code_dir,
