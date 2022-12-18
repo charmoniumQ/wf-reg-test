@@ -30,7 +30,7 @@ spack:
   - py-xxhash
   - py-pyyaml@6
   - py-charmonium-time-block@0.3:0
-  - py-freeze
+  - py-charmonium-freeze
   - py-universal-pathlib
   - py-toolz
   - py-parsl

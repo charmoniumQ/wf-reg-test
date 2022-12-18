@@ -4,7 +4,7 @@ set -e
 
 # See spack requirements here:
 # https://spack.readthedocs.io/en/latest/getting_started.html
-sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake
+sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc
 
 # Install spack
 if [ ! -d spack ]; then
@@ -16,10 +16,6 @@ git -C spack pull origin develop-merge
 source ~/spack/share/spack/setup-env.sh
 
 # Spack takes too long to build Rust.
-if [ ! -d ~/.cargo ]; then
-	curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
-	source "$HOME/.cargo/env"
-fi
 spack external find rust
 # also cmake, which we already installed with apt
 spack external find cmake
@@ -31,13 +27,15 @@ spack external find cmake
 if [ ! -d wf-reg-test ]; then
 	git clone https://github.com/charmoniumQ/wf-reg-test
 fi
+git -C wf-reg-test pull origin
 if ! spack repo list | grep spack_repo; then
 	spack repo add wf-reg-test/spack/spack_repo
 fi
 
-if [ ! -d spack/var/spack/environments/wf-reg-test/ ]; then
-	spack env create wf-reg-test wf-reg-test/spack/spack.yaml
+if [ -d spack/var/spack/environments/wf-reg-test/ ]; then
+	spack env remove wf-reg-test
 fi
+spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test
 spack concretize --fresh --force
 for i in $(seq 0 2 $(nproc)); do
@@ -47,7 +45,8 @@ wait $(jobs -p)
 spack install --yes
 
 # Create install script:
-spack env deactivate
+spack env deactivate --sh > spack/deactivate.sh
+source spack/deactivate.sh
 spack env activate wf-reg-test --sh > spack/activate.sh
 source spack/activate.sh
 
