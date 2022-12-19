@@ -115,6 +115,7 @@ def parsl_parallel_map_with_id(
         # Note, I am using a tuple instead of a list because tuples are covariant.
         exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
         if oversubscribe:
+            raise NotImplementedError("Oversubscribe is not implemented for multi-node deployments yet.")
             @parsl.python_app
             def _execute_one(idx: int, pool: ResourcePool[int]) -> tuple[int, _V]:
                 t, v = ts_vs[idx]
@@ -124,6 +125,7 @@ def parsl_parallel_map_with_id(
         else:
             @parsl.python_app
             def _execute_one(idx: int) -> tuple[int, _V]:
+                return None
                 t, v = ts_vs[idx]
                 return idx, execute_one(t, v, None, **kwargs)
             futures = [_execute_one(idx) for idx in range(len(ts_vs))]

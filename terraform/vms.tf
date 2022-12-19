@@ -77,28 +77,27 @@ resource "azurerm_linux_virtual_machine" "manager" {
   identity {
     type = "SystemAssigned"
   }
-  # connection {
-  #   type        = "ssh"
-  #     user        = var.username
-  #     host        = azurerm_linux_virtual_machine.manager.public_ip_address
-  #     private_key = tls_private_key.developer.private_key_openssh
-  # }
+  connection {
+    type        = "ssh"
+      user        = var.username
+      host        = azurerm_linux_virtual_machine.manager.public_ip_address
+      private_key = tls_private_key.developer.private_key_openssh
+  }
+  provisioner "file" {
+      content = tls_private_key.manager.private_key_openssh
+      destination = "/home/${var.username}/.ssh/id_rsa"
+  }
+  provisioner "remote-exec" {
+      inline = [
+        "chmod 0600 ~/.ssh/id_rsa",
+      ]
+  }
+  provisioner "file" {
+      content = "export PARSL_WORKERS=${join(",", [for i in range(var.workers): "worker-${i}"])}\nPARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py\n"
+      destination = "/home/${var.username}/parsl-config.sh"
+  }
   # provisioner "remote-exec" {
   #     script = "../spack/setup_env.sh"
-  # }
-  # provisioner "file" {
-  #     content = tls_private_key.manager.private_key_openssh
-  #     destination = "/home/${var.username}/.ssh/id_rsa"
-  # }
-  # provisioner "file" {
-  #     content = "export PARSL_WORKERS=${join(",", [for i in range(var.workers): "worker-${i}"])}\n"
-  #     destination = "/home/${var.username}/parsl-workers.sh"
-  # }
-  # provisioner "remote-exec" {
-  #     inline = [
-  #       "chmod 0600 ~/.ssh/id_rsa",
-  #       # "bash -c 'source spack/activate.sh && git clone https://github.com/charmoniumQ/wf-reg-test'",
-  #     ]
   # }
 }
 

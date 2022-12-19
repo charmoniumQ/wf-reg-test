@@ -146,7 +146,7 @@ def test() -> None:
             time_bound=DateTime(2022, 8, 1),
             conditions=[Condition.NO_CONTROLS],
             desired_execution_count=1,
-            execution_limit=15,
+            execution_limit=3,
         )
         parallel_execute(
             hub,
@@ -162,6 +162,7 @@ def test() -> None:
         serialize(hub, data_path)
     with ch_time_block.ctx("report", print_start=False):
         report(hub)
+
 
 @main.command()
 def review() -> None:
