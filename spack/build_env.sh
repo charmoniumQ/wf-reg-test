@@ -78,6 +78,4 @@ tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar.g
 # Unfortunately, azure-cli in Spack is too old.
 export PATH=$PATH:$HOME/.local/bin
 pip install azure-cli
-az login
-az ad signed-in-user show
 az storage blob upload --account-name wfregtest --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite

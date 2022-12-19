@@ -23,24 +23,15 @@
 from spack.package import *
 
 
-class PyDomonic(PythonPackage):
-    """Generate html with python 3. DOM API, Javascript API and more..."""
+class PyElementpath(PythonPackage):
+    """XPath 1.0/2.0/3.0 parsers and selectors for ElementTree and lxml"""
 
-    # pypi = "domonic/domonic-0.9.11.tar.gz"
-    # The PyPI release does not have `requirements.txt`, which `setup.py` wants to read.
-    url = "https://github.com/byteface/domonic/archive/0.9.11.tar.gz"
+    pypi = "elementpath/elementpath-3.0.2.tar.gz"
 
     maintainers = ["charmoniumQ"]
 
-    version("0.9.11", sha256="05fcc95b10fd4f15438159b7b7f47cc72851bdabfcfc3fd52f359bbc909b4faf")
+    version("3.0.2", sha256="cca18742dc0f354f79874c41a906e6ce4cc15230b7858d22a861e1ec5946940f")
+    version("2.5.3", sha256="b8aeb6f27dddc10fb9201b62090628a846cbae8577f3544cb1075fa38d0817f6")
 
-    # https://github.com/byteface/domonic/blob/0.9.11/setup.py
+    # https://github.com/sissaschool/elementpath/blob/v3.0.2/setup.py
     depends_on("py-setuptools", type="build")
-
-    # https://github.com/byteface/domonic/blob/0.9.11/requirements.txt
-    depends_on("py-elementpath@2.5.2:2.5", type=("build", "run"))
-    depends_on("py-python-dateutil@2.8.2", type=("build", "run"))
-    depends_on("py-requests@2.28", type=("build", "run"))
-    depends_on("py-urllib3@1.26.9:1.26", type=("build", "run"))
-    depends_on("py-html5lib@1.1:1", type=("build", "run"))
-    depends_on("py-cssselect@1.1", type=("build", "run"))
