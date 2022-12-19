@@ -15,10 +15,10 @@ import click
 import charmonium.time_block as ch_time_block
 import yaml
 import tqdm
-from upath import UPath
 
 from .serialization import serialize, deserialize
-from .report import report_html
+# from .report import report_html
+report_html = lambda x: "HTML report not available"
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
 from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr
@@ -131,6 +131,13 @@ def clear() -> None:
 @main.command()
 @ch_time_block.decor()
 def test() -> None:
+    import azure.identity.aio, upath
+    storage = upath.UPath(
+        "abfs://data/",
+        account_name="wfregtest",
+        credential=azure.identity.aio.ManagedIdentityCredential()
+    )
+
     with ch_time_block.ctx("load", print_start=False):
         hub = deserialize(data_path)
     with ch_time_block.ctx("process", print_start=False):
@@ -149,7 +156,7 @@ def test() -> None:
             serialize_every=TimeDelta(seconds=0),
             oversubscribe=False,
             remote=True,
-            storage=UPath("abfs://wfregtest.blob.core.windows.net/data"),
+            storage=storage,
         )
     with ch_time_block.ctx("store", print_start=False):
         serialize(hub, data_path)

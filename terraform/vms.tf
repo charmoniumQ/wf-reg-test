@@ -102,8 +102,8 @@ resource "azurerm_linux_virtual_machine" "manager" {
   # }
 }
 
-resource azurerm_role_assignment manager-data {
-  scope              = azurerm_storage_container.data.resource_manager_id
+resource azurerm_role_assignment manager-storage {
+  scope              = azurerm_storage_account.default.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id       = azurerm_linux_virtual_machine.manager.identity[0].principal_id
 }
@@ -176,7 +176,7 @@ resource "azurerm_linux_virtual_machine" "worker" {
 
 resource azurerm_role_assignment worker-data {
   count                = var.workers
-  scope                = azurerm_storage_container.data.resource_manager_id
+  scope                = azurerm_storage_account.default.id
   role_definition_name = "Storage Blob Data Contributor"
   principal_id         = azurerm_linux_virtual_machine.worker[count.index].identity[0].principal_id
 }

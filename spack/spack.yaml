@@ -1,17 +1,13 @@
 spack:
   specs:
   - hwloc
-  
   #- util-linux
   - time
   - nextflow
   - apptainer
-
-  
   # Note that many Snakemake repositories require snakemake@7.5:
   # E.g., https://github.com/friendsofstrandseq/mosaicatcher-pipeline/
   - snakemake@7.18.2+s3+http+ftp+reports
-  
   # Many users use the bioconda package for Snakemake.
   # However, the bioconda package for Snakemake pulls in several dependencies that are not true dependencies of Snakemake.
   # To be compatible with users who assume bioconda Snakemake, I must also pull in those packages.
@@ -22,15 +18,11 @@ spack:
   # - py-pysftp
   # - py-aioeasywebdav
   - py-pandas
-  
   # - py-slacker
   # - py-peppy
   # Snakemake --use-conda needs a frontend.
   # I will use micrommaba
   - micromamba
-
-  - python@3.10
-  
   # Next are python dependencies
   - py-pygithub@1
   - py-gitpython@3
@@ -46,11 +38,12 @@ spack:
   - py-click@8
   - py-azure-identity
   - py-tqdm
-
   # py-azure-cli in Spack is too old to be usable.
   # If you need this, try `pip install azure-cli`
   # - py-azure-cli
   - py-pip
+  - py-domonic
   view: true
   concretizer:
     unify: when_possible
+
