@@ -270,7 +270,7 @@ class FileBundle:
                     contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
                     tarball.add(root / path, path)
             tarball.close()
-            remote_archive.fs.put_file(tarball.name, remote_archive.path)
+            remote_arcihve.fs.put_file("README.md", remote_archive._url.netloc + remote_archive.path)
         return FileBundle(contents)
 
     def total_size(self) -> int:
