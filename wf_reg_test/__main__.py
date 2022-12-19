@@ -9,7 +9,7 @@ import sys
 from datetime import datetime as DateTime
 from datetime import timedelta as TimeDelta
 from pathlib import Path
-from typing import cast, Optional
+from typing import cast, Optional, Callable, Any
 
 import click
 import charmonium.time_block as ch_time_block
@@ -18,7 +18,7 @@ import tqdm
 
 from .serialization import serialize, deserialize
 # from .report import report_html
-report_html = lambda x: "HTML report not available"
+report_html = cast(Callable[[Any], str], lambda x: "HTML report not available")
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
 from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr
