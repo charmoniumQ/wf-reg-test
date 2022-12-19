@@ -19,7 +19,7 @@ import charmonium.time_block as ch_time_block
 import yaml
 from upath import UPath
 
-from .util import create_temp_dir, expect_type, walk_files
+from .util import create_temp_dir, expect_type, walk_files, random_str, fs_escape
 from .workflows import Execution, Revision, Condition, FileBundle
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
@@ -79,11 +79,15 @@ class Engine:
                 "status": proc.returncode,
                 "resources": resources,
             }))
+        name = "-".join([
+            fs_escape(revision.workflow.display_name),
+            random_str(8),
+        ])
         return Execution(
             machine=None,
             datetime=now,
-            outputs=FileBundle.create_in_storage(out_dir, storage / "stdout.tar.xz"),
-            logs=FileBundle.create_in_storage(log_dir, storage / "stdout.tar.xz"),
+            outputs=FileBundle.create_in_storage(out_dir, storage / name / "stdout.tar.xz"),
+            logs=FileBundle.create_in_storage(log_dir, storage / name / "stdout.tar.xz"),
             condition=condition,
             resources=resources,
             status_code=proc.returncode,

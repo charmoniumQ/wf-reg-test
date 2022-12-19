@@ -10,6 +10,7 @@ import tempfile
 from pathlib import Path
 import pprint
 from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional
+import urllib.parse
 import itertools
 import xml.etree.ElementTree
 
@@ -181,3 +182,7 @@ def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
         *((children,) if children else ()),
         *((tail,) if tail else ()),
     )
+
+
+def fs_escape(string: str) -> str:
+    return urllib.parse.urlencode(string.replace(" ", "-").replace("_", "-"))

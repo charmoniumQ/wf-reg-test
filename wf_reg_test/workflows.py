@@ -270,7 +270,10 @@ class FileBundle:
                     contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
                     tarball.add(root / path, path)
             tarball.close()
-            remote_archive.fs.put_file(tarball.name, remote_archive.path)
+            try:
+                remote_arcihve.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+            except Exception as exc:
+                raise Exception("cp", tarball.name, remote_archive._url.netloc + remote_archive.path) from exc
         return FileBundle(contents)
 
     def total_size(self) -> int:
