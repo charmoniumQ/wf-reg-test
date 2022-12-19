@@ -87,7 +87,7 @@ class Workflow:
         if wall_times_of_successes:
             return max(wall_times_of_successes) * 3 // 2 + TimeDelta(minutes=10)
         else:
-            return TimeDelta(minutes=60)
+            return TimeDelta(minutes=5)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
@@ -239,7 +239,7 @@ Condition.EASY_CONTROLS = Condition(
 Condition.HARD_CONTROLS = Condition(
         single_core=True,
         aslr=True,
-        faketime=DateTime(2020, 1, 1),
+        faketime=DateTime(2022, 1, 1),
         dev_random=RandomStream(seed=0, method="stdlib"),
         rr_record=False,
         rr_replay=None,
