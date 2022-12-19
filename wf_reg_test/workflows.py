@@ -271,7 +271,7 @@ class FileBundle:
                     tarball.add(root / path, path)
             tarball.close()
             try:
-                remote_arcihve.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
             except Exception as exc:
                 raise Exception("cp", tarball.name, remote_archive._url.netloc + remote_archive.path) from exc
         return FileBundle(contents)
