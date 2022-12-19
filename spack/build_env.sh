@@ -4,7 +4,7 @@ set -e
 
 # See spack requirements here:
 # https://spack.readthedocs.io/en/latest/getting_started.html
-sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc
+sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc cargo
 
 # Install spack
 if [ ! -d spack ]; then

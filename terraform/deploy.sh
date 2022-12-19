@@ -31,8 +31,12 @@ ssh -F ssh_config manager "if [ ! -d spack ]; then bash setup_env.sh; fi"
 scp -F ssh_config ../spack/setup_env.sh worker-0:
 ssh -F ssh_config worker-0 "if [ ! -d spack ]; then bash setup_env.sh; fi"
 
+ssh -F ssh_config manager "if [ ! -d wf-reg-test ]; then git clone https://github.com/charmoniumQ/wf-reg-test; fi"
+ssh -F ssh_config worker-0 "if [ ! -d wf-reg-test ]; then git clone https://github.com/charmoniumQ/wf-reg-test; fi"
+
 count=$(terraform output --raw worker_count)
-python3 -c "print('export PARSL_WORKERS=' + ','.join(f'worker-{i}' for i in range($count)))" > $dir/parsl-worker.sh
-scp -F ssh_config $dir/parsl-worker.sh manager:parsl-worker.sh
+python3 -c "print('export PARSL_WORKERS=' + ','.join(f'worker-{i}' for i in range($count)))" > $dir/parsl-config.sh
+echo "export PARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py" >> $dir/parsl-config.sh
+scp -F ssh_config $dir/parsl-worker.sh manager:parsl-config.sh
 
 rm -rf $dir

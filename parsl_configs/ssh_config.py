@@ -9,7 +9,7 @@ parsl.load(parsl.config.Config(
                     parsl.channels.SSHChannel(hostname, script_dir="/home/azureuser/parsl")
                     for hostname in os.environ["PARSL_WORKERS"].split(",")
                 ],
-                worker_init="source $HOME/spack/activate.sh",
+                worker_init="source $HOME/spack/activate.sh\nexport PYTHONPATH=$HOME/wf-reg-test:$PYTHONPATH",
                 parallelism=1,
             ),
         ),

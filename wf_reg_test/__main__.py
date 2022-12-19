@@ -18,7 +18,8 @@ import tqdm
 from upath import UPath
 
 from .serialization import serialize, deserialize
-from .report import report_html
+# from .report import report_html
+report_html = lambda x: "HTML report not available"
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
 from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr

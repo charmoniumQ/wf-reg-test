@@ -125,7 +125,7 @@ class SnakemakeEngine(Engine):
                     "--use-conda",
                     "--forceall",
                     "--snakefile",
-                    f"--directory={log_dir!s}"
+                    f"--directory={log_dir!s}",
                     snakefile,
                 ],
                 cwd=code_dir,
