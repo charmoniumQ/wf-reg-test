@@ -184,5 +184,5 @@ def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
     )
 
 
-def fs_encode(string: str) -> str:
+def fs_escape(string: str) -> str:
     return urllib.parse.urlencode(string.replace(" ", "-").replace("_", "-"))
