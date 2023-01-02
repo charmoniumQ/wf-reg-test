@@ -61,17 +61,16 @@ def bar4():
         return foo7(revision, condition, storage)
 
     revision = hub.registries[0].workflows[0].revisions[0]
-    storage = upath.UPath("storage")
-    # import azure.identity.aio
-    # storage = upath.UPath(
-    #     "abfs://data/",
-    #     account_name="wfregtest",
-    #     credential=azure.identity.aio.ManagedIdentityCredential()
-    # )
+    import azure.identity.aio
+    storage = upath.UPath(
+        "abfs://data/",
+        account_name="wfregtest",
+        credential=azure.identity.aio.ManagedIdentityCredential()
+    )
     print(foo6(revision, Condition.NO_CONTROLS, storage).result())
 
 if __name__ == "__main__":
-    exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
+    exec(Path(os.environ["PARSL_CONFIG"]).read_text(), {**globals(), "parallelism": 1}, locals())
     print(foo1(3).result())
     bar1()
     bar2()
