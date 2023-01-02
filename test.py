@@ -32,17 +32,7 @@ from wf_reg_test.serialization import deserialize
 from wf_reg_test.engines import engines
 
 def bar3():
-    data_path = Path("data")
-    hub = deserialize(data_path)
-    @parsl.python_app
-    def foo5(revision: Revision) -> str:
-        workflow = expect_type(Workflow, revision.workflow)
-        registry = workflow.registry
-        print(workflow.display_name, registry.display_name, revision.display_name)
-        return str(engines[workflow.engine])
-
-    revision = hub.registries[0].workflows[0].revisions[0]
-    print(foo5(revision).result())
+    pass
 
 from upath import UPath
 
