@@ -28,9 +28,11 @@ def bar2():
     print(foo4(3).result())
 
 from wf_reg_test.workflows import Workflow
+from wf_reg_test.serialization import deserialize
 from wf_reg_test.engines import engines
 
 def bar3():
+    data_path = Path("data")
     hub = deserialize(data_path)
     @parsl.python_app
     def foo5(revision: Revision) -> str:
