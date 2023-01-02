@@ -86,8 +86,8 @@ class Engine:
         return Execution(
             machine=None,
             datetime=now,
-            outputs=None, #FileBundle.create_in_storage(out_dir, storage / name / "stdout.tar.xz"),
-            logs=None, #FileBundle.create_in_storage(log_dir, storage / name / "stdout.tar.xz"),
+            outputs=FileBundle.create_in_storage(out_dir, storage / name / "stdout.tar.xz"),
+            logs=FileBundle.create_in_storage(log_dir, storage / name / "stdout.tar.xz"),
             condition=condition,
             resources=resources,
             status_code=proc.returncode,

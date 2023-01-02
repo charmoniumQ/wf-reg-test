@@ -61,12 +61,13 @@ def bar4():
         return foo7(revision, condition, storage)
 
     revision = hub.registries[0].workflows[0].revisions[0]
-    import azure.identity.aio, upath
-    storage = upath.UPath(
-        "abfs://data/",
-        account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential()
-    )
+    storage = upath.UPath("storage")
+    # import azure.identity.aio, upath
+    # storage = upath.UPath(
+    #     "abfs://data/",
+    #     account_name="wfregtest",
+    #     credential=azure.identity.aio.ManagedIdentityCredential()
+    # )
     print(foo6(revision, Condition.NO_CONTROLS, storage).result())
 
 if __name__ == "__main__":
