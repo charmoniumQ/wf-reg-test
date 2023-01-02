@@ -36,9 +36,9 @@ data_path = Path("data")
 def bar3():
     pass
 
-from upath import UPath
+import upath
 
-def foo7(revision: Revision, condition: Condition, storage: UPath) -> str:
+def foo7(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
     workflow = expect_type(Workflow, revision.workflow)
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
@@ -56,13 +56,13 @@ def foo7(revision: Revision, condition: Condition, storage: UPath) -> str:
 def bar4():
     hub = deserialize(data_path)
     @parsl.python_app
-    def foo6(revision: Revision, condition: Condition, storage: UPath) -> str:
+    def foo6(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
         from test import foo7
         return foo7(revision, condition, storage)
 
     revision = hub.registries[0].workflows[0].revisions[0]
     storage = upath.UPath("storage")
-    # import azure.identity.aio, upath
+    # import azure.identity.aio
     # storage = upath.UPath(
     #     "abfs://data/",
     #     account_name="wfregtest",
