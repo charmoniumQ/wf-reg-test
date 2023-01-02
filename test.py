@@ -16,14 +16,15 @@ def foo7(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
     print(workflow.display_name, registry.display_name, revision.display_name)
     engine = engines[workflow.engine]
     with create_temp_dir() as path:
-        return engine.run(
-            revision=revision,
-            condition=condition,
-            path=path,
-            which_cores=[0, 1],
-            wall_time_limit=workflow.max_wall_time_estimate(),
-            storage=storage,
-        )
+        return path
+        # return engine.run(
+        #     revision=revision,
+        #     condition=condition,
+        #     path=path,
+        #     which_cores=[0, 1],
+        #     wall_time_limit=workflow.max_wall_time_estimate(),
+        #     storage=storage,
+        # )
 
 if __name__ == "__main__":
     exec(Path(os.environ["PARSL_CONFIG"]).read_text(), {**globals(), "parallelism": 1}, locals())
