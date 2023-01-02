@@ -30,7 +30,7 @@ def bar2():
     def foo4(x: int) -> int:
         return foo3(expect_type(int, x))
 
-    print(foo3(3).result())
+    print(foo4(3).result())
 
 bar2()
 
