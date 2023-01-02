@@ -47,7 +47,6 @@ class Engine:
             wall_time_limit: TimeDelta,
             storage: UPath,
     ) -> Execution:
-        return None
         if revision.workflow is None:
             raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
         if condition.single_core != (len(which_cores) == 1):
@@ -68,6 +67,7 @@ class Engine:
                 with time(executable) as (executable, time_file):
                     with ch_time_block.ctx(f"execute {revision.workflow}"):
                         now = DateTime.now()
+                        return None
                         proc = executable.local_execute(check=False, capture_output=True)
                         resources = parse_time_file(time_file)
                 (log_dir / "stdout.txt").write_bytes(proc.stdout)
