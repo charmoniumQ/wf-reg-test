@@ -61,6 +61,7 @@ def bar4():
         return foo7(revision, condition, storage)
 
     revision = hub.registries[0].workflows[0].revisions[0]
+    import azure.identity.aio, upath
     storage = upath.UPath(
         "abfs://data/",
         account_name="wfregtest",
