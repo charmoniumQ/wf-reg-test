@@ -49,6 +49,10 @@ def bar4():
     hub = deserialize(data_path)
     @parsl.python_app
     def foo6(revision: Revision, condition: Condition, storage: UPath) -> str:
+        from test import foo7
+        return foo7(revision, condition, storage)
+
+    def foo7(revision: Revision, condition: Condition, storage: UPath) -> str:
         workflow = expect_type(Workflow, revision.workflow)
         registry = workflow.registry
         print(workflow.display_name, registry.display_name, revision.display_name)
