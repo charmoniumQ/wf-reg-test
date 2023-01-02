@@ -43,7 +43,6 @@ class Engine:
             self,
             revision: Revision,
             condition: Condition,
-            path: Path,
             which_cores: list[int],
             wall_time_limit: TimeDelta,
             storage: UPath,
