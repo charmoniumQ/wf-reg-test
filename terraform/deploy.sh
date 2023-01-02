@@ -21,20 +21,6 @@ EOF
 ssh-keygen -R "worker-0"
 ssh-keygen -R "manager"
 
-dir=$(mktemp --directory)
-
-count=$(terraform -chdir=terraform output --raw worker_count)
-python3 -c "print('export PARSL_WORKERS=' + ','.join(f'worker-{i}' for i in range($count)))" > $dir/parsl-config.sh
-echo "export PARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py" >> $dir/parsl-config.sh
-
-terraform -chdir=terraform output --raw manager_ssh_key > $dir/manager_ssh_key
-
-scp -F terraform/ssh_config $dir/parsl-config.sh $dir/manager_ssh_key manager:
-
-rm -rf $dir
-
-ssh -F terraform/ssh_config manager 'mv manager_ssh_key .ssh/id_rsa && chmod 0600 .ssh/id_rsa && ssh-keygen -R worker-0'
-
 for host in manager worker-0; do
     ssh -F terraform/ssh_config $host <<EOF
     set -e -x

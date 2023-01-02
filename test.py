@@ -9,8 +9,6 @@ from wf_reg_test.util import expect_type
 def foo1(x: int) -> int:
     return x**2
 
-print(foo1(3).result())
-
 def bar1():
     @parsl.python_app
     def foo2(x: int) -> int:
@@ -69,6 +67,7 @@ def bar4():
 
 if __name__ == "__main__":
     exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
+    print(foo1(3).result())
     bar1()
     bar2()
     bar3()
