@@ -67,8 +67,8 @@ class Engine:
                 with time(executable) as (executable, time_file):
                     with ch_time_block.ctx(f"execute {revision.workflow}"):
                         now = DateTime.now()
-                        return None
                         proc = executable.local_execute(check=False, capture_output=True)
+                        return None
                         resources = parse_time_file(time_file)
                 (log_dir / "stdout.txt").write_bytes(proc.stdout)
                 (log_dir / "stderr.txt").write_bytes(proc.stderr)
