@@ -271,11 +271,11 @@ class FileBundle:
                     tarball.add(root / path, path)
             tarball.close()
             try:
-                if isinstance(remote_archive, Path):
+                if isinstance(remote_archive, UPath):
+                    remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+                else:
                     remote_archive.parent.mkdir(exist_ok=True, parents=True)
                     shutil.move(tarball.name, remote_archive)
-                else:
-                    remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
             except Exception as exc:
                 raise Exception("cp", tarball.name, str(remote_archive)) from exc
         return FileBundle(contents)
