@@ -48,7 +48,7 @@ def foo7(revision: Revision, condition: Condition, storage: UPath) -> str:
             revision=revision,
             condition=condition,
             path=path,
-            which_cores=[0],
+            which_cores=[0, 1],
             wall_time_limit=workflow.max_wall_time_estimate(),
             storage=storage,
         )
