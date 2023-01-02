@@ -28,6 +28,7 @@ def foo3(x: int) -> int:
 def bar2():
     @parsl.python_app
     def foo4(x: int) -> int:
+        from test import foo3
         return foo3(expect_type(int, x))
 
     print(foo4(3).result())
