@@ -5,8 +5,6 @@ import parsl
 
 from wf_reg_test.util import expect_type
 
-exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
-
 @parsl.python_app
 def foo1(x: int) -> int:
     return x**2
@@ -20,8 +18,6 @@ def bar1():
 
     print(foo2(3).result())
 
-bar1()
-
 def foo3(x: int) -> int:
     return x**2
 
@@ -32,8 +28,6 @@ def bar2():
         return foo3(expect_type(int, x))
 
     print(foo4(3).result())
-
-bar2()
 
 from wf_reg_test.workflows import Workflow
 from wf_reg_test.engines import engines
@@ -49,8 +43,6 @@ def bar3():
 
     revision = hub.registries[0].workflows[0].revisions[0]
     print(foo5(revision).result())
-
-bar3()
 
 from upath import UPath
 from wf_reg_test.workflows import Condition
@@ -75,4 +67,9 @@ def bar4():
     storage = UPath("./tmp")
     print(foo6(revision, Condition.NO_CONTROLS, storage).result())
 
-bar4()
+if __name__ == "__main__":
+    exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
+    bar1()
+    bar2()
+    bar3()
+    bar4()
