@@ -27,7 +27,7 @@ def bar2():
 
     print(foo4(3).result())
 
-from wf_reg_test.workflows import Workflow
+from wf_reg_test.workflows import Workflow, Revision, Condition
 from wf_reg_test.serialization import deserialize
 from wf_reg_test.engines import engines
 
@@ -45,7 +45,6 @@ def bar3():
     print(foo5(revision).result())
 
 from upath import UPath
-from wf_reg_test.workflows import Condition
 
 def bar4():
     hub = deserialize(data_path)
