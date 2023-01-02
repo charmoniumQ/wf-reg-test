@@ -43,14 +43,15 @@ def foo7(revision: Revision, condition: Condition, storage: UPath) -> str:
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
     engine = engines[workflow.engine]
-    return engine.run(
-        revision=revision,
-        condition=condition,
-        path=path,
-        which_cores=[0],
-        wall_time_limit=workflow.max_wall_time_estimate(),
-        storage=storage,
-    )
+    with create_temp_dir() as path:
+        return engine.run(
+            revision=revision,
+            condition=condition,
+            path=path,
+            which_cores=[0],
+            wall_time_limit=workflow.max_wall_time_estimate(),
+            storage=storage,
+        )
 
 def bar4():
     hub = deserialize(data_path)
