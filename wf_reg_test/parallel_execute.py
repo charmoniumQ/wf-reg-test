@@ -193,23 +193,20 @@ def execute_one(
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
     engine = engines[workflow.engine]
-    with create_temp_dir() as path:
-        if core_pool is not None:
-            with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:
-                return engine.run(
-                    revision=revision,
-                    condition=condition,
-                    path=path,
-                    which_cores=cores,
-                    wall_time_limit=workflow.max_wall_time_estimate(),
-                    storage=storage,
-                )
-        else:
+    if core_pool is not None:
+        with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:
             return engine.run(
                 revision=revision,
                 condition=condition,
-                path=path,
-                which_cores=[0] if condition.single_core else [0, 1],
+                which_cores=cores,
                 wall_time_limit=workflow.max_wall_time_estimate(),
                 storage=storage,
             )
+    else:
+        return engine.run(
+            revision=revision,
+            condition=condition,
+            which_cores=[0] if condition.single_core else [0, 1],
+            wall_time_limit=workflow.max_wall_time_estimate(),
+            storage=storage,
+        )

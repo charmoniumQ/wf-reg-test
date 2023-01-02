@@ -135,7 +135,7 @@ def test() -> None:
     storage = upath.UPath(
         "abfs://data/",
         account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential()
+        credential=azure.identity.aio.ManagedIdentityCredential(),
     )
 
     with ch_time_block.ctx("load", print_start=False):

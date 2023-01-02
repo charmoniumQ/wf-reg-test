@@ -43,7 +43,6 @@ class Engine:
             self,
             revision: Revision,
             condition: Condition,
-            path: Path,
             which_cores: list[int],
             wall_time_limit: TimeDelta,
             storage: UPath,
@@ -55,39 +54,42 @@ class Engine:
         if condition.aslr or condition.faketime or condition.dev_random is not None or condition.rr_record or condition.rr_replay is not None:
             raise NotImplementedError()
         repo = get_repo(revision.workflow.repo_url)
-        code_dir = path / "code"
-        log_dir = path / "log"
-        out_dir = path / "out"
-        for dir in [code_dir, log_dir, out_dir]:
-            dir.mkdir()
-        now = DateTime.now()
-        repo.checkout(revision, code_dir)
-        with self.get_executable(code_dir, log_dir, out_dir, len(which_cores)) as executable:
-            executable = taskset(executable, which_cores)
-            executable = timeout(executable, wall_time_limit)
-            with time(executable) as (executable, time_file):
-                with ch_time_block.ctx(f"execute {revision.workflow}"):
-                    proc = executable.local_execute(check=False, capture_output=True)
-                    resources = parse_time_file(time_file)
-            (log_dir / "stdout.txt").write_bytes(proc.stdout)
-            (log_dir / "stderr.txt").write_bytes(proc.stderr)
-            (log_dir / "command.sh").write_text("\n".join([
-                *map(shlex.join, repo.get_checkout_cmd(revision, code_dir)),
-                shlex.join(executable.to_env_command())
-            ]))
-            (log_dir / "status.yaml").write_text(yaml.dump({
-                "status": proc.returncode,
-                "resources": resources,
-            }))
-        name = "-".join([
-            fs_escape(revision.workflow.display_name),
-            random_str(8),
-        ])
+        with create_temp_dir() as path:
+            code_dir = path / "code"
+            log_dir = path / "log"
+            out_dir = path / "out"
+            for dir in [code_dir, log_dir, out_dir]:
+                dir.mkdir()
+            repo.checkout(revision, code_dir)
+            with self.get_executable(code_dir, log_dir, out_dir, len(which_cores)) as executable:
+                executable = taskset(executable, which_cores)
+                executable = timeout(executable, wall_time_limit)
+                with time(executable) as (executable, time_file):
+                    with ch_time_block.ctx(f"execute {revision.workflow}"):
+                        now = DateTime.now()
+                        proc = executable.local_execute(check=False, capture_output=True)
+                        resources = parse_time_file(time_file)
+                (log_dir / "stdout.txt").write_bytes(proc.stdout)
+                (log_dir / "stderr.txt").write_bytes(proc.stderr)
+                (log_dir / "command.sh").write_text("\n".join([
+                    *map(shlex.join, repo.get_checkout_cmd(revision, code_dir)),
+                    shlex.join(executable.to_env_command())
+                ]))
+                (log_dir / "status.yaml").write_text(yaml.dump({
+                    "status": proc.returncode,
+                    "resources": resources,
+                }))
+            name = "-".join([
+                fs_escape(revision.workflow.display_name),
+                random_str(8),
+            ])
+            outputs = FileBundle.create_in_storage(out_dir, storage / name / "output.tar.xz")
+            logs = FileBundle.create_in_storage(log_dir, storage / name / "logs.tar.xz")
         return Execution(
             machine=None,
             datetime=now,
-            outputs=FileBundle.create_in_storage(out_dir, storage / name / "output.tar.xz"),
-            logs=FileBundle.create_in_storage(log_dir, storage / name / "error.tar.xz"),
+            outputs=outputs,
+            logs=logs,
             condition=condition,
             resources=resources,
             status_code=proc.returncode,

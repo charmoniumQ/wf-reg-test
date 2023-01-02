@@ -12,6 +12,7 @@ import pprint
 from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional
 import urllib.parse
 import itertools
+import shutil
 import xml.etree.ElementTree
 
 import xxhash
@@ -25,15 +26,17 @@ def curried_getattr(attr: str) -> Callable[[_T], _V]:
 
 
 @contextlib.contextmanager
-def create_temp_file() -> Generator[Path, None, None]:
-    with create_temp_dir() as temp_dir:
+def create_temp_file(cleanup: bool = True) -> Generator[Path, None, None]:
+    with create_temp_dir(cleanup) as temp_dir:
         yield Path(temp_dir / "file")
 
 
 @contextlib.contextmanager
-def create_temp_dir() -> Generator[Path, None, None]:
-    with tempfile.TemporaryDirectory() as temp_dir:
-        yield Path(temp_dir)
+def create_temp_dir(cleanup: bool = True) -> Generator[Path, None, None]:
+    temp_dir = Path(tempfile.mkdtemp())
+    yield Path(temp_dir)
+    if cleanup:
+        shutil.rmtree(temp_dir)
 
 
 def random_str(
