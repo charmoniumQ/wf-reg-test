@@ -31,6 +31,8 @@ from wf_reg_test.workflows import Workflow, Revision, Condition
 from wf_reg_test.serialization import deserialize
 from wf_reg_test.engines import engines
 
+data_path = Path("data")
+
 def bar3():
     pass
 
