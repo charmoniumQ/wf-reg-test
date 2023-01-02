@@ -3,7 +3,7 @@ from pathlib import Path
 
 import parsl
 
-from wf_reg_test.util import expect_type
+from wf_reg_test.util import expect_type, create_temp_dir
 
 @parsl.python_app
 def foo1(x: int) -> int:
