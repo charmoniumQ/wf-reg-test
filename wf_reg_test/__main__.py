@@ -163,6 +163,7 @@ def test() -> None:
     with ch_time_block.ctx("report", print_start=False):
         report(hub)
 
+
 @main.command()
 def review() -> None:
     with ch_time_block.ctx("load", print_start=False):
