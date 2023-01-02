@@ -276,7 +276,7 @@ class FileBundle:
                 else:
                     remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
             except Exception as exc:
-                raise Exception("cp", tarball.name, remote_archive._url.netloc + remote_archive.path) from exc
+                raise Exception("cp", tarball.name, str(remote_archive)) from exc
         return FileBundle(contents)
 
     def total_size(self) -> int:
