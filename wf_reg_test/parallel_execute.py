@@ -194,6 +194,7 @@ def execute_one(
     with create_temp_dir() as path:
         if core_pool is not None:
             with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:
+                return None
                 return engine.run(
                     revision=revision,
                     condition=condition,
@@ -203,6 +204,7 @@ def execute_one(
                     storage=storage,
                 )
         else:
+            return None
             return engine.run(
                 revision=revision,
                 condition=condition,
