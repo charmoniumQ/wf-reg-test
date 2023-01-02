@@ -272,7 +272,7 @@ class FileBundle:
             tarball.close()
             try:
                 if isinstance(remote_archive, Path):
-                    remote_archive.parent.mkdir(exist_ok=True)
+                    remote_archive.parent.mkdir(exist_ok=True, parents=True)
                     shutil.move(tarball.name, remote_archive)
                 else:
                     remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
