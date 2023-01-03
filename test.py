@@ -51,6 +51,7 @@ if __name__ == "__main__":
     @parsl.python_app
     def foo9(storage) -> str:
         ret0 = (storage() / "worker-0_text").write_text("hello world")
+        from pathlib import Path
         from wf_reg_test.util import create_temp_dir
         from wf_reg_test.workflows import FileBundle
         import tarfile
