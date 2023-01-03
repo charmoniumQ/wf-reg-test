@@ -54,6 +54,7 @@ if __name__ == "__main__":
         from pathlib import Path
         from wf_reg_test.workflows import FileBundle
         ret1 = 0
+        root = Path("terraform")
         ret2 = FileBundle.create_in_storage(root, storage() / "file_bundle.tar.xz")
         return ret0, ret1, ret2
 
