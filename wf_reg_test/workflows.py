@@ -270,6 +270,7 @@ class FileBundle:
                     contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
                     tarball.add(root / path, path)
             tarball.close()
+            return FileBundle({})
             try:
                 if isinstance(remote_archive, UPath):
                     remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)

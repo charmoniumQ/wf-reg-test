@@ -83,17 +83,6 @@ class Engine:
                 fs_escape(revision.workflow.display_name),
                 random_str(8),
             ])
-            return Execution(
-                machine=None,
-                datetime=now,
-                outputs=None,
-                logs=None,
-                condition=condition,
-                resources=resources,
-                status_code=proc.returncode,
-                revision=None,
-            )
-
             outputs = FileBundle.create_in_storage(out_dir, storage / name / "output.tar.xz")
             logs = FileBundle.create_in_storage(log_dir, storage / name / "logs.tar.xz")
         return Execution(
