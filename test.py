@@ -41,7 +41,7 @@ if __name__ == "__main__":
     # print(foo6(revision, Condition.NO_CONTROLS, storage).result())
 
 
-    (storage / "manager_text").write_text("hello world")
+    # (storage / "manager_text").write_text("hello world")
 
     @parsl.python_app
     def foo8(storage) -> str:
