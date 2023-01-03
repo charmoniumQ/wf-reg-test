@@ -80,10 +80,9 @@ if __name__ == "__main__":
     # fs().write_bytes("data/3-manager", b"hello world")
     # foo10(fs).result()
 
-    credential = __import__("azure.identity.aio").identity.aio.ManagedIdentityCredential()
     storage = lambda: __import__("upath").UPath(
         "abfs://data/",
         account_name="wfregtest",
-        credential=credential,
+        credential=__import__("azure.identity.aio").identity.aio.ManagedIdentityCredential(),
     )
     print(foo9(storage).result())
