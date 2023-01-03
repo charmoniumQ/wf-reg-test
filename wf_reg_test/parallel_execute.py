@@ -121,16 +121,16 @@ def parsl_parallel_map_with_id(
                 t, v = ts_vs[idx]
                 return idx, execute_one(t, v, pool, **kwargs)
             core_pool = ResourcePool(temp_dir, list(range(multiprocessing.cpu_count())))
+            reveal_type(_execute_one)
             futures = [_execute_one(idx, core_pool) for idx in range(len(ts_vs))]
         else:
             @parsl.python_app
             def _execute_one(idx: int) -> tuple[int, _V]:
-                return None
                 t, v = ts_vs[idx]
                 return idx, execute_one(t, v, None, **kwargs)
-            futures = [_execute_one(idx) for idx in range(len(ts_vs))]
+            futures = [_execute_one(idx) for idx in range(len(ts_vs))]  # type: ignore
         for future in concurrent.futures.as_completed(futures):
-            idx, u = future.result()
+            idx, u = cast(tuple[int, _V], future.result())
             t, v = ts_vs[idx]
             yield t, v, u
 
@@ -145,7 +145,7 @@ def parallel_execute(
     parallelism: int,
     oversubscribe: bool,
     remote: bool,
-    storage: UPath,
+    storage: Callable[[], UPath],
     serialize_every: TimeDelta = TimeDelta(minutes=5),
 ) -> None:
     iterator = tqdm.tqdm(
@@ -185,10 +185,10 @@ def execute_one(
         revision: Revision,
         condition: Condition,
         core_pool: Optional[ResourcePool[int]],
-        storage: Optional[UPath] = None,
+        storage: Optional[Callable[[], UPath]] = None,
 ) -> Execution:
     if storage is None:
-        raise RuntimeError()
+        raise TypeError()
     workflow = expect_type(Workflow, revision.workflow)
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
@@ -200,7 +200,7 @@ def execute_one(
                 condition=condition,
                 which_cores=cores,
                 wall_time_limit=workflow.max_wall_time_estimate(),
-                storage=storage,
+                storage=storage(),
             )
     else:
         return engine.run(
@@ -208,5 +208,5 @@ def execute_one(
             condition=condition,
             which_cores=[0] if condition.single_core else [0, 1],
             wall_time_limit=workflow.max_wall_time_estimate(),
-            storage=storage,
+            storage=storage(),
         )

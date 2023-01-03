@@ -131,11 +131,13 @@ def clear() -> None:
 @main.command()
 @ch_time_block.decor()
 def test() -> None:
-    import azure.identity.aio, upath
-    storage = upath.UPath(
+    # This storage path needs to be pickled and sent to the children.
+    # But ManagedIdentityCredential is not picklable or even dill picklable.
+    # So I have to pass around a thunk that evaluates to AzureBlobFileSystem.
+    storage = lambda: __import__("upath").UPath(
         "abfs://data/",
         account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential(),
+        credential=__import__("azure.identity.aio").identity.aio.ManagedIdentityCredential(),
     )
 
     with ch_time_block.ctx("load", print_start=False):
