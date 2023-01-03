@@ -262,7 +262,7 @@ class FileBundle:
     def create_in_storage(root: Path, remote_archive: UPath) -> FileBundle:
         if not remote_archive.name.endswith(".tar.xz"):
             raise ValueError("Must pass a .tar.xz")
-        with create_temp_dir() as temp_dir:
+        with create_temp_dir(cleanup=False) as temp_dir:
             tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
             contents: dict[Path, File] = {}
             for path in walk_files(root):
@@ -271,8 +271,8 @@ class FileBundle:
                     tarball.add(root / path, path)
             tarball.close()
             if isinstance(remote_archive, UPath):
-                raise Exception(remote_archive.fs, "put_file", tarball.name, remote_archive._url.netloc + remote_archive.path)
                 remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+                raise Exception(remote_archive.fs, "put_file", tarball.name, remote_archive._url.netloc + remote_archive.path)
             else:
                 remote_archive.parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(tarball.name, remote_archive)
