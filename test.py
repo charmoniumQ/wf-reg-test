@@ -73,6 +73,9 @@ if __name__ == "__main__":
         return fs().write_bytes("data/3-worker-0", b"hello world")
 
 
-    fs = lambda: __import__("adlfs.spec").AzureBlobFileSystem(account_name="wfregtest", credential=__import__("azure.identity.aio").ManagedIdentityCredential())
+    fs = lambda: __import__("adlfs.spec").AzureBlobFileSystem(
+        account_name="wfregtest",
+        credential=__import__("azure").identity.aio.ManagedIdentityCredential(),
+    )
     fs().write_bytes("data/3-manager", b"hello world")
     foo10(fs).result()
