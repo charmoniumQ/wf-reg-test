@@ -70,9 +70,9 @@ if __name__ == "__main__":
 
     @parsl.python_app
     def foo10(fs) -> str:
-        return fs().write_bytes("data/2-worker-0", b"hello world")
+        return fs().write_bytes("data/3-worker-0", b"hello world")
 
 
-    import azure.identity.aio, adlfs.spec
-    fs = lambda: adlfs.spec.AzureBlobFileSystem(account_name="wfregtest", credential=azure.identity.aio.ManagedIdentityCredential())
+    fs = lambda: __import__("adlfs.spec").AzureBlobFileSystem(account_name="wfregtest", credential=__import__("azure.identity.aio").ManagedIdentityCredential())
+    fs().write_bytes("data/3-manager", b"hello world")
     foo10(fs).result()
