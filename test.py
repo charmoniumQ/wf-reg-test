@@ -31,7 +31,7 @@ if __name__ == "__main__":
     storage = upath.UPath(
         "abfs://data/",
         account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential()
+        credential=azure.identity.aio.ManagedIdentityCredential(),
     )
 
     @parsl.python_app
@@ -45,24 +45,46 @@ if __name__ == "__main__":
 
     @parsl.python_app
     def foo8(storage) -> str:
+        return (storage / "worker-0_text").write_text("hello world")
+
+
+    @parsl.python_app
+    def foo9(storage) -> str:
         ret0 = (storage / "worker-0_text").write_text("hello world")
-        return str(ret0)
+        from wf_reg_test.util import create_temp_dir
+        from wf_reg_test.workflows import FileBundle
+        import tarfile
+        root = Path("terraform")
+        remote_archive = storage / "archive.tar.xz"
+        with create_temp_dir() as temp_dir:
+            tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
+            for path in walk_files(root):
+                if (root / path).is_file() and not (root / path).is_symlink():
+                    tarball.add(root / path, path)
+            tarball.close()
+            ret1 = remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
 
-        # from wf_reg_test.util import create_temp_dir
-        # from wf_reg_test.workflows import FileBundle
-        # import tarfile
-        # root = Path("terraform")
-        # remote_archive = storage / "archive.tar.xz"
-        # with create_temp_dir() as temp_dir:
-        #     tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
-        #     for path in walk_files(root):
-        #         if (root / path).is_file() and not (root / path).is_symlink():
-        #             tarball.add(root / path, path)
-        #     tarball.close()
-        #     ret1 = remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+        ret2 = FileBundle.create_in_storage(root, storage / "file_bundle.tar.xz")
 
-        # ret2 = FileBundle.create_in_storage(root, storage / "file_bundle.tar.xz")
+        return ret0, ret1, ret2
 
-        # return ret0, ret1, ret2
+    @parsl.python_app
+    def foo10() -> str:
+        import azure.identity.aio
+        import adlfs.spec
+        fs = adlfs.spec.AzureBlobFileSystem(
+            account_name="wfregtest",
+            credential=azure.identity.aio.ManagedIdentityCredential(),
+        )
+        return fs.write_bytes("data/worker-0", b"hello world")
 
-    print(foo8(storage).result())
+
+    import azure.identity.aio
+    import adlfs.spec
+    fs = adlfs.spec.AzureBlobFileSystem(
+        account_name="wfregtest",
+        credential=azure.identity.aio.ManagedIdentityCredential(),
+    )
+    fs.write_bytes("data/manager", b"hello world")
+
+    print(foo10().result())
