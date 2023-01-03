@@ -79,6 +79,5 @@ if __name__ == "__main__":
         account_name="wfregtest",
         credential=azure.identity.aio.ManagedIdentityCredential(),
     )
-    fs.write_bytes("data/2-manager", b"hello world")
 
     print(foo10(fs).result())
