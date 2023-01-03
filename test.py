@@ -45,7 +45,7 @@ if __name__ == "__main__":
     def foo8(storage: upath.UPath) -> str:
         from wf_reg_test.util import create_temp_dir
         from wf_reg_test.workflows import FileBundle
-        import tarball
+        import tarfile
 
         ret0 = (storage / "text").write_text("hello world")
 
