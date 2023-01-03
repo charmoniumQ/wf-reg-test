@@ -38,5 +38,29 @@ if __name__ == "__main__":
     def foo6(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
         from test import foo7
         return foo7(revision, condition, storage)
-    print(foo6(revision, Condition.NO_CONTROLS, storage).result())
+    # print(foo6(revision, Condition.NO_CONTROLS, storage).result())
 
+
+    @parsl.python_app
+    def foo8(storage: upath.UPath) -> str:
+        from wf_reg_test.util import create_temp_dir
+        from wf_reg_test.workflows import FileBundle
+        import tarball
+
+        ret0 = (storage / "text").write_text("hello world")
+
+        root = Path("terraform")
+        remote_archive = storage / "archive.tar.xz"
+        with create_temp_dir() as temp_dir:
+            tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
+            for path in walk_files(root):
+                if (root / path).is_file() and not (root / path).is_symlink():
+                    tarball.add(root / path, path)
+            tarball.close()
+            ret1 = remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+
+        ret2 = FileBundle.create_in_storage(root, storage / "file_bundle.tar.xz")
+
+        return ret0, ret1, ret2
+
+    print(foo8(storage).result())
