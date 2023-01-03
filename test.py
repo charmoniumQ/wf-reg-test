@@ -79,5 +79,7 @@ if __name__ == "__main__":
         account_name="wfregtest",
         credential=azure.identity.aio.ManagedIdentityCredential(),
     )
-
-    print(foo10(fs).result())
+    fs.write_bytes("data/2-manager", b"hello world")
+    import pickle
+    fs = pickle.loads(pickle.dumps(fs))
+    fs.write_butes("data/3-manager", b"hello world")
