@@ -15,13 +15,14 @@ import click
 import charmonium.time_block as ch_time_block
 import yaml
 import tqdm
+import upath
 
 from .serialization import serialize, deserialize
 # from .report import report_html
 report_html = cast(Callable[[Any], str], lambda x: "HTML report not available")
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
-from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, ManagedIdentityCredential
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
@@ -131,11 +132,10 @@ def clear() -> None:
 @main.command()
 @ch_time_block.decor()
 def test() -> None:
-    import azure.identity.aio, upath
     storage = upath.UPath(
         "abfs://data/",
         account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential(),
+        credential=ManagedIdentityCredential(),
     )
 
     with ch_time_block.ctx("load", print_start=False):

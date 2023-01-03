@@ -22,57 +22,20 @@ def foo7(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
         storage=storage,
     )
 
+
 if __name__ == "__main__":
     exec(Path(os.environ["PARSL_CONFIG"]).read_text(), {**globals(), "parallelism": 1}, locals())
     data_path = Path("data")
     hub = deserialize(data_path)
     revision = hub.registries[0].workflows[0].revisions[0]
-    import azure.identity.aio
-    storage = upath.UPath(
-        "abfs://data/",
-        account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential(),
-    )
-
-    @parsl.python_app
-    def foo6(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
-        from test import foo7
-        return foo7(revision, condition, storage)
-    # print(foo6(revision, Condition.NO_CONTROLS, storage).result())
-
-
-    # (storage / "manager_text").write_text("hello world")
-
-    @parsl.python_app
-    def foo8(storage) -> str:
-        return (storage / "worker-0_text").write_text("hello world")
-
-
-    @parsl.python_app
-    def foo9(storage) -> str:
-        ret0 = (storage() / "worker-0_text").write_text("hello world")
-        from pathlib import Path
-        from wf_reg_test.workflows import FileBundle
-        ret1 = 0
-        root = Path("terraform")
-        ret2 = FileBundle.create_in_storage(root, storage() / "file_bundle.tar.xz")
-        return ret0, ret1, ret2
-
-    @parsl.python_app
-    def foo10(fs) -> str:
-        return fs().write_bytes("data/3-worker-0", b"hello world")
-
-
-    fs = lambda: __import__("adlfs.spec").AzureBlobFileSystem(
-        account_name="wfregtest",
-        credential=__import__("azure.identity.aio").identity.aio.ManagedIdentityCredential(),
-    )
-    # fs().write_bytes("data/3-manager", b"hello world")
-    # foo10(fs).result()
-
     storage = lambda: __import__("upath").UPath(
         "abfs://data/",
         account_name="wfregtest",
         credential=__import__("azure.identity.aio").identity.aio.ManagedIdentityCredential(),
     )
-    print(foo9(storage).result())
+
+    @parsl.python_app
+    def foo6(revision: Revision, condition: Condition, storage: Callable[upath.UPath]) -> str:
+        from test import foo7
+        return foo7(revision, condition, storage())
+    print(foo6(revision, Condition.NO_CONTROLS, storage).result())

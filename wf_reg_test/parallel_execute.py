@@ -121,16 +121,16 @@ def parsl_parallel_map_with_id(
                 t, v = ts_vs[idx]
                 return idx, execute_one(t, v, pool, **kwargs)
             core_pool = ResourcePool(temp_dir, list(range(multiprocessing.cpu_count())))
+            reveal_type(_execute_one)
             futures = [_execute_one(idx, core_pool) for idx in range(len(ts_vs))]
         else:
             @parsl.python_app
             def _execute_one(idx: int) -> tuple[int, _V]:
-                return None
                 t, v = ts_vs[idx]
                 return idx, execute_one(t, v, None, **kwargs)
-            futures = [_execute_one(idx) for idx in range(len(ts_vs))]
+            futures = [_execute_one(idx) for idx in range(len(ts_vs))]  # type: ignore
         for future in concurrent.futures.as_completed(futures):
-            idx, u = future.result()
+            idx, u = cast(tuple[int, _V], future.result())
             t, v = ts_vs[idx]
             yield t, v, u
 
@@ -188,7 +188,7 @@ def execute_one(
         storage: Optional[UPath] = None,
 ) -> Execution:
     if storage is None:
-        raise RuntimeError()
+        raise TypeError()
     workflow = expect_type(Workflow, revision.workflow)
     registry = workflow.registry
     print(workflow.display_name, registry.display_name, revision.display_name)
