@@ -272,6 +272,7 @@ class FileBundle:
             tarball.close()
             try:
                 if isinstance(remote_archive, UPath):
+                    raise Exception(remote_archive.fs, "put_file", tarball.name, remote_archive._url.netloc + remote_archive.path)
                     remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
                 else:
                     remote_archive.parent.mkdir(exist_ok=True, parents=True)
