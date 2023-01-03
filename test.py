@@ -45,10 +45,10 @@ if __name__ == "__main__":
 
     @parsl.python_app
     def foo8(storage: upath.UPath) -> str:
-        from wf_reg_test.util import create_temp_dir
-
         ret0 = (storage / "worker-0_text").write_text("hello world")
+        return ret0
 
+        # from wf_reg_test.util import create_temp_dir
         # from wf_reg_test.workflows import FileBundle
         # import tarfile
         # root = Path("terraform")
