@@ -70,16 +70,9 @@ if __name__ == "__main__":
 
     @parsl.python_app
     def foo10(fs) -> str:
-        return fs.write_bytes("data/2-worker-0", b"hello world")
+        return fs().write_bytes("data/2-worker-0", b"hello world")
 
 
-    import azure.identity.aio
-    import adlfs.spec
-    fs = adlfs.spec.AzureBlobFileSystem(
-        account_name="wfregtest",
-        credential=azure.identity.aio.ManagedIdentityCredential(),
-    )
-    fs.write_bytes("data/2-manager", b"hello world")
-    import pickle
-    fs = pickle.loads(pickle.dumps(fs))
-    fs.write_butes("data/3-manager", b"hello world")
+    import azure.identity.aio, adlfs.spec
+    fs = lambda: adlfs.spec.AzureBlobFileSystem(account_name="wfregtest", credential=azure.identity.aio.ManagedIdentityCredential())
+    foo10(fs).result()
