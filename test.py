@@ -50,12 +50,12 @@ if __name__ == "__main__":
 
     @parsl.python_app
     def foo9(storage) -> str:
-        ret0 = (storage / "worker-0_text").write_text("hello world")
+        ret0 = (storage() / "worker-0_text").write_text("hello world")
         from wf_reg_test.util import create_temp_dir
         from wf_reg_test.workflows import FileBundle
         import tarfile
         root = Path("terraform")
-        remote_archive = storage / "archive.tar.xz"
+        remote_archive = storage() / "archive.tar.xz"
         with create_temp_dir() as temp_dir:
             tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
             for path in walk_files(root):
@@ -64,7 +64,7 @@ if __name__ == "__main__":
             tarball.close()
             ret1 = remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
 
-        ret2 = FileBundle.create_in_storage(root, storage / "file_bundle.tar.xz")
+        ret2 = FileBundle.create_in_storage(root, storage() / "file_bundle.tar.xz")
 
         return ret0, ret1, ret2
 
@@ -77,5 +77,12 @@ if __name__ == "__main__":
         account_name="wfregtest",
         credential=__import__("azure.identity.aio").identity.aio.ManagedIdentityCredential(),
     )
-    fs().write_bytes("data/3-manager", b"hello world")
-    foo10(fs).result()
+    # fs().write_bytes("data/3-manager", b"hello world")
+    # foo10(fs).result()
+
+    storage = lambda: __import__("upath").UPath(
+        "abfs://data/",
+        account_name="wfregtest",
+        credential=azure.identity.aio.ManagedIdentityCredential(),
+    )
+    print(foo9(storage))
