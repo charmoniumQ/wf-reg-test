@@ -85,4 +85,4 @@ if __name__ == "__main__":
         account_name="wfregtest",
         credential=azure.identity.aio.ManagedIdentityCredential(),
     )
-    print(foo9(storage))
+    print(foo9(storage).result())
