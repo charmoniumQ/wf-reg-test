@@ -69,14 +69,8 @@ if __name__ == "__main__":
         return ret0, ret1, ret2
 
     @parsl.python_app
-    def foo10() -> str:
-        import azure.identity.aio
-        import adlfs.spec
-        fs = adlfs.spec.AzureBlobFileSystem(
-            account_name="wfregtest",
-            credential=azure.identity.aio.ManagedIdentityCredential(),
-        )
-        return fs.write_bytes("data/worker-0", b"hello world")
+    def foo10(fs) -> str:
+        return fs.write_bytes("data/2-worker-0", b"hello world")
 
 
     import azure.identity.aio
@@ -85,6 +79,6 @@ if __name__ == "__main__":
         account_name="wfregtest",
         credential=azure.identity.aio.ManagedIdentityCredential(),
     )
-    fs.write_bytes("data/manager", b"hello world")
+    fs.write_bytes("data/2-manager", b"hello world")
 
-    print(foo10().result())
+    print(foo10(fs).result())
