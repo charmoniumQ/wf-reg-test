@@ -270,15 +270,12 @@ class FileBundle:
                     contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
                     tarball.add(root / path, path)
             tarball.close()
-            try:
-                if isinstance(remote_archive, UPath):
-                    raise Exception(remote_archive.fs, "put_file", tarball.name, remote_archive._url.netloc + remote_archive.path)
-                    remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
-                else:
-                    remote_archive.parent.mkdir(exist_ok=True, parents=True)
-                    shutil.move(tarball.name, remote_archive)
-            except Exception as exc:
-                raise Exception("cp", tarball.name, str(remote_archive)) from exc
+            if isinstance(remote_archive, UPath):
+                raise Exception(remote_archive.fs, "put_file", tarball.name, remote_archive._url.netloc + remote_archive.path)
+                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+            else:
+                remote_archive.parent.mkdir(exist_ok=True, parents=True)
+                shutil.move(tarball.name, remote_archive)
         return FileBundle(contents)
 
     def total_size(self) -> int:
