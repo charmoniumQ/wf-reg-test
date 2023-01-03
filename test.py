@@ -44,9 +44,9 @@ if __name__ == "__main__":
     (storage / "manager_text").write_text("hello world")
 
     @parsl.python_app
-    def foo8(storage: upath.UPath) -> str:
+    def foo8(storage) -> str:
         ret0 = (storage / "worker-0_text").write_text("hello world")
-        return ret0
+        return str(ret0)
 
         # from wf_reg_test.util import create_temp_dir
         # from wf_reg_test.workflows import FileBundle
