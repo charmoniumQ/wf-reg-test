@@ -145,7 +145,7 @@ def parallel_execute(
     parallelism: int,
     oversubscribe: bool,
     remote: bool,
-    storage: Callable[[], UPath],
+    storage: UPath,
     serialize_every: TimeDelta = TimeDelta(minutes=5),
 ) -> None:
     iterator = tqdm.tqdm(
@@ -185,7 +185,7 @@ def execute_one(
         revision: Revision,
         condition: Condition,
         core_pool: Optional[ResourcePool[int]],
-        storage: Optional[Callable[[], UPath]] = None,
+        storage: Optional[UPath] = None,
 ) -> Execution:
     if storage is None:
         raise TypeError()
@@ -200,7 +200,7 @@ def execute_one(
                 condition=condition,
                 which_cores=cores,
                 wall_time_limit=workflow.max_wall_time_estimate(),
-                storage=storage(),
+                storage=storage,
             )
     else:
         return engine.run(
@@ -208,5 +208,5 @@ def execute_one(
             condition=condition,
             which_cores=[0] if condition.single_core else [0, 1],
             wall_time_limit=workflow.max_wall_time_estimate(),
-            storage=storage(),
+            storage=storage,
         )

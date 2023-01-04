@@ -9,12 +9,13 @@ import contextlib
 import tempfile
 from pathlib import Path
 import pprint
-from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional
+from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional, Generic
 import urllib.parse
 import itertools
 import shutil
 import xml.etree.ElementTree
 
+import azure.identity.aio
 import xxhash
 import toolz
 
@@ -189,3 +190,41 @@ def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
 
 def fs_escape(string: str) -> str:
     return urllib.parse.quote(string.replace(" ", "-").replace("_", "-"), safe="")
+
+
+class ThunkObject:
+    def __init__(self, thunk: Callable[[], _T]) -> None:
+        self._thunk = thunk
+        self._value: Optional[_T]
+        self._value = None
+
+    def __getstate__(self) -> Any:
+        return self._thunk
+
+    def __setstate__(self, thunk: Callable[[], _T]) -> None:
+        self._thunk = thunk
+        self._value = None
+
+    def _reify(self) -> _T:
+        if self._value is None:
+            self._value = self._thunk()
+            assert self._value is not None
+            for attr in dir(self._value):
+                if attr not in ["__class__", "__getstate__", "__setstate__"]:
+                    setattr(self, attr, getattr(self._value, attr))
+        return self._value
+
+    def __getattr__(self, attr: str) -> Any:
+        return getattr(self._reify(), attr)
+
+
+# azure.identity.aio.ManagedIdentityCredential is not picklable.
+# So, instead we create a surrogate object that initializes a new ManagedIdentityCredential when it gets restored from Pickle.
+# __init__ implicitly calls azure.identity.aio.ManagedIdentityCredential.__init__
+# __setstate__ also calls azure.identity.aio.ManagedIdentityCredential.__init__
+# __getstate__ is dummy that returns something Truthy.
+class ManagedIdentityCredential(azure.identity.aio.ManagedIdentityCredential):
+    def __getstate__(self) -> str:
+        return "hi" # must be Truthy
+    def __setstate__(self, state: Any) -> None:
+        azure.identity.aio.ManagedIdentityCredential.__init__(self)

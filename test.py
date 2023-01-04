@@ -22,42 +22,6 @@ def foo7(revision: Revision, condition: Condition, storage: upath.UPath) -> str:
         storage=storage,
     )
 
-from typing import Generic, TypeVar, Callable, Any
-
-def wrap(outer: Any, inner: T) -> T:
-    def proxy_wrap(attr):
-        "This method creates a proxy method that calls the wrappee's method."
-        def f(self, *args):
-            return getattr(self.wrappee, attr)(*args)
-        return f
-    # Don't overwrite any attributes already present
-    exclude = set(dir(outer))
-    # Watch out for this one...
-    exclude.add('__class__')
-    for (attr, value) in inspect.getmembers(inner, callable):
-        if attr not in EXCLUDE:
-            setattr(Wrapper, attr, proxy_wrap(attr))
-
-_T = TypeVar("_T")
-
-class ThunkObject(wrapt.ObjectProxy):
-    def __init__(self, thunk: Callable[[], _T]) -> None:
-        self._thunk = thunk
-        self._value = None
-
-    def __getattr__(self, attr: str) -> Any:
-        if self._value is None:
-            self._value = self._thunk()
-            
-            assert self._value is not None
-        return getattr(self._value, attr)
-
-    def __getstate__(self) -> None:
-        return self._thunk
-
-    def __setstate__(self, thunk: Callable[[], _T]) -> None:
-        self._thunk = thunk
-
 
 if __name__ == "__main__":
     exec(Path(os.environ["PARSL_CONFIG"]).read_text(), {**globals(), "parallelism": 1}, locals())
