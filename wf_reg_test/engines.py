@@ -121,17 +121,16 @@ class SnakemakeEngine(Engine):
             )
         else:
             yield Executable(
-                command=["ls"],
-                # command=[
-                #     "snakemake",
-                #     f"--cores={n_cores}",
-                #     "--use-singularity",
-                #     "--use-conda",
-                #     "--forceall",
-                #     "--snakefile",
-                #     f"--directory={log_dir!s}",
-                #     snakefile,
-                # ],
+                command=[
+                    "snakemake",
+                    f"--cores={n_cores}",
+                    "--use-singularity",
+                    "--use-conda",
+                    "--forceall",
+                    "--snakefile",
+                    f"--directory={log_dir!s}",
+                    snakefile,
+                ],
                 cwd=code_dir,
                 read_write_mounts={
                     code_dir: code_dir,
@@ -165,16 +164,15 @@ class NextflowEngine(Engine):
             n_cores: int,
     ) -> Iterator[Executable]:
         yield Executable(
-            command=["ls"],
-            # command=[
-            #     "nextflow",
-            #     "run",
-            #     code_dir.resolve(),
-            #     "-profile",
-            #     "test,singularity",
-            #     f"--outdir",
-            #     out_dir.resolve(),
-            # ],
+            command=[
+                "nextflow",
+                "run",
+                code_dir.resolve(),
+                "-profile",
+                "test,singularity",
+                f"--outdir",
+                out_dir.resolve(),
+            ],
             cwd=log_dir.resolve(),
             read_write_mounts={
                 code_dir: code_dir,
