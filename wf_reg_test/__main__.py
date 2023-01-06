@@ -113,7 +113,14 @@ def regenerate() -> RegistryHub:
     return hub
 
 
-data_path = Path("data")
+storage = upath.UPath(
+    "abfs://data/",
+    account_name="wfregtest",
+    credential=ManagedIdentityCredential(),
+)
+
+
+data_path = storage / "index"
 
 
 @click.group()
@@ -132,12 +139,6 @@ def clear() -> None:
 @main.command()
 @ch_time_block.decor()
 def test() -> None:
-    storage = upath.UPath(
-        "abfs://data/",
-        account_name="wfregtest",
-        credential=ManagedIdentityCredential(),
-    )
-
     with ch_time_block.ctx("load", print_start=False):
         hub = deserialize(data_path)
     with ch_time_block.ctx("process", print_start=False):
@@ -146,7 +147,7 @@ def test() -> None:
             time_bound=DateTime(2022, 8, 1),
             conditions=[Condition.NO_CONTROLS],
             desired_execution_count=1,
-            execution_limit=3,
+            execution_limit=15,
         )
         parallel_execute(
             hub,

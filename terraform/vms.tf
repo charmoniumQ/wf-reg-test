@@ -93,7 +93,7 @@ resource "azurerm_linux_virtual_machine" "manager" {
       ]
   }
   provisioner "file" {
-      content = "export PARSL_WORKERS=${join(",", [for i in range(var.workers): "worker-${i}"])}\nPARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py\n"
+      content = "export PARSL_WORKERS=${join(",", [for i in range(var.workers): "worker-${i}"])}\nexport PARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py\n"
       destination = "/home/${var.username}/parsl-config.sh"
   }
   # provisioner "remote-exec" {
@@ -117,7 +117,7 @@ output "manager_ip" {
 
 resource "azurerm_network_interface" "worker_nic" {
   count               = var.workers
-  name                = "worker_nic"
+  name                = "worker-nic-${count.index}"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
 
@@ -139,11 +139,11 @@ resource "azurerm_linux_virtual_machine" "worker" {
   disable_password_authentication = true
   admin_ssh_key {
     username   = var.username
-    public_key = tls_private_key.developer.public_key_openssh
+    public_key = tls_private_key.manager.public_key_openssh
   }
   admin_ssh_key {
     username   = var.username
-    public_key = tls_private_key.manager.public_key_openssh
+    public_key = tls_private_key.developer.public_key_openssh
   }
   source_image_reference {
     publisher = var.vm_image.publisher

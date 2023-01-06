@@ -4,7 +4,7 @@
 
 variable "os_disk_size_gb" {
   type    = string
-  default = "30"
+  default = "64"
   # Usually can't be smaller than 30
 }
 
@@ -15,12 +15,12 @@ variable "manager_vm_size" {
 
 variable "builder_vm_size" {
   type    = string
-  default = "Standard_D8as_v5"
+  default = "Standard_D16as_v5"
 }
 
 variable "workers" {
   type    = number
-  default = 1
+  default = 3
 }
 
 variable "worker_vm_size" {

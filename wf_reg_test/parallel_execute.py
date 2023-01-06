@@ -111,6 +111,7 @@ def parsl_parallel_map_with_id(
         remote: bool,
         **kwargs: Any,
 ) -> Iterable[tuple[_T, _U, _V]]:
+    logging.getLogger("parsl").setLevel(logging.WARNING)
     with create_temp_dir() as temp_dir:
         # Note, I am using a tuple instead of a list because tuples are covariant.
         exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())

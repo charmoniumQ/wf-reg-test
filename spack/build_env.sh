@@ -38,8 +38,8 @@ fi
 spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test
 spack concretize --fresh --force
-for i in $(seq 0 2 $(nproc)); do
-	spack install --yes -j2 &
+for i in $(seq $(nproc)); do
+	spack install --yes &
 done
 wait $(jobs -p)
 spack install --yes
@@ -77,5 +77,6 @@ total=$(du --summarize --bytes spack | cut -f1)
 tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar.gz
 # Unfortunately, azure-cli in Spack is too old.
 export PATH=$PATH:$HOME/.local/bin
-pip install azure-cli
+pip install --user azure-cli
+az login
 az storage blob upload --account-name wfregtest --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite
