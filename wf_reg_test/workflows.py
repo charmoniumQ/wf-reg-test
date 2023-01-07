@@ -161,6 +161,7 @@ class Execution:
     resources: ComputeResources
     status_code: int
     revision: Optional[Revision] = dataclasses.field(compare=False)
+    wf_reg_test_revision: Optional[str] = None
 
     def with_pointers(self, machine: Machine, revision: Revision) -> Execution:
         return Execution(

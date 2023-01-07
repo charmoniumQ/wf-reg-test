@@ -106,6 +106,7 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
                 "status_code": execution.status_code,
                 "revision": revision.display_name,
                 "workflow": workflow.display_name,
+                "wf_reg_test_revision": workflow.wf_reg_test_revision,
             }
             for workflow in registry.workflows
             for revision in workflow.revisions
@@ -193,6 +194,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
                 resources=execution_dict["resources"],
                 status_code=execution_dict["status_code"],
                 revision=revision,
+                wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", None),
             )
             revision.executions.append(execution)
 

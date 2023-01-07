@@ -33,7 +33,7 @@ if ! spack repo list | grep spack_repo; then
 fi
 
 if [ -d spack/var/spack/environments/wf-reg-test/ ]; then
-	spack env remove wf-reg-test
+	echo y | spack env remove wf-reg-test
 fi
 spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test

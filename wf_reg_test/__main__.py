@@ -124,7 +124,7 @@ def regenerate() -> None:
     hub = RegistryHub(registries=[])
     from .registries import snakemake_registry, nf_core_registry
     hub.registries.append(nf_core_registry())
-    # hub.registries.append(snakemake_registry())
+    hub.registries.append(snakemake_registry())
     ensure_revisions(hub, only_empty=True)
     serialize(hub, data_path)
 
@@ -134,7 +134,20 @@ def regenerate() -> None:
 def clear() -> None:
     (data_path / "nf-core_executions.yaml").write_text("[]")
     (data_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
-    shutil.rmtree(".repos")
+    for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz"))):
+        blob.unlink()
+    if Path(".repos").exists():
+        shutil.rmtree(".repos")
+
+
+@main.command()
+@ch_time_block.decor()
+def fill_in_sm() -> None:
+    hub = deserialize(data_path)
+    from .registries import snakemake_registry
+    hub.registries.append(snakemake_registry())
+    ensure_revisions(hub, only_empty=True)
+    serialize(hub, data_path)
 
 
 @main.command()
@@ -146,7 +159,7 @@ def test() -> None:
         time_bound=DateTime(2022, 8, 1),
         conditions=[Condition.NO_CONTROLS],
         desired_execution_count=1,
-        execution_limit=15,
+        execution_limit=30,
     )
     parallel_execute(
         hub,
@@ -165,7 +178,7 @@ def test() -> None:
 @ch_time_block.decor()
 def report() -> None:
     hub = deserialize(data_path)
-    (storage_path / "results.html").write_text(report_html(hub))
+    (storage / "results.html").write_text(report_html(hub))
 
 
 @main.command()
