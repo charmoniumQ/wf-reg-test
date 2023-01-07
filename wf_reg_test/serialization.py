@@ -46,7 +46,8 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
     # This doesn't work so well for UPaths
     # if path.exists():
     #     shutil.rmtree(path)
-    path.mkdir()
+    if not path.exists():
+        path.mkdir()
 
     (path / "index.yaml").write_text(yaml.dump([
         {
