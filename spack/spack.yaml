@@ -4,7 +4,7 @@ spack:
   #- util-linux
   - time
   - nextflow
-  - apptainer
+  - singularity
   # Note that many Snakemake repositories require snakemake@7.5:
   # E.g., https://github.com/friendsofstrandseq/mosaicatcher-pipeline/
   - snakemake@7.18.2+s3+http+ftp+reports
