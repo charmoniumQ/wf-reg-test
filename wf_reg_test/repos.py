@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import dataclasses
 import json
+import os
 import types
 import urllib.parse
 from pathlib import Path
@@ -13,7 +14,9 @@ import github
 import xxhash
 
 from .workflows import Revision, Workflow
-from .secrets import github_client
+
+
+github_client = github.Github(os.environ.get("GITHUB_ACCESS_TOKEN", None))
 
 
 def get_repo(url: str) -> Repo:

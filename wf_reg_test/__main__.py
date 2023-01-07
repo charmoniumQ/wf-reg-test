@@ -22,7 +22,7 @@ from .serialization import serialize, deserialize
 report_html = cast(Callable[[Any], str], lambda x: "HTML report not available")
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
-from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, ManagedIdentityCredential
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
@@ -102,21 +102,10 @@ def review_failures(hub: RegistryHub) -> None:
                 input(":")
 
 
-def regenerate() -> RegistryHub:
-    # This is an archive for my old code.
-    # One should also, theoretically, be able to reconstruct hub by rerunning all of the archived code.
-    hub = RegistryHub(registries=[])
-    from .registries import snakemake_registry, nf_core_registry
-    hub.registries.append(nf_core_registry())
-    # hub.registries.append(snakemake_registry())
-    ensure_revisions(hub, only_empty=True)
-    return hub
-
-
 storage = upath.UPath(
     "abfs://data/",
     account_name="wfregtest",
-    credential=ManagedIdentityCredential(),
+    credential=AzureCredential(),
 )
 
 
@@ -126,6 +115,19 @@ data_path = storage / "index"
 @click.group()
 def main() -> None:
     pass
+
+
+@main.command()
+@ch_time_block.decor()
+def regenerate() -> None:
+    # This is an archive for my old code.
+    # One should also, theoretically, be able to reconstruct hub by rerunning all of the archived code.
+    hub = RegistryHub(registries=[])
+    from .registries import snakemake_registry, nf_core_registry
+    hub.registries.append(nf_core_registry())
+    # hub.registries.append(snakemake_registry())
+    ensure_revisions(hub, only_empty=True)
+    serialize(hub, data_path)
 
 
 @main.command()
