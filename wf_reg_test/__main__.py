@@ -134,7 +134,7 @@ def regenerate() -> None:
 def clear() -> None:
     (data_path / "nf-core_executions.yaml").write_text("[]")
     (data_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
-    for blob in tqdm(list(data_path.glob("**.tar.xz"))):
+    for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz"))):
         blob.unlink()
     if Path(".repos").exists():
         shutil.rmtree(".repos")
