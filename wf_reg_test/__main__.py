@@ -146,7 +146,7 @@ def test() -> None:
         time_bound=DateTime(2022, 8, 1),
         conditions=[Condition.NO_CONTROLS],
         desired_execution_count=1,
-        execution_limit=15,
+        execution_limit=30,
     )
     parallel_execute(
         hub,
