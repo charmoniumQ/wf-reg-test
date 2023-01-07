@@ -5,22 +5,31 @@ set -e -x -o nounset
 cd $(dirname $(dirname $0))
 
 terraform output --raw developer_ssh_key > key
+
 cat <<EOF > terraform/ssh_config
 Host manager
     HostName $(terraform -chdir=terraform output --raw manager_ip)
     IdentityFile ~/box/wf-reg-test/terraform/key
     User azureuser
-
-Host worker-0
-    HostName worker-0
-    IdentityFile ~/box/wf-reg-test/terraform/key
-    User azureuser
-    ProxyJump manager
+    StrictHostKeyChecking no
 EOF
-ssh-keygen -R "worker-0"
 ssh-keygen -R "manager"
 
-for host in manager worker-0; do
+worker_count=$(terraform -chdir=terraform output --raw worker_count)
+
+for worker in $(seq 0 $((worker_count - 1))); do
+    cat <<EOF >> terraform/ssh_config
+        Host worker-${worker}
+        HostName worker-${worker}
+        IdentityFile ~/box/wf-reg-test/terraform/key
+        User azureuser
+        ProxyJump manager
+        StrictHostKeyChecking no
+EOF
+    ssh-keygen -R "worker-${worker}"
+done
+
+for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); do
     ssh -F terraform/ssh_config $host <<EOF
     set -e -x
     if [ ! -d spack ]; then

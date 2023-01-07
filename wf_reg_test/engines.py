@@ -179,7 +179,8 @@ class NextflowEngine(Engine):
                 out_dir: out_dir,
             },
         )
-        shutil.move(out_dir / "pipeline_info", log_dir)
+        if (out_dir / "pipeline_info").exists():
+            shutil.move(out_dir / "pipeline_info", log_dir)
 
 
 engines = {
