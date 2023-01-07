@@ -8,6 +8,7 @@ import warnings
 
 import yaml
 import charmonium.freeze
+import charmonium.time_block as ch_time_block
 
 from .workflows import RegistryHub, Registry, Workflow, Revision, Execution
 from .util import expect_type
@@ -38,14 +39,18 @@ registries, workflows, revisions, and executions in separate files.
 # encode will escape spaces and slashes in the name.
 encode = urllib.parse.quote_plus
 
+
+@ch_time_block.decor()
 def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
     if warn:
         for warning in hub.check_invariants():
             warnings.warn(warning)
 
-    if path.exists():
-        shutil.rmtree(path)
-    path.mkdir()
+    # This doesn't work so well for UPaths
+    # if path.exists():
+    #     shutil.rmtree(path)
+    if not path.exists():
+        path.mkdir()
 
     (path / "index.yaml").write_text(yaml.dump([
         {
@@ -115,6 +120,7 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
         assert hub == stored_hub, charmonium.freeze.summarize_diff(hub, stored_hub)
 
 
+@ch_time_block.decor()
 def deserialize(path: Path, warn: bool = True) -> RegistryHub:
     registry_dicts = yaml.load(
         (path / "index.yaml").read_text(),

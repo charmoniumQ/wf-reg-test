@@ -218,13 +218,13 @@ class ThunkObject:
         return getattr(self._reify(), attr)
 
 
-# azure.identity.aio.ManagedIdentityCredential is not picklable.
-# So, instead we create a surrogate object that initializes a new ManagedIdentityCredential when it gets restored from Pickle.
+# azure.identity.aio.DefaultIdentityCredential is not picklable.
+# So, instead we create a surrogate object that initializes a new DefaultIdentityCredential when it gets restored from Pickle.
 # __init__ implicitly calls azure.identity.aio.ManagedIdentityCredential.__init__
 # __setstate__ also calls azure.identity.aio.ManagedIdentityCredential.__init__
 # __getstate__ is dummy that returns something Truthy.
-class ManagedIdentityCredential(azure.identity.aio.ManagedIdentityCredential):
+class AzureCredential(azure.identity.aio.DefaultAzureCredential):
     def __getstate__(self) -> str:
         return "hi" # must be Truthy
     def __setstate__(self, state: Any) -> None:
-        azure.identity.aio.ManagedIdentityCredential.__init__(self)
+        azure.identity.aio.DefaultAzureCredential.__init__(self)

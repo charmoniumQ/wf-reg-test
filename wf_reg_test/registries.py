@@ -1,3 +1,4 @@
+import os
 import re
 import json
 from pathlib import Path
@@ -6,9 +7,12 @@ import itertools
 
 from tqdm import tqdm
 import requests
+import github
 
 from .workflows import Workflow, Registry
-from .secrets import github_client
+
+
+github_client = github.Github(os.environ.get("GITHUB_ACCESS_TOKEN", None))
 
 
 def nf_core_registry(limit: Optional[int] = None) -> Registry:

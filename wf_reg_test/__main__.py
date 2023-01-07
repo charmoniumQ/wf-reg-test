@@ -18,17 +18,20 @@ import tqdm
 import upath
 
 from .serialization import serialize, deserialize
-# from .report import report_html
-report_html = cast(Callable[[Any], str], lambda x: "HTML report not available")
+from .report import report_html
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
-from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, ManagedIdentityCredential
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 ch_time_block.disable_stderr()
+
+logging.getLogger("parsl").setLevel(logging.WARNING)
+logging.getLogger("paramiko").setLevel(logging.WARNING)
+logging.getLogger("azure").setLevel(logging.WARNING)
 
 
 @ch_time_block.decor()
@@ -41,10 +44,6 @@ def ensure_revisions(
             for revision in repo.get_revisions():
                 revision.workflow = workflow
                 workflow.revisions.append(revision)
-
-
-def report(hub: RegistryHub) -> None:
-    Path("docs/results.html").write_text(report_html(hub))
 
 
 def what_to_execute(
@@ -102,21 +101,10 @@ def review_failures(hub: RegistryHub) -> None:
                 input(":")
 
 
-def regenerate() -> RegistryHub:
-    # This is an archive for my old code.
-    # One should also, theoretically, be able to reconstruct hub by rerunning all of the archived code.
-    hub = RegistryHub(registries=[])
-    from .registries import snakemake_registry, nf_core_registry
-    hub.registries.append(nf_core_registry())
-    # hub.registries.append(snakemake_registry())
-    ensure_revisions(hub, only_empty=True)
-    return hub
-
-
 storage = upath.UPath(
     "abfs://data/",
     account_name="wfregtest",
-    credential=ManagedIdentityCredential(),
+    credential=AzureCredential(),
 )
 
 
@@ -130,6 +118,19 @@ def main() -> None:
 
 @main.command()
 @ch_time_block.decor()
+def regenerate() -> None:
+    # This is an archive for my old code.
+    # One should also, theoretically, be able to reconstruct hub by rerunning all of the archived code.
+    hub = RegistryHub(registries=[])
+    from .registries import snakemake_registry, nf_core_registry
+    hub.registries.append(nf_core_registry())
+    # hub.registries.append(snakemake_registry())
+    ensure_revisions(hub, only_empty=True)
+    serialize(hub, data_path)
+
+
+@main.command()
+@ch_time_block.decor()
 def clear() -> None:
     (data_path / "nf-core_executions.yaml").write_text("[]")
     (data_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
@@ -139,36 +140,37 @@ def clear() -> None:
 @main.command()
 @ch_time_block.decor()
 def test() -> None:
-    with ch_time_block.ctx("load", print_start=False):
-        hub = deserialize(data_path)
-    with ch_time_block.ctx("process", print_start=False):
-        revisions_conditions = what_to_execute(
-            hub=hub,
-            time_bound=DateTime(2022, 8, 1),
-            conditions=[Condition.NO_CONTROLS],
-            desired_execution_count=1,
-            execution_limit=15,
-        )
-        parallel_execute(
-            hub,
-            revisions_conditions,
-            parallelism=10,
-            data_path=data_path,
-            serialize_every=TimeDelta(seconds=0),
-            oversubscribe=False,
-            remote=True,
-            storage=storage,
-        )
-    with ch_time_block.ctx("store", print_start=False):
-        serialize(hub, data_path)
-    with ch_time_block.ctx("report", print_start=False):
-        report(hub)
+    hub = deserialize(data_path)
+    revisions_conditions = what_to_execute(
+        hub=hub,
+        time_bound=DateTime(2022, 8, 1),
+        conditions=[Condition.NO_CONTROLS],
+        desired_execution_count=1,
+        execution_limit=15,
+    )
+    parallel_execute(
+        hub,
+        revisions_conditions,
+        parallelism=10,
+        data_path=data_path,
+        serialize_every=TimeDelta(seconds=0),
+        oversubscribe=False,
+        remote=True,
+        storage=storage,
+    )
+    serialize(hub, data_path)
+
+
+@main.command()
+@ch_time_block.decor()
+def report() -> None:
+    hub = deserialize(data_path)
+    (storage_path / "results.html").write_text(report_html(hub))
 
 
 @main.command()
 def review() -> None:
-    with ch_time_block.ctx("load", print_start=False):
-        hub = deserialize(data_path)
+    hub = deserialize(data_path)
     review_failures(hub)
 
 
