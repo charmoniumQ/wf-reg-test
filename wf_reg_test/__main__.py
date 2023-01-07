@@ -29,6 +29,7 @@ from .parallel_execute import parallel_execute
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 ch_time_block.disable_stderr()
+logging.getLogger("azure").setLevel(logging.WARNING)
 
 
 @ch_time_block.decor()

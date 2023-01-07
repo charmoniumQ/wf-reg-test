@@ -227,4 +227,4 @@ class AzureCredential(azure.identity.aio.DefaultAzureCredential):
     def __getstate__(self) -> str:
         return "hi" # must be Truthy
     def __setstate__(self, state: Any) -> None:
-        azure.identity.aio.DefaultIdentityCredential.__init__(self)
+        azure.identity.aio.DefaultAzureCredential.__init__(self)
