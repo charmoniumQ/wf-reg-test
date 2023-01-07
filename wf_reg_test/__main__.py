@@ -165,7 +165,7 @@ def test() -> None:
 @ch_time_block.decor()
 def report() -> None:
     hub = deserialize(data_path)
-    (storage_path / "results.html").write_text(report_html(hub))
+    (storage / "results.html").write_text(report_html(hub))
 
 
 @main.command()
