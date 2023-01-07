@@ -41,6 +41,9 @@ spack:
   # - py-azure-cli
   - py-pip
   - py-domonic
+  # These are needed to mount stuff inside Singularity.
+  - squashfuse
+  - e2fsprogs
   view: true
   concretizer:
     unify: when_possible
