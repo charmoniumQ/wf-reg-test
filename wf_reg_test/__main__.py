@@ -172,6 +172,18 @@ def report() -> None:
 
 
 @main.command()
+@ch_time_block.decor()
+def delete_failures() -> None:
+    hub = deserialize(data_path)
+    for registry in hub.registries:
+        for workflow in registry.workflows:
+            for execution in workflow.executions:
+                if not execution.successful:
+                    pass
+    serialize(hub, data_path)
+
+
+@main.command()
 def review() -> None:
     hub = deserialize(data_path)
     review_failures(hub)
