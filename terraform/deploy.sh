@@ -12,6 +12,7 @@ Host manager
     IdentityFile ~/box/wf-reg-test/terraform/key
     User azureuser
     StrictHostKeyChecking no
+
 EOF
 ssh-keygen -R "manager"
 
@@ -19,12 +20,13 @@ worker_count=$(terraform -chdir=terraform output --raw worker_count)
 
 for worker in $(seq 0 $((worker_count - 1))); do
     cat <<EOF >> terraform/ssh_config
-        Host worker-${worker}
-        HostName worker-${worker}
-        IdentityFile ~/box/wf-reg-test/terraform/key
-        User azureuser
-        ProxyJump manager
-        StrictHostKeyChecking no
+Host worker-${worker}
+    HostName worker-${worker}
+    IdentityFile ~/box/wf-reg-test/terraform/key
+    User azureuser
+    ProxyJump manager
+    StrictHostKeyChecking no
+
 EOF
     ssh-keygen -R "worker-${worker}"
 done
