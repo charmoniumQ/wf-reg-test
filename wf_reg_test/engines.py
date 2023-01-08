@@ -128,7 +128,6 @@ class SnakemakeEngine(Engine):
                     "--use-conda",
                     "--forceall",
                     f"--snakefile={snakefile!s}",
-                    f"--directory={log_dir!s}",
                 ],
                 cwd=code_dir,
                 read_write_mounts={

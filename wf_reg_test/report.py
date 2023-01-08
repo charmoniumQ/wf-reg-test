@@ -29,6 +29,12 @@ def get_stats(hub: RegistryHub) -> html.Element:
             for workflow in workflows
             for revision in workflow.revisions
         ),
+        "N working executions": lambda workflows: sum(
+            execution.successful()
+            for workflow in workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+        ),
         "N interesting workflows": lambda workflows: sum(
             1 for workflow in workflows if is_interesting(workflow)
         ),
