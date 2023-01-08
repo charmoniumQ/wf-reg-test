@@ -171,7 +171,7 @@ def report() -> None:
     (storage / "results.html").write_text(report_html(hub))
 
 
-pp@main.command()
+@main.command()
 def review() -> None:
     hub = deserialize(data_path)
     review_failures(hub)
