@@ -236,7 +236,8 @@ class AzureCredential(azure.identity.aio.DefaultAzureCredential):
 def get_current_revision() -> str:
     return subprocess.run(
         ["git", "rev-parse", "HEAD"],
+        cwd=Path(__file__).resolve().parent,
         capture_output=True,
         text=True,
         check=True,
-    ).stdout
+    ).stdout.strip()
