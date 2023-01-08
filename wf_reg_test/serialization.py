@@ -1,5 +1,4 @@
 from datetime import datetime as DateTime
-from pathlib import Path
 import pickle
 import shutil
 import sys
@@ -9,9 +8,10 @@ import warnings
 import yaml
 import charmonium.freeze
 import charmonium.time_block as ch_time_block
+import upath
 
 from .workflows import RegistryHub, Registry, Workflow, Revision, Execution
-from .util import expect_type
+from .util import expect_type, get_current_revision
 
 """
 
@@ -41,7 +41,7 @@ encode = urllib.parse.quote_plus
 
 
 @ch_time_block.decor()
-def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
+def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
     if warn:
         for warning in hub.check_invariants():
             warnings.warn(warning)
@@ -104,9 +104,9 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
                 "condition": execution.condition,
                 "resources": execution.resources,
                 "status_code": execution.status_code,
+                "wf_reg_test_revision": execution.wf_reg_test_revision,
                 "revision": revision.display_name,
                 "workflow": workflow.display_name,
-                "wf_reg_test_revision": workflow.wf_reg_test_revision,
             }
             for workflow in registry.workflows
             for revision in workflow.revisions
@@ -122,7 +122,7 @@ def serialize(hub: RegistryHub, path: Path, warn: bool = True) -> None:
 
 
 @ch_time_block.decor()
-def deserialize(path: Path, warn: bool = True) -> RegistryHub:
+def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
     registry_dicts = yaml.load(
         (path / "index.yaml").read_text(),
         Loader=yaml.Loader,
@@ -194,7 +194,7 @@ def deserialize(path: Path, warn: bool = True) -> RegistryHub:
                 resources=execution_dict["resources"],
                 status_code=execution_dict["status_code"],
                 revision=revision,
-                wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", None),
+                wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", get_current_revision()),
             )
             revision.executions.append(execution)
 

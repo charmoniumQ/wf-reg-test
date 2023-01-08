@@ -9,7 +9,7 @@ from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 
 from upath import UPath
 
-from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr, create_temp_dir
+from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr, create_temp_dir, get_current_revision
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -161,7 +161,7 @@ class Execution:
     resources: ComputeResources
     status_code: int
     revision: Optional[Revision] = dataclasses.field(compare=False)
-    wf_reg_test_revision: Optional[str] = None
+    wf_reg_test_revision: str = dataclasses.field(default_factory=get_current_revision)
 
     def with_pointers(self, machine: Machine, revision: Revision) -> Execution:
         return Execution(
