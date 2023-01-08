@@ -142,16 +142,6 @@ def clear() -> None:
 
 @main.command()
 @ch_time_block.decor()
-def fill_in_sm() -> None:
-    hub = deserialize(data_path)
-    from .registries import snakemake_registry
-    hub.registries.append(snakemake_registry())
-    ensure_revisions(hub, only_empty=True)
-    serialize(hub, data_path)
-
-
-@main.command()
-@ch_time_block.decor()
 def test() -> None:
     hub = deserialize(data_path)
     revisions_conditions = what_to_execute(
@@ -181,7 +171,7 @@ def report() -> None:
     (storage / "results.html").write_text(report_html(hub))
 
 
-@main.command()
+pp@main.command()
 def review() -> None:
     hub = deserialize(data_path)
     review_failures(hub)
