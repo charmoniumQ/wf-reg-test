@@ -6,6 +6,8 @@ import random
 import datetime
 import dataclasses
 import contextlib
+import functools
+import subprocess
 import tempfile
 from pathlib import Path
 import pprint
@@ -228,3 +230,13 @@ class AzureCredential(azure.identity.aio.DefaultAzureCredential):
         return "hi" # must be Truthy
     def __setstate__(self, state: Any) -> None:
         azure.identity.aio.DefaultAzureCredential.__init__(self)
+
+
+@functools.cache
+def get_current_revision() -> str:
+    return subprocess.run(
+        ["git", "rev-parse", "HEAD"],
+        capture_output=True,
+        text=True,
+        check=True,
+    ).stdout
