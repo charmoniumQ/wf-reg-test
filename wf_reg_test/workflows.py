@@ -250,6 +250,7 @@ Condition.HARD_CONTROLS = Condition(
 @dataclasses.dataclass(frozen=True)
 class FileBundle:
     contents: Mapping[Path, File]
+    # archive: upath.UPath
 
     @staticmethod
     def create_on_disk(root: Path) -> FileBundle:
@@ -276,7 +277,10 @@ class FileBundle:
             else:
                 remote_archive.parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(tarball.name, remote_archive)
-        return FileBundle(contents)
+        return FileBundle(
+            contents,
+            # remote_archive,
+        )
 
     def total_size(self) -> int:
         return sum(file.size for file in self.contents.values())
