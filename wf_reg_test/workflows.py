@@ -289,7 +289,10 @@ class FileBundle:
 
     @property
     def archive(self) -> str:
-        path, file = next(iter(self.contents.items()))
+        try:
+            path, file = next(iter(self.contents.items()))
+        except StopIteration:
+            return ""
         return (
             file.contents_url
             # Looking for path to whole archive, not just this file
