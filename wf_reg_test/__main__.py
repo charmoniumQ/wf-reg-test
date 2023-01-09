@@ -150,14 +150,14 @@ def clear() -> None:
 
 @main.command()
 @ch_time_block.decor()
-def test() -> None:
+def test(quantity: int) -> None:
     hub = deserialize(data_path)
     revisions_conditions = what_to_execute(
         hub=hub,
         time_bound=DateTime(2022, 8, 1),
         conditions=[Condition.NO_CONTROLS],
         desired_execution_count=1,
-        execution_limit=30,
+        execution_limit=quantity,
     )
     parallel_execute(
         hub,
@@ -183,33 +183,37 @@ def report() -> None:
 @ch_time_block.decor()
 def delete_failures() -> None:
     hub = deserialize(data_path)
-    for registry in hub.registries:
-        for workflow in registry.workflows:
-            for revision in workflow.revisions:
-                bad_executions      = [execution for execution in revision.executions if not execution.successful]
-                revision.executions = [execution for execution in revision.executions if execution.successful]
-                for execution in bad_executions:
-                    for file in [*execution.logs.contents.values(), *execution.outputs.contents.values()]:
-                        urls_to_delete = []
-                        url = file.contents_url
-                        if url is not None:
-                            # If is a path within a tarball, this requires special care
-                            if m := re.match("tar://.*::(.*)", url):
-                                urls_to_delete.append(m.group(1))
-                            else:
-                                urls_to_delete.append(url)
-                    for url in set(urls_to_delete):
-                        if m := re.match("file://(.*)", url):
-                            Path(m.group(1)).unlink()
-                        elif m := re.match("(abfs://.*)", url):
-                            # TODO: handle this based on generic storage
-                            upath.UPath(
-                                m.group(1),
-                                account_name="wfregtest",
-                                credential=AzureCredential(),
-                            ).unlink()
-                        else:
-                            raise NotImplementedError(f"Delete routine not implemented for {url}")
+    revisions = [
+        revision
+        for registry in hub.registries
+        for workflow in registry.workflows
+        for revision in workflow.revisions
+    ]
+    for revision in tqdm(revisions, desc="revisions"):
+        bad_executions      = [execution for execution in revision.executions if not execution.successful]
+        revision.executions = [execution for execution in revision.executions if execution.successful]
+        for execution in bad_executions:
+            for file in [*execution.logs.contents.values(), *execution.outputs.contents.values()]:
+                urls_to_delete = []
+                url = file.contents_url
+                if url is not None:
+                    # If is a path within a tarball, this requires special care
+                    if m := re.match("tar://.*::(.*)", url):
+                        urls_to_delete.append(m.group(1))
+                    else:
+                        urls_to_delete.append(url)
+            for url in set(urls_to_delete):
+                if m := re.match("file://(.*)", url):
+                    Path(m.group(1)).unlink()
+                elif m := re.match("(abfs://.*)", url):
+                    # TODO: handle this based on generic storage
+                    upath.UPath(
+                        m.group(1),
+                        account_name="wfregtest",
+                        credential=AzureCredential(),
+                    ).unlink()
+                else:
+                    raise NotImplementedError(f"Delete routine not implemented for {url}")
     serialize(hub, data_path)
 
 

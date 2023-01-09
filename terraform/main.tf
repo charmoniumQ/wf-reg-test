@@ -112,16 +112,6 @@ resource "tls_private_key" "manager" {
   rsa_bits  = 4096
 }
 
-output "developer_ssh_key" {
-  value = tls_private_key.developer.private_key_openssh
-  sensitive = true
-}
-
-output "manager_ssh_key" {
-  value = tls_private_key.manager.private_key_openssh
-  sensitive = true
-}
-
 resource "azurerm_virtual_network" "default" {
   name                = "default"
   address_space       = ["10.0.0.0/16"]
@@ -129,6 +119,11 @@ resource "azurerm_virtual_network" "default" {
   resource_group_name = azurerm_resource_group.default.name
 }
 
+
+output "developer_ssh_key" {
+  value = tls_private_key.developer.private_key_openssh
+  sensitive = true
+}
 
 output "worker_count" {
   value = var.workers
