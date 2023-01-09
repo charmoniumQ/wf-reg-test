@@ -1,7 +1,103 @@
+- display_name: sandragodinhosilva/melange
+  engine: snakemake
+  repo_url: https://github.com/sandragodinhosilva/melange?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/sandragodinhosilva/melange
+- display_name: johnne/map_metaT
+  engine: snakemake
+  repo_url: https://github.com/johnne/map_metaT?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/johnne/map_metaT
+- display_name: tahiri-lab/aPhyloGeo-pipeline
+  engine: snakemake
+  repo_url: https://github.com/tahiri-lab/aPhyloGeo-pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/tahiri-lab/aPhyloGeo-pipeline
+- display_name: hzi-bifo/phylogeny-of-single-cells
+  engine: snakemake
+  repo_url: https://github.com/hzi-bifo/phylogeny-of-single-cells?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/hzi-bifo/phylogeny-of-single-cells
+- display_name: Zilong-Li/array-imputation-workflow
+  engine: snakemake
+  repo_url: https://github.com/Zilong-Li/array-imputation-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/Zilong-Li/array-imputation-workflow
+- display_name: zifornd/arrays
+  engine: snakemake
+  repo_url: https://github.com/zifornd/arrays?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/zifornd/arrays
+- display_name: ArsenaultResearch/RNAseq_Pipeline
+  engine: snakemake
+  repo_url: https://github.com/ArsenaultResearch/RNAseq_Pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/ArsenaultResearch/RNAseq_Pipeline
+- display_name: Sara-Morsy/metaomic-workflow
+  engine: snakemake
+  repo_url: https://github.com/Sara-Morsy/metaomic-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/Sara-Morsy/metaomic-workflow
+- display_name: Wytamma/snk-basic-pipeline
+  engine: snakemake
+  repo_url: https://github.com/Wytamma/snk-basic-pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/Wytamma/snk-basic-pipeline
 - display_name: seankmartin/atn-sub-lfp-workflow
   engine: snakemake
   repo_url: https://github.com/seankmartin/atn-sub-lfp-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/seankmartin/atn-sub-lfp-workflow
+- display_name: simonmoulds/global-decadal-flood-prediction
+  engine: snakemake
+  repo_url: https://github.com/simonmoulds/global-decadal-flood-prediction?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/simonmoulds/global-decadal-flood-prediction
+- display_name: dbespiatykh/TBvar
+  engine: snakemake
+  repo_url: https://github.com/dbespiatykh/TBvar?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/dbespiatykh/TBvar
+- display_name: simonmoulds/gwm-analysis
+  engine: snakemake
+  repo_url: https://github.com/simonmoulds/gwm-analysis?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/simonmoulds/gwm-analysis
+- display_name: simonmoulds/decadal-prediction-data-preparation
+  engine: snakemake
+  repo_url: https://github.com/simonmoulds/decadal-prediction-data-preparation?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/simonmoulds/decadal-prediction-data-preparation
+- display_name: tbenavi1/RetroDetector
+  engine: snakemake
+  repo_url: https://github.com/tbenavi1/RetroDetector?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/tbenavi1/RetroDetector
+- display_name: SichongP/atac-seq
+  engine: snakemake
+  repo_url: https://github.com/SichongP/atac-seq?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/SichongP/atac-seq
+- display_name: simonmoulds/jules-mosart
+  engine: snakemake
+  repo_url: https://github.com/simonmoulds/jules-mosart?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/simonmoulds/jules-mosart
+- display_name: delpropo/structural-variant-analysis
+  engine: snakemake
+  repo_url: https://github.com/delpropo/structural-variant-analysis?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/delpropo/structural-variant-analysis
+- display_name: rmFlynn/snakemake_example
+  engine: snakemake
+  repo_url: https://github.com/rmFlynn/snakemake_example?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/rmFlynn/snakemake_example
+- display_name: trickovicmatija/kingfisher_workflow
+  engine: snakemake
+  repo_url: https://github.com/trickovicmatija/kingfisher_workflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/trickovicmatija/kingfisher_workflow
+- display_name: AmberFu/snakemake_BAMmetrics_mosdepth
+  engine: snakemake
+  repo_url: https://github.com/AmberFu/snakemake_BAMmetrics_mosdepth?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/AmberFu/snakemake_BAMmetrics_mosdepth
+- display_name: jjjoelle/learn_rna
+  engine: snakemake
+  repo_url: https://github.com/jjjoelle/learn_rna?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/jjjoelle/learn_rna
+- display_name: delpropo/bam-fq
+  engine: snakemake
+  repo_url: https://github.com/delpropo/bam-fq?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/delpropo/bam-fq
+- display_name: simonmoulds/jules-ganges-data-preparation
+  engine: snakemake
+  repo_url: https://github.com/simonmoulds/jules-ganges-data-preparation?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/simonmoulds/jules-ganges-data-preparation
+- display_name: crs4/fair-crcc-get-data
+  engine: snakemake
+  repo_url: https://github.com/crs4/fair-crcc-get-data?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/crs4/fair-crcc-get-data
 - display_name: solida-core/musta
   engine: snakemake
   repo_url: https://github.com/solida-core/musta?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -10,10 +106,6 @@
   engine: snakemake
   repo_url: https://github.com/omidalam/can_vac?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/omidalam/can_vac
-- display_name: friendsofstrandseq/ashleys-qc-pipeline
-  engine: snakemake
-  repo_url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline
 - display_name: JosephineConnelly/SoyAdapt_workflow
   engine: snakemake
   repo_url: https://github.com/JosephineConnelly/SoyAdapt_workflow?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -22,30 +114,14 @@
   engine: snakemake
   repo_url: https://github.com/rmFlynn/dram_validataion_pipline?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/rmFlynn/dram_validataion_pipline
-- display_name: rmFlynn/snakemake_example
+- display_name: myousif9/snsx_surface_analysis
   engine: snakemake
-  repo_url: https://github.com/rmFlynn/snakemake_example?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/rmFlynn/snakemake_example
-- display_name: simonmoulds/decadal-prediction-data-preparation
-  engine: snakemake
-  repo_url: https://github.com/simonmoulds/decadal-prediction-data-preparation?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/simonmoulds/decadal-prediction-data-preparation
+  repo_url: https://github.com/myousif9/snsx_surface_analysis?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/myousif9/snsx_surface_analysis
 - display_name: MaNyh/NTRFlows
   engine: snakemake
   repo_url: https://github.com/MaNyh/NTRFlows?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/MaNyh/NTRFlows
-- display_name: snakemake-workflows/dna-seq-mtb
-  engine: snakemake
-  repo_url: https://github.com/snakemake-workflows/dna-seq-mtb?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/snakemake-workflows/dna-seq-mtb
-- display_name: sandragodinhosilva/melange
-  engine: snakemake
-  repo_url: https://github.com/sandragodinhosilva/melange?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/sandragodinhosilva/melange
-- display_name: Zilong-Li/lcWGS-imputation-workflow
-  engine: snakemake
-  repo_url: https://github.com/Zilong-Li/lcWGS-imputation-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/Zilong-Li/lcWGS-imputation-workflow
 - display_name: simonmoulds/us-streamflow-prediction
   engine: snakemake
   repo_url: https://github.com/simonmoulds/us-streamflow-prediction?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -58,6 +134,10 @@
   engine: snakemake
   repo_url: https://github.com/kvntrc/snakemake_template?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/kvntrc/snakemake_template
+- display_name: zifornd/array
+  engine: snakemake
+  repo_url: https://github.com/zifornd/array?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/zifornd/array
 - display_name: simonmoulds/aquacrop-vegmon-analysis
   engine: snakemake
   repo_url: https://github.com/simonmoulds/aquacrop-vegmon-analysis?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -66,10 +146,6 @@
   engine: snakemake
   repo_url: https://github.com/yeyuan98/rna_fish_analysis?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/yeyuan98/rna_fish_analysis
-- display_name: SilasK/Snakebread
-  engine: snakemake
-  repo_url: https://github.com/SilasK/Snakebread?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/SilasK/Snakebread
 - display_name: seung1yoo/snakemake-s3-prototype
   engine: snakemake
   repo_url: https://github.com/seung1yoo/snakemake-s3-prototype?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -86,10 +162,6 @@
   engine: snakemake
   repo_url: https://github.com/knutdrand/bionumpy-benchmarks?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/knutdrand/bionumpy-benchmarks
-- display_name: zifornd/array
-  engine: snakemake
-  repo_url: https://github.com/zifornd/array?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/zifornd/array
 - display_name: Cesconlab/ExomeSeq
   engine: snakemake
   repo_url: https://github.com/Cesconlab/ExomeSeq?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -106,14 +178,14 @@
   engine: snakemake
   repo_url: https://github.com/elsamah/ExomeSeq_wNorm?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/elsamah/ExomeSeq_wNorm
-- display_name: dbespiatykh/TBvar
-  engine: snakemake
-  repo_url: https://github.com/dbespiatykh/TBvar?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/dbespiatykh/TBvar
 - display_name: Xavster838/get_and_annotate_locus
   engine: snakemake
   repo_url: https://github.com/Xavster838/get_and_annotate_locus?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/Xavster838/get_and_annotate_locus
+- display_name: SchlossLab/MiSeq-SOP-demo
+  engine: snakemake
+  repo_url: https://github.com/SchlossLab/MiSeq-SOP-demo?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/SchlossLab/MiSeq-SOP-demo
 - display_name: KonstantinBurkin/cbai
   engine: snakemake
   repo_url: https://github.com/KonstantinBurkin/cbai?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -126,10 +198,6 @@
   engine: snakemake
   repo_url: https://github.com/Albinam1/bioinformatics_school?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/Albinam1/bioinformatics_school
-- display_name: SichongP/atac-seq
-  engine: snakemake
-  repo_url: https://github.com/SichongP/atac-seq?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/SichongP/atac-seq
 - display_name: Ovewh/Climaso
   engine: snakemake
   repo_url: https://github.com/Ovewh/Climaso?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -162,10 +230,6 @@
   engine: snakemake
   repo_url: https://github.com/simonmoulds/uk-decadal-flood-prediction?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/simonmoulds/uk-decadal-flood-prediction
-- display_name: johnne/map_metaT
-  engine: snakemake
-  repo_url: https://github.com/johnne/map_metaT?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/johnne/map_metaT
 - display_name: Xavster838/run_NucFreq
   engine: snakemake
   repo_url: https://github.com/Xavster838/run_NucFreq?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -178,10 +242,6 @@
   engine: snakemake
   repo_url: https://github.com/radlinsky/snakemake_scrape_house_data?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/radlinsky/snakemake_scrape_house_data
-- display_name: hzi-bifo/phylogeny-of-single-cells
-  engine: snakemake
-  repo_url: https://github.com/hzi-bifo/phylogeny-of-single-cells?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/hzi-bifo/phylogeny-of-single-cells
 - display_name: davidlorenz/snakemake-workflow-template
   engine: snakemake
   repo_url: https://github.com/davidlorenz/snakemake-workflow-template?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -250,22 +310,38 @@
   engine: snakemake
   repo_url: https://github.com/jma1991/rnaseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/jma1991/rnaseq
-- display_name: epigen/mixscape_seurat
+- display_name: Zilong-Li/lcWGS-imputation-workflow
   engine: snakemake
-  repo_url: https://github.com/epigen/mixscape_seurat?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/epigen/mixscape_seurat
-- display_name: epigen/dea_seurat
+  repo_url: https://github.com/Zilong-Li/lcWGS-imputation-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/Zilong-Li/lcWGS-imputation-workflow
+- display_name: friendsofstrandseq/ashleys-qc-pipeline
   engine: snakemake
-  repo_url: https://github.com/epigen/dea_seurat?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/epigen/dea_seurat
+  repo_url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/friendsofstrandseq/ashleys-qc-pipeline
+- display_name: ETH-NEXUS/gExcite_pipeline
+  engine: snakemake
+  repo_url: https://github.com/ETH-NEXUS/gExcite_pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/ETH-NEXUS/gExcite_pipeline
+- display_name: pauldrinn/MuSTARRd
+  engine: snakemake
+  repo_url: https://github.com/pauldrinn/MuSTARRd?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/pauldrinn/MuSTARRd
+- display_name: Jain-Joyce-Labs/snakemake-chipseq
+  engine: snakemake
+  repo_url: https://github.com/Jain-Joyce-Labs/snakemake-chipseq?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/Jain-Joyce-Labs/snakemake-chipseq
+- display_name: snakemake-workflows/dna-seq-mtb
+  engine: snakemake
+  repo_url: https://github.com/snakemake-workflows/dna-seq-mtb?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/snakemake-workflows/dna-seq-mtb
 - display_name: snakemake-workflows/cyrcular-calling
   engine: snakemake
   repo_url: https://github.com/snakemake-workflows/cyrcular-calling?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/snakemake-workflows/cyrcular-calling
-- display_name: CVUA-RRW/FooDMe
+- display_name: SilasK/Snakebread
   engine: snakemake
-  repo_url: https://github.com/CVUA-RRW/FooDMe?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/CVUA-RRW/FooDMe
+  repo_url: https://github.com/SilasK/Snakebread?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/SilasK/Snakebread
 - display_name: currocam/RawIlluminaPipeline
   engine: snakemake
   repo_url: https://github.com/currocam/RawIlluminaPipeline?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -274,10 +350,6 @@
   engine: snakemake
   repo_url: https://github.com/wharvey31/denovo_sv_validation?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/wharvey31/denovo_sv_validation
-- display_name: pauldrinn/MuSTARRd
-  engine: snakemake
-  repo_url: https://github.com/pauldrinn/MuSTARRd?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/pauldrinn/MuSTARRd
 - display_name: solida-core/dima
   engine: snakemake
   repo_url: https://github.com/solida-core/dima?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -326,10 +398,14 @@
   engine: snakemake
   repo_url: https://github.com/snakemake-workflows/dna-seq-benchmark?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/snakemake-workflows/dna-seq-benchmark
-- display_name: akcorut/kGWASflow
+- display_name: CVUA-RRW/FooDMe
   engine: snakemake
-  repo_url: https://github.com/akcorut/kGWASflow?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/akcorut/kGWASflow
+  repo_url: https://github.com/CVUA-RRW/FooDMe?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/CVUA-RRW/FooDMe
+- display_name: epigen/mixscape_seurat
+  engine: snakemake
+  repo_url: https://github.com/epigen/mixscape_seurat?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/epigen/mixscape_seurat
 - display_name: dbespiatykh/RDscan
   engine: snakemake
   repo_url: https://github.com/dbespiatykh/RDscan?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -346,6 +422,30 @@
   engine: snakemake
   repo_url: https://github.com/snakemake-workflows/species-quantification?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/snakemake-workflows/species-quantification
+- display_name: clami66/AF_server
+  engine: snakemake
+  repo_url: https://github.com/clami66/AF_server?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/clami66/AF_server
+- display_name: SchlossLab/mothur-snakemake-workflow
+  engine: snakemake
+  repo_url: https://github.com/SchlossLab/mothur-snakemake-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/SchlossLab/mothur-snakemake-workflow
+- display_name: epigen/genome_tracks
+  engine: snakemake
+  repo_url: https://github.com/epigen/genome_tracks?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/epigen/genome_tracks
+- display_name: akcorut/kGWASflow
+  engine: snakemake
+  repo_url: https://github.com/akcorut/kGWASflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/akcorut/kGWASflow
+- display_name: epigen/dea_seurat
+  engine: snakemake
+  repo_url: https://github.com/epigen/dea_seurat?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/epigen/dea_seurat
+- display_name: nismod/open-gira
+  engine: snakemake
+  repo_url: https://github.com/nismod/open-gira?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/nismod/open-gira
 - display_name: epigen/scrnaseq_processing_seurat
   engine: snakemake
   repo_url: https://github.com/epigen/scrnaseq_processing_seurat?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -354,18 +454,18 @@
   engine: snakemake
   repo_url: https://github.com/epigen/enrichment_analysis?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/epigen/enrichment_analysis
-- display_name: epigen/unsupervised_analysis
-  engine: snakemake
-  repo_url: https://github.com/epigen/unsupervised_analysis?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/epigen/unsupervised_analysis
-- display_name: nismod/open-gira
-  engine: snakemake
-  repo_url: https://github.com/nismod/open-gira?revisions=releases&skip-drafts=1&skip-preleases=1
-  url: https://github.com/nismod/open-gira
 - display_name: sreichl/atacseq_pipeline
   engine: snakemake
   repo_url: https://github.com/sreichl/atacseq_pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/sreichl/atacseq_pipeline
+- display_name: epigen/unsupervised_analysis
+  engine: snakemake
+  repo_url: https://github.com/epigen/unsupervised_analysis?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/epigen/unsupervised_analysis
+- display_name: SchlossLab/mikropml-snakemake-workflow
+  engine: snakemake
+  repo_url: https://github.com/SchlossLab/mikropml-snakemake-workflow?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/SchlossLab/mikropml-snakemake-workflow
 - display_name: friendsofstrandseq/mosaicatcher-pipeline
   engine: snakemake
   repo_url: https://github.com/friendsofstrandseq/mosaicatcher-pipeline?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -390,6 +490,10 @@
   engine: snakemake
   repo_url: https://github.com/snakemake-workflows/snakemake-workflow-template?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://github.com/snakemake-workflows/snakemake-workflow-template
+- display_name: zavolanlab/zarp
+  engine: snakemake
+  repo_url: https://github.com/zavolanlab/zarp?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://github.com/zavolanlab/zarp
 - display_name: mrvollger/StainedGlass
   engine: snakemake
   repo_url: https://github.com/mrvollger/StainedGlass?revisions=releases&skip-drafts=1&skip-preleases=1

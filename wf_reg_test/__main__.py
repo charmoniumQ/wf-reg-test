@@ -4,6 +4,7 @@ import warnings
 import itertools
 import multiprocessing
 import random
+import re
 import shutil
 import sys
 from datetime import datetime as DateTime
@@ -32,6 +33,10 @@ ch_time_block.disable_stderr()
 logging.getLogger("parsl").setLevel(logging.WARNING)
 logging.getLogger("paramiko").setLevel(logging.WARNING)
 logging.getLogger("azure").setLevel(logging.WARNING)
+
+
+serialize = ch_time_block.decor()(serialize)
+deserialize = ch_time_block.decor()(deserialize)
 
 
 @ch_time_block.decor()
@@ -109,6 +114,9 @@ storage = upath.UPath(
 
 
 data_path = storage / "index"
+# TODO: store index in different place
+# TODO: store results in different place
+# TODO: should code be self-aware that it is in Git?
 
 
 @click.group()
@@ -177,10 +185,38 @@ def delete_failures() -> None:
     hub = deserialize(data_path)
     for registry in hub.registries:
         for workflow in registry.workflows:
-            for execution in workflow.executions:
-                if not execution.successful:
-                    pass
+            for revision in workflow.revisions:
+                bad_executions      = [execution for execution in revision.executions if not execution.successful]
+                revision.executions = [execution for execution in revision.executions if execution.successful]
+                for execution in bad_executions:
+                    for file in [*execution.logs.contents.values(), *execution.outputs.contents.values()]:
+                        urls_to_delete = []
+                        url = file.contents_url
+                        if url is not None:
+                            # If is a path within a tarball, this requires special care
+                            if m := re.match("tar://.*::(.*)", url):
+                                urls_to_delete.append(m.group(1))
+                            else:
+                                urls_to_delete.append(url)
+                    for url in set(urls_to_delete):
+                        if m := re.match("file://(.*)", url):
+                            Path(m.group(1)).unlink()
+                        elif m := re.match("(abfs://.*)", url):
+                            # TODO: handle this based on generic storage
+                            upath.UPath(
+                                m.group(1),
+                                account_name="wfregtest",
+                                credential=AzureCredential(),
+                            ).unlink()
+                        else:
+                            raise NotImplementedError(f"Delete routine not implemented for {url}")
     serialize(hub, data_path)
+
+
+# @main.command()
+# def post_process() -> None:
+#     from .postprocess import get_data
+#     get_data()
 
 
 @main.command()

@@ -6,6 +6,7 @@ import random
 import datetime
 import dataclasses
 import contextlib
+import random
 import functools
 import subprocess
 import tempfile
@@ -241,3 +242,21 @@ def get_current_revision() -> str:
         text=True,
         check=True,
     ).stdout.strip()
+
+
+def drop_keys(dct: Mapping[_T, _V], drop_keys: set[_T]) -> Mapping[_T, _V]:
+    return {
+        key: val
+        for key, val in dct.items()
+        if key not in drop_keys
+    }
+
+
+_U = TypeVar("_U")
+
+
+def map_keys(mapper: Callable[[_T], _U], dct: Mapping[_T, _V]) -> Mapping[_U, _V]:
+    return {
+        mapper(key): val
+        for key, val in dct.items()
+    }

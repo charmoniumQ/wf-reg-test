@@ -13,6 +13,10 @@ from .util import non_unique, concat_lists, hash_path, walk_files, curried_getat
 from .executable import Executable, ComputeResources, Machine
 
 
+# TODO: do this more like three separate tables with joins maybe?
+# THat would help immutability
+
+
 @dataclasses.dataclass
 class RegistryHub:
     registries: list[Registry]
@@ -187,6 +191,7 @@ class Execution:
         elif self not in self.revision.executions:
             yield UserWarning("Not in own revision")
         yield from self.outputs.check_invariants()
+        yield from self.logs.check_invariants()
         yield from self.resources.check_invariants()
         yield from self.condition.check_invariants()
 

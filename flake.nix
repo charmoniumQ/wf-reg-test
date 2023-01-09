@@ -40,6 +40,7 @@
           pkgs.singularity
           pkgs.micromamba
           pkgs.terraform
+          pkgs.graphviz
           (pkgs.python310.withPackages(ps: [ps.poetry]))
         ];
       in {
@@ -71,6 +72,7 @@
           buildInputs = nix-dev-dependencies ++ [default-python];
           shellHook = ''
             export PREPEND_TO_PS1="(${name}) "
+            export LD_LIBRARY_PATH=LD_LIBRARY_PATH=${pkgs.gcc-unwrapped.lib}/lib:$LD_LIBRARY_PATH
           '';
         };
 

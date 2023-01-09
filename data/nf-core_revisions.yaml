@@ -1,385 +1,410 @@
+- datetime: 2022-12-06 08:28:44
+  display_name: 2.4.0
+  rev: a6fdad9f6a2408d7846789e549f8650c30485fe5
+  url: https://github.com/nf-core/airrflow/tree/2.4.0
+  workflow: airrflow
 - datetime: 2022-09-16 14:44:41
-  display_name: nf-core/airrflow version 2.3.0 "Expelliarmus"
+  display_name: 2.3.0
   rev: 8c1185f7d659d7797a66b541bb27aa5861d34991
   url: https://github.com/nf-core/airrflow/tree/2.3.0
   workflow: airrflow
 - datetime: 2022-06-03 14:01:06
-  display_name: nf-core/airrflow version 2.2.0 "Reparo"
+  display_name: 2.2.0
   rev: 5e30384d64921cc721edff43ed0f24d6c74566ef
   url: https://github.com/nf-core/airrflow/tree/2.2.0
   workflow: airrflow
 - datetime: 2022-05-02 09:28:31
-  display_name: nf-core/airrflow version 2.1.0 "Accio"
+  display_name: 2.1.0
   rev: 0bb3ca4c6763d56c612c8567cb8efb7e54923a5e
   url: https://github.com/nf-core/airrflow/tree/2.1.0
   workflow: airrflow
 - datetime: 2021-07-19 10:53:40
-  display_name: nf-core/bcellmagic version 2.0.0 "Lumos"
+  display_name: 2.0.0
   rev: cc29af5aeb19fb1a58ed6d627ac7aa5145d713fe
   url: https://github.com/nf-core/airrflow/tree/2.0.0
   workflow: airrflow
 - datetime: 2020-01-14 11:02:05
-  display_name: nf-core/bcellmagic version 1.2.0 "Riddikulus"
+  display_name: 1.2.0
   rev: c3107f30e6c061fc5bb35a526199ed4297aa4eb7
   url: https://github.com/nf-core/airrflow/tree/1.2.0
   workflow: airrflow
 - datetime: 2019-11-07 21:14:33
-  display_name: nf-core/bcellmagic version 1.1.0 "Wingardium Leviosa"
+  display_name: 1.1.0
   rev: 11d19bc2c68633cca93c522736552691fff459da
   url: https://github.com/nf-core/airrflow/tree/1.1.0
   workflow: airrflow
 - datetime: 2019-04-16 11:59:35
-  display_name: nf-core/bcellmagic version 1.0.0 "Alohomora"
+  display_name: 1.0.0
   rev: df7e204ae7e15b3185ebbe1ffe529a86303bf9f1
   url: https://github.com/nf-core/airrflow/tree/1.0.0
   workflow: airrflow
+- datetime: 2022-12-07 15:45:16
+  display_name: 2.4.1
+  rev: 83877d2fe539293818be84dec3bd1f43238c9c3c
+  url: https://github.com/nf-core/ampliseq/tree/2.4.1
+  workflow: ampliseq
 - datetime: 2022-09-07 15:14:38
-  display_name: Ampliseq Version 2.4.0
+  display_name: 2.4.0
   rev: 708b8398d007d9a8c907ce6da478717e1ab5f5bc
   url: https://github.com/nf-core/ampliseq/tree/2.4.0
   workflow: ampliseq
 - datetime: 2022-05-27 11:09:18
-  display_name: Ampliseq Version 2.3.2
+  display_name: 2.3.2
   rev: aed35e5b4bad907ed2bdf6587efb82ad2578e6b1
   url: https://github.com/nf-core/ampliseq/tree/2.3.2
   workflow: ampliseq
 - datetime: 2022-04-05 12:15:51
-  display_name: Ampliseq Version 2.3.1
+  display_name: 2.3.1
   rev: 306ad5df8f0a3b7cd033d040ddd440c09eb9a361
   url: https://github.com/nf-core/ampliseq/tree/2.3.1
   workflow: ampliseq
 - datetime: 2022-04-04 11:30:26
-  display_name: Ampliseq Version 2.3.0
+  display_name: 2.3.0
   rev: 680a7a15ba7cc9c850e2d3eeb99c886e45d72c7d
   url: https://github.com/nf-core/ampliseq/tree/2.3.0
   workflow: ampliseq
 - datetime: 2022-01-31 14:04:57
-  display_name: Ampliseq Version 2.2.0
+  display_name: 2.2.0
   rev: 3beb2392044ad0575df76b54b0a5a26c6ce4b32a
   url: https://github.com/nf-core/ampliseq/tree/2.2.0
   workflow: ampliseq
 - datetime: 2021-10-28 14:50:24
-  display_name: Ampliseq Version 2.1.1
+  display_name: 2.1.1
   rev: 80b3cb8b05d3b596bd0a52866e7febe40ea497db
   url: https://github.com/nf-core/ampliseq/tree/2.1.1
   workflow: ampliseq
 - datetime: 2021-09-14 11:50:30
-  display_name: Ampliseq Version 2.1.0 "Gray Steel Boa"
+  display_name: 2.1.0
   rev: 68e4b5ff9aef5e97c9f8b8a56c8b7a394a38e18f
   url: https://github.com/nf-core/ampliseq/tree/2.1.0
   workflow: ampliseq
 - datetime: 2021-06-29 10:19:21
-  display_name: Ampliseq Version 2.0.0 "Blue Copper Kangaroo"
+  display_name: 2.0.0
   rev: ce4d7f4bbe876be0d942cd597614143bf1677030
   url: https://github.com/nf-core/ampliseq/tree/2.0.0
   workflow: ampliseq
 - datetime: 2021-02-04 15:30:53
-  display_name: Ampliseq Version 1.2.0 "Teal Bronze Lion"
+  display_name: 1.2.0
   rev: 1e76f1c0c6d270572573a6ad76aa40bfc185c3da
   url: https://github.com/nf-core/ampliseq/tree/1.2.0
   workflow: ampliseq
 - datetime: 2020-11-02 14:35:51
-  display_name: Ampliseq Version 1.1.3
+  display_name: 1.1.3
   rev: 70b23f4710094df9299e5ab2d18a1d412bbd4d04
   url: https://github.com/nf-core/ampliseq/tree/1.1.3
   workflow: ampliseq
 - datetime: 2019-12-19 20:37:55
-  display_name: Ampliseq Version 1.1.2
+  display_name: 1.1.2
   rev: cd23988d881ebb5c9fc42d5f030e3673274983c3
   url: https://github.com/nf-core/ampliseq/tree/1.1.2
   workflow: ampliseq
 - datetime: 2019-12-09 15:03:34
-  display_name: Ampliseq Version 1.1.1
+  display_name: 1.1.1
   rev: 4371681d2418516e692065374b05669d96868a02
   url: https://github.com/nf-core/ampliseq/tree/1.1.1
   workflow: ampliseq
 - datetime: 2019-07-15 15:03:13
-  display_name: Ampliseq Version 1.1.0 "Silver Lime Bee"
+  display_name: 1.1.0
   rev: 57e1ee2f9028d0a8c5838ee8aa8cf4b383f61174
   url: https://github.com/nf-core/ampliseq/tree/1.1.0
   workflow: ampliseq
 - datetime: 2018-12-13 11:15:06
-  display_name: Ampliseq v1.0.0 "Olive Steel Panda"
+  display_name: 1.0.0
   rev: f0357d61cf1afb1f0df4f8c701c62609f9374bbb
   url: https://github.com/nf-core/ampliseq/tree/1.0.0
   workflow: ampliseq
+- datetime: 2022-11-30 20:15:26
+  display_name: '2.0'
+  rev: 0add18866a5f095e93b8ec345a12b76d675f4af9
+  url: https://github.com/nf-core/atacseq/tree/2.0
+  workflow: atacseq
 - datetime: 2022-05-12 20:21:49
-  display_name: nf-core/atacseq v1.2.2 - Iron Ossifrage
+  display_name: 1.2.2
   rev: f327c86324427c64716be09c98634ae0bc8165f6
   url: https://github.com/nf-core/atacseq/tree/1.2.2
   workflow: atacseq
 - datetime: 2020-07-29 15:32:26
-  display_name: nf-core/atacseq v1.2.1 - Iron Centipede
+  display_name: 1.2.1
   rev: 1b3a832db5a53c92c2c89a4d6d79455e860461ad
   url: https://github.com/nf-core/atacseq/tree/1.2.1
   workflow: atacseq
 - datetime: 2020-07-02 10:24:44
-  display_name: nf-core/atacseq v1.2.0 - Iron Swan
+  display_name: 1.2.0
   rev: 766424e3a3f55c28fa746da519e3e61362a78d68
   url: https://github.com/nf-core/atacseq/tree/1.2.0
   workflow: atacseq
 - datetime: 2019-11-05 12:37:49
-  display_name: nf-core/atacseq v1.1.0 - Iron Shark
+  display_name: 1.1.0
   rev: fa1e3f8993cd20e249b9df09d29c5498eff311d2
   url: https://github.com/nf-core/atacseq/tree/1.1.0
   workflow: atacseq
 - datetime: 2019-04-09 12:59:46
-  display_name: nf-core/atacseq v1.0.0 - Iron Panda
+  display_name: 1.0.0
   rev: c65bf6cd11c8a98807084d2d4039822a19f03969
   url: https://github.com/nf-core/atacseq/tree/1.0.0
   workflow: atacseq
 - datetime: 2021-08-27 12:16:44
-  display_name: 'v2.0.0 nf-core/bacass: "Navy Steel Swordfish"'
+  display_name: 2.0.0
   rev: 959967364c7c0105b5b271acf0441fa9290e0d4c
   url: https://github.com/nf-core/bacass/tree/2.0.0
   workflow: bacass
 - datetime: 2020-11-05 10:58:36
-  display_name: 'v1.1.1 nf-core/bacass: "Green Aluminium Shark" 2020/11/05'
+  display_name: 1.1.1
   rev: 4500b3bf69c45c1b5a8d368f24048575b18588dd
   url: https://github.com/nf-core/bacass/tree/1.1.1
   workflow: bacass
 - datetime: 2019-12-13 13:06:58
-  display_name: 'nf-core/bacass v1.1.0: "Green Aluminium Shark'
+  display_name: 1.1.0
   rev: c6d5c3a0f80099fa247bf8be1cdedcf5fce644fb
   url: https://github.com/nf-core/bacass/tree/1.1.0
   workflow: bacass
 - datetime: 2019-05-06 14:46:05
-  display_name: 'nf-core/bacass v1.0.0: "Green Tin Ant"'
+  display_name: 1.0.0
   rev: ae7f903ffae61fb86d7af52b0751ee5fce030479
   url: https://github.com/nf-core/bacass/tree/1.0.0
   workflow: bacass
 - datetime: 2021-06-18 11:57:15
-  display_name: Aluminium Spider
+  display_name: 1.0.0
   rev: 834642d8ac150ca10d705833223e7bcf15efc210
   url: https://github.com/nf-core/bactmap/tree/1.0.0
   workflow: bactmap
 - datetime: 2021-01-14 07:54:14
-  display_name: '[1.0.2] 13.01.2021'
+  display_name: 1.0.2
   rev: 838d2a5165edb86439d7ff0400bd385d6bcf6927
   url: https://github.com/nf-core/cageseq/tree/1.0.2
   workflow: cageseq
 - datetime: 2020-11-23 14:47:14
-  display_name: '[1.0.1] - 2020-11-23'
+  display_name: 1.0.1
   rev: 0e58db8cce0555684fb71ccaa8ced7c7a8fa4fdc
   url: https://github.com/nf-core/cageseq/tree/1.0.1
   workflow: cageseq
 - datetime: 2020-10-16 11:07:52
-  display_name: '[1.0.0] - Gold Lion - 2020-10-16'
+  display_name: 1.0.0
   rev: 729fbcb775bfde5c2f2af731374fbdfcb697d5eb
   url: https://github.com/nf-core/cageseq/tree/1.0.0
   workflow: cageseq
 - datetime: 2022-10-03 15:29:13
-  display_name: nf-core/chipseq v2.0 - Platinum Goldfinch
+  display_name: 2.0.0
   rev: 51eba00b32885c4d0bec60db3cb0a45eb61e34c5
   url: https://github.com/nf-core/chipseq/tree/2.0.0
   workflow: chipseq
 - datetime: 2021-04-22 19:26:48
-  display_name: nf-core/chipseq v1.2.2 - Rusty Mole
+  display_name: 1.2.2
   rev: 6924b669422215f9021144b251e83fc9929be1fe
   url: https://github.com/nf-core/chipseq/tree/1.2.2
   workflow: chipseq
 - datetime: 2020-07-29 16:33:46
-  display_name: nf-core/chipseq v1.2.1 - Platinum Mole
+  display_name: 1.2.1
   rev: 0f487ed76dc947793ab48527d8d3025f5f3060a5
   url: https://github.com/nf-core/chipseq/tree/1.2.1
   workflow: chipseq
 - datetime: 2020-07-02 11:16:53
-  display_name: nf-core/chipseq v1.2.0 - Platinum Fox
+  display_name: 1.2.0
   rev: 048fd6854fcc85b355c61dfc2e21da0bcc6399ea
   url: https://github.com/nf-core/chipseq/tree/1.2.0
   workflow: chipseq
 - datetime: 2019-11-05 12:14:21
-  display_name: nf-core/chipseq v1.1.0 - Platinum Pig
+  display_name: 1.1.0
   rev: 21be3149542cdc84431e12d1e092359058aed32a
   url: https://github.com/nf-core/chipseq/tree/1.1.0
   workflow: chipseq
 - datetime: 2019-06-06 15:10:58
-  display_name: nf-core/chipseq v1.0.0 - Platinum Wolf
+  display_name: 1.0.0
   rev: 5e95c969bae35a8a39d47dfe70f8ec18e990c979
   url: https://github.com/nf-core/chipseq/tree/1.0.0
   workflow: chipseq
 - datetime: 2022-06-22 14:03:42
-  display_name: v 1.0.1 - 2022-06-22 - Black Bronze Viper
+  display_name: 1.0.1
   rev: 50681adaf7c089d51071ebbebee75e07c6650965
   url: https://github.com/nf-core/circdna/tree/1.0.1
   workflow: circdna
 - datetime: 2022-05-31 20:44:56
-  display_name: v 1.0.0 - 2022-06-01 - Stone Green Lizard
+  display_name: 1.0.0
   rev: b0152a3629114ff0e1fb5db03403e0677783c8a6
   url: https://github.com/nf-core/circdna/tree/1.0.0
   workflow: circdna
 - datetime: 2021-04-27 10:25:00
-  display_name: nf-core/clipseq 1.0.0 - Ianthine Pelican
+  display_name: 1.0.0
   rev: 45ae3c0b9b16206b687f4a645e1643c85b3f1ab4
   url: https://github.com/nf-core/clipseq/tree/1.0.0
   workflow: clipseq
+- datetime: 2022-11-04 16:41:01
+  display_name: 1.1.1
+  rev: baab5d8ad1a4bf3aaf386166328cec81adb7aba2
+  url: https://github.com/nf-core/coproid/tree/1.1.1
+  workflow: coproid
 - datetime: 2020-04-29 10:43:48
-  display_name: 'coproID v1.1 -  Langley Panda '
+  display_name: '1.1'
   rev: 7dc3362267bc89ce658651d47534455e01dc152b
   url: https://github.com/nf-core/coproid/tree/1.1
   workflow: coproid
 - datetime: 2019-04-29 14:43:27
-  display_name: coproID v1.0 - Dioptre Walrus
+  display_name: '1.0'
   rev: e69aa3dd0e0d090e49f0c13208a15da9460b8427
   url: https://github.com/nf-core/coproid/tree/1.0
   workflow: coproid
 - datetime: 2022-10-27 09:03:44
-  display_name: nf-core/cutandrun v3.0 Bronze Rattlesnake
+  display_name: '3.0'
   rev: dcaa4423d783017996c30302d16d772facb0da7e
   url: https://github.com/nf-core/cutandrun/tree/3.0
   workflow: cutandrun
 - datetime: 2022-06-08 13:04:07
-  display_name: nf-core/cutandrun v2.0 Copper Cobra
+  display_name: '2.0'
   rev: 971984a48ad4dc5b39fc20b56c5729f4ca20379a
   url: https://github.com/nf-core/cutandrun/tree/2.0
   workflow: cutandrun
 - datetime: 2022-01-20 10:59:29
-  display_name: nf-core/cutandrun v1.1 Brass Viper
+  display_name: '1.1'
   rev: c30a37fd57dcd717870c1ce947bc157ca3a88838
   url: https://github.com/nf-core/cutandrun/tree/1.1
   workflow: cutandrun
 - datetime: 2021-11-05 14:50:44
-  display_name: "nf-core/cutandrun v1.0.0 - Aluminium \uFEFFBoa"
+  display_name: 1.0.0
   rev: 5b9f4fad41d11e98cbbfa30359a6e494f8f77694
   url: https://github.com/nf-core/cutandrun/tree/1.0.0
   workflow: cutandrun
 - datetime: 2018-11-19 14:32:50
-  display_name: nf-core/deepvariant version 1.0
+  display_name: '1.0'
   rev: 2b5486356c4dbd4dcb598b611281997119c2e350
   url: https://github.com/nf-core/deepvariant/tree/1.0
   workflow: deepvariant
 - datetime: 2022-10-06 14:18:20
-  display_name: Titanium Pig
+  display_name: 1.0.0
   rev: b0a004eb2e79f6fceb9b5d79b91b563b7724ed62
   url: https://github.com/nf-core/demultiplex/tree/1.0.0
   workflow: demultiplex
 - datetime: 2021-04-28 19:12:13
-  display_name: nf-core/diaproteomics 1.2.4 - "Kalalau Trail"
+  display_name: 1.2.4
   rev: 58b18dd02583ad4288949aa31471bcec375705cc
   url: https://github.com/nf-core/diaproteomics/tree/1.2.4
   workflow: diaproteomics
 - datetime: 2021-04-26 09:36:16
-  display_name: nf-core/diaproteomics 1.2.3 - "Mt. Elbrus South Route"
+  display_name: 1.2.3
   rev: 47ac20ca5d6c4c788a7bea4c49644096b2c80b61
   url: https://github.com/nf-core/diaproteomics/tree/1.2.3
   workflow: diaproteomics
 - datetime: 2021-02-24 21:10:43
-  display_name: nf-core/diaproteomics 1.2.2 - "Camino de Santiago"
+  display_name: 1.2.2
   rev: a219be9c33de0b0732cbab0282702f03d21432c8
   url: https://github.com/nf-core/diaproteomics/tree/1.2.2
   workflow: diaproteomics
 - datetime: 2021-02-18 12:23:20
-  display_name: nf-core/diaproteomics 1.2.1 - "Appalachian Trail"
+  display_name: 1.2.1
   rev: e118578569e022406224dce3bda901d12a4a7c0c
   url: https://github.com/nf-core/diaproteomics/tree/1.2.1
   workflow: diaproteomics
 - datetime: 2020-12-15 20:01:49
-  display_name: nf-core/diaproteomics 1.2.0 - "Wilhelmstrasse"
+  display_name: 1.2.0
   rev: 6c4157d8454cbaf3897f982abb538aaa6f89cb27
   url: https://github.com/nf-core/diaproteomics/tree/1.2.0
   workflow: diaproteomics
 - datetime: 2020-12-03 07:51:50
-  display_name: nf-core/diaproteomics 1.1.0 - "Manali-Leh-Highway"
+  display_name: 1.1.0
   rev: 77f51fdb56c1ae792aba1d780879130a9c44b5f6
   url: https://github.com/nf-core/diaproteomics/tree/1.1.0
   workflow: diaproteomics
 - datetime: 2020-11-13 11:21:54
-  display_name: nf-core/diaproteomics 1.0.0 - "Great ocean road"
+  display_name: 1.0.0
   rev: 39db11edcd318870329a5ab91518d4d076539de4
   url: https://github.com/nf-core/diaproteomics/tree/1.0.0
   workflow: diaproteomics
 - datetime: 2021-02-14 19:34:16
-  display_name: '[nf-core/dualrnaseq] - 1.0.0 - Tarnica'
+  display_name: 1.0.0
   rev: d8dcd8acfa6f1c2de933294bc73344d6258ebb42
   url: https://github.com/nf-core/dualrnaseq/tree/1.0.0
   workflow: dualrnaseq
+- datetime: 2022-11-17 09:58:04
+  display_name: 2.4.6
+  rev: bb32ae3b0110b9a26b791f73a5324828d849271a
+  url: https://github.com/nf-core/eager/tree/2.4.6
+  workflow: eager
 - datetime: 2022-08-02 13:35:11
-  display_name: '[2.4.5] - Wangen (Patch) - 2022-08-02'
+  display_name: 2.4.5
   rev: 42c9d5f8602e5e88fdcec28f194d2cd4cff61c75
   url: https://github.com/nf-core/eager/tree/2.4.5
   workflow: eager
 - datetime: 2022-04-08 19:16:57
-  display_name: '[2.4.4] - Wangen (Patch) - 2022-04-08'
+  display_name: 2.4.4
   rev: 43a239bd132b4a6ccf791d7052f537f3d22b700c
   url: https://github.com/nf-core/eager/tree/2.4.4
   workflow: eager
 - datetime: 2022-03-24 14:56:38
-  display_name: '[2.4.3] - Wangen (Patch) - 2022-03-24'
+  display_name: 2.4.3
   rev: 6c0c9d5dfd08c3809d09c99f85017cd809134ee0
   url: https://github.com/nf-core/eager/tree/2.4.3
   workflow: eager
 - datetime: 2022-01-24 17:00:46
-  display_name: '[2.4.2] - Wangen (Patch, Broken Leg Edition) - 2022-01-24'
+  display_name: 2.4.2
   rev: 37e860d0ebd4989accf9a0fa0bdba22d953027bc
   url: https://github.com/nf-core/eager/tree/2.4.2
   workflow: eager
 - datetime: 2021-11-30 13:55:05
-  display_name: '[2.4.1] - Wangen (Patch) - 2021-11-30'
+  display_name: 2.4.1
   rev: 20b0be4e769d9a4cffda59723ad7152e0a64b312
   url: https://github.com/nf-core/eager/tree/2.4.1
   workflow: eager
 - datetime: 2021-09-14 16:53:35
-  display_name: '[2.4.0] - Wangen - 2021-09-14'
+  display_name: 2.4.0
   rev: cc66639a8a2710f0de6aef5ae28e1614a5a4e3e2
   url: https://github.com/nf-core/eager/tree/2.4.0
   workflow: eager
 - datetime: 2021-06-04 06:16:22
-  display_name: '[2.3.5] - Aalen (Patch) - 2021-06-04'
+  display_name: 2.3.5
   rev: 70e3d276d3a39859b8f067518added35ef616af7
   url: https://github.com/nf-core/eager/tree/2.3.5
   workflow: eager
 - datetime: 2021-05-05 11:21:29
-  display_name: '[2.3.4] - Aalen (Patch) - 2021-05-05'
+  display_name: 2.3.4
   rev: 10bfbdff86607f816c4e1819e8ede0f5f00ea2ac
   url: https://github.com/nf-core/eager/tree/2.3.4
   workflow: eager
 - datetime: 2021-04-08 11:35:14
-  display_name: '[2.3.3] - Aalen (Patch) - 2021-04-08'
+  display_name: 2.3.3
   rev: ad8e41a20a49febb1814c530de5460a5d342df8c
   url: https://github.com/nf-core/eager/tree/2.3.3
   workflow: eager
 - datetime: 2021-03-16 15:22:15
-  display_name: '[2.3.2] - Aalen (Patch) - 2021-03-16'
+  display_name: 2.3.2
   rev: b5a8f0f7682570c6fa7aa351b81b41af9cc5aaa1
   url: https://github.com/nf-core/eager/tree/2.3.2
   workflow: eager
 - datetime: 2021-01-14 13:18:58
-  display_name: '[2.3.1] - Aalen (Patch) - 2021-01-14'
+  display_name: 2.3.1
   rev: 29b6e147bd9a848f84e6d26706af7f652f2165ca
   url: https://github.com/nf-core/eager/tree/2.3.1
   workflow: eager
 - datetime: 2021-01-11 11:59:39
-  display_name: '[2.3.0] - Aalen - 2020-10-21'
+  display_name: 2.3.0
   rev: 0bc87f361f95969e40f5643d403eb40b3b0dd2e3
   url: https://github.com/nf-core/eager/tree/2.3.0
   workflow: eager
 - datetime: 2020-12-09 07:48:15
-  display_name: '[2.2.2] - Ulm (Patch) - 2020-12-09'
+  display_name: 2.2.2
   rev: 85e2e3288ae9e357bfa0e7bd55ea63bca6291c5c
   url: https://github.com/nf-core/eager/tree/2.2.2
   workflow: eager
 - datetime: 2020-10-29 18:05:16
-  display_name: '[2.2.1] - Ulm (Patch) - 2020-10-29'
+  display_name: 2.2.1
   rev: 7971d89e54621c44055b2062a569c76a36045723
   url: https://github.com/nf-core/eager/tree/2.2.1
   workflow: eager
 - datetime: 2020-10-21 08:01:36
-  display_name: '[2.2.0] - Ulm - 2020-10-21'
+  display_name: 2.2.0
   rev: b1ae5ad6c1aa54c11f3f571f25920506f9b92129
   url: https://github.com/nf-core/eager/tree/2.2.0
   workflow: eager
 - datetime: 2020-03-05 15:39:10
-  display_name: ' [2.1.0] - Ravensburg - 2020-03-05'
+  display_name: 2.1.0
   rev: 26ae7e945f738b47996cce32fe86ec37897087a9
   url: https://github.com/nf-core/eager/tree/2.1.0
   workflow: eager
 - datetime: 2019-06-10 20:14:48
-  display_name: '[2.0.7] - 2019-06-10'
+  display_name: 2.0.7
   rev: b8d3dec3f044da5ec016493108910945be2b8702
   url: https://github.com/nf-core/eager/tree/2.0.7
   workflow: eager
 - datetime: 2019-03-06 07:12:31
-  display_name: '[2.0.6]'
+  display_name: 2.0.6
   rev: bc55df323e1be63fedb8a75e663a25e7d422b7ef
   url: https://github.com/nf-core/eager/tree/2.0.6
   workflow: eager
@@ -409,712 +434,772 @@
   url: https://github.com/nf-core/eager/tree/2.0.1
   workflow: eager
 - datetime: 2018-10-17 21:18:48
-  display_name: 2.0.0 - "Kaufbeuren"
+  display_name: 2.0.0
   rev: 897fca777aa79e35f555fec17bb836ffd1d57053
   url: https://github.com/nf-core/eager/tree/2.0.0
   workflow: eager
 - datetime: 2022-08-04 10:55:55
-  display_name: 2.1.0 - Nordring
+  display_name: 2.1.0
   rev: 1bd1df07058169d3965bdc5090a00e0e05050bcd
   url: https://github.com/nf-core/epitopeprediction/tree/2.1.0
   workflow: epitopeprediction
 - datetime: 2021-12-21 12:23:48
-  display_name: 2.0.0 - Heuberg
+  display_name: 2.0.0
   rev: 1afbbf19ed6adca477451a3c42e2e0ac0c75af28
   url: https://github.com/nf-core/epitopeprediction/tree/2.0.0
   workflow: epitopeprediction
 - datetime: 2020-10-20 17:01:45
-  display_name: 1.1.0 - Morgenstelle
+  display_name: 1.1.0
   rev: ce15e440954f8e7c83c341261b82aacc8e3535ac
   url: https://github.com/nf-core/epitopeprediction/tree/1.1.0
   workflow: epitopeprediction
 - datetime: 2019-12-05 16:30:27
-  display_name: nf-core/epitopeprediction V 1.0.0 - "Purple Nickel Shrimp"
+  display_name: 1.0.0
   rev: a4c32a0ad83f6d7b8e9f36829af6bb75379ab60d
   url: https://github.com/nf-core/epitopeprediction/tree/1.0.0
   workflow: epitopeprediction
+- datetime: 2022-12-21 13:49:51
+  display_name: '1.9'
+  rev: 084e5ef3038b3210efaf203ce57d0ba21a6ece0b
+  url: https://github.com/nf-core/fetchngs/tree/1.9
+  workflow: fetchngs
+- datetime: 2022-11-08 09:47:28
+  display_name: '1.8'
+  rev: 249210f1856edaf4713430ebc42d6bdf60561d7a
+  url: https://github.com/nf-core/fetchngs/tree/1.8
+  workflow: fetchngs
 - datetime: 2022-07-01 16:09:31
-  display_name: nf-core/fetchngs v1.7 - Sodium Skunk
+  display_name: '1.7'
   rev: b79cde2fb58ec3bee3ef20124c6ade0c2f263d7d
   url: https://github.com/nf-core/fetchngs/tree/1.7
   workflow: fetchngs
 - datetime: 2022-05-17 11:47:34
-  display_name: nf-core/fetchngs v1.6 - Cobalt Hippopotamus
+  display_name: '1.6'
   rev: 7b7ab2f818d8202b0bc71b7eb901c1329216ddd9
   url: https://github.com/nf-core/fetchngs/tree/1.6
   workflow: fetchngs
 - datetime: 2021-12-01 09:27:56
-  display_name: nf-core/fetchngs v1.5 - Copper Cat
+  display_name: '1.5'
   rev: c318ae12fcb972ff28f6d38edd3165c88b6d0b3f
   url: https://github.com/nf-core/fetchngs/tree/1.5
   workflow: fetchngs
 - datetime: 2021-11-09 15:26:35
-  display_name: nf-core/fetchngs v1.4 - Platinum Hawk
+  display_name: '1.4'
   rev: 0c43cc787290d88c9127af8281bb69554d905012
   url: https://github.com/nf-core/fetchngs/tree/1.4
   workflow: fetchngs
 - datetime: 2021-09-15 16:27:51
-  display_name: nf-core/fetchngs v1.3 - Lead Python
+  display_name: '1.3'
   rev: 2d593fb504caf65301c78b8076272f895e364cd7
   url: https://github.com/nf-core/fetchngs/tree/1.3
   workflow: fetchngs
 - datetime: 2021-07-28 08:22:17
-  display_name: nf-core/fetchngs v1.2 - Silver Fox
+  display_name: '1.2'
   rev: 8c00805705b66587167a1f166935506413225260
   url: https://github.com/nf-core/fetchngs/tree/1.2
   workflow: fetchngs
 - datetime: 2021-06-22 10:11:06
-  display_name: nf-core/fetchngs v1.1 - Titanium Toad
+  display_name: '1.1'
   rev: 3bd6ea5f0e657dde934ac4c8f7cb28ad19d14df7
   url: https://github.com/nf-core/fetchngs/tree/1.1
   workflow: fetchngs
 - datetime: 2021-06-08 10:40:17
-  display_name: nf-core/fetchngs v1.0 - Steel Hippo
+  display_name: '1.0'
   rev: 4611da4046667c74ad3bb943e88fcd6f5e60287a
   url: https://github.com/nf-core/fetchngs/tree/1.0
   workflow: fetchngs
 - datetime: 2022-10-24 12:37:05
-  display_name: hgtseq 1.0.0 - Dalmatian Daffodil
+  display_name: 1.0.0
   rev: 4cd916f0c15e2c1a6a4a09228981cfd919b33222
   url: https://github.com/nf-core/hgtseq/tree/1.0.0
   workflow: hgtseq
 - datetime: 2021-05-24 19:00:38
-  display_name: nf-core/hic v1.3.0
+  display_name: 1.3.0
   rev: ac74763a91961ef7b274a651608c76be05be15e4
   url: https://github.com/nf-core/hic/tree/1.3.0
   workflow: hic
 - datetime: 2020-09-03 07:10:29
-  display_name: nf-core/hic v1.2.2
+  display_name: 1.2.2
   rev: 52e5f048a66541a4d33d4b721ff4a0a05ba1745e
   url: https://github.com/nf-core/hic/tree/1.2.2
   workflow: hic
 - datetime: 2020-07-09 11:59:07
-  display_name: nf-core/hic v1.2.1
+  display_name: 1.2.1
   rev: ae2352c5b864a5e11d1220137d631a7c98b9ad14
   url: https://github.com/nf-core/hic/tree/1.2.1
   workflow: hic
 - datetime: 2020-06-19 06:34:13
-  display_name: nf-core/hic v1.2.0
+  display_name: 1.2.0
   rev: b84069e1f2f1d51414341a992200c339cdce711b
   url: https://github.com/nf-core/hic/tree/1.2.0
   workflow: hic
 - datetime: 2019-10-16 14:07:09
-  display_name: nf-core/hic v1.1.0
+  display_name: 1.1.0
   rev: 481964d91cd3c4ab1d4b3afcba0f8a639911d97e
   url: https://github.com/nf-core/hic/tree/1.1.0
   workflow: hic
 - datetime: 2019-05-06 16:50:15
-  display_name: nf-core/hic v1.0.0
+  display_name: 1.0.0
   rev: f7a827eeda4e5b8fd30f1724d1ae1f21ec65b3dd
   url: https://github.com/nf-core/hic/tree/1.0.0
   workflow: hic
 - datetime: 2022-05-03 18:41:37
-  display_name: nf-core/hicar Release 1.0.0
+  display_name: 1.0.0
   rev: 429087d2b13e59c3edd2e71b8005c1adc5bbb7bb
   url: https://github.com/nf-core/hicar/tree/1.0.0
   workflow: hicar
 - datetime: 2022-10-18 11:16:08
-  display_name: 2.0.0 - Han Solo
+  display_name: 2.0.0
   rev: 7c9a2fbd404fae653d12e14db823b378512fbb40
   url: https://github.com/nf-core/hlatyping/tree/2.0.0
   workflow: hlatyping
 - datetime: 2020-08-21 09:20:21
-  display_name: 1.2.0 - Lead-sparrow
+  display_name: 1.2.0
   rev: 69987947952ec3f188356a3043cce724d72125e3
   url: https://github.com/nf-core/hlatyping/tree/1.2.0
   workflow: hlatyping
 - datetime: 2019-06-27 09:12:36
-  display_name: 1.1.5 - Patch Release
+  display_name: 1.1.5
   rev: bf5d0c2d4646df8ce240230b1a15c0a241658a07
   url: https://github.com/nf-core/hlatyping/tree/1.1.5
   workflow: hlatyping
 - datetime: 2019-03-07 10:06:06
-  display_name: 1.1.4 - Patch Release
+  display_name: 1.1.4
   rev: 4bcced898ee23600bd8c249ff085f8f88db90e7c
   url: https://github.com/nf-core/hlatyping/tree/1.1.4
   workflow: hlatyping
 - datetime: 2019-02-04 13:27:58
-  display_name: 1.1.3 - Patch Release
+  display_name: 1.1.3
   rev: 18740c24175eb82cb1e206e8d471c2899e59ab7e
   url: https://github.com/nf-core/hlatyping/tree/1.1.3
   workflow: hlatyping
 - datetime: 2018-12-12 14:31:52
-  display_name: Patch release 2018-12-12 14:31:52
+  display_name: 1.1.2
   rev: 5a5687958004e2d8e9c2625f0bde558deffdda99
   url: https://github.com/nf-core/hlatyping/tree/1.1.2
   workflow: hlatyping
 - datetime: 2018-08-21 07:02:17
-  display_name: Patch release 2018-08-21 07:02:17
+  display_name: 1.1.1
   rev: af1f68457c50060dcae8ed7e53b780e7f6203e60
   url: https://github.com/nf-core/hlatyping/tree/1.1.1
   workflow: hlatyping
 - datetime: 2018-08-15 12:05:25
-  display_name: Aqua-titanium-crab
+  display_name: 1.1.0
   rev: 17826e8340be96fd9def2fad4d7bb778294ca9b1
   url: https://github.com/nf-core/hlatyping/tree/1.1.0
   workflow: hlatyping
 - datetime: 2018-07-18 13:19:57
-  display_name: First major release of nf-core/hlatyping
+  display_name: 1.0.0
   rev: 41d7b6baf787cb1f29ba44c5bc864b3eddfcfe3c
   url: https://github.com/nf-core/hlatyping/tree/1.0.0
   workflow: hlatyping
 - datetime: 2020-05-28 20:54:08
-  display_name: nf-core/imcyto v1.0.0 - Platinum Panda
+  display_name: 1.0.0
   rev: 5d6631332b43c78f12b853594e91a7f7356d87ae
   url: https://github.com/nf-core/imcyto/tree/1.0.0
   workflow: imcyto
 - datetime: 2022-09-27 14:59:17
-  display_name: nf-core/isoseq v1.1.1 - White Hawk [26/09/2022]
+  display_name: 1.1.1
   rev: 322f3a2f4b22855c03f59d29802fe35c5ddaafbc
   url: https://github.com/nf-core/isoseq/tree/1.1.1
   workflow: isoseq
 - datetime: 2022-07-12 06:48:32
-  display_name: nf-core/isoseq v1.1.0 - Black Crow [12/07/2022]
+  display_name: 1.1.0
   rev: f191d29c552e236fb66b0ce9b80ffd7a70dc0f58
   url: https://github.com/nf-core/isoseq/tree/1.1.0
   workflow: isoseq
 - datetime: 2022-06-28 08:46:59
-  display_name: nf-core/isoseq v1.0.0  - Silver Swan [28/06/2022]
+  display_name: 1.0.0
   rev: af7d5049a60fed0838249c65039386f1b551ef5f
   url: https://github.com/nf-core/isoseq/tree/1.0.0
   workflow: isoseq
 - datetime: 2022-08-25 10:32:18
-  display_name: mag 2.2.1
+  display_name: 2.2.1
   rev: a8e92af70eca59a92b72262e6cdde11e69375801
   url: https://github.com/nf-core/mag/tree/2.2.1
   workflow: mag
 - datetime: 2022-06-14 06:29:15
-  display_name: mag 2.2.0 - Golden Mammoth
+  display_name: 2.2.0
   rev: 3b4dd3469725654d67e06b3853ba460d64c80788
   url: https://github.com/nf-core/mag/tree/2.2.0
   workflow: mag
 - datetime: 2021-11-26 10:37:41
-  display_name: mag 2.1.1
+  display_name: 2.1.1
   rev: e065754c46eedc85d46cd8a71b32ad73b3b741cb
   url: https://github.com/nf-core/mag/tree/2.1.1
   workflow: mag
 - datetime: 2021-07-29 07:00:58
-  display_name: mag 2.1.0 - Black Zebra
+  display_name: 2.1.0
   rev: d4f00bc2d178c1c8dc25b576c9e77e70511d5d21
   url: https://github.com/nf-core/mag/tree/2.1.0
   workflow: mag
 - datetime: 2021-06-01 11:36:53
-  display_name: mag 2.0.0 - Silver Swan
+  display_name: 2.0.0
   rev: 0b4f0ef116481a346e3e5ffebafb811872db2ba9
   url: https://github.com/nf-core/mag/tree/2.0.0
   workflow: mag
 - datetime: 2021-02-10 10:23:16
-  display_name: mag 1.2.0 - Yellow Squirrel
+  display_name: 1.2.0
   rev: 485c3fa0ba7345ac124bef04d08391d5e7cdcb42
   url: https://github.com/nf-core/mag/tree/1.2.0
   workflow: mag
 - datetime: 2020-11-24 17:58:19
-  display_name: mag 1.1.2 - Blue Panda
+  display_name: 1.1.2
   rev: 8c0f1fedf2d86ad17032c45add7851578022972a
   url: https://github.com/nf-core/mag/tree/1.1.2
   workflow: mag
 - datetime: 2020-11-10 17:11:59
-  display_name: mag 1.1.1 - Lime Owl
+  display_name: 1.1.1
   rev: a3122b1743bc483f04f33eff846dab2f2460e62c
   url: https://github.com/nf-core/mag/tree/1.1.1
   workflow: mag
 - datetime: 2020-10-06 13:44:58
-  display_name: mag 1.1.0 - White Elephant
+  display_name: 1.1.0
   rev: 7384cef0313583bc1c1277ba8f139f9783f0619e
   url: https://github.com/nf-core/mag/tree/1.1.0
   workflow: mag
 - datetime: 2019-12-21 10:19:32
-  display_name: mag 1.0.0 - Purple Corgi
+  display_name: 1.0.0
   rev: 4c2f61cbbb2be56d9a176947a758cdb4d7941910
   url: https://github.com/nf-core/mag/tree/1.0.0
   workflow: mag
 - datetime: 2021-05-18 07:00:38
-  display_name: nf-core/metaboigniter v1.0.1 - Red Daisy
+  display_name: 1.0.1
   rev: fca2ab5c508fc8179380ff747eab68b6db8aa93f
   url: https://github.com/nf-core/metaboigniter/tree/1.0.1
   workflow: metaboigniter
 - datetime: 2021-05-08 16:19:44
-  display_name: nf-core/metaboigniter v1.0.0 - Teal Rose
+  display_name: 1.0.0
   rev: 43d491841e7e4ac21fff73e72ec79762c3b5276e
   url: https://github.com/nf-core/metaboigniter/tree/1.0.0
   workflow: metaboigniter
+- datetime: 2022-12-17 00:37:52
+  display_name: 2.3.0
+  rev: 93bc5811603c287c766a0ff7e03b5b41f4483895
+  url: https://github.com/nf-core/methylseq/tree/2.3.0
+  workflow: methylseq
+- datetime: 2022-11-28 23:24:36
+  display_name: 2.2.0
+  rev: a1aaa924eeeaf6526d69af3a625bcc61676b150a
+  url: https://github.com/nf-core/methylseq/tree/2.2.0
+  workflow: methylseq
+- datetime: 2022-11-10 12:47:46
+  display_name: 2.1.0
+  rev: 44b80aa2bf6e8f11e23d506227bbd7293c108cb1
+  url: https://github.com/nf-core/methylseq/tree/2.1.0
+  workflow: methylseq
+- datetime: 2022-11-09 10:12:46
+  display_name: 2.0.0
+  rev: 04025de523dd111c9f86101255ed3d6f4c16fb5a
+  url: https://github.com/nf-core/methylseq/tree/2.0.0
+  workflow: methylseq
 - datetime: 2021-05-09 20:03:33
-  display_name: nf-core/methylseq version 1.6.1 [Nauseous Serpent]
+  display_name: 1.6.1
   rev: 03972a686bedeb2920803cd575f4d671e9135af0
   url: https://github.com/nf-core/methylseq/tree/1.6.1
   workflow: methylseq
 - datetime: 2021-03-26 15:59:26
-  display_name: nf-core/methylseq version 1.6 [Queasy Serpent]
+  display_name: '1.6'
   rev: b3e5e3b95aaf01d98391a62a10a3990c0a4de395
   url: https://github.com/nf-core/methylseq/tree/1.6
   workflow: methylseq
 - datetime: 2020-04-09 15:03:51
-  display_name: nf-core/methylseq version 1.5 [ Belated Dodo ]
+  display_name: '1.5'
   rev: 4f31ed1792e3cc8ce0ea648b6ee8f541f70102f7
   url: https://github.com/nf-core/methylseq/tree/1.5
   workflow: methylseq
 - datetime: 2019-11-20 12:39:23
-  display_name: nf-core/methylseq version 1.4 [Mercury Rattlesnake]
+  display_name: '1.4'
   rev: 40760ecffbf1d3ce8659712f692454ed88e59324
   url: https://github.com/nf-core/methylseq/tree/1.4
   workflow: methylseq
 - datetime: 2019-02-01 12:53:45
-  display_name: nf-core/methylseq version 1.3
+  display_name: '1.3'
   rev: 1d3f5cc5898c973832722a7e76538eab0933b3f5
   url: https://github.com/nf-core/methylseq/tree/1.3
   workflow: methylseq
 - datetime: 2019-01-02 12:17:41
-  display_name: nf-core/methylseq version 1.2
+  display_name: '1.2'
   rev: 1f0eaa6f1a8342e98c87b639553f54c47536f9c3
   url: https://github.com/nf-core/methylseq/tree/1.2
   workflow: methylseq
 - datetime: 2018-08-10 10:23:04
-  display_name: nf-core/methylseq version 1.1
+  display_name: '1.1'
   rev: feafff3436760a2f35a63973ed6652c00fe7ccc0
   url: https://github.com/nf-core/methylseq/tree/1.1
   workflow: methylseq
 - datetime: 2018-04-17 15:48:25
-  display_name: nf-core/methylseq version 1.0
+  display_name: '1.0'
   rev: e9106e500a4a0d7685b30e6a79dfb278490d99f6
   url: https://github.com/nf-core/methylseq/tree/1.0
   workflow: methylseq
+- datetime: 2022-12-01 15:01:15
+  display_name: 2.4.0
+  rev: a2235d555c1bc6618ded2d922176d7401eccdd50
+  url: https://github.com/nf-core/mhcquant/tree/2.4.0
+  workflow: mhcquant
 - datetime: 2022-05-10 09:14:21
-  display_name: 'nfcore/mhcquant v2.3.1 - White Gold Swallow '
+  display_name: 2.3.1
   rev: bc0a2dd30bae440c86e0953feabcb1d971a96b52
   url: https://github.com/nf-core/mhcquant/tree/2.3.1
   workflow: mhcquant
 - datetime: 2022-04-05 19:15:08
-  display_name: nfcore/mhcquant v2.3.0 - White Gold Swallow
+  display_name: 2.3.0
   rev: b24db1e0fd9e63ac2dd41eb70355ef0ee6a211cd
   url: https://github.com/nf-core/mhcquant/tree/2.3.0
   workflow: mhcquant
 - datetime: 2022-01-14 16:19:15
-  display_name: nf-core/mhcquant v2.2.0 - Silver Titanium Ostrich
+  display_name: 2.2.0
   rev: 8447c4d8073fd939febbd2935eb64baf76e5e02a
   url: https://github.com/nf-core/mhcquant/tree/2.2.0
   workflow: mhcquant
 - datetime: 2021-12-09 13:58:47
-  display_name: nf-core/mhcquant v2.1.0 -Olive Tin Hamster
+  display_name: 2.1.0
   rev: 3dd74fb6845395f091713db97e1ed62c634a84ca
   url: https://github.com/nf-core/mhcquant/tree/2.1.0
   workflow: mhcquant
 - datetime: 2021-09-03 06:37:58
-  display_name: nf-core/mhcquant v2.0.0 - Steel Beagle
+  display_name: 2.0.0
   rev: c95201d5a57b45e97491664641be3506ef6f1d7c
   url: https://github.com/nf-core/mhcquant/tree/2.0.0
   workflow: mhcquant
 - datetime: 2020-10-06 16:57:39
-  display_name: v1.6.0 nf-core/mhcquant
+  display_name: 1.6.0
   rev: 3437540db07a1b51e6b88bcb41a5c8c6844bf283
   url: https://github.com/nf-core/mhcquant/tree/1.6.0
   workflow: mhcquant
 - datetime: 2020-04-24 09:23:47
-  display_name: nf-core/mhcquant v1.5.1 "Flying Fish"
+  display_name: 1.5.1
   rev: 22e1bd6e04fb8b42d0b2ca59f336fca1d6b250f8
   url: https://github.com/nf-core/mhcquant/tree/1.5.1
   workflow: mhcquant
 - datetime: 2020-04-21 15:07:10
-  display_name: nf-core/mhcquant v1.5 "Flying Fish"
+  display_name: '1.5'
   rev: 09a40054d3fe408a3d2bd6ef65aff854d50a74fb
   url: https://github.com/nf-core/mhcquant/tree/1.5
   workflow: mhcquant
 - datetime: 2020-03-23 19:20:04
-  display_name: nf-core/mhcquant V1.4 "Blue Kingfisher"
+  display_name: '1.4'
   rev: d6b79571f7f3708dc5b4b91198824839db6aafba
   url: https://github.com/nf-core/mhcquant/tree/1.4
   workflow: mhcquant
 - datetime: 2019-08-03 15:52:11
-  display_name: nf-core/mhcquant V1.3 "Red Perrot"
+  display_name: '1.3'
   rev: 2dca3219b5deb3a0747a9d8b6387f89c3b9eb514
   url: https://github.com/nf-core/mhcquant/tree/1.3
   workflow: mhcquant
 - datetime: 2019-03-05 21:24:36
-  display_name: nf-core/mhcquant V1.2.6 "Golden Eagle"
+  display_name: 1.2.6
   rev: 124cbbe5a070e1ee1dec25da1f65c9baea179b91
   url: https://github.com/nf-core/mhcquant/tree/1.2.6
   workflow: mhcquant
 - datetime: 2019-03-04 14:11:44
-  display_name: nf-core/mhcquant V1.2.5 "Golden Eagle"
+  display_name: 1.2.5
   rev: 455c20cd8a2331ae854adf1d10cfcac518bc59b9
   url: https://github.com/nf-core/mhcquant/tree/1.2.5
   workflow: mhcquant
 - datetime: 2019-02-06 09:34:00
-  display_name: nf-core/mhcquant V.1.2.4 "Golden Eagle" - 2019/02/06
+  display_name: 1.2.4
   rev: 16dcb86088627f19fcca68030eb28e864a4935ba
   url: https://github.com/nf-core/mhcquant/tree/1.2.4
   workflow: mhcquant
 - datetime: 2019-02-04 13:23:42
-  display_name: nf-core/mhcquant V1.2.3  "Golden Eagle"
+  display_name: 1.2.3
   rev: 213936032889fd8e5f9f9b43002879cfea9ea0d3
   url: https://github.com/nf-core/mhcquant/tree/1.2.3
   workflow: mhcquant
 - datetime: 2019-01-28 08:47:19
-  display_name: nf-core/mhcquant  V1.2.2 "Golden Eagle"
+  display_name: 1.2.2
   rev: 9e0235edefc5e5e1748e716c267bc0760a329a58
   url: https://github.com/nf-core/mhcquant/tree/1.2.2
   workflow: mhcquant
 - datetime: 2019-01-25 08:56:39
-  display_name: nf-core/mhcquant V1.2.1 "Golden Eagle"
+  display_name: 1.2.1
   rev: 3bed2d2e86c841c99af7ae0339b6b2a17a0f28df
   url: https://github.com/nf-core/mhcquant/tree/1.2.1
   workflow: mhcquant
 - datetime: 2019-01-21 12:01:17
-  display_name: nf-core/mhcquant V1.1.0 "Golden Eagle"
+  display_name: 1.2.0
   rev: 8f2b0ae8e055a0b2a84ea16cb442196c47566d4c
   url: https://github.com/nf-core/mhcquant/tree/1.2.0
   workflow: mhcquant
 - datetime: 2019-01-04 13:34:16
-  display_name: nf-core/mhcquant V1.1.0 "Black Crow"
+  display_name: 1.1.0
   rev: 84967b1ad3e7b552990d9498815237b1393419b3
   url: https://github.com/nf-core/mhcquant/tree/1.1.0
   workflow: mhcquant
 - datetime: 2018-11-27 12:24:37
-  display_name: nf-core/mhcquant V1.0.0 "Naked Chicken"
+  display_name: 1.0.0
   rev: 6bd8137849407565e36f2c26f688a209a3c141b9
   url: https://github.com/nf-core/mhcquant/tree/1.0.0
   workflow: mhcquant
 - datetime: 2022-05-25 15:42:13
-  display_name: nf-core/mnaseseq v1.0.0 - Silver Sloth
+  display_name: 1.0.0
   rev: eb5ea5c9b122f2cc29810e6a040187838bda6702
   url: https://github.com/nf-core/mnaseseq/tree/1.0.0
   workflow: mnaseseq
 - datetime: 2022-06-20 10:20:47
-  display_name: nf-core/nanoseq v3.0.0 - Zinc Kea
+  display_name: 3.0.0
   rev: 1e60482a2c4621234393a6eef8e9a104309c20ae
   url: https://github.com/nf-core/nanoseq/tree/3.0.0
   workflow: nanoseq
 - datetime: 2021-11-30 03:59:42
-  display_name: nf-core/nanoseq v2.0.1 - Steel Sloth
+  display_name: 2.0.1
   rev: a93c84624e59ed07062c334afa9bc03aebfe4737
   url: https://github.com/nf-core/nanoseq/tree/2.0.1
   workflow: nanoseq
 - datetime: 2021-11-26 15:47:00
-  display_name: nf-core/nanoseq v2.0.0 - Nickel Sloth
+  display_name: 2.0.0
   rev: 73cbe193e9cd19610daa0fa0b00db603acd76750
   url: https://github.com/nf-core/nanoseq/tree/2.0.0
   workflow: nanoseq
 - datetime: 2020-11-06 01:13:56
-  display_name: nf-core/nanoseq v1.1.0 - Green Panda
+  display_name: 1.1.0
   rev: ad5b2bb7a37a6edb9f61603636bd26e43259f58b
   url: https://github.com/nf-core/nanoseq/tree/1.1.0
   workflow: nanoseq
 - datetime: 2020-03-05 13:57:23
-  display_name: nf-core/nanoseq v1.0.0 - Silver Snail
+  display_name: 1.0.0
   rev: 05669df8a8e42837c8a16cc2985d9c8a19e48c4f
   url: https://github.com/nf-core/nanoseq/tree/1.0.0
   workflow: nanoseq
 - datetime: 2022-10-24 14:41:36
-  display_name: 'Titanium Oyster '
+  display_name: 2.0.0
   rev: 985f37e1030e838d692a742f45fb67aa94cb1d76
   url: https://github.com/nf-core/nascent/tree/2.0.0
   workflow: nascent
 - datetime: 2019-04-16 08:32:58
-  display_name: nf-core/nascent version 1.0
+  display_name: '1.0'
   rev: ada9b280c9f94f6d5e493715605257bc8a30b2b6
   url: https://github.com/nf-core/nascent/tree/1.0
   workflow: nascent
 - datetime: 2019-12-12 08:36:26
-  display_name: nf-core/neutronstar version 1.0
+  display_name: 1.0.0
   rev: 71f6e3f0377dfb0b4c8324a9cb965d8140869d76
   url: https://github.com/nf-core/neutronstar/tree/1.0.0
   workflow: neutronstar
 - datetime: 2021-04-27 05:20:18
-  display_name: Version 1.0.0 - Initial Release
+  display_name: 1.0.0
   rev: 4eda7a827f83a9be0470de16331f7105ab48bdd1
   url: https://github.com/nf-core/pgdb/tree/1.0.0
   workflow: pgdb
 - datetime: 2020-10-18 21:47:43
-  display_name: v1.0.0 - Lovely Logan [18.10.2020]
+  display_name: 1.0.0
   rev: 43c77e50c955d7e62899e7d31e0d6f6a87ac2316
   url: https://github.com/nf-core/proteomicslfq/tree/1.0.0
   workflow: proteomicslfq
 - datetime: 2022-05-02 14:58:27
-  display_name: nf-core/quantms v1.0 - Havana
+  display_name: '1.0'
   rev: 6ffb0c92964cb70e212e18225c769b9e26cb1c11
   url: https://github.com/nf-core/quantms/tree/1.0
   workflow: quantms
 - datetime: 2022-07-12 14:10:41
-  display_name: 2.1.0 - 2022/07/12
+  display_name: 2.1.0
   rev: 6ffe30435b611339999145e4b71ac59158cf1182
   url: https://github.com/nf-core/rnafusion/tree/2.1.0
   workflow: rnafusion
 - datetime: 2022-05-19 11:16:07
-  display_name: v2.0.0 - 2022/05/19
+  display_name: 2.0.0
   rev: c47ce6fdbfbbb249b23613f4713dde27e9ca2853
   url: https://github.com/nf-core/rnafusion/tree/2.0.0
   workflow: rnafusion
 - datetime: 2020-07-15 13:21:59
-  display_name: nf-core/rnafusion:1.2.0
+  display_name: 1.2.0
   rev: 2e3d5de9dc718bd23eaa2f6f693cd9c311a459cf
   url: https://github.com/nf-core/rnafusion/tree/1.2.0
   workflow: rnafusion
 - datetime: 2020-02-10 09:53:45
-  display_name: nf-core/rnafusion:1.1.0
+  display_name: 1.1.0
   rev: 505a0fb784771fdb5d2e9c3e28fccb490430727d
   url: https://github.com/nf-core/rnafusion/tree/1.1.0
   workflow: rnafusion
 - datetime: 2019-05-16 12:16:38
-  display_name: nf-core/rnafusion:1.0.2
+  display_name: 1.0.2
   rev: d4a622c2e24148c568994f3d019b2a3b5a014e17
   url: https://github.com/nf-core/rnafusion/tree/1.0.2
   workflow: rnafusion
 - datetime: 2019-04-06 20:07:01
-  display_name: nf-core/rnafusion:1.0.1
+  display_name: 1.0.1
   rev: d32090720b79a2e43d36977753ea5102750c8727
   url: https://github.com/nf-core/rnafusion/tree/1.0.1
   workflow: rnafusion
 - datetime: 2019-02-14 21:26:30
-  display_name: nf-core/rnafusion:1.0
+  display_name: '1.0'
   rev: 12e5cb28cc05197e00cd900d4fc92e36a66be772
   url: https://github.com/nf-core/rnafusion/tree/1.0
   workflow: rnafusion
+- datetime: 2023-01-05 12:12:59
+  display_name: 3.10.1
+  rev: 6e1e448f535ccf34d11cc691bb241cfd6e60a647
+  url: https://github.com/nf-core/rnaseq/tree/3.10.1
+  workflow: rnaseq
+- datetime: 2022-12-21 13:48:29
+  display_name: '3.10'
+  rev: adce7ce9abc8f6b338b4f53d0d988ff9a0fd52ff
+  url: https://github.com/nf-core/rnaseq/tree/3.10
+  workflow: rnaseq
 - datetime: 2022-09-30 20:23:18
-  display_name: nf-core/rnaseq v3.9 - Niobium Nightingale
+  display_name: '3.9'
   rev: e049f51f0214b2aef7624b9dd496a404a7c34d14
   url: https://github.com/nf-core/rnaseq/tree/3.9
   workflow: rnaseq
 - datetime: 2022-05-27 16:33:22
-  display_name: 'nf-core/rnaseq v3.8.1 - Plastered Magnesium Mongoose '
+  display_name: 3.8.1
   rev: 89bf536ce4faa98b4d50a8ec0a0343780bc62e0a
   url: https://github.com/nf-core/rnaseq/tree/3.8.1
   workflow: rnaseq
 - datetime: 2022-05-25 09:44:12
-  display_name: nf-core/rnaseq v3.8 - Magnesium Mongoose
+  display_name: '3.8'
   rev: 6995330476244a6bffe55ddcbe50b8ed5cf6c2e2
   url: https://github.com/nf-core/rnaseq/tree/3.8
   workflow: rnaseq
 - datetime: 2022-05-03 11:13:00
-  display_name: nf-core/rnaseq v3.7 - Iron Iguana
+  display_name: '3.7'
   rev: e0dfce9af5c2299bcc2b8a74b6559ce055965455
   url: https://github.com/nf-core/rnaseq/tree/3.7
   workflow: rnaseq
 - datetime: 2022-03-04 13:45:46
-  display_name: nf-core/rnaseq v3.6 - Platinum Platypus
+  display_name: '3.6'
   rev: 7106bd792b3fb04f9f09b4e737165fa4e736ea81
   url: https://github.com/nf-core/rnaseq/tree/3.6
   workflow: rnaseq
 - datetime: 2021-12-17 16:05:54
-  display_name: nf-core/rnaseq v3.5 - Copper Chameleon
+  display_name: '3.5'
   rev: 646723c70f04ee6d66391758b02822d4f0fe2966
   url: https://github.com/nf-core/rnaseq/tree/3.5
   workflow: rnaseq
 - datetime: 2021-10-05 13:44:47
-  display_name: nf-core/rnaseq v3.4 - Aluminium Aardvark
+  display_name: '3.4'
   rev: 964425e3fd8bfc3dc7bce43279a98d17a874d3f7
   url: https://github.com/nf-core/rnaseq/tree/3.4
   workflow: rnaseq
 - datetime: 2021-07-29 13:22:42
-  display_name: nf-core/rnaseq v3.3 - Bronze Bear
+  display_name: '3.3'
   rev: 8094c42add6dcdf69ce54dfdec957789c37ae903
   url: https://github.com/nf-core/rnaseq/tree/3.3
   workflow: rnaseq
 - datetime: 2021-06-18 13:58:36
-  display_name: "nf-core/rnaseq v3.2 - Copper \uFEFFFlamingo"
+  display_name: '3.2'
   rev: b3ff92bc54363faf17d820689a8e9074ffd99045
   url: https://github.com/nf-core/rnaseq/tree/3.2
   workflow: rnaseq
 - datetime: 2021-05-13 12:59:54
-  display_name: "nf-core/rnaseq v3.1 - Lead \uFEFFAlligator"
+  display_name: '3.1'
   rev: 0fcbb0ac491ecb8a80ef879c4f3dad5f869021f9
   url: https://github.com/nf-core/rnaseq/tree/3.1
   workflow: rnaseq
 - datetime: 2020-12-15 16:21:06
-  display_name: nf-core/rnaseq v3.0 - Silver Shark
+  display_name: '3.0'
   rev: 3643a94411b65f42bce5357c5015603099556ad9
   url: https://github.com/nf-core/rnaseq/tree/3.0
   workflow: rnaseq
 - datetime: 2020-11-12 19:58:30
-  display_name: nf-core/rnaseq v2.0 - Titanium Tiger
+  display_name: '2.0'
   rev: bc5fc76f40b2da6082a854927184c9d6e5060393
   url: https://github.com/nf-core/rnaseq/tree/2.0
   workflow: rnaseq
 - datetime: 2019-10-18 10:50:14
-  display_name: nf-core/rnaseq version 1.4.2
+  display_name: 1.4.2
   rev: 3b6df9bd104927298fcdf69e97cca7ff1f80527c
   url: https://github.com/nf-core/rnaseq/tree/1.4.2
   workflow: rnaseq
 - datetime: 2019-10-17 17:39:21
-  display_name: nf-core/rnaseq version 1.4.1
+  display_name: 1.4.1
   rev: f213557a0851d3f897efb1faeb3e54e8eee1424c
   url: https://github.com/nf-core/rnaseq/tree/1.4.1
   workflow: rnaseq
 - datetime: 2019-10-15 13:09:13
-  display_name: 'nf-core/rnaseq version 1.4 "Gray Crocus Dachshund" '
+  display_name: '1.4'
   rev: 55eee0c01c36db013d1dcbe6a4e65b407c358f0f
   url: https://github.com/nf-core/rnaseq/tree/1.4
   workflow: rnaseq
 - datetime: 2019-03-26 20:03:50
-  display_name: nf-core/rnaseq version 1.3
+  display_name: '1.3'
   rev: 37f260d360e59df7166cfd60e2b3c9a3999adf75
   url: https://github.com/nf-core/rnaseq/tree/1.3
   workflow: rnaseq
 - datetime: 2018-12-12 16:43:31
-  display_name: nf-core/rnaseq version 1.2
+  display_name: '1.2'
   rev: e8376373da8c1dfb0cae5372947cf5b241056076
   url: https://github.com/nf-core/rnaseq/tree/1.2
   workflow: rnaseq
 - datetime: 2018-10-05 22:19:24
-  display_name: nf-core/rnaseq version 1.1
+  display_name: '1.1'
   rev: 1cd5ab733a35727b01370de2ae8462d65f57fbb9
   url: https://github.com/nf-core/rnaseq/tree/1.1
   workflow: rnaseq
 - datetime: 2018-08-20 16:36:08
-  display_name: nf-core/rnaseq version 1.0
+  display_name: '1.0'
   rev: 44f1525d7adfa3a6afcafdcf7730eca78a1a2511
   url: https://github.com/nf-core/rnaseq/tree/1.0
   workflow: rnaseq
 - datetime: 2022-06-16 13:50:17
-  display_name: nf-core/rnavar v1.0.0 - Tiny Firefly
+  display_name: 1.0.0
   rev: 85b98d51c6bdcbbe9780490d6484c4e50c3c182c
   url: https://github.com/nf-core/rnavar/tree/1.0.0
   workflow: rnavar
+- datetime: 2023-01-05 18:05:18
+  display_name: 3.1.2
+  rev: c87f4eb694a7183e4f99c70fca0f1d4e91750b33
+  url: https://github.com/nf-core/sarek/tree/3.1.2
+  workflow: sarek
+- datetime: 2022-11-21 13:30:35
+  display_name: 3.1.1
+  rev: 96749f742197e828f4632cc2a7481190e7f642ac
+  url: https://github.com/nf-core/sarek/tree/3.1.1
+  workflow: sarek
+- datetime: 2022-11-16 13:23:24
+  display_name: '3.1'
+  rev: 0b7f0e2b6f0be7053838ba1884b2eb03e9f83f9e
+  url: https://github.com/nf-core/sarek/tree/3.1
+  workflow: sarek
 - datetime: 2022-09-26 18:36:50
-  display_name: "Sarek 3.0.2 - L\xE1jt\xE1vrre"
+  display_name: 3.0.2
   rev: bcd7bf9cb98cddec27bb54fb47ee122c09388c02
   url: https://github.com/nf-core/sarek/tree/3.0.2
   workflow: sarek
 - datetime: 2022-08-18 11:44:40
-  display_name: Sarek 3.0.1 - Saiva
+  display_name: 3.0.1
   rev: ad2b34f39fead34d7a09051e67506229e827e892
   url: https://github.com/nf-core/sarek/tree/3.0.1
   workflow: sarek
 - datetime: 2022-07-21 11:28:34
-  display_name: Sarek 3.0 - Skierfe
+  display_name: '3.0'
   rev: 5bb160ddb2cee50c811585e450b16cba13c95a02
   url: https://github.com/nf-core/sarek/tree/3.0
   workflow: sarek
 - datetime: 2022-06-10 09:41:39
-  display_name: "Sarek 2.7.2 - \xC1hkk\xE1"
+  display_name: 2.7.2
   rev: e8f56e5bbb6f8a34793a6b5a2945981eb43090aa
   url: https://github.com/nf-core/sarek/tree/2.7.2
   workflow: sarek
 - datetime: 2021-06-14 12:41:14
-  display_name: "P\xE5rtejekna"
+  display_name: 2.7.1
   rev: 68b9930a74962f3c42eee71f51e6dd2646269199
   url: https://github.com/nf-core/sarek/tree/2.7.1
   workflow: sarek
 - datetime: 2021-01-26 13:40:10
-  display_name: "Sarek 2.7 - P\xE5rte"
+  display_name: '2.7'
   rev: 7ccfb36509d8380946c048065129b29d69c8443b
   url: https://github.com/nf-core/sarek/tree/2.7
   workflow: sarek
 - datetime: 2020-06-23 09:09:37
-  display_name: "Sarek 2.6.1 - G\xE5dokgaskatj\xE5hkk\xE5"
+  display_name: 2.6.1
   rev: bce378e09de25bb26c388b917f93f84806d3ba27
   url: https://github.com/nf-core/sarek/tree/2.6.1
   workflow: sarek
 - datetime: 2020-05-24 09:37:48
-  display_name: Sarek 2.6 - Piellorieppe
+  display_name: '2.6'
   rev: 75fe254f0b5d93d1f3f0173f2163afa83686f6fd
   url: https://github.com/nf-core/sarek/tree/2.6
   workflow: sarek
 - datetime: 2019-12-16 08:45:53
-  display_name: "Sarek 2.5.2 - J\xE5kk\xE5tjkaskajekna"
+  display_name: 2.5.2
   rev: 5c30fd821ab7cdf27fd4105464a1fba5eabdfcd5
   url: https://github.com/nf-core/sarek/tree/2.5.2
   workflow: sarek
 - datetime: 2019-10-22 13:26:47
-  display_name: "Sarek 2.5.1 - \xC5rjep-\xC5lkatjjekna"
+  display_name: 2.5.1
   rev: 05c6e0b63251af83b9e7d5b259cec9e679fccf57
   url: https://github.com/nf-core/sarek/tree/2.5.1
   workflow: sarek
 - datetime: 2019-10-08 13:12:07
-  display_name: "Sarek 2.5 - \xC5lkatj"
+  display_name: '2.5'
   rev: c5fc54788bdd5b8a0d39dba9d93a039a564f0e4b
   url: https://github.com/nf-core/sarek/tree/2.5
   workflow: sarek
 - datetime: 2022-10-06 09:43:40
-  display_name: nf-core/scrnaseq V 2.1.0 "Gray Nickel Beagle" Latest
+  display_name: 2.1.0
   rev: c86646e4a818397f4bddfffd641b34240423f3ea
   url: https://github.com/nf-core/scrnaseq/tree/2.1.0
   workflow: scrnaseq
 - datetime: 2022-06-17 11:48:05
-  display_name: nf-core/scrnaseq V 2.0.0 "Gray Nickel Beagle"
+  display_name: 2.0.0
   rev: 27f37ab827b3f72e8e305256a9c59a37bb85ef83
   url: https://github.com/nf-core/scrnaseq/tree/2.0.0
   workflow: scrnaseq
 - datetime: 2021-03-29 07:55:52
-  display_name: nf-core/scrnaseq version 1.1.0 "Olive Mercury Corgi"
+  display_name: 1.1.0
   rev: f31b12f79097ed5775fba925c3b2832d701b21f4
   url: https://github.com/nf-core/scrnaseq/tree/1.1.0
   workflow: scrnaseq
 - datetime: 2019-12-09 16:25:11
-  display_name: nf-core/scrnaseq version 1.0.0 "Tiny Aluminium Crab" 2019-12-09
+  display_name: 1.0.0
   rev: 884e541285330e1ef4771ff9267ce27e42dfb2e3
   url: https://github.com/nf-core/scrnaseq/tree/1.0.0
   workflow: scrnaseq
 - datetime: 2020-05-14 12:29:37
-  display_name: Version 1.0.0 - "Cobra Tin Beetle"
+  display_name: 1.0.0
   rev: 855583252166ca5ff739b40a6762837534a99c36
   url: https://github.com/nf-core/slamseq/tree/1.0.0
   workflow: slamseq
 - datetime: 2022-10-24 22:40:52
-  display_name: v2.1.0 - 2022-10-25 Maroon Tin Dalmatian
+  display_name: 2.1.0
   rev: 27514c40c08d1eab8249521096f4f2f7be875104
   url: https://github.com/nf-core/smrnaseq/tree/2.1.0
   workflow: smrnaseq
 - datetime: 2022-05-31 19:23:13
-  display_name: v 2.0.0 - 2022-05-31 Aqua Zinc Chihuahua
+  display_name: 2.0.0
   rev: d1299b132a910d8adb38a5445d0c223051e14264
   url: https://github.com/nf-core/smrnaseq/tree/2.0.0
   workflow: smrnaseq
 - datetime: 2021-06-15 12:44:13
-  display_name: v.1.1.0 - 2021-05-11
+  display_name: 1.1.0
   rev: 03333bfa17adc8d829a400012ed9f13c5abf4cc3
   url: https://github.com/nf-core/smrnaseq/tree/1.1.0
   workflow: smrnaseq
 - datetime: 2019-09-20 15:52:42
-  display_name: nf-core/smrnaseq v1.0.0
+  display_name: 1.0.0
   rev: 28f3418bc80e9af23766b445a7ab5c20caa24deb
   url: https://github.com/nf-core/smrnaseq/tree/1.0.0
   workflow: smrnaseq
 - datetime: 2022-07-13 15:41:22
-  display_name: nf-core/viralrecon v2.5 - Manganese Monkey
+  display_name: '2.5'
   rev: 3ee1fe98fdf17a80922aa8cf4da4afaf483f3429
   url: https://github.com/nf-core/viralrecon/tree/2.5
   workflow: viralrecon
 - datetime: 2022-03-01 18:55:42
-  display_name: nf-core/viralrecon v2.4.1 - Plastered Magnesium Marmoset
+  display_name: 2.4.1
   rev: 42e38bba3da80484bc480f53d2130642a349e8c6
   url: https://github.com/nf-core/viralrecon/tree/2.4.1
   workflow: viralrecon
 - datetime: 2022-02-22 08:40:31
-  display_name: nf-core/viralrecon v2.4 - Magnesium  Marmoset
+  display_name: '2.4'
   rev: fbcb2ce94c9abded00d9fcb5181daa17b9ecd55e
   url: https://github.com/nf-core/viralrecon/tree/2.4
   workflow: viralrecon
 - datetime: 2022-02-15 16:28:13
-  display_name: nf-core/viralrecon v2.3.1 - Patched Copper Coatimundi
+  display_name: 2.3.1
   rev: 97bebf8fe12e0e802d4468e133f3a2277ceb843c
   url: https://github.com/nf-core/viralrecon/tree/2.3.1
   workflow: viralrecon
 - datetime: 2022-02-04 17:57:07
-  display_name: nf-core/viralrecon v2.3 - Copper Coatimundi
+  display_name: '2.3'
   rev: fc9fece226061594208a25c8acdc05b0bf7c14d1
   url: https://github.com/nf-core/viralrecon/tree/2.3
   workflow: viralrecon
 - datetime: 2021-07-29 15:41:37
-  display_name: nf-core/viralrecon v2.2 - Tin Turtle
+  display_name: '2.2'
   rev: 2ebae61442598302c64916bd5127cf23c8ab5611
   url: https://github.com/nf-core/viralrecon/tree/2.2
   workflow: viralrecon
 - datetime: 2021-06-15 14:56:28
-  display_name: nf-core/viralrecon v2.1 - Lead Mink
+  display_name: '2.1'
   rev: f0171324a60d1759ca7f5d02351372d97d22cc12
   url: https://github.com/nf-core/viralrecon/tree/2.1
   workflow: viralrecon
 - datetime: 2021-05-13 15:10:24
-  display_name: nf-core/viralrecon v2.0 - Silver Ferret
+  display_name: '2.0'
   rev: a85d5969f9025409e3618d6c280ef15ce417df65
   url: https://github.com/nf-core/viralrecon/tree/2.0
   workflow: viralrecon
 - datetime: 2020-06-23 16:52:15
-  display_name: nf-core/viralrecon v1.1.0 - Steel Pangolin
+  display_name: 1.1.0
   rev: 75a2f9763e9b4c1aa20ad342ae3ce148c33cc65a
   url: https://github.com/nf-core/viralrecon/tree/1.1.0
   workflow: viralrecon
 - datetime: 2020-06-01 13:23:03
-  display_name: nf-core/viralrecon v1.0.0 - Mercury Bat
+  display_name: 1.0.0
   rev: 7422b0d353b1a295fb7cda47f2f7750c3bd890d1
   url: https://github.com/nf-core/viralrecon/tree/1.0.0
   workflow: viralrecon
