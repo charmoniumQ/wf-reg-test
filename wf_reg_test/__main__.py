@@ -71,8 +71,8 @@ def what_to_execute(
                 n_executions = (desired_execution_count - actual_execution_count)
                 revisions_conditions.extend(n_executions * [(revision, condition)])
     revisions_conditions = functional_shuffle(revisions_conditions, seed=seed)
-    if execution_limit:
-        revisions_conditions = revisions_conditions[:execution_limit]
+    if max_executions:
+        revisions_conditions = revisions_conditions[:max_executions]
     return revisions_conditions
 
 
