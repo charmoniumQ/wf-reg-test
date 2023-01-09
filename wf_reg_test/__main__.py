@@ -149,6 +149,8 @@ def clear() -> None:
 
 
 @main.command()
+@click.argument("max_quantity", type=int)
+@ch_time_block.decor()
 def test(quantity: int) -> None:
     hub = deserialize(data_path)
     revisions_conditions = what_to_execute(
