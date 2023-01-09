@@ -287,6 +287,22 @@ class FileBundle:
             # remote_archive,
         )
 
+    @property
+    def archive(self) -> str:
+        try:
+            path, file = next(iter(self.contents.items()))
+        except StopIteration:
+            return ""
+        return (
+            file.contents_url
+            # Looking for path to whole archive, not just this file
+            .replace(str(path), "")
+            # If this path was a path within a tar://, this gets us the URL of the tar.
+            .replace("tar://::", "")
+            # If this was an Azure, this gives us an HTTP url.
+            .replace("abfs://", "https://wfregtest.blob.core.windows.net/")
+        )
+
     def total_size(self) -> int:
         return sum(file.size for file in self.contents.values())
 

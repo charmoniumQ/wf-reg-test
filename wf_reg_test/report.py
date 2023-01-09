@@ -96,7 +96,7 @@ def report_html(hub: RegistryHub) -> str:
                                             "Success": html_emoji_bool(
                                                 execution.status_code == 0
                                             ),
-                                            "Max RAM": f"{execution.resources.max_rss / 2**10:.0f}KiB",
+                                            "Max RAM": f"{execution.resources.max_rss / 2**30:.3f}GiB",
                                             "CPU Time": html_timedelta(
                                                 execution.resources.user_cpu_time
                                                 + execution.resources.system_cpu_time,
@@ -138,7 +138,15 @@ def report_html(hub: RegistryHub) -> str:
                             digits=0,
                         ),
                         "Success": html_emoji_bool(execution.status_code == 0),
-                        "Max RAM": f"{execution.resources.max_rss / 2**10:.0f}KiB",
+                        "Logs": html_link(
+                            f"{execution.logs.total_size() / 2**30:.3f}GiB",
+                            execution.logs.archive,
+                        ),
+                        "Outputs": html_link(
+                            f"{execution.outputs.total_size() / 2**30:.3f}GiB",
+                            execution.outputs.archive,
+                        ),
+                        "Max RAM": f"{execution.resources.max_rss / 2**30:.3f}GiB",
                         "CPU Time": html_timedelta(
                             execution.resources.user_cpu_time + execution.resources.system_cpu_time,
                             unit="seconds",
