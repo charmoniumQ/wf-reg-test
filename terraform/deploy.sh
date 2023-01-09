@@ -11,7 +11,6 @@ Host manager
     HostName $(terraform -chdir=terraform output --raw manager_ip)
     IdentityFile ~/box/wf-reg-test/terraform/key
     User azureuser
-    StrictHostKeyChecking no
 
 EOF
 ssh-keygen -R "manager"
@@ -25,15 +24,15 @@ Host worker-${worker}
     IdentityFile ~/box/wf-reg-test/terraform/key
     User azureuser
     ProxyJump manager
-    StrictHostKeyChecking no
 
 EOF
     ssh-keygen -R "worker-${worker}"
 done
 
 for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); do
-    ssh -F terraform/ssh_config $host <<EOF
+    ssh -o StrictHostKeyChecking=no -F terraform/ssh_config $host <<EOF
     set -e -x
+    # rm -rf spack spack.tar.gz
     if [ ! -d spack ]; then
         wget https://raw.githubusercontent.com/charmoniumQ/wf-reg-test/main/spack/setup_env.sh
         bash setup_env.sh
