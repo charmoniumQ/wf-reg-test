@@ -8,7 +8,7 @@ sudo apt-get update && sudo apt-get install -y build-essential ca-certificates c
 
 # Install spack
 if [ ! -d spack ]; then
-	git clone -c feature.manyFiles=true https://github.com/charmoniumQ/spack.git
+    git clone -c feature.manyFiles=true https://github.com/charmoniumQ/spack.git
 fi
 git -C spack fetch
 git -C spack checkout develop-merge
@@ -25,21 +25,21 @@ spack external find cmake
 
 # Install this environment.
 if [ ! -d wf-reg-test ]; then
-	git clone https://github.com/charmoniumQ/wf-reg-test
+    git clone https://github.com/charmoniumQ/wf-reg-test
 fi
 git -C wf-reg-test pull origin
 if ! spack repo list | grep spack_repo; then
-	spack repo add wf-reg-test/spack/spack_repo
+    spack repo add wf-reg-test/spack/spack_repo
 fi
 
 if [ -d spack/var/spack/environments/wf-reg-test/ ]; then
-	echo y | spack env remove wf-reg-test
+    echo y | spack env remove wf-reg-test
 fi
 spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test
 spack concretize --fresh --force
-for i in $(seq $(nproc)); do
-	spack install --yes &
+for i in $(seq 1 $(nproc)); do
+    spack install --yes &
 done
 wait $(jobs -p)
 spack install --yes

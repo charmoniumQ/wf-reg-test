@@ -30,7 +30,7 @@ def get_stats(hub: RegistryHub) -> html.Element:
             for revision in workflow.revisions
         ),
         "N working executions": lambda workflows: sum(
-            execution.successful()
+            execution.successful
             for workflow in workflows
             for revision in workflow.revisions
             for execution in revision.executions
