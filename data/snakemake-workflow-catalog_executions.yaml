@@ -1,425 +1,2326 @@
-- condition: &id001 !!python/object:wf_reg_test.workflows.Condition
+- condition: !!python/object:wf_reg_test.workflows.Condition
     aslr: false
     dev_random: null
     faketime: null
     rr_record: false
     rr_replay: null
     single_core: false
-  datetime: 2022-11-23 11:13:57.009637
+  datetime: 2023-01-09 03:36:04.072592
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
+      - .snakemake
+      - log
+      - 2023-01-09T033604.547738.snakemake.log
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fashleys-qc-pipeline/1.3.2/1ace64956c0aaf3f/log/command.sh
+        contents_url: tar://.snakemake/log/2023-01-09T033604.547738.snakemake.log::abfs://data/johnne%2Fmap-metaT/jycj2mym/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 6979354331370733239
-        size: 940
-      ? !!python/object/apply:pathlib.PosixPath
-      - status.yaml
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fashleys-qc-pipeline/1.3.2/1ace64956c0aaf3f/log/status.yaml
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 924953109866185797
-        size: 326
-      ? !!python/object/apply:pathlib.PosixPath
-      - stderr.txt
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fashleys-qc-pipeline/1.3.2/1ace64956c0aaf3f/log/stderr.txt
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 4813778243573441579
-        size: 38437
-      ? !!python/object/apply:pathlib.PosixPath
-      - stdout.txt
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fashleys-qc-pipeline/1.3.2/1ace64956c0aaf3f/log/stdout.txt
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 17241709254077376921
-        size: 0
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
-  outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 778240
-    system_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 0
-    - 0
-    user_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 0
-    - 0
-    wall_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 3630
-    - 0
-  revision: 1.3.2
-  status_code: 137
-  workflow: friendsofstrandseq/ashleys-qc-pipeline
-- condition: *id001
-  datetime: 2022-11-23 11:13:56.997328
-  logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents:
+        hash_val: 10555108238660954795
+        size: 1323
       ? !!python/object/apply:pathlib.PosixPath
       - command.sh
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/CVUA-RRW%2FFooDMe/1.4.6/ad655a0e8aef786d/log/command.sh
+        contents_url: tar://command.sh::abfs://data/johnne%2Fmap-metaT/jycj2mym/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 13404279655494849774
-        size: 802
+        hash_val: 12268624378621273512
+        size: 386
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/CVUA-RRW%2FFooDMe/1.4.6/ad655a0e8aef786d/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/johnne%2Fmap-metaT/jycj2mym/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 17722296826339510980
+        hash_val: 17950751650612551363
         size: 337
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/CVUA-RRW%2FFooDMe/1.4.6/ad655a0e8aef786d/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/johnne%2Fmap-metaT/jycj2mym/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 2480860570195776220
-        size: 4391
+        hash_val: 10555108238660954795
+        size: 1323
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/CVUA-RRW%2FFooDMe/1.4.6/ad655a0e8aef786d/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/johnne%2Fmap-metaT/jycj2mym/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 10023619036466994163
-        size: 128
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 82001920
+    max_rss: 56795136
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 490000
-    user_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 1
-    - 740000
-    wall_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 5
     - 90000
-  revision: 1.4.6
-  status_code: 1
-  workflow: CVUA-RRW/FooDMe
-- condition: *id001
-  datetime: 2022-11-23 11:13:56.999177
-  logs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents:
-      ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/mrvollger%2FRhodonite/2022-02-10+15%3A14%3A12/1aa65cb260fc9518/log/command.sh
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 6045537491626888730
-        size: 916
-      ? !!python/object/apply:pathlib.PosixPath
-      - status.yaml
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/mrvollger%2FRhodonite/2022-02-10+15%3A14%3A12/1aa65cb260fc9518/log/status.yaml
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 7008927291236458104
-        size: 338
-      ? !!python/object/apply:pathlib.PosixPath
-      - stderr.txt
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/mrvollger%2FRhodonite/2022-02-10+15%3A14%3A12/1aa65cb260fc9518/log/stderr.txt
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 14766120484775218544
-        size: 535
-      ? !!python/object/apply:pathlib.PosixPath
-      - stdout.txt
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/mrvollger%2FRhodonite/2022-02-10+15%3A14%3A12/1aa65cb260fc9518/log/stdout.txt
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 17241709254077376921
-        size: 0
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
-  outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
-  resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 73097216
-    system_cpu_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 0
-    - 410000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 1
-    - 240000
+    - 0
+    - 960000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 2
-    - 760000
-  revision: '2022-02-10 15:14:12'
+    - 1
+    - 130000
+  revision: v0.0.1
   status_code: 1
-  workflow: mrvollger/Rhodonite
-- condition: *id001
-  datetime: 2022-11-23 11:13:56.984634
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: johnne/map_metaT
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:45:31.151103
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
+      - .snakemake
+      - log
+      - 2023-01-08T004532.174936.snakemake.log
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.4.1/d73b6a192b6a979c/log/command.sh
+        contents_url: tar://.snakemake/log/2023-01-08T004532.174936.snakemake.log::abfs://data/zifornd%2Farrays/osux905a/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 4422632054334377721
-        size: 1009
+        hash_val: 11841000996801364677
+        size: 224
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/zifornd%2Farrays/osux905a/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4711077858743812412
+        size: 417
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.4.1/d73b6a192b6a979c/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/zifornd%2Farrays/osux905a/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 9675230864915259762
+        hash_val: 919572341203430103
         size: 337
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.4.1/d73b6a192b6a979c/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/zifornd%2Farrays/osux905a/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 2944765299045573890
-        size: 2972
+        hash_val: 11841000996801364677
+        size: 224
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.4.1/d73b6a192b6a979c/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/zifornd%2Farrays/osux905a/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
         hash_val: 17241709254077376921
         size: 0
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 37720064
+    max_rss: 58376192
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 250000
+    - 90000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
     - 810000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 2
-    - 20000
-  revision: dna-seq-benchmark v1.4.1
+    - 1
+    - 720000
+  revision: 1.0.0
   status_code: 1
-  workflow: snakemake-workflows/benchmark-giab
-- condition: *id001
-  datetime: 2022-11-23 11:13:56.981758
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: zifornd/arrays
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:42.565438
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
+      - .snakemake
+      - log
+      - 2023-01-09T033043.060071.snakemake.log
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.2.0/881e261bc90324e7/log/command.sh
+        contents_url: tar://.snakemake/log/2023-01-09T033043.060071.snakemake.log::abfs://data/solida-core%2Fmusta/y3gt4k8v/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 7071706540894179651
-        size: 1011
+        hash_val: 11676713905923945484
+        size: 471
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/solida-core%2Fmusta/y3gt4k8v/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4047794263124216201
+        size: 387
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.2.0/881e261bc90324e7/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/solida-core%2Fmusta/y3gt4k8v/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 10055472242784525509
+        hash_val: 10369367189953781415
         size: 338
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.2.0/881e261bc90324e7/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/solida-core%2Fmusta/y3gt4k8v/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 13409567457366654203
-        size: 3123
+        hash_val: 11676713905923945484
+        size: 471
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fbenchmark-giab/dna-seq-benchmark+v1.2.0/881e261bc90324e7/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/solida-core%2Fmusta/y3gt4k8v/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 1414438281580210797
-        size: 62
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - README.md
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/README.md::abfs://data/solida-core%2Fmusta/y3gt4k8v/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12984323593813738003
+        size: 227
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 37920768
+    max_rss: 65613824
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 280000
+    - 140000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 510000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 960000
+  revision: '1.0'
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: solida-core/musta
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:45:47.500768
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004548.104346.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004548.104346.snakemake.log::abfs://data/hzi-bifo%2Fsnakemake-workflow-univec-removal/hput9sbu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12036539311714511771
+        size: 224
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/hzi-bifo%2Fsnakemake-workflow-univec-removal/hput9sbu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17011747920046161547
+        size: 445
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/hzi-bifo%2Fsnakemake-workflow-univec-removal/hput9sbu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 264957706186547139
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/hzi-bifo%2Fsnakemake-workflow-univec-removal/hput9sbu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12036539311714511771
+        size: 224
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/hzi-bifo%2Fsnakemake-workflow-univec-removal/hput9sbu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 58093568
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 100000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 880000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 4
+    - 480000
+  revision: v1.0.0
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: hzi-bifo/snakemake-workflow-univec-removal
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:31:56.625345
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033157.045738.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033157.045738.snakemake.log::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/pirmfiet/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 769049211749111184
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/pirmfiet/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4015244107957865005
+        size: 408
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/pirmfiet/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14069150050367839603
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/pirmfiet/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 769049211749111184
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/pirmfiet/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 62357504
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 100000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 100000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 220000
+  revision: 1.3.6
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:45:12.502243
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004516.723322.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004516.723322.snakemake.log::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/gp7n6kl0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1342245676688464936
+        size: 206
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/gp7n6kl0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 13870281149660343836
+        size: 432
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/gp7n6kl0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5505216872225359753
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/gp7n6kl0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1342245676688464936
+        size: 206
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/friendsofstrandseq%2Fashleys-qc-pipeline/gp7n6kl0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 59289600
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 200000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 490000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 4
+    - 700000
+  revision: '1.1'
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: friendsofstrandseq/ashleys-qc-pipeline
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:39:58.771890
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033959.340725.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033959.340725.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-mtb/njoaex50/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9535247117157064532
+        size: 1470
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-mtb/njoaex50/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2803560950974521641
+        size: 401
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-mtb/njoaex50/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4968758789903576786
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-mtb/njoaex50/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9535247117157064532
+        size: 1470
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-mtb/njoaex50/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 66076672
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 170000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 290000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 2
+    - 850000
+  revision: v1.2.0
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: snakemake-workflows/dna-seq-mtb
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:44:56.503321
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004457.584262.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004457.584262.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-mtb/twm5akgc/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1424789841255513344
+        size: 311
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-mtb/twm5akgc/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10676824069153245478
+        size: 434
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-mtb/twm5akgc/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7223067802341359907
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-mtb/twm5akgc/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1424789841255513344
+        size: 311
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-mtb/twm5akgc/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 59256832
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 270000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 260000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 910000
+  revision: v1.0.1
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: snakemake-workflows/dna-seq-mtb
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:36:07.777796
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033608.223715.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033608.223715.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-mtb/ul8lmrjo/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 6586623051225031727
+        size: 1470
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-mtb/ul8lmrjo/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 11642980800616175451
+        size: 401
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-mtb/ul8lmrjo/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15805471146001320621
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-mtb/ul8lmrjo/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 6586623051225031727
+        size: 1470
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-mtb/ul8lmrjo/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 65515520
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 100000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 320000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 890000
+  revision: v1.0.0
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: snakemake-workflows/dna-seq-mtb
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:32:50.609892
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033251.032153.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033251.032153.snakemake.log::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10795998587827462409
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7159136787448146634
+        size: 402
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1929653598101628680
+        size: 336
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10795998587827462409
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000006765.1_ASM676v1_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000006765.1_ASM676v1_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3593165421384460329
+        size: 6342768
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000006945.2_ASM694v2_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000006945.2_ASM694v2_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15233980520628214158
+        size: 4857546
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000008565.1_ASM856v1_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000008565.1_ASM856v1_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1287536269950907297
+        size: 2648711
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000008865.2_ASM886v2_chr_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000008865.2_ASM886v2_chr_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12722036961895202241
+        size: 5498649
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000008865.2_ASM886v2_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000008865.2_ASM886v2_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9728661396131219499
+        size: 5664775
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000010365.1_ASM1036v1_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000010365.1_ASM1036v1_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12504071266807227970
+        size: 161724
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000012685.1_ASM1268v1_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000012685.1_ASM1268v1_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 6561691182180950640
+        size: 9254070
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000222975.1_ASM22297v1_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000222975.1_ASM22297v1_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17009574699494106561
+        size: 4553825
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000240185.1_ASM24018v2_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000240185.1_ASM24018v2_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 13996454334758127105
+        size: 5754012
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_000240185.1_ASM24018v2_renamed.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_000240185.1_ASM24018v2_renamed.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 8857225206358966928
+        size: 5754012
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - bac_refs
+      - GCF_014698305.1_ASM1469830v1_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/bac_refs/GCF_014698305.1_ASM1469830v1_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17596440731026217301
+        size: 6140666
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_aligned_reads.pkl
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_aligned_reads.pkl::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2541394952379692705
+        size: 9877470
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_aligned_region.pkl
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_aligned_region.pkl::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16298796813602785817
+        size: 9877470
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_chimeric_info
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_chimeric_info::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 11916442048334034304
+        size: 56
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_error_markov_model
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_error_markov_model::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16737033495974449598
+        size: 421
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_error_rate.tsv
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_error_rate.tsv::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2673788036993348310
+        size: 145
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_first_match.hist
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_first_match.hist::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4789195299077727365
+        size: 10135
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_gap_length.pkl
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_gap_length.pkl::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 13944939435039779587
+        size: 154206
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_ht_length.pkl
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_ht_length.pkl::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3431285265679924015
+        size: 9877477
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_ht_ratio.pkl
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_ht_ratio.pkl::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4916787551994447726
+        size: 7957701
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_match_markov_model
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_match_markov_model::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10890414609641183793
+        size: 162322
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_model_profile
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_model_profile::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12591785811722340200
+        size: 267
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_reads_alignment_rate
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_reads_alignment_rate::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14713421813373622079
+        size: 45
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_strandness_rate
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_strandness_rate::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14207984509625079544
+        size: 17
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - human_NA12878_DNA_FAB49712_guppy
+      - training_unaligned_length.pkl
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/human_NA12878_DNA_FAB49712_guppy/training_unaligned_length.pkl::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 8126560740538808170
+        size: 1126250
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - nanosim-train
+      - GCF_000008865.2_ASM886v2_chr_genomic.fna
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/nanosim-train/GCF_000008865.2_ASM886v2_chr_genomic.fna::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12722036961895202241
+        size: 5498649
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - nanosim-train
+      - small_sra_data.fq
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/nanosim-train/small_sra_data.fq::abfs://data/huzuner%2FTumor-microbiome-calling/u6k8amiu/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10180099068867309035
+        size: 17351358
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 61607936
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 90000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 80000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 200000
+  revision: v1.0.0
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: huzuner/Tumor-microbiome-calling
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:46:20.523628
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004623.126098.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004623.126098.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/f7l25jxr/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16480916583026286854
+        size: 224
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/f7l25jxr/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 11877016369334486389
+        size: 440
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/f7l25jxr/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 12410700191638523002
+        size: 337
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/f7l25jxr/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16480916583026286854
+        size: 224
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/f7l25jxr/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 58458112
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 170000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 310000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 5
+    - 60000
+  revision: v1.2.0
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: snakemake-workflows/dna-seq-benchmark
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:34:47.703093
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033448.120741.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033448.120741.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/6gryn108/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4469008216168475903
+        size: 302
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/6gryn108/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3621769211563238117
+        size: 407
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/6gryn108/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18118992709665449272
+        size: 336
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/6gryn108/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4469008216168475903
+        size: 302
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-benchmark/6gryn108/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 58126336
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 80000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 950000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 40000
+  revision: v1.0.1
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: snakemake-workflows/dna-seq-benchmark
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 01:58:35.429322
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T015836.269659.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T015836.269659.snakemake.log::abfs://data/CVUA-RRW%2FFooDMe/09x15okk/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4830875904042838591
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/CVUA-RRW%2FFooDMe/09x15okk/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5279464211844507464
+        size: 385
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/CVUA-RRW%2FFooDMe/09x15okk/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16793138534746677276
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/CVUA-RRW%2FFooDMe/09x15okk/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4830875904042838591
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/CVUA-RRW%2FFooDMe/09x15okk/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 67203072
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 110000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 580000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 2
+    - 140000
+  revision: 1.6.1
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: CVUA-RRW/FooDMe
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:12.228874
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033012.866544.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033012.866544.snakemake.log::abfs://data/CVUA-RRW%2FFooDMe/fuiqmkhn/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14043706085970905952
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/CVUA-RRW%2FFooDMe/fuiqmkhn/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16754207906242795811
+        size: 385
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/CVUA-RRW%2FFooDMe/fuiqmkhn/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3909179788806938655
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/CVUA-RRW%2FFooDMe/fuiqmkhn/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14043706085970905952
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/CVUA-RRW%2FFooDMe/fuiqmkhn/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 61698048
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 290000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 180000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 840000
+  revision: 1.6.0
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: CVUA-RRW/FooDMe
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:46:45.479260
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004646.914513.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004646.914513.snakemake.log::abfs://data/CVUA-RRW%2FFooDMe/sahu90t2/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3286018940109519186
+        size: 1421
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/CVUA-RRW%2FFooDMe/sahu90t2/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 6282218730190383179
+        size: 418
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/CVUA-RRW%2FFooDMe/sahu90t2/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 8154731620642546581
+        size: 339
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/CVUA-RRW%2FFooDMe/sahu90t2/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3286018940109519186
+        size: 1421
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/CVUA-RRW%2FFooDMe/sahu90t2/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 102244352
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 240000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 640000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 3
+    - 440000
+  revision: 1.4.7
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: CVUA-RRW/FooDMe
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:45:59.246747
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004603.763284.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004603.763284.snakemake.log::abfs://data/CVUA-RRW%2FFooDMe/ocjxzuc0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18431150375881300330
+        size: 1240
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/CVUA-RRW%2FFooDMe/ocjxzuc0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16709647692548596174
+        size: 418
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/CVUA-RRW%2FFooDMe/ocjxzuc0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17145518821956825341
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/CVUA-RRW%2FFooDMe/ocjxzuc0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18431150375881300330
+        size: 1240
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/CVUA-RRW%2FFooDMe/ocjxzuc0/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 59105280
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 120000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 400000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 8
+    - 890000
+  revision: 1.4.2
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: CVUA-RRW/FooDMe
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:45:33.779181
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004545.146632.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004545.146632.snakemake.log::abfs://data/sreichl%2Fatacseq-pipeline/du8kzw3g/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9568973893256109291
+        size: 237
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/sreichl%2Fatacseq-pipeline/du8kzw3g/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17622493056792123882
+        size: 427
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/sreichl%2Fatacseq-pipeline/du8kzw3g/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5950648113943248402
+        size: 334
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/sreichl%2Fatacseq-pipeline/du8kzw3g/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 593202805982826722
+        size: 378
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/sreichl%2Fatacseq-pipeline/du8kzw3g/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1780569858808425480
+        size: 67
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - results
+      - BSA_0000_test_hg38_atac
+      - report.zip
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://results/BSA_0000_test_hg38_atac/report.zip::abfs://data/sreichl%2Fatacseq-pipeline/du8kzw3g/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14192926844587343085
+        size: 16581549
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 98979840
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 220000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 2
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 15
+    - 990000
+  revision: v0.1.0
+  status_code: 1
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: sreichl/atacseq_pipeline
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:40.810705
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033041.083683.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033041.083683.snakemake.log::abfs://data/epigen%2Funsupervised-analysis/xrzswysa/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5624209696808193539
+        size: 1159
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/epigen%2Funsupervised-analysis/xrzswysa/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2270495048439384947
+        size: 398
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/epigen%2Funsupervised-analysis/xrzswysa/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7471556616983159670
+        size: 337
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/epigen%2Funsupervised-analysis/xrzswysa/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 5624209696808193539
+        size: 1159
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/epigen%2Funsupervised-analysis/xrzswysa/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 56561664
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 30000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 630000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 670000
+  revision: v0.2.0
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: epigen/unsupervised_analysis
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:39:25.645406
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033926.469460.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033926.469460.snakemake.log::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/8ryxoyir/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3916127645371570907
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/8ryxoyir/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 4361492678804748440
+        size: 410
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/8ryxoyir/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16361620106388053036
+        size: 337
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/8ryxoyir/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3916127645371570907
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/8ryxoyir/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 62402560
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 90000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 170000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 2
+    - 780000
+  revision: 1.8.4
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:31:45.557292
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033145.983106.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033145.983106.snakemake.log::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/imloshh5/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17859142470542422475
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/imloshh5/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17382580503457070279
+        size: 410
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/imloshh5/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7547291289016036130
+        size: 337
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/imloshh5/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17859142470542422475
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/friendsofstrandseq%2Fmosaicatcher-pipeline/imloshh5/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 62435328
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 80000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 140000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 250000
+  revision: 1.8.2
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: friendsofstrandseq/mosaicatcher-pipeline
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:35:54.827137
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033556.528416.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033556.528416.snakemake.log::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2023725989071847410
+        size: 181
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 74286000350113433
+        size: 388
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 16673379035785224108
+        size: 337
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 2023725989071847410
+        size: 181
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - ARTIC_v3_adapters.py
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/ARTIC_v3_adapters.py::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7215279147202226135
+        size: 50946
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-stylesheet.css
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-stylesheet.css::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9189862211796720115
+        size: 28260
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-table-report.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-table-report.js::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14943796734581920531
+        size: 20652
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - math.min.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/math.min.js::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3435116629189333425
+        size: 559126
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - report-table-formatter.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/report-table-formatter.js::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 888313065326712992
+        size: 3423
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - scenario.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/scenario.yaml::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 8110404551260954779
+        size: 236
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - synonyms.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/synonyms.txt::abfs://data/IKIM-Essen%2Funcovar/gib4k6u9/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18019435948705045671
+        size: 46
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 61317120
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 70000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
     - 760000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 2
-    - 320000
-  revision: dna-seq-benchmark v1.2.0
+    - 3
+    - 810000
+  revision: v0.6.0
   status_code: 1
-  workflow: snakemake-workflows/benchmark-giab
-- condition: *id001
-  datetime: 2022-11-23 11:13:56.984144
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: IKIM-Essen/uncovar
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:12.449268
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
+      - .snakemake
+      - log
+      - 2023-01-09T033013.114915.snakemake.log
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fmosaicatcher-pipeline/1.5.1/fb693df72ca6a612/log/command.sh
+        contents_url: tar://.snakemake/log/2023-01-09T033013.114915.snakemake.log::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 15721501125082527567
-        size: 941
+        hash_val: 1043709944611611904
+        size: 181
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3588283535419696100
+        size: 388
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fmosaicatcher-pipeline/1.5.1/fb693df72ca6a612/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 11897742324062742759
+        hash_val: 17995571257899626102
+        size: 333
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1043709944611611904
+        size: 181
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - ARTIC_v3_adapters.py
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/ARTIC_v3_adapters.py::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7215279147202226135
+        size: 50946
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-stylesheet.css
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-stylesheet.css::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9189862211796720115
+        size: 28260
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-table-report.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-table-report.js::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14943796734581920531
+        size: 20652
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - math.min.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/math.min.js::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3435116629189333425
+        size: 559126
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - report-table-formatter.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/report-table-formatter.js::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 888313065326712992
+        size: 3423
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - scenario.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/scenario.yaml::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 852530454892730201
+        size: 235
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - synonyms.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/synonyms.txt::abfs://data/IKIM-Essen%2Funcovar/rnh2qi79/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18019435948705045671
+        size: 46
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 60887040
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 200000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 180000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 2
+    - 0
+  revision: v0.5.0
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: IKIM-Essen/uncovar
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-08 00:45:43.001263
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-08T004543.548934.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-08T004543.548934.snakemake.log::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 613129016903537350
+        size: 226
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9772022784211461339
+        size: 421
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15063074191156646198
         size: 338
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fmosaicatcher-pipeline/1.5.1/fb693df72ca6a612/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 6640621941222438285
-        size: 572
+        hash_val: 613129016903537350
+        size: 226
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/friendsofstrandseq%2Fmosaicatcher-pipeline/1.5.1/fb693df72ca6a612/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 5877968044088626772
-        size: 246
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - ARTIC_v3_adapters.py
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/ARTIC_v3_adapters.py::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7215279147202226135
+        size: 50946
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-stylesheet.css
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-stylesheet.css::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9189862211796720115
+        size: 28260
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-table-report.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-table-report.js::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14943796734581920531
+        size: 20652
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - math.min.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/math.min.js::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3435116629189333425
+        size: 559126
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - report-table-formatter.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/report-table-formatter.js::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 888313065326712992
+        size: 3423
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - scenario.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/scenario.yaml::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 852530454892730201
+        size: 235
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - synonyms.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/synonyms.txt::abfs://data/IKIM-Essen%2Funcovar/o5mc9y9t/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18019435948705045671
+        size: 46
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 73420800
+    max_rss: 59002880
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 460000
+    - 100000
     user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 810000
+    wall_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
     - 980000
-    wall_time: !!python/object/apply:datetime.timedelta
-    - 0
-    - 4
-    - 380000
-  revision: 1.5.1
+  revision: v0.4.1
   status_code: 1
-  workflow: friendsofstrandseq/mosaicatcher-pipeline
-- condition: *id001
-  datetime: 2022-11-23 11:13:57.015007
+  wf_reg_test_revision: 1100633d4ea850c633ef937deac54480eb086b19
+  workflow: IKIM-Essen/uncovar
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:21.953838
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
+      - .snakemake
+      - log
+      - 2023-01-09T033022.604950.snakemake.log
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/epigen%2Fatacseq_pipeline/v0.1.1+-+transfer+to+epigen%2C+updated+and+extended+documentation+/324b825f61425e53/log/command.sh
+        contents_url: tar://.snakemake/log/2023-01-09T033022.604950.snakemake.log::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 6673769185989743135
-        size: 1155
+        hash_val: 5034779264835555798
+        size: 181
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1248601087183526693
+        size: 388
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/epigen%2Fatacseq_pipeline/v0.1.1+-+transfer+to+epigen%2C+updated+and+extended+documentation+/324b825f61425e53/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 8921051986497209127
-        size: 343
+        hash_val: 17826152898908468403
+        size: 338
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/epigen%2Fatacseq_pipeline/v0.1.1+-+transfer+to+epigen%2C+updated+and+extended+documentation+/324b825f61425e53/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 2573293512951661944
-        size: 4606560
+        hash_val: 5034779264835555798
+        size: 181
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/epigen%2Fatacseq_pipeline/v0.1.1+-+transfer+to+epigen%2C+updated+and+extended+documentation+/324b825f61425e53/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 1780569858808425480
-        size: 67
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
-    contents: {}
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - ARTIC_v3_adapters.py
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/ARTIC_v3_adapters.py::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 7215279147202226135
+        size: 50946
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-stylesheet.css
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-stylesheet.css::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9189862211796720115
+        size: 28260
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - custom-table-report.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/custom-table-report.js::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14943796734581920531
+        size: 20652
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - math.min.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/math.min.js::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 3435116629189333425
+        size: 559126
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - report-table-formatter.js
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/report-table-formatter.js::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 888313065326712992
+        size: 3423
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - scenario.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/scenario.yaml::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 852530454892730201
+        size: 235
+      ? !!python/object/apply:pathlib.PosixPath
+      - resources
+      - synonyms.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://resources/synonyms.txt::abfs://data/IKIM-Essen%2Funcovar/v355xi2q/output.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18019435948705045671
+        size: 46
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 286994432
+    max_rss: 61014016
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 41
-    - 580000
+    - 0
+    - 100000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 95
-    - 720000
+    - 1
+    - 220000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 311
-    - 600000
-  revision: 'v0.1.1 - transfer to epigen, updated and extended documentation '
+    - 2
+    - 310000
+  revision: v0.4.0
   status_code: 1
-  workflow: epigen/atacseq_pipeline
-- condition: *id001
-  datetime: 2022-11-23 11:13:56.991325
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: IKIM-Essen/uncovar
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:30.269237
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
       - command.sh
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/GooglingTheCancerGenome%2Fsv-callers/Version+1.1.0/1aa160ff1485b2e0/log/command.sh
+        contents_url: tar://command.sh::abfs://data/GooglingTheCancerGenome%2Fsv-callers/hvmdqvfp/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 3264140108176888492
-        size: 639
+        hash_val: 1658083427412684311
+        size: 356
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/GooglingTheCancerGenome%2Fsv-callers/Version+1.1.0/1aa160ff1485b2e0/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/GooglingTheCancerGenome%2Fsv-callers/hvmdqvfp/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 5212638085529979196
-        size: 321
+        hash_val: 6738622611218350657
+        size: 322
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/GooglingTheCancerGenome%2Fsv-callers/Version+1.1.0/1aa160ff1485b2e0/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/GooglingTheCancerGenome%2Fsv-callers/hvmdqvfp/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
         hash_val: 17241709254077376921
@@ -427,16 +2328,16 @@
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/GooglingTheCancerGenome%2Fsv-callers/Version+1.1.0/1aa160ff1485b2e0/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/GooglingTheCancerGenome%2Fsv-callers/hvmdqvfp/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
         hash_val: 15930342518314204162
         size: 28
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 819200
+    max_rss: 1941504
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
@@ -449,118 +2350,362 @@
     - 0
     - 0
     - 0
-  revision: Version 1.1.0
+  revision: v1.1.2
   status_code: 0
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
   workflow: GooglingTheCancerGenome/sv-callers
-- condition: *id001
-  datetime: 2022-11-23 11:13:57.005833
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:27.420851
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
       - command.sh
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.18.2/b1bd528dbfaa9051/log/command.sh
+        contents_url: tar://command.sh::abfs://data/GooglingTheCancerGenome%2Fsv-callers/5ccmiwsq/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 7275343386467678781
-        size: 968
+        hash_val: 1073769224489947038
+        size: 356
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.18.2/b1bd528dbfaa9051/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/GooglingTheCancerGenome%2Fsv-callers/5ccmiwsq/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 5794446909131392385
-        size: 338
+        hash_val: 11010246281512668810
+        size: 327
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.18.2/b1bd528dbfaa9051/log/stderr.txt
-        hash_algo: xxhash
-        hash_bits: 64
-        hash_val: 11318361506064339404
-        size: 2139
-      ? !!python/object/apply:pathlib.PosixPath
-      - stdout.txt
-      : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.18.2/b1bd528dbfaa9051/log/stdout.txt
+        contents_url: tar://stderr.txt::abfs://data/GooglingTheCancerGenome%2Fsv-callers/5ccmiwsq/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
         hash_val: 17241709254077376921
         size: 0
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/GooglingTheCancerGenome%2Fsv-callers/5ccmiwsq/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15930342518314204162
+        size: 28
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 81129472
+    max_rss: 2052096
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 470000
+    - 0
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 0
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 200000
+  revision: v1.1.0
+  status_code: 0
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: GooglingTheCancerGenome/sv-callers
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:38.095757
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033038.517142.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033038.517142.snakemake.log::abfs://data/snakemake-workflows%2Frna-seq-kallisto-sleuth/8jh5wej4/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1017390877421464269
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Frna-seq-kallisto-sleuth/8jh5wej4/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10552121064439720942
+        size: 413
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Frna-seq-kallisto-sleuth/8jh5wej4/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17414091395917595271
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Frna-seq-kallisto-sleuth/8jh5wej4/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1017390877421464269
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Frna-seq-kallisto-sleuth/8jh5wej4/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 61992960
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 100000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 1
-    - 650000
+    - 160000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 3
-    - 450000
+    - 1
+    - 510000
+  revision: v2.0.3
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: snakemake-workflows/rna-seq-kallisto-sleuth
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:32:41.704297
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033242.117370.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033242.117370.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/c6txvlxs/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10090333238784842299
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/c6txvlxs/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 756488177415993977
+        size: 411
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/c6txvlxs/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 18432331399387826626
+        size: 338
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/c6txvlxs/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 10090333238784842299
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/c6txvlxs/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 63602688
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 110000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 160000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 280000
   revision: v3.18.2
   status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
   workflow: snakemake-workflows/dna-seq-varlociraptor
-- condition: *id001
-  datetime: 2022-11-23 11:13:57.010302
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:30:14.124175
   logs: !!python/object:wf_reg_test.workflows.FileBundle
     contents:
       ? !!python/object/apply:pathlib.PosixPath
-      - command.sh
+      - .snakemake
+      - log
+      - 2023-01-09T033015.233638.snakemake.log
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.9.0/d0c6b6ef8390426e/log/command.sh
+        contents_url: tar://.snakemake/log/2023-01-09T033015.233638.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/80vdarar/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 16244781393656110189
-        size: 963
+        hash_val: 12928232178030320978
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/80vdarar/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 9174803528759137766
+        size: 411
       ? !!python/object/apply:pathlib.PosixPath
       - status.yaml
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.9.0/d0c6b6ef8390426e/log/status.yaml
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/80vdarar/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 12786809419249617689
+        hash_val: 7211206805168209216
         size: 338
       ? !!python/object/apply:pathlib.PosixPath
       - stderr.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.9.0/d0c6b6ef8390426e/log/stderr.txt
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/80vdarar/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
-        hash_val: 9088178549149106958
-        size: 1869
+        hash_val: 12928232178030320978
+        size: 1245
       ? !!python/object/apply:pathlib.PosixPath
       - stdout.txt
       : !!python/object:wf_reg_test.workflows.File
-        contents_url: file:///home/sagrays/wf-reg-test/.repos/snakemake-workflow-catalog/snakemake-workflows%2Fdna-seq-varlociraptor/v3.9.0/d0c6b6ef8390426e/log/stdout.txt
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/80vdarar/logs.tar.xz
         hash_algo: xxhash
         hash_bits: 64
         hash_val: 17241709254077376921
         size: 0
-  machine: ecw00201-Linux-3.10.0-1160.62.1.el7.x86_64-x86_64-with-glibc2.17
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
   outputs: !!python/object:wf_reg_test.workflows.FileBundle
     contents: {}
   resources: !!python/object:wf_reg_test.executable.ComputeResources
-    max_rss: 81051648
+    max_rss: 62496768
     system_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 0
-    - 470000
+    - 120000
     user_cpu_time: !!python/object/apply:datetime.timedelta
     - 0
     - 1
-    - 820000
+    - 360000
     wall_time: !!python/object/apply:datetime.timedelta
     - 0
-    - 3
-    - 370000
-  revision: v3.9.0
+    - 2
+    - 950000
+  revision: v3.7.1
   status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
+  workflow: snakemake-workflows/dna-seq-varlociraptor
+- condition: !!python/object:wf_reg_test.workflows.Condition
+    aslr: false
+    dev_random: null
+    faketime: null
+    rr_record: false
+    rr_replay: null
+    single_core: false
+  datetime: 2023-01-09 03:39:50.113803
+  logs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents:
+      ? !!python/object/apply:pathlib.PosixPath
+      - .snakemake
+      - log
+      - 2023-01-09T033950.774892.snakemake.log
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://.snakemake/log/2023-01-09T033950.774892.snakemake.log::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/jxii9rto/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15487182660027296157
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - command.sh
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://command.sh::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/jxii9rto/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 1291107678061755269
+        size: 411
+      ? !!python/object/apply:pathlib.PosixPath
+      - status.yaml
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://status.yaml::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/jxii9rto/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 14138416428294525808
+        size: 337
+      ? !!python/object/apply:pathlib.PosixPath
+      - stderr.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stderr.txt::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/jxii9rto/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 15487182660027296157
+        size: 1245
+      ? !!python/object/apply:pathlib.PosixPath
+      - stdout.txt
+      : !!python/object:wf_reg_test.workflows.File
+        contents_url: tar://stdout.txt::abfs://data/snakemake-workflows%2Fdna-seq-varlociraptor/jxii9rto/logs.tar.xz
+        hash_algo: xxhash
+        hash_bits: 64
+        hash_val: 17241709254077376921
+        size: 0
+  machine: manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35
+  outputs: !!python/object:wf_reg_test.workflows.FileBundle
+    contents: {}
+  resources: !!python/object:wf_reg_test.executable.ComputeResources
+    max_rss: 62849024
+    system_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 0
+    - 100000
+    user_cpu_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 1
+    - 150000
+    wall_time: !!python/object/apply:datetime.timedelta
+    - 0
+    - 2
+    - 10000
+  revision: v3.6.2
+  status_code: 1
+  wf_reg_test_revision: 25f2b793d8424e1a16f60fda02c98cddb883d300
   workflow: snakemake-workflows/dna-seq-varlociraptor

@@ -87,7 +87,7 @@ tqdm-stubs = "^0.2.1"
 azure-cli = "^2.43.0"
 
 [tool.poetry.dependencies]
-python = ">=3.8,<3.12"
+python = ">=3.8,<3.11"
 # make sure to keep the Python versions here consistent with those tested by Tox (tool.tox.legacy_tox_ini.tox.envlist).
 PyGithub = "^1.55"
 GitPython = "^3.1.27"
@@ -105,3 +105,9 @@ msgraph-core = "^0.2.2"
 universal-pathlib = "^0.0.21"
 tqdm = "^4.64.1"
 toolz = "^0.12.0"
+pymc = "^5.0.1"
+graphviz = "^0.20.1"
+jupyter = "^1.0.0"
+pandas = "^1.5.2"
+arviz = "^0.14.0"
+matplotlib = "^3.6.2"

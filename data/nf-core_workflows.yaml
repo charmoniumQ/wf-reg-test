@@ -234,6 +234,10 @@
   engine: nextflow
   repo_url: https://github.com/nf-core/rnaseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/rnaseq
+- display_name: rnasplice
+  engine: nextflow
+  repo_url: https://github.com/nf-core/rnasplice?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://nf-co.re/rnasplice
 - display_name: rnavar
   engine: nextflow
   repo_url: https://github.com/nf-core/rnavar?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -278,6 +282,10 @@
   engine: nextflow
   repo_url: https://github.com/nf-core/vipr?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/vipr
+- display_name: viralintegration
+  engine: nextflow
+  repo_url: https://github.com/nf-core/viralintegration?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://nf-co.re/viralintegration
 - display_name: viralrecon
   engine: nextflow
   repo_url: https://github.com/nf-core/viralrecon?revisions=releases&skip-drafts=1&skip-preleases=1

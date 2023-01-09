@@ -7,7 +7,6 @@ import warnings
 
 import yaml
 import charmonium.freeze
-import charmonium.time_block as ch_time_block
 import upath
 
 from .workflows import RegistryHub, Registry, Workflow, Revision, Execution
@@ -40,7 +39,6 @@ registries, workflows, revisions, and executions in separate files.
 encode = urllib.parse.quote_plus
 
 
-@ch_time_block.decor()
 def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
     if warn:
         for warning in hub.check_invariants():
@@ -121,7 +119,6 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
         assert hub == stored_hub, charmonium.freeze.summarize_diff(hub, stored_hub)
 
 
-@ch_time_block.decor()
 def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
     registry_dicts = yaml.load(
         (path / "index.yaml").read_text(),
