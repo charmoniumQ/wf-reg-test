@@ -149,7 +149,6 @@ def clear() -> None:
 
 
 @main.command()
-@ch_time_block.decor()
 def test(quantity: int) -> None:
     hub = deserialize(data_path)
     revisions_conditions = what_to_execute(
