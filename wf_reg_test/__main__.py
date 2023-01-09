@@ -56,7 +56,7 @@ def what_to_execute(
     time_bound: DateTime,
     conditions: list[Condition],
     desired_execution_count: int = 1,
-    execution_limit: Optional[int] = None,
+    max_executions: Optional[int] = None,
     seed: int = 0,
 ) -> list[tuple[Revision, Condition]]:
     revisions_conditions: list[tuple[Revision, Condition]] = []
@@ -149,16 +149,16 @@ def clear() -> None:
 
 
 @main.command()
-@click.argument("max_quantity", type=int)
+@click.argument("max_executions", type=int)
 @ch_time_block.decor()
-def test(quantity: int) -> None:
+def test(max_executions: int) -> None:
     hub = deserialize(data_path)
     revisions_conditions = what_to_execute(
         hub=hub,
         time_bound=DateTime(2022, 8, 1),
         conditions=[Condition.NO_CONTROLS],
         desired_execution_count=1,
-        execution_limit=quantity,
+        max_executions=max_executions,
     )
     parallel_execute(
         hub,
