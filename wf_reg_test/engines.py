@@ -119,37 +119,36 @@ class SnakemakeEngine(Engine):
                 command=["/usr/bin/echo", "Could not find [Ss]nakefile"],
                 cwd=code_dir,
             )
-        else:
-            yield Executable(
-                command=[
-                    "snakemake",
-                    f"--cores={n_cores}",
-                    "--use-singularity",
-                    "--use-conda",
-                    "--forceall",
-                    f"--snakefile={snakefile!s}",
-                ],
-                cwd=code_dir,
-                read_write_mounts={
-                    code_dir: code_dir,
-                    log_dir: log_dir,
-                    out_dir: out_dir,
-                },
-            )
-            # See https://github.com/snakemake-workflows/dna-seq-benchmark
-            # do `snakemake workflow/Snakefile --summary` for typical outputs
-            # do `snakemake workflow/Snakefile` for typical logs
-            for log_file in [".snakemake", "logs"]:
-                if (code_dir / log_file).exists():
-                    shutil.move(code_dir / log_file, log_dir / log_file)
-            for out_file in ["results", "resources"]:
-                if (code_dir / out_file).exists():
-                    shutil.move(code_dir / out_file, out_dir / out_file)
-            # Fallthrough, everything else goes to results.
-            for fil in walk_files(code_dir):
-                if fil.exists() and fil.is_file() and DateTime.fromtimestamp(fil.stat().st_mtime) >= start_time:
-                    (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
-                    shutil.move(code_dir / fil, out_dir / fil)
+        yield Executable(
+            command=[
+                "snakemake",
+                f"--cores={n_cores}",
+                "--use-singularity",
+                "--use-conda",
+                "--forceall",
+                f"--snakefile={snakefile!s}",
+            ],
+            cwd=code_dir,
+            read_write_mounts={
+                code_dir: code_dir,
+                log_dir: log_dir,
+                out_dir: out_dir,
+            },
+        )
+        # See https://github.com/snakemake-workflows/dna-seq-benchmark
+        # do `snakemake workflow/Snakefile --summary` for typical outputs
+        # do `snakemake workflow/Snakefile` for typical logs
+        for log_file in [".snakemake", "logs"]:
+            if (code_dir / log_file).exists():
+                shutil.move(code_dir / log_file, log_dir / log_file)
+        for out_file in ["results", "resources"]:
+            if (code_dir / out_file).exists():
+                shutil.move(code_dir / out_file, out_dir / out_file)
+        # Fallthrough, everything else goes to results.
+        for fil in walk_files(code_dir):
+            if fil.exists() and fil.is_file() and DateTime.fromtimestamp(fil.stat().st_mtime) >= start_time:
+                (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
+                shutil.move(code_dir / fil, out_dir / fil)
 
 
 class NextflowEngine(Engine):
@@ -161,6 +160,7 @@ class NextflowEngine(Engine):
             out_dir: Path,
             n_cores: int,
     ) -> Iterator[Executable]:
+        start_time = datetime.datetime.now()
         yield Executable(
             command=[
                 "nextflow",
@@ -171,15 +171,21 @@ class NextflowEngine(Engine):
                 f"--outdir",
                 out_dir.resolve(),
             ],
-            cwd=log_dir.resolve(),
+            cwd=code_dir.resolve(),
             read_write_mounts={
                 code_dir: code_dir,
                 log_dir: log_dir,
                 out_dir: out_dir,
             },
         )
-        if (out_dir / "pipeline_info").exists():
-            shutil.move(out_dir / "pipeline_info", log_dir)
+        for log_file in ["pipeline_info", ".nextflow", "work", ".nextflow.log"]:
+            if (code_dir / log_file).exists():
+                shutil.move(code_dir / log_file, log_dir / log_file)
+        # Fallthrough, everything else goes to results.
+        for fil in walk_files(code_dir):
+            if fil.exists() and fil.is_file() and DateTime.fromtimestamp(fil.stat().st_mtime) >= start_time:
+                (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
+                shutil.move(code_dir / fil, out_dir / fil)
 
 
 engines = {

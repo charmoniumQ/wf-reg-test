@@ -72,7 +72,7 @@
           buildInputs = nix-dev-dependencies ++ [default-python];
           shellHook = ''
             export PREPEND_TO_PS1="(${name}) "
-            export LD_LIBRARY_PATH=LD_LIBRARY_PATH=${pkgs.gcc-unwrapped.lib}/lib:$LD_LIBRARY_PATH
+            export LD_LIBRARY_PATH=${pkgs.gcc-unwrapped.lib}/lib:$LD_LIBRARY_PATH
           '';
         };
 

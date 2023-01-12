@@ -6,6 +6,7 @@ import dataclasses
 from pathlib import Path
 import tarfile
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
+import urllib.parse
 
 from upath import UPath
 
@@ -36,9 +37,20 @@ class RegistryHub:
             for workflow in registry.workflows
         )
 
+    @property
+    def failed_executions(self) -> list[Execution]:
+        return [
+            execution
+            for registry in self.registries
+            for workflow in registry.workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+            if not execution.successful
+        ]
+
     def check_invariants(self) -> Iterable[UserWarning]:
         for attr in ["url", "display_name"]:
-            for reg_i, reg_j, i, j in non_unique(self.registries, curried_getattr(attr)):
+            for reg_i, reg_j, i, j in non_unique(self.registries, curried_getattr(str, attr)):
                 yield UserWarning(f"Two registries have the same {attr}: {i} \"{reg_i!s}\", {j} \"{reg_j!s}\"")
         for registry in self.registries:
             yield from registry.check_invariants()
@@ -60,7 +72,7 @@ class Registry:
 
     def check_invariants(self) -> Iterable[UserWarning]:
         for attr in ["url", "display_name"]:
-            for wf_i, wf_j, i, j in non_unique(self.workflows, curried_getattr(attr)):
+            for wf_i, wf_j, i, j in non_unique(self.workflows, curried_getattr(str, attr)):
                 yield UserWarning(f"Two workflows have the same {attr}: {i} \"{wf_i!s}\", {j} \"{wf_j!s}\"")
         for wf in self.workflows:
             if wf.registry != self:
@@ -112,7 +124,7 @@ class Workflow:
         if self not in self.registry.workflows:
             yield UserWarning("Not in own registry")
         for attr in ["url", "display_name", "rev"]:
-            for rev_i, rev_j, i, j in non_unique(self.revisions, curried_getattr(attr)):
+            for rev_i, rev_j, i, j in non_unique(self.revisions, curried_getattr(str, attr)):
                 yield UserWarning(f"Two revisions have the same {attr}: {i} \"{rev_i!s}\", {j} \"{rev_j!s}\"")
         for revision in self.revisions:
             if revision.workflow != self:
@@ -278,7 +290,12 @@ class FileBundle:
                     tarball.add(root / path, path)
             tarball.close()
             if isinstance(remote_archive, UPath):
-                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive.path)
+                remote_archive_path = remote_archive.path
+                # Note that Azure blob storage Python SDK already calls urlquote, so by default, these things get quoted twice!
+                # So we should unquote them here.
+                if remote_archive.fs.__class__.__name__ == "AzureBlobFileSystem":
+                    remote_archive_path = urllib.parse.unquote(remote_archive_path)
+                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive_path)
             else:
                 remote_archive.parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(tarball.name, remote_archive)
@@ -293,15 +310,23 @@ class FileBundle:
             path, file = next(iter(self.contents.items()))
         except StopIteration:
             return ""
-        return (
-            file.contents_url
-            # Looking for path to whole archive, not just this file
-            .replace(str(path), "")
-            # If this path was a path within a tar://, this gets us the URL of the tar.
-            .replace("tar://::", "")
-            # If this was an Azure, this gives us an HTTP url.
-            .replace("abfs://", "https://wfregtest.blob.core.windows.net/")
-        )
+        url = file.contents_url
+        if url is None:
+            return ""
+        else:
+            return (
+                url
+                # Looking for path to whole archive, not just this file
+                .replace(str(path), "")
+                # If this path was a path within a tar://, this gets us the URL of the tar.
+                .replace("tar://::", "")
+                # If this was an Azure, this gives us an HTTP url.
+                .replace("abfs://", "https://wfregtest.blob.core.windows.net/")
+            )
+
+    @property
+    def empty(self) -> bool:
+        return not bool(self.contents)
 
     def total_size(self) -> int:
         return sum(file.size for file in self.contents.values())

@@ -206,6 +206,15 @@ In what fraction of the cases does automatic repair work?
 Automatic repair could let one run old experiments off-the-shelf.
 We can apply techniques similar to Shipwright [@henkel_shipwright_2021], such as using a language model to categorize many failures into a few clusters.
 
+<!--
+TODO:
+
+Outcome-preserving input-reduction to enable reproducibility
+
+Build a an execution wiki
+  Web of trust? Pagerank?
+-->
+
 ## Description of codes
 
 <!-- Concise -->

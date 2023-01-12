@@ -23,7 +23,12 @@ import xxhash
 import toolz
 
 
-def curried_getattr(attr: str) -> Callable[[_T], _V]:
+_T = TypeVar("_T")
+_U = TypeVar("_U")
+_V = TypeVar("_V")
+
+
+def curried_getattr(ty: type[_V], attr: str) -> Callable[[_T], _V]:
     def inner(obj: _T) -> _V:
         return cast(_V, getattr(obj, attr))
     return inner
@@ -86,10 +91,6 @@ def hash_bytes(buffer: bytes, size: int = 128) -> int:
 
 def _ignore_vcs(path: str) -> bool:
     return path == ".git" or path.endswith("/.git")
-
-
-_T = TypeVar("_T")
-_V = TypeVar("_V")
 
 
 def walk_files(path: Path) -> Iterable[Path]:
@@ -196,7 +197,8 @@ def fs_escape(string: str) -> str:
 
 
 class ThunkObject:
-    def __init__(self, thunk: Callable[[], _T]) -> None:
+    def __init__(self, ty: type[_T], thunk: Callable[[], _T]) -> None:
+        self._ty = ty
         self._thunk = thunk
         self._value: Optional[_T]
         self._value = None
@@ -208,7 +210,7 @@ class ThunkObject:
         self._thunk = thunk
         self._value = None
 
-    def _reify(self) -> _T:
+    def _reify(self, ty: type[_T]) -> _T:
         if self._value is None:
             self._value = self._thunk()
             assert self._value is not None
@@ -218,7 +220,7 @@ class ThunkObject:
         return self._value
 
     def __getattr__(self, attr: str) -> Any:
-        return getattr(self._reify(), attr)
+        return getattr(self._reify(self._ty), attr)
 
 
 # azure.identity.aio.DefaultIdentityCredential is not picklable.
@@ -252,11 +254,21 @@ def drop_keys(dct: Mapping[_T, _V], drop_keys: set[_T]) -> Mapping[_T, _V]:
     }
 
 
-_U = TypeVar("_U")
-
-
 def map_keys(mapper: Callable[[_T], _U], dct: Mapping[_T, _V]) -> Mapping[_U, _V]:
     return {
         mapper(key): val
         for key, val in dct.items()
     }
+
+
+def chunk(it: Iterable[_T], chunk_size: int) -> Iterable[list[_T]]:
+    ity = iter(it)
+    while True:
+        ret = []
+        for _ in range(chunk_size):
+            try:
+                ret.append(next(ity))
+            except StopIteration:
+                yield ret
+                break
+        yield ret
