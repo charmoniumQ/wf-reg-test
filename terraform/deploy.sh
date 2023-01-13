@@ -5,6 +5,7 @@ set -e -x -o nounset
 cd $(dirname $(dirname $0))
 
 terraform -chdir=terraform output --raw developer_ssh_key > terraform/key
+chmod 0600 terraform/key
 
 cat <<EOF > terraform/ssh_config
 Host manager
