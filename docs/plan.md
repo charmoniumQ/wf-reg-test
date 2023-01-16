@@ -2,7 +2,7 @@
 
 - [ ] 2023-01-16 Rerun failed experiments
 - [ ] 2023-01-23 Get >30% pass on Nextflow, >10% on Snakemake, get at least 10 datapoints for each year from 2015 -- 2022.
-- [ ] 2023-01-30 Finish draft (based on NCSA Delta Proposal and ICSE NIER)
+- [ ] 2023-01-30 Finish draft (based on SC'S Delta Proposal and ICSE NIER)
 - [ ] 2023-02-06 Deadline to submit
 
 # Draft outline
@@ -41,7 +41,7 @@ Mary Shaw wrote about [common and expected features of SE research papers][1], i
   - What question did you answer?
     - How many scientific experiments have successfully terminating replication?
   - Why should the reader care?
-    - Science requires reproducibility to be self-correcting, successfully terminating replication is a necessary condition for reproducibility, it isn't always there in practice, and this study shows the prevalance of it, so we know the magnitude of the problem.
+    - Science requires reproducibility to be self-correcting, successfully terminating replication is a necessary condition for reproducibility, it isn't always there in practice, and this study shows the prevalence of it, so we know the magnitude of the problem.
   - What larger question does this address?
     - Is computational replication a big problem in science?
 - What is your new result?
@@ -63,3 +63,4 @@ Mary Shaw wrote about [common and expected features of SE research papers][1], i
   - What standard should be used to evaluate your claim?
     - Run our software on new experiments or new repositories. Even running the exact same experiment a year from now would catch new experiments deposited in that last year. Are these experiments replicable at a similar rate?
   - What concrete evidence shows that your result satisfies your claim?
+    - TBD
