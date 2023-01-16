@@ -128,6 +128,9 @@ class SnakemakeEngine(Engine):
                 "--forceall",
                 f"--snakefile={snakefile!s}",
             ],
+            env_override={
+                "SINGULARITY_DISABLE_CACHE": "1",
+            },
             cwd=code_dir,
             read_write_mounts={
                 code_dir: code_dir,
@@ -171,6 +174,9 @@ class NextflowEngine(Engine):
                 f"--outdir",
                 out_dir.resolve(),
             ],
+            env_override={
+                "SINGULARITY_DISABLE_CACHE": "1",
+            },
             cwd=code_dir.resolve(),
             read_write_mounts={
                 code_dir: code_dir,

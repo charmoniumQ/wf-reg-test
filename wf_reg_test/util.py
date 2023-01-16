@@ -43,9 +43,11 @@ def create_temp_file(cleanup: bool = True) -> Generator[Path, None, None]:
 @contextlib.contextmanager
 def create_temp_dir(cleanup: bool = True) -> Generator[Path, None, None]:
     temp_dir = Path(tempfile.mkdtemp())
-    yield Path(temp_dir)
-    if cleanup:
-        shutil.rmtree(temp_dir)
+    try:
+        yield Path(temp_dir)
+    finally:
+        if cleanup:
+            shutil.rmtree(temp_dir)
 
 
 def random_str(
