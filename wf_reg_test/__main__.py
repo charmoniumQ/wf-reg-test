@@ -174,15 +174,17 @@ def test(max_executions: int) -> None:
 
 
 @main.command()
-@click.argument("max_executions", type=int, default=-1)
+@click.option("--max-executions", type=int, default=-1)
+@click.option("--engine", type=str, default="")
 @ch_time_block.decor()
-def retest(max_executions: int) -> None:
+def retest(max_executions: int, engine: str) -> None:
     hub = deserialize(data_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
         for execution in hub.failed_executions
+        if engine == "" or engine == expect_type(Workflow, expect_type(Revision, execution.revision).workflow).engine
     ]
-    if max_executions == -1:
+    if max_executions != -1:
         revisions_conditions = revisions_conditions[:max_executions]
     parallel_execute(
         hub,
@@ -236,7 +238,7 @@ def remove_older_executions(hub: RegistryHub) -> None:
                             credential=AzureCredential(),
                         )
                         if path.exists():
-                            pathk.unlink()
+                            path.unlink()
                     else:
                         raise NotImplementedError(f"Delete routine not implemented for {url}")
     serialize(hub, data_path)
@@ -259,11 +261,7 @@ def verify() -> None:
     hub0 = deserialize(data_path, warn=True)
     hub1 = deserialize(data_path, warn=False)
     if hub0 == hub1:
-        charmonium.freeze.config.ignore_all_code = True
-        charmonium.freeze.config.ignore_all_classes = True
-        charmonium.freeze.config.ignore_dict_order = True
         warnings.warn("Deserialization is not deterministic!")
-        print(charmonium.freeze.summarize_diff(hub0, hub1))
 
 
 main()

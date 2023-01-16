@@ -67,6 +67,10 @@ def html_date(dt: datetime) -> html.Element:
     return dt.strftime("%Y-%m-%d")
 
 
+def html_datetime(dt: datetime) -> html.Element:
+    return dt.isoformat()
+
+
 def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
     day_diff = td.total_seconds() / timedelta(**{unit: 1}).total_seconds()
     return f"{day_diff:.{digits}f} {unit}"
@@ -132,6 +136,7 @@ def report_html(hub: RegistryHub) -> str:
                         "Engine": workflow.engine,
                         "Revision": html_link(revision.display_name, revision.url),
                         "Revision date": html_date(revision.datetime),
+                        "Execution date": html_datetime(execution.datetime),
                         "Staleness": html_timedelta(
                             execution.datetime - revision.datetime,
                             unit="days",

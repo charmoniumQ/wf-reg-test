@@ -125,10 +125,13 @@ class SnakemakeEngine(Engine):
                 f"--cores={n_cores}",
                 "--use-singularity",
                 "--use-conda",
+                "--conda-frontend=conda",
                 "--forceall",
                 f"--snakefile={snakefile!s}",
             ],
             env_override={
+                # Doing without cache gives a better estimate on the time/compute resources required to get the **first** replication.
+                # Also, this would fill without bound and cause "no space left on storage device" error.
                 "SINGULARITY_DISABLE_CACHE": "1",
             },
             cwd=code_dir,
