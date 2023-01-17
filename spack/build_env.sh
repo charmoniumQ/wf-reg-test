@@ -8,11 +8,11 @@ sudo apt-get update && sudo apt-get install -y build-essential ca-certificates c
 
 # Install spack
 if [ ! -d spack ]; then
-    git clone -c feature.manyFiles=true https://github.com/charmoniumQ/spack.git
+    git clone -c feature.manyFiles=true https://github.com/spack/spack.git
 fi
 git -C spack fetch
-git -C spack checkout develop-merge
-git -C spack pull origin develop-merge
+git -C spack checkout develop
+git -C spack pull origin develop
 source ~/spack/share/spack/setup-env.sh
 
 # Spack takes too long to build Rust.

@@ -10,7 +10,7 @@ chmod 0600 terraform/key
 cat <<EOF > terraform/ssh_config
 Host manager
     HostName $(terraform -chdir=terraform output --raw manager_ip)
-    IdentityFile ~/box/wf-reg-test/terraform/key
+    IdentityFile ${PWD}/terraform/key
     User azureuser
 
 EOF
@@ -22,7 +22,7 @@ for worker in $(seq 0 $((worker_count - 1))); do
     cat <<EOF >> terraform/ssh_config
 Host worker-${worker}
     HostName worker-${worker}
-    IdentityFile ~/box/wf-reg-test/terraform/key
+    IdentityFile ${PWD}/terraform/key
     User azureuser
     ProxyJump manager
 
@@ -42,7 +42,9 @@ for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); 
     if [ ! -d wf-reg-test ]; then
         git clone https://github.com/charmoniumQ/wf-reg-test
     else
-        git -C wf-reg-test pull
+        git -C wf-reg-test fetch --all
+        git -C wf-reg-test reset --hard HEAD
+        git -C wf-reg-test merge @{u}
     fi
 EOF
 done
