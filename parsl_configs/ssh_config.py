@@ -14,10 +14,14 @@ parsl.load(parsl.config.Config(
             max_workers=parallelism,
         ),
     ],
-   monitoring=parsl.monitoring.MonitoringHub(
-       hub_address=parsl.addresses.address_by_hostname(),
-       hub_port=55055,
-       monitoring_debug=False,
-       resource_monitoring_interval=10,
+   monitoring=(
+       parsl.monitoring.MonitoringHub(
+           hub_address=parsl.addresses.address_by_hostname(),
+           hub_port=55055,
+           monitoring_debug=False,
+           resource_monitoring_interval=10,
+       )
+       if os.environ.get("PARSL_MONITORING", None) else
+       None
    ),
 ))
