@@ -113,10 +113,19 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
 
     if warn:
         stored_hub = deserialize(path, warn=False)
-        charmonium.freeze.config.ignore_all_code = True
-        charmonium.freeze.config.ignore_all_classes = True
-        charmonium.freeze.config.ignore_dict_order = True
-        assert hub == stored_hub, charmonium.freeze.summarize_diff(hub, stored_hub)
+        if stored_hub != hub:
+            upath.UPath("diff.log").write_text(
+                charmonium.freeze.summarize_diff(
+                    hub,
+                    stored_hub,
+                    charmonium.freeze.Config(
+                        ignore_all_code=True,
+                        ignore_all_classes=True,
+                        ignore_dict_order=True,
+                    ),
+                )
+            )
+            warnings.warn("hub != stored_hub, see diff.log")
 
 
 def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:

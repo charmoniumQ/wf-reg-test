@@ -30,8 +30,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 ch_time_block.disable_stderr()
 
-logging.getLogger("paramiko").setLevel(logging.WARNING)
-logging.getLogger("azure").setLevel(logging.WARNING)
+for name in ["paramiko", "azure"]:
+    logging.getLogger(name).setLevel(logging.WARNING)
+    logging.getLogger(name).propagate = False
 
 
 serialize = ch_time_block.decor()(serialize)
@@ -257,7 +258,7 @@ def review() -> None:
 
 @main.command()
 def verify() -> None:
-    serialize(deserialize(data_path))
+    serialize(deserialize(data_path), data_path)
 
 
 main()
