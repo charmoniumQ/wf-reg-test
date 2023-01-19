@@ -4,7 +4,7 @@ set -e
 
 # See spack requirements here:
 # https://spack.readthedocs.io/en/latest/getting_started.html
-sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc cargo perl
+sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc cargo perl golang-go
 
 # Install spack
 if [ ! -d spack ]; then
@@ -16,6 +16,7 @@ git -C spack pull origin develop
 source ~/spack/share/spack/setup-env.sh
 
 # Spack takes too long to build Rust.
+spack external find go
 spack external find rust
 spack external find perl
 spack external find cmake
@@ -54,12 +55,11 @@ spack env activate wf-reg-test --sh > spack/activate.sh
 source spack/activate.sh
 
 # Minimize installation:
-# spack gc
 # See https://github.com/spack/spack/issues/14695
 spack-python <<EOF
 from spack.cmd.uninstall import dependent_environments
 import spack.store
-from spack.package import PackageStillNeededError
+from spack.package_base import PackageStillNeededError
 installed = spack.store.db.query()
 for spec in installed:
     if not dependent_environments([spec]):
@@ -69,10 +69,11 @@ for spec in installed:
         except PackageStillNeededError as e:
             pass
 EOF
+spack gc --yes-to-all
 spack clean --all
 
 # Upload to container archive:
-total=$(du --summarize --bytes spack | cut -f1)
+total=$(du --summarize --bytes spack | cut --fields=1)
 tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar.gz
 # Unfortunately, azure-cli in Spack is too old.
 export PATH=$PATH:$HOME/.local/bin

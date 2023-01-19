@@ -39,6 +39,5 @@ for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); 
     set +x ; source spack/activate.sh ; set -x
     rm -rf wf-reg-test
     git clone https://github.com/charmoniumQ/wf-reg-test
-
 EOF
 done

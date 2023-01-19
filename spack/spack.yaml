@@ -1,5 +1,8 @@
 spack:
   specs:
+  - git
+  - ncdu
+
   # hwloc to profile the current system
   - hwloc
 
