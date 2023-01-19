@@ -56,19 +56,19 @@ source spack/activate.sh
 # Minimize installation:
 # spack gc
 # See https://github.com/spack/spack/issues/14695
-# spack-python <<EOF
-# from spack.cmd.uninstall import dependent_environments
-# import spack.store
-# from spack.package import PackageStillNeededError
-# installed = spack.store.db.query()
-# for spec in installed:
-#     if not dependent_environments([spec]):
-#         print("Uninstalling", spec.name, spec.version)
-#         try:
-#             spec.package.do_uninstall()
-#         except PackageStillNeededError as e:
-#             pass
-# EOF
+spack-python <<EOF
+from spack.cmd.uninstall import dependent_environments
+import spack.store
+from spack.package import PackageStillNeededError
+installed = spack.store.db.query()
+for spec in installed:
+    if not dependent_environments([spec]):
+        print("Uninstalling", spec.name, spec.version)
+        try:
+            spec.package.do_uninstall()
+        except PackageStillNeededError as e:
+            pass
+EOF
 spack clean --all
 
 # Upload to container archive:
