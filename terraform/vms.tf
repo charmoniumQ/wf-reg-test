@@ -16,8 +16,8 @@ resource "azurerm_public_ip" "manager_ip" {
   allocation_method   = "Dynamic"
 }
 
-resource "azurerm_network_security_group" "manager_nsg" {
-  name                = "manager-nsg"
+resource "azurerm_network_security_group" "sshable_nsg" {
+  name                = "sshable-nsg"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
   security_rule {
@@ -34,7 +34,7 @@ resource "azurerm_network_security_group" "manager_nsg" {
 }
 
 resource "azurerm_network_interface" "manager_nic" {
-  name                = "manager_nic"
+  name                = "manager-nic"
   location            = azurerm_resource_group.default.location
   resource_group_name = azurerm_resource_group.default.name
 
@@ -48,7 +48,7 @@ resource "azurerm_network_interface" "manager_nic" {
 
 resource "azurerm_network_interface_security_group_association" "manager" {
   network_interface_id      = azurerm_network_interface.manager_nic.id
-  network_security_group_id = azurerm_network_security_group.manager_nsg.id
+  network_security_group_id = azurerm_network_security_group.sshable_nsg.id
 }
 
 resource "azurerm_linux_virtual_machine" "manager" {
@@ -180,9 +180,9 @@ resource azurerm_role_assignment worker-data {
   principal_id         = azurerm_linux_virtual_machine.worker[count.index].identity[0].principal_id
 }
 
-# #############################################
-# # Builder
-# #############################################
+#############################################
+# Builder
+#############################################
 
 # resource "azurerm_public_ip" "builder_ip" {
 #   name                = "builder"
@@ -193,7 +193,7 @@ resource azurerm_role_assignment worker-data {
 
 
 # resource "azurerm_network_interface" "builder_nic" {
-#   name                = "builder_nic"
+#   name                = "builder-nic"
 #   location            = azurerm_resource_group.default.location
 #   resource_group_name = azurerm_resource_group.default.name
 

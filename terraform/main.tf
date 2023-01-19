@@ -4,7 +4,7 @@
 
 variable "os_disk_size_gb" {
   type    = string
-  default = "64"
+  default = "32"
   # Usually can't be smaller than 30
 }
 

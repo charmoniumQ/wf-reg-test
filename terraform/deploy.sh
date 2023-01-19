@@ -32,19 +32,11 @@ done
 
 for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); do
     ssh -o StrictHostKeyChecking=no -F terraform/ssh_config $host <<EOF
-    set -e -x
-    # rm -rf spack spack.tar.gz
-    if [ ! -d spack ]; then
-        wget https://raw.githubusercontent.com/charmoniumQ/wf-reg-test/main/spack/setup_env.sh
-        bash setup_env.sh
-    fi
+    set -x
+    $(cat spack/setup_env.sh)
     set +x ; source spack/activate.sh ; set -x
-    if [ ! -d wf-reg-test ]; then
-        git clone https://github.com/charmoniumQ/wf-reg-test
-    else
-        git -C wf-reg-test fetch --all
-        git -C wf-reg-test reset --hard HEAD
-        git -C wf-reg-test merge @{u}
-    fi
+    rm -rf wf-reg-test
+    git clone https://github.com/charmoniumQ/wf-reg-test
+
 EOF
 done
