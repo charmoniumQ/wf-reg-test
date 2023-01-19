@@ -83,6 +83,18 @@ resource "azurerm_storage_account" "default" {
   account_replication_type = "LRS"
 }
 
+resource "azurerm_storage_container" "index" {
+  name                  = "index"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
+resource "azurerm_storage_container" "web" {
+  name                  = "$web"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
 resource "azurerm_storage_container" "data" {
   name                  = "data"
   storage_account_name  = azurerm_storage_account.default.name

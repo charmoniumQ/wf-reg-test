@@ -206,8 +206,8 @@ def report_html(hub: RegistryHub) -> str:
             html.body(
                 html.h1("Stats"),
                 get_stats(hub),
-                html.h1("Workflows"),
-                table_by_workflows,
+                # html.h1("Workflows"),
+                # table_by_workflows,
                 html.h1("Executions"),
                 table_by_executions,
             ),

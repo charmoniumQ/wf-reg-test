@@ -113,9 +113,19 @@ storage = upath.UPath(
 )
 
 
-data_path = storage / "index"
-# TODO: store index in different place
-# TODO: store results in different place
+index_path = upath.UPath(
+    "abfs://index/",
+    account_name="wfregtest",
+    credential=AzureCredential(),
+)
+
+report_path = upath.UPath(
+    "abfs://$web/index.html",
+    account_name="wfregtest",
+    credential=AzureCredential(),
+)
+
+
 # TODO: should code be self-aware that it is in Git?
 
 
@@ -134,15 +144,15 @@ def regenerate() -> None:
     hub.registries.append(nf_core_registry())
     hub.registries.append(snakemake_registry())
     ensure_revisions(hub, only_empty=True)
-    serialize(hub, data_path)
+    serialize(hub, index_path)
 
 
 @main.command()
 @ch_time_block.decor()
 def clear() -> None:
-    (data_path / "nf-core_executions.yaml").write_text("[]")
-    (data_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
-    for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz"))):
+    (index_path / "nf-core_executions.yaml").write_text("[]")
+    (index_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
+    for blob in tqdm.tqdm(list(index_path.glob("**.tar.xz"))):
         blob.unlink()
     if Path(".repos").exists():
         shutil.rmtree(".repos")
@@ -152,7 +162,7 @@ def clear() -> None:
 @click.argument("max_executions", type=int)
 @ch_time_block.decor()
 def test(max_executions: int) -> None:
-    hub = deserialize(data_path)
+    hub = deserialize(index_path)
     revisions_conditions = what_to_execute(
         hub=hub,
         time_bound=DateTime(2022, 8, 1),
@@ -164,13 +174,13 @@ def test(max_executions: int) -> None:
         hub,
         revisions_conditions,
         parallelism=10,
-        data_path=data_path,
+        index_path=index_path,
         serialize_every=TimeDelta(seconds=0),
         oversubscribe=False,
         remote=True,
         storage=storage,
     )
-    serialize(hub, data_path)
+    serialize(hub, index_path)
 
 
 @main.command()
@@ -178,7 +188,7 @@ def test(max_executions: int) -> None:
 @click.option("--engine", type=str, default="")
 @ch_time_block.decor()
 def retest(max_executions: int, engine: str) -> None:
-    hub = deserialize(data_path)
+    hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
         for execution in hub.failed_executions
@@ -190,21 +200,21 @@ def retest(max_executions: int, engine: str) -> None:
         hub,
         revisions_conditions,
         parallelism=10,
-        data_path=data_path,
+        index_path=index_path,
         serialize_every=TimeDelta(seconds=0),
         oversubscribe=False,
         remote=True,
         storage=storage,
     )
     remove_older_executions(hub)
-    serialize(hub, data_path)
+    serialize(hub, index_path)
 
 
 @main.command()
 @ch_time_block.decor()
 def report() -> None:
-    hub = deserialize(data_path)
-    (storage / "results.html").write_text(report_html(hub))
+    hub = deserialize(index_path)
+    report_path.write_text(report_html(hub))
 
 
 def remove_older_executions(hub: RegistryHub) -> None:
@@ -241,7 +251,7 @@ def remove_older_executions(hub: RegistryHub) -> None:
                             path.unlink()
                     else:
                         raise NotImplementedError(f"Delete routine not implemented for {url}")
-    serialize(hub, data_path)
+    serialize(hub, index_path)
 
 
 @main.command()
@@ -252,13 +262,13 @@ def post_process() -> None:
 
 @main.command()
 def review() -> None:
-    hub = deserialize(data_path)
+    hub = deserialize(index_path)
     review_failures(hub)
 
 
 @main.command()
 def verify() -> None:
-    serialize(deserialize(data_path), data_path)
+    serialize(deserialize(index_path), index_path)
 
 
 main()

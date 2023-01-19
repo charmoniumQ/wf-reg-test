@@ -143,7 +143,7 @@ parallel_map_with_id = parsl_parallel_map_with_id
 def parallel_execute(
     hub: RegistryHub,
     revisions_conditions: list[tuple[Revision, Condition]],
-    data_path: Path,
+    index_path: Path,
     parallelism: int,
     oversubscribe: bool,
     remote: bool,
@@ -174,7 +174,7 @@ def parallel_execute(
             raise warning
         # Must be no warnings. yay
         if last_serialization + serialize_every < DateTime.now():
-            serialize(hub, data_path)
+            serialize(hub, index_path)
 
 
 escape = urllib.parse.quote_plus
