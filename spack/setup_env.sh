@@ -1,6 +1,6 @@
 if ! which tmux; then
     sudo apt-get update
-    sudo apt-get install --assume-yes gfortran tmux
+    sudo apt-get install --assume-yes gfortran tmux less nano
     # Spack assumes libgfortram.so.5 exists, since it existed on the machine which built the env.
 fi
 

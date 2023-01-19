@@ -43,7 +43,7 @@ We define several "measurements" for the above definitions.
 - Output vector := the data values in an output artifact. For example, the CSV contents or HDF5 arrays.
 - Output bytes := the bits consisting of the output artifact
 
-We can cautiously assume that experiments in a registry did successfully terminate at the time they were uploaded (although this does become a threat to validity).
+We are considering experiments which have been specifically published or uploaded to be in the repository. Therefore, we can cautiously assume that experiments did successfully terminate at the time they were published (although this does become a threat to validity). For example, git commits are too frequent to be markers of working software, but git tags are less frequent and more likely to indicate working software.
 When we run the experiment in our system, we determine the replicability of successful termination, since we have a different computational environment.
 However, we don't know the original output, so we cannot determine the replicability of the output.
 Instead, we will determine the repeatability of the output.

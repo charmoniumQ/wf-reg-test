@@ -4,6 +4,8 @@ set -e -x -o nounset
 
 cd $(dirname $(dirname $0))
 
+terraform -chdir=terraform apply -auto-approve
+
 terraform -chdir=terraform output --raw developer_ssh_key > terraform/key
 chmod 0600 terraform/key
 

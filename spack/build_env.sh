@@ -4,7 +4,7 @@ set -e
 
 # See spack requirements here:
 # https://spack.readthedocs.io/en/latest/getting_started.html
-sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc cargo
+sudo apt-get update && sudo apt-get install -y build-essential ca-certificates coreutils curl environment-modules gfortran git gpg lsb-release python3 python3-distutils python3-venv python3-pip unzip zip tmux cmake rustc cargo perl
 
 # Install spack
 if [ ! -d spack ]; then
@@ -17,7 +17,7 @@ source ~/spack/share/spack/setup-env.sh
 
 # Spack takes too long to build Rust.
 spack external find rust
-# also cmake, which we already installed with apt
+spack external find perl
 spack external find cmake
 # Note, `spack external find` will NOT work for run-time deps,
 # as the workers will not have this package.
@@ -38,10 +38,13 @@ fi
 spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test
 spack concretize --fresh --force
+# Sometimes these spuriously fail due to race conditions
+set +e
 for i in $(seq 1 $(nproc)); do
     spack install --yes &
 done
 wait $(jobs -p)
+set -e
 spack install --yes
 
 # Create install script:
@@ -67,10 +70,6 @@ source spack/activate.sh
 #             pass
 # EOF
 spack clean --all
-
-# Until https://github.com/snakemake/snakemake/issues/1038 is resolved, micromamba should masquerade as mamba
-#cp /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/micromamba
-# rm -f /home/azureuser/spack/var/spack/environments/wf-reg-test/.spack-env/view/bin/mamba
 
 # Upload to container archive:
 total=$(du --summarize --bytes spack | cut -f1)

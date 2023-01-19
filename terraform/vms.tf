@@ -1,19 +1,8 @@
-#############################################
-# Manager
-#############################################
-
 resource "azurerm_subnet" "default" {
   name                 = "default"
   resource_group_name  = azurerm_resource_group.default.name
   virtual_network_name = azurerm_virtual_network.default.name
   address_prefixes     = ["10.0.2.0/24"]
-}
-
-resource "azurerm_public_ip" "manager_ip" {
-  name                = "manager"
-  resource_group_name = azurerm_resource_group.default.name
-  location            = azurerm_resource_group.default.location
-  allocation_method   = "Dynamic"
 }
 
 resource "azurerm_network_security_group" "sshable_nsg" {
@@ -31,6 +20,17 @@ resource "azurerm_network_security_group" "sshable_nsg" {
     source_address_prefix      = "*"
     destination_address_prefix = "*"
   }
+}
+
+#############################################
+# Manager
+#############################################
+
+resource "azurerm_public_ip" "manager_ip" {
+  name                = "manager"
+  resource_group_name = azurerm_resource_group.default.name
+  location            = azurerm_resource_group.default.location
+  allocation_method   = "Dynamic"
 }
 
 resource "azurerm_network_interface" "manager_nic" {

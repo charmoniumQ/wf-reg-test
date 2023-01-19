@@ -103,6 +103,7 @@ def dask_parallel_map_with_id(
 
 import concurrent
 import parsl
+logging.getLogger("parsl").setLevel(logging.WARNING)
 def parsl_parallel_map_with_id(
         execute_one: Callable[[_T, _U, Optional[ResourcePool[int]]], _V],
         ts_vs: list[tuple[_T, _U]],
