@@ -211,7 +211,7 @@ def report_html(hub: RegistryHub) -> str:
                 html.h1("Executions"),
                 table_by_executions,
             ),
-        ).__format__(""),
+        ).__format__("").replace("<!DOCTYPE html>\n", ""),
     )
 
 

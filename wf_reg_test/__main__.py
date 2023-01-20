@@ -119,8 +119,8 @@ index_path = upath.UPath(
     credential=AzureCredential(),
 )
 
-report_path = upath.UPath(
-    "abfs://$web/index.html",
+html_path = upath.UPath(
+    "abfs://$web/",
     account_name="wfregtest",
     credential=AzureCredential(),
 )
@@ -214,16 +214,26 @@ def retest(max_executions: int, engine: str) -> None:
 @ch_time_block.decor()
 def report() -> None:
     hub = deserialize(index_path)
-    report_path.write_text(report_html(hub))
+    (html_path / "result.html").write_text(report_html(hub))
+    (html_path / "404.html").write_text(Path("docs/404.html").read_text())
+
+
+@main.command()
+def delete_old() -> None:
+    hub = deserialize(index_path)
+    remove_older_executions(hub)
+    serialize(hub, index_path)
 
 
 def remove_older_executions(hub: RegistryHub) -> None:
     for revision in tqdm.tqdm(hub.revisions, desc="revisions"):
-        if revision.executions:
+        if len(revision.executions) > 2:
+            print(f"{revision!s} has multiple")
             newest_execution = revision.executions[0]
             for execution in revision.executions:
                 if execution.datetime >= newest_execution.datetime:
                     newest_execution = execution
+            print(f"{newest_execution.datetime!s} is the newest")
             old_executions = revision.executions[:]
             old_executions.remove(newest_execution)
             revision.executions = [newest_execution]
@@ -238,6 +248,7 @@ def remove_older_executions(hub: RegistryHub) -> None:
                         else:
                             urls_to_delete.append(url)
                 for url in set(urls_to_delete):
+                    print(f"Delete {url}")
                     if m := re.match("file://(.*)", url):
                         Path(m.group(1)).unlink()
                     elif m := re.match("(abfs://.*)", url):
@@ -251,7 +262,6 @@ def remove_older_executions(hub: RegistryHub) -> None:
                             path.unlink()
                     else:
                         raise NotImplementedError(f"Delete routine not implemented for {url}")
-    serialize(hub, index_path)
 
 
 @main.command()
