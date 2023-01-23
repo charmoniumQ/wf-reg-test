@@ -1,6 +1,6 @@
 # Work plan
 
-- [ ] 2023-01-16 Rerun failed experiments
+- [x] 2023-01-16 Rerun failed experiments
 - [ ] 2023-01-23 Get >30% pass on Nextflow, >10% on Snakemake, get at least 10 datapoints for each year from 2015 -- 2022.
 - [ ] 2023-01-30 Finish draft (based on SC'S Delta Proposal and ICSE NIER)
 - [ ] 2023-02-06 Deadline to submit

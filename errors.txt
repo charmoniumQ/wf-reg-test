@@ -1,0 +1,136 @@
+snakemake-workflows/dna-seq-varlociraptor v3.19.1
+  stderr or .snakemake/log/*.snakemake.log:
+    InputFunctionException in line 73 of /tmp/tmpp8hah4nq/code/workflow/rules/datavzrd.smk:
+    Error:
+      ValueError: No samples found. Is your sample sheet empty?
+    Wildcards:
+      batch=all
+      event=some_id
+    Traceback:
+      File "/tmp/tmpp8hah4nq/code/workflow/rules/common.smk", line 851, in inner
+      File "/tmp/tmpp8hah4nq/code/workflow/rules/common.smk", line 560, in get_report_batch
+
+----------------------------------------------------------------------------------------------------
+
+snakemake-workflows/rna-seq-kallisto-sleuth v2.4.2
+  stderr or .snakemake/log/*.snakemake.log:
+    MissingInputException in rule cutadapt_pe  in line 1 of /tmp/tmpkhk9k431/code/workflow/rules/trim.smk:
+    Missing input files for rule cutadapt_pe:
+        output: results/trimmed/A-1.1.fastq.gz, results/trimmed/A-1.2.fastq.gz, results/trimmed/A-1.qc.txt
+        wildcards: sample=A, unit=1
+        affected files:
+            raw/a.chr21.1.fq
+            raw/a.chr21.2.fq
+
+----------------------------------------------------------------------------------------------------
+
+mhcquant 2.4.0
+ stdout or .nextflow.log:
+    Caused by:
+      Process `NFCORE_MHCQUANT:MHCQUANT:INPUT_CHECK:SAMPLESHEET_CHECK (sample_sheet.tsv)` terminated with an error exit status (255)
+    
+    Command executed:
+    
+      check_samplesheet.py \
+          sample_sheet.tsv \
+          samplesheet.valid.csv
+      
+      cat <<-END_VERSIONS > versions.yml
+      "NFCORE_MHCQUANT:MHCQUANT:INPUT_CHECK:SAMPLESHEET_CHECK":
+          python: $(python --version | sed 's/Python //g')
+      END_VERSIONS
+    
+    Command exit status:
+      255
+    
+    Command output:
+      (empty)
+    
+    Command error:
+      INFO:    Converting SIF file to temporary sandbox...
+      WARNING: Skipping mount /home/azureuser/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-11.3.0/singularityce-3.10.3-msdj5bwwt36tiy36prbpozewixrm6lyw/var/singularity/mnt/session/etc/resolv.conf [files]: /etc/resolv.conf doesn't exist in container
+      INFO:    Cleaning up image...
+      FATAL:   container creation failed: mount /tmp/tmp2hn8wwjf/code->/tmp/tmp2hn8wwjf/code error: while mounting /tmp/tmp2hn8wwjf/code: destination /tmp/tmp2hn8wwjf/code doesn't exist in container
+    
+    Work dir:
+      /tmp/tmp2hn8wwjf/code/work/b9/6a6b80b20dc0bec6ed92c71c6fb87b
+
+----------------------------------------------------------------------------------------------------
+
+friendsofstrandseq/mosaicatcher-pipeline 1.8.3
+  stderr or .snakemake/log/*.snakemake.log:
+    WorkflowError:
+    Failed to pull singularity image from docker://weber8thomas/mosaicatcher-pipeline:1.8.3:
+    INFO:    Converting OCI blobs to SIF format
+    INFO:    Starting build...
+    FATAL:   While making image from oci registry: error fetching image to cache: while building SIF from layers: conveyor failed to get: writing blob: write /tmp/bundle-temp-4290054861/oci-put-blob3559658978: no space left on device
+
+----------------------------------------------------------------------------------------------------
+
+sneuensc/mapache v0.2.0
+  stderr or .snakemake/log/*.snakemake.log:
+    ERROR: Reference genome config[hg19] does not exist (/work/FAC/FBM/DBC/amalaspi/popgen/shared_ressources/reference_human/hs.build37.1/hs.build37.1.fa)!
+    ERROR: Reference genome config[GRCh38] does not exist (/work/FAC/FBM/DBC/amalaspi/popgen/shared_ressources/reference_human/GCA_000001405.15_GRCh38.p13_onlyChrom/GCA_000001405.15_GRCh38.fa)!
+    IndexError in line 665 of /tmp/tmpq4_cd7ot/code/workflow/scripts/utils.py:
+    list index out of range
+      File "/tmp/tmpq4_cd7ot/code/workflow/Snakefile", line 179, in <module>
+      File "/tmp/tmpq4_cd7ot/code/workflow/scripts/utils.py", line 665, in set_sex_inference
+
+----------------------------------------------------------------------------------------------------
+
+circdna 1.0.0
+  stdout or .nextflow.log
+    Caused by:
+      Process `NFCORE_CIRCDNA:CIRCDNA:INPUT_CHECK:SAMPLESHEET_CHECK (samplesheet.csv)` terminated with an error exit status (255)
+    
+    Command executed:
+    
+      check_samplesheet.py \
+          samplesheet.csv \
+          samplesheet.valid.csv \
+          FASTQ
+      
+      cat <<-END_VERSIONS > versions.yml
+      "NFCORE_CIRCDNA:CIRCDNA:INPUT_CHECK:SAMPLESHEET_CHECK":
+          python: $(python --version | sed 's/Python //g')
+      END_VERSIONS
+    
+    Command exit status:
+      255
+    
+    Command output:
+      (empty)
+    
+    Command error:
+      INFO:    Converting SIF file to temporary sandbox...
+      WARNING: Skipping mount /home/azureuser/spack/opt/spack/linux-ubuntu22.04-zen2/gcc-11.3.0/singularityce-3.10.3-msdj5bwwt36tiy36prbpozewixrm6lyw/var/singularity/mnt/session/etc/resolv.conf [files]: /etc/resolv.conf doesn't exist in container
+      INFO:    Cleaning up image...
+      FATAL:   container creation failed: mount /tmp/tmpvzhm_xal/code->/tmp/tmpvzhm_xal/code error: while mounting /tmp/tmpvzhm_xal/code: destination /tmp/tmpvzhm_xal/code doesn't exist in container
+    
+    Work dir:
+      /tmp/tmpvzhm_xal/code/work/ad/06648f0341eba6fa19bc50975605b3
+
+----------------------------------------------------------------------------------------------------
+
+friendsofstrandseq/ashleys-qc-pipeline1.0
+
+    WorkflowError:
+        MissingInputException: Missing input files for rule bwa_strandseq_to_reference_alignment:
+            output: .tests/data_CHR21/RPE-BM510/all/BM510x3PE20401.bam
+            wildcards: path=.tests/data_CHR21, sample=RPE-BM510, cell=BM510x3PE20401
+            affected files:
+                sandbox.zenodo.org/record/1074721/files/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
+        MissingInputException: Missing input files for rule bwa_strandseq_to_reference_alignment:
+            output: .tests/data_CHR21/RPE-BM510/all/BM510x3PE20401.sort.bam
+            wildcards: path=.tests/data_CHR21, sample=RPE-BM510, cell=BM510x3PE20401.sort
+            affected files:
+                .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.2.fastq.gz
+                .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.1.fastq.gz
+                sandbox.zenodo.org/record/1074721/files/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
+    MissingInputException: Missing input files for rule bwa_strandseq_to_reference_alignment:
+        output: .tests/data_CHR21/RPE-BM510/all/BM510x3PE20401.sort.mdup.bam
+        wildcards: path=.tests/data_CHR21, sample=RPE-BM510, cell=BM510x3PE20401.sort.mdup
+        affected files:
+            .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.mdup.2.fastq.gz
+            sandbox.zenodo.org/record/1074721/files/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
+            .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.mdup.1.fastq.gz
