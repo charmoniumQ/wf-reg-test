@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import contextlib
 import dataclasses
 import datetime
@@ -17,10 +19,10 @@ from typing import Any, Callable, Mapping, Optional, TypeVar, cast, ContextManag
 
 import charmonium.time_block as ch_time_block
 import yaml
-from upath import UPath
+import upath
 
 from .util import create_temp_dir, expect_type, walk_files, random_str, fs_escape
-from .workflows import Execution, Revision, Condition, FileBundle
+from .workflows import Execution, Revision, Condition, FileBundle, WorkflowError
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
 
@@ -45,7 +47,7 @@ class Engine:
             condition: Condition,
             which_cores: list[int],
             wall_time_limit: TimeDelta,
-            storage: UPath,
+            storage: upath.UPath,
     ) -> Execution:
         if revision.workflow is None:
             raise ValueError(f"Can't run a revision that doesn't have workflow. {revision}")
@@ -156,6 +158,49 @@ class SnakemakeEngine(Engine):
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
+    def parse_error(self, log_dir: Path) -> Optional[WorkflowError]:
+        log_files = list((log_dir / "log").glob("*.snakemake.log"))
+        if not log_files:
+            return None
+        logs = max(log_files).read_text()
+        err: Optional[WorkflowError]
+        if err := SnakemakePythonError._from_text(logs):
+            return err
+        elif err := SnakemakeWorkflowError._from_text(logs):
+            return err
+        else:
+            return None
+
+
+@dataclasses.dataclass
+class SnakemakePythonError(WorkflowError):
+    line_no: int
+    file: str
+    rest: str
+    _pattern = re.compile("(.*Exception) in line (\\d*) of (.*):([\\s\\S]*)", re.MULTILINE)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[SnakemakePythonError]:
+        if match := SnakemakePythonError._pattern.search(string):
+            return SnakemakePythonError(
+                match.group(1), int(match.group(2)), match.group(3), match.group(4),
+            )
+        else:
+            return None
+
+
+@dataclasses.dataclass
+class SnakemakeWorkflowError(WorkflowError):
+    rest: str
+    _pattern = re.compile("WorkflowError: ([\\s\\S]*)", re.MULTILINE)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[SnakemakeWorkflowError]:
+        if match := SnakemakeWorkflowError._pattern.search(string):
+            return SnakemakeWorkflowError("WorkflowError", match.group(1))
+        else:
+            return None
+
 
 class NextflowEngine(Engine):
     @contextlib.contextmanager
@@ -196,6 +241,60 @@ class NextflowEngine(Engine):
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
+    def parse_error(self, log_dir: Path) -> Optional[WorkflowError]:
+        log_file = log_dir / ".nextflow.log"
+        if not log_file.exists():
+            return None
+        log = log_file.read_text()
+        return NextflowError._from_text(log)
+
+
+@dataclasses.dataclass
+class NextflowError(WorkflowError):
+    process: str
+    command_executed: str
+    exit_status: int
+    output: str
+    error: str
+    work_dir: Path
+
+    @staticmethod
+    def _strip_indent(string: str, n: int) -> str:
+        return "\n".join(line[n:] for line in string.split("\n"))
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[NextflowError]:
+        if match := NextflowError._pattern.search(string):
+            return NextflowError(
+                "CommandError",
+                match.group(1),
+                NextflowError._strip_indent(match.group(2), 2),
+                int(match.group(3)),
+                NextflowError._strip_indent(match.group(4), 2),
+                NextflowError._strip_indent(match.group(5), 2),
+                Path(match.group(6)),
+            )
+        else:
+            return None
+
+    _pattern = re.compile("""Caused by:
+  Process `(.*)` terminated.*
+
+Command executed:
+(.*)
+
+Command exit status:
+  (\\d*)
+
+Command output:
+(.*)
+
+Command error:
+(.*)
+
+Work dir:
+  (.*)
+""", re.MULTILINE)
 
 engines = {
     "snakemake": SnakemakeEngine(),

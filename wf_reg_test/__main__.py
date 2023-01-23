@@ -21,8 +21,8 @@ import upath
 from .serialization import serialize, deserialize
 from .report import report_html
 from .repos import get_repo
-from .workflows import RegistryHub, Revision, Workflow, Condition, Execution
-from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential
+from .workflows import RegistryHub, Revision, Workflow, Condition, Execution, File
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential, http_content_length
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
@@ -279,6 +279,31 @@ def review() -> None:
 @main.command()
 def verify() -> None:
     serialize(deserialize(index_path), index_path)
+
+
+def migrate_execution(execution: Execution) -> None:
+    if not isinstance(execution.logs, File):
+        url = execution.logs.get_archive()
+        if url:
+            length = http_content_length(url)
+            execution.logs = File("length", 64, length, length, url)
+        else:
+            execution.logs = File("length", 64, 0, 0, "lost")
+    if not isinstance(execution.outputs, File):
+        url = execution.outputs.get_archive()
+        if url:
+            length = http_content_length(url)
+            execution.output = File("length", 64, length, length, url)
+        else:
+            execution.output = File("length", 64, 0, 0, "lost")
+
+
+@main.command()
+def migrate() -> None:
+    hub = deserialize(index_path)
+    for execution in tqdm.tqdm(hub.executions, desc="executions"):
+        migrate_execution(execution)
+    serialize(hub, index_path)
 
 
 main()

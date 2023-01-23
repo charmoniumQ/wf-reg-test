@@ -8,7 +8,7 @@ import tarfile
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 import urllib.parse
 
-from upath import UPath
+import upath
 
 from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr, create_temp_dir, get_current_revision
 from .executable import Executable, ComputeResources, Machine
@@ -36,6 +36,15 @@ class RegistryHub:
             for registry in self.registries
             for workflow in registry.workflows
         )
+
+    @property
+    def executions(self) -> list[Execution]:
+        return concat_lists([
+            revision.executions
+            for registry in self.registries
+            for workflow in registry.workflows
+            for revision in workflow.revisions
+        ])
 
     @property
     def failed_executions(self) -> list[Execution]:
@@ -167,7 +176,12 @@ class Revision:
                 self.executions.append(execution)
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass
+class WorkflowError:
+    kind: str
+
+
+@dataclasses.dataclass#(frozen=True)
 class Execution:
     machine: Optional[Machine]
     datetime: DateTime
@@ -178,6 +192,7 @@ class Execution:
     status_code: int
     revision: Optional[Revision] = dataclasses.field(compare=False)
     wf_reg_test_revision: str = dataclasses.field(default_factory=get_current_revision)
+    workflow_error: Optional[WorkflowError] = None
 
     def with_pointers(self, machine: Machine, revision: Revision) -> Execution:
         return Execution(
@@ -189,6 +204,7 @@ class Execution:
             condition=self.condition,
             resources=self.resources,
             status_code=self.status_code,
+            workflow_error=self.workflow_error,
         )
 
     @property
@@ -264,10 +280,9 @@ Condition.HARD_CONTROLS = Condition(
     )
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass#(frozen=True)
 class FileBundle:
     contents: Mapping[Path, File]
-    # archive: upath.UPath
 
     @staticmethod
     def create_on_disk(root: Path) -> FileBundle:
@@ -278,7 +293,7 @@ class FileBundle:
         return FileBundle(contents)
 
     @staticmethod
-    def create_in_storage(root: Path, remote_archive: UPath) -> FileBundle:
+    def create_in_storage(root: Path, remote_archive: upath.UPath) -> FileBundle:
         if not remote_archive.name.endswith(".tar.xz"):
             raise ValueError("Must pass a .tar.xz")
         with create_temp_dir(cleanup=True) as temp_dir:
@@ -289,7 +304,7 @@ class FileBundle:
                     contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
                     tarball.add(root / path, path)
             tarball.close()
-            if isinstance(remote_archive, UPath):
+            if isinstance(remote_archive, upath.UPath):
                 remote_archive_path = remote_archive.path
                 # Note that Azure blob storage Python SDK already calls urlquote, so by default, these things get quoted twice!
                 # So we should unquote them here.
@@ -301,20 +316,18 @@ class FileBundle:
                 shutil.move(tarball.name, remote_archive)
         return FileBundle(
             contents,
-            # remote_archive,
         )
 
-    @property
-    def archive(self) -> str:
+    def get_archive(self) -> Optional[upath.UPath]:
         try:
             path, file = next(iter(self.contents.items()))
         except StopIteration:
-            return ""
+            return None
         url = file.contents_url
         if url is None:
-            return ""
+            return None
         else:
-            return (
+            return upath.UPath(
                 url
                 # Looking for path to whole archive, not just this file
                 .replace(str(path), "")
@@ -355,6 +368,15 @@ class File:
             size=path.stat().st_size,
             contents_url=f"file://{path.resolve()!s}" if url is None else url,
         )
+
+    def __eq__(self, other: object) -> bool:
+        if isinstance(other, File):
+            if self.hash_algo == other.hash_algo and self.hash_bits == other.hash_bits:
+                return self.hash_val == other.hash_val
+            else:
+                raise ValueError("Files have different hash algorithms. No determination could be made.")
+        else:
+            return False
 
     def check_invariants(self) -> Iterable[UserWarning]:
         if not (0 <= self.hash_val < (1 << self.hash_bits)):

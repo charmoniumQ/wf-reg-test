@@ -145,11 +145,11 @@ def report_html(hub: RegistryHub) -> str:
                         "Success": html_emoji_bool(execution.status_code == 0),
                         "Logs": html_link(
                             "empty" if execution.logs.empty else f"{execution.logs.total_size() / 2**30:.3f}GiB",
-                            execution.logs.archive,
+                            str(execution.logs.archive),
                         ),
                         "Outputs": html_link(
                             "empty" if execution.outputs.empty else f"{execution.outputs.total_size() / 2**30:.3f}GiB",
-                            execution.outputs.archive,
+                            str(execution.outputs.archive),
                         ),
                         "Max RAM": f"{execution.resources.max_rss / 2**30:.3f}GiB",
                         "CPU Time": html_timedelta(

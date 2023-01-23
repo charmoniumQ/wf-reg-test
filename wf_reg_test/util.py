@@ -274,3 +274,10 @@ def chunk(it: Iterable[_T], chunk_size: int) -> Iterable[list[_T]]:
                 yield ret
                 break
         yield ret
+
+
+def http_content_length(url: str) -> int:
+    req = urllib.request.Request(url, method="HEAD")
+    with urllib.request.urlopen(req) as response:
+        return int(response.getheader("Content-Length"))
+        
