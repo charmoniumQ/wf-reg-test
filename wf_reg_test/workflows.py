@@ -185,8 +185,8 @@ class WorkflowError:
 class Execution:
     machine: Optional[Machine]
     datetime: DateTime
-    outputs: FileBundle
-    logs: FileBundle
+    outputs: File
+    logs: File
     condition: Condition
     resources: ComputeResources
     status_code: int
@@ -280,82 +280,13 @@ Condition.HARD_CONTROLS = Condition(
     )
 
 
-@dataclasses.dataclass#(frozen=True)
-class FileBundle:
-    contents: Mapping[Path, File]
-
-    @staticmethod
-    def create_on_disk(root: Path) -> FileBundle:
-        contents: dict[Path, File] = {}
-        for path in walk_files(root):
-            if (root / path).is_file() and not (root / path).is_symlink():
-                contents[path] = File.create(root / path, url=f"file://{path.resolve()!s}")
-        return FileBundle(contents)
-
-    @staticmethod
-    def create_in_storage(root: Path, remote_archive: upath.UPath) -> FileBundle:
-        if not remote_archive.name.endswith(".tar.xz"):
-            raise ValueError("Must pass a .tar.xz")
-        with create_temp_dir(cleanup=True) as temp_dir:
-            tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
-            contents: dict[Path, File] = {}
-            for path in walk_files(root):
-                if (root / path).is_file() and not (root / path).is_symlink():
-                    contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
-                    tarball.add(root / path, path)
-            tarball.close()
-            if isinstance(remote_archive, upath.UPath):
-                remote_archive_path = remote_archive.path
-                # Note that Azure blob storage Python SDK already calls urlquote, so by default, these things get quoted twice!
-                # So we should unquote them here.
-                if remote_archive.fs.__class__.__name__ == "AzureBlobFileSystem":
-                    remote_archive_path = urllib.parse.unquote(remote_archive_path)
-                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive_path)
-            else:
-                remote_archive.parent.mkdir(exist_ok=True, parents=True)
-                shutil.move(tarball.name, remote_archive)
-        return FileBundle(
-            contents,
-        )
-
-    def get_archive(self) -> Optional[upath.UPath]:
-        try:
-            path, file = next(iter(self.contents.items()))
-        except StopIteration:
-            return None
-        url = file.contents_url
-        if url is None:
-            return None
-        else:
-            return upath.UPath(
-                url
-                # Looking for path to whole archive, not just this file
-                .replace(str(path), "")
-                # If this path was a path within a tar://, this gets us the URL of the tar.
-                .replace("tar://::", "")
-                # If this was an Azure, this gives us an HTTP url.
-                .replace("abfs://", "https://wfregtest.blob.core.windows.net/")
-            )
-
-    @property
-    def empty(self) -> bool:
-        return not bool(self.contents)
-
-    def total_size(self) -> int:
-        return sum(file.size for file in self.contents.values())
-
-    def check_invariants(self) -> Iterable[UserWarning]:
-        for file in self.contents.values():
-            yield from file.check_invariants()
-
-
 @dataclasses.dataclass(frozen=True)
 class File:
     hash_algo: str
     hash_bits: int
     hash_val: int
     size: int
-    contents_url: Optional[str] = dataclasses.field(compare=False, hash=False)
+    url: Optional[str] = dataclasses.field(compare=False, hash=False)
 
     @staticmethod
     def create(path: Path, url: Optional[str] = None) -> File:
@@ -366,7 +297,7 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
-            contents_url=f"file://{path.resolve()!s}" if url is None else url,
+            url=f"file://{path.resolve()!s}" if url is None else url,
         )
 
     def __eq__(self, other: object) -> bool:
@@ -383,6 +314,10 @@ class File:
             yield UserWarning("hash is bigger than hash_bits", self, self.hash_val, self.hash_bits)
         if self.size < 0:
             yield UserWarning("File cannot have negative size")
+
+    @property
+    def empty(self) -> bool:
+        return self.size == 0
 
     def read_bytes(self) -> Optional[bytes]:
         """Return the bytes of this file, if we have them, else None."""

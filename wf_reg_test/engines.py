@@ -5,16 +5,18 @@ import dataclasses
 import datetime
 import functools
 import logging
+import pathlib
 import random
 import re
 import shlex
 import shutil
 import subprocess
 import sys
+import tarfile
+import urllib
 import warnings
 from typing_extensions import Protocol
 from datetime import datetime as DateTime, timedelta as TimeDelta
-from pathlib import Path
 from typing import Any, Callable, Mapping, Optional, TypeVar, cast, ContextManager, Iterator
 
 import charmonium.time_block as ch_time_block
@@ -22,7 +24,7 @@ import yaml
 import upath
 
 from .util import create_temp_dir, expect_type, walk_files, random_str, fs_escape
-from .workflows import Execution, Revision, Condition, FileBundle, WorkflowError
+from .workflows import Execution, Revision, Condition, File, WorkflowError
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
 
@@ -33,9 +35,9 @@ logger = logging.getLogger("wf_reg_test")
 class Engine:
     def get_executable(
             self,
-            workflow: Path,
-            log_dir: Path,
-            out_dir: Path,
+            workflow: pathlib.Path,
+            log_dir: pathlib.Path,
+            out_dir: pathlib.Path,
             n_cores: int,
     ) -> ContextManager[Executable]:
         raise NotImplementedError
@@ -82,8 +84,8 @@ class Engine:
                     "resources": resources,
                 }))
             run_path = storage / fs_escape(revision.workflow.display_name) / random_str(8)
-            outputs = FileBundle.create_in_storage(out_dir, run_path / "output.tar.xz")
-            logs = FileBundle.create_in_storage(log_dir, run_path / "logs.tar.xz")
+            outputs = self.create_in_storage(out_dir, run_path / "output.tar.xz")
+            logs = self.create_in_storage(log_dir, run_path / "logs.tar.xz")
         return Execution(
             machine=None,
             datetime=now,
@@ -95,14 +97,41 @@ class Engine:
             revision=None,
         )
 
+    @staticmethod
+    def create_in_storage(root: pathlib.Path, remote_archive: upath.UPath) -> File:
+        if not remote_archive.name.endswith(".tar.xz"):
+            raise ValueError("Must pass a .tar.xz")
+        with create_temp_dir(cleanup=True) as temp_dir:
+            tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
+            contents: dict[pathlib.Path, File] = {}
+            for path in walk_files(root):
+                if (root / path).is_file() and not (root / path).is_symlink():
+                    contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
+                    tarball.add(root / path, path)
+            tarball.close()
+            length = pathlib.Path(str(tarball.name)).stat().st_size
+            if isinstance(remote_archive, upath.UPath):
+                remote_archive_path = remote_archive.path
+                # Note that Azure blob storage Python SDK already calls urlquote, so by default, these things get quoted twice!
+                # So we should unquote them here.
+                if remote_archive.fs.__class__.__name__ == "AzureBlobFileSystem":
+                    remote_archive_path = urllib.parse.unquote(remote_archive_path)
+                    url = str(remote_archive).replace("abfs://", "https://wfregtest.blob.core.windows.net/")
+                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive_path)
+            else:
+                remote_archive.parent.mkdir(exist_ok=True, parents=True)
+                shutil.move(tarball.name, remote_archive)
+                url = "file:///" + str(remote_archive)
+        return File("length", 64, length, length, url)
+
 
 class SnakemakeEngine(Engine):
     @contextlib.contextmanager
     def get_executable(
             self,
-            code_dir: Path,
-            log_dir: Path,
-            out_dir: Path,
+            code_dir: pathlib.Path,
+            log_dir: pathlib.Path,
+            out_dir: pathlib.Path,
             n_cores: int,
     ) -> Iterator[Executable]:
         start_time = datetime.datetime.now()
@@ -158,7 +187,7 @@ class SnakemakeEngine(Engine):
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
-    def parse_error(self, log_dir: Path) -> Optional[WorkflowError]:
+    def parse_error(self, log_dir: pathlib.Path) -> Optional[WorkflowError]:
         log_files = list((log_dir / "log").glob("*.snakemake.log"))
         if not log_files:
             return None
@@ -206,9 +235,9 @@ class NextflowEngine(Engine):
     @contextlib.contextmanager
     def get_executable(
             self,
-            code_dir: Path,
-            log_dir: Path,
-            out_dir: Path,
+            code_dir: pathlib.Path,
+            log_dir: pathlib.Path,
+            out_dir: pathlib.Path,
             n_cores: int,
     ) -> Iterator[Executable]:
         start_time = datetime.datetime.now()
@@ -241,7 +270,7 @@ class NextflowEngine(Engine):
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
-    def parse_error(self, log_dir: Path) -> Optional[WorkflowError]:
+    def parse_error(self, log_dir: pathlib.Path) -> Optional[WorkflowError]:
         log_file = log_dir / ".nextflow.log"
         if not log_file.exists():
             return None
@@ -256,7 +285,7 @@ class NextflowError(WorkflowError):
     exit_status: int
     output: str
     error: str
-    work_dir: Path
+    work_dir: pathlib.Path
 
     @staticmethod
     def _strip_indent(string: str, n: int) -> str:
@@ -272,7 +301,7 @@ class NextflowError(WorkflowError):
                 int(match.group(3)),
                 NextflowError._strip_indent(match.group(4), 2),
                 NextflowError._strip_indent(match.group(5), 2),
-                Path(match.group(6)),
+                pathlib.Path(match.group(6)),
             )
         else:
             return None

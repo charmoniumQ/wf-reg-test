@@ -91,18 +91,7 @@ def review_failures(hub: RegistryHub) -> None:
                 assert revision.workflow is not None
                 assert revision.workflow.registry is not None
                 print(revision.workflow.registry.display_name, revision.workflow.display_name, revision.display_name)
-                for path in [Path("stderr.txt"), Path("stdout.txt")]:
-                    if path in execution.logs.contents:
-                        url = execution.logs.contents[path].contents_url
-                        if url and url.startswith("file:///"):
-                            path = Path(url[7:])
-                            cwd = Path().resolve()
-                            if path.is_relative_to(cwd):
-                                print(path.relative_to(cwd))
-                            else:
-                                print(path)
-                        else:
-                            print(url)
+                print(execution.logs.url)
                 input(":")
 
 
@@ -238,28 +227,22 @@ def remove_older_executions(hub: RegistryHub) -> None:
             old_executions.remove(newest_execution)
             revision.executions = [newest_execution]
             for execution in old_executions:
-                for file in [*execution.logs.contents.values(), *execution.outputs.contents.values()]:
-                    urls_to_delete = []
-                    url = file.contents_url
-                    if url is not None:
-                        # If is a path within a tarball, this requires special care
-                        if m := re.match("tar://.*::(.*)", url):
-                            urls_to_delete.append(m.group(1))
-                        else:
-                            urls_to_delete.append(url)
-                for url in set(urls_to_delete):
+                for file in [execution.logs, execution.outputs]:
+                    url = file.url
                     print(f"Delete {url}")
-                    if m := re.match("file://(.*)", url):
-                        Path(m.group(1)).unlink()
-                    elif m := re.match("(abfs://.*)", url):
+                    fs_prefix = "file:///"
+                    azure_prefix = "https://wfregtest.blob.core.windows.net/"
+                    if url is None:
+                        pass
+                    elif url.startswith(azure_prefix):
                         # TODO: handle this based on generic storage
-                        path = upath.UPath(
-                            m.group(1),
+                        upath.UPath(
+                            url[len(azure_prefix):],
                             account_name="wfregtest",
                             credential=AzureCredential(),
-                        )
-                        if path.exists():
-                            path.unlink()
+                        ).unlink()
+                    elif url.startswith(fs_prefix):
+                        Path(url[len(fs_prefix):]).unlink()
                     else:
                         raise NotImplementedError(f"Delete routine not implemented for {url}")
 
@@ -279,31 +262,6 @@ def review() -> None:
 @main.command()
 def verify() -> None:
     serialize(deserialize(index_path), index_path)
-
-
-def migrate_execution(execution: Execution) -> None:
-    if not isinstance(execution.logs, File):
-        url = execution.logs.get_archive()
-        if url:
-            length = http_content_length(url)
-            execution.logs = File("length", 64, length, length, url)
-        else:
-            execution.logs = File("length", 64, 0, 0, "lost")
-    if not isinstance(execution.outputs, File):
-        url = execution.outputs.get_archive()
-        if url:
-            length = http_content_length(url)
-            execution.output = File("length", 64, length, length, url)
-        else:
-            execution.output = File("length", 64, 0, 0, "lost")
-
-
-@main.command()
-def migrate() -> None:
-    hub = deserialize(index_path)
-    for execution in tqdm.tqdm(hub.executions, desc="executions"):
-        migrate_execution(execution)
-    serialize(hub, index_path)
 
 
 main()
