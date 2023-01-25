@@ -147,6 +147,9 @@ class SnakemakeEngine(Engine):
         # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.4.1/ -> ./Snakefile
         # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.8.4/ -> ./workflow/Snakefile
         possible_snakefiles = ["snakefile", "Snakefile", "workflow/snakefile", "workflow/Snakefile"]
+        # This suppresses the "UnboundLocalError: local variable 'snakefile' referenced before assignment"
+        # even though Snakefile will certainly be overwritten before use
+        snakefile = possible_snakefiles[0]
         try:
             snakefile = next(
                 path
@@ -158,6 +161,7 @@ class SnakemakeEngine(Engine):
                 command=["/usr/bin/echo", "Could not find [Ss]nakefile"],
                 cwd=code_dir,
             )
+            return
         yield Executable(
             command=[
                 "snakemake",

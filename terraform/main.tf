@@ -8,6 +8,7 @@ variable "os_disk_size_gb" {
   # Usually can't be smaller than 30
 }
 
+# See https://azureprice.net/
 variable "manager_vm_size" {
   type    = string
   default = "Standard_D2as_v5"
@@ -20,7 +21,7 @@ variable "builder_vm_size" {
 
 variable "workers" {
   type    = number
-  default = 3
+  default = 5
 }
 
 variable "worker_vm_size" {
