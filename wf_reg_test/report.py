@@ -1,18 +1,24 @@
+import collections
 import itertools
+import io
+import base64
 from datetime import datetime, timedelta
 from typing import Callable, Mapping, cast
 
+import matplotlib  # type: ignore
 import domonic as html  # type: ignore
 
 from .html_helpers import (
     collapsed,
     css_rule,
+    heading,
     html_emoji_bool,
     html_link,
     html_table,
+    html_list,
 )
 from .util import sorted_and_dropped, groupby_dict
-from .workflows import Workflow, RegistryHub
+from .workflows import Workflow, RegistryHub, Execution
 
 
 def is_interesting(workflow: Workflow) -> bool:
@@ -31,6 +37,18 @@ def get_stats(hub: RegistryHub) -> html.Element:
         ),
         "N working executions": lambda workflows: sum(
             execution.successful
+            for workflow in workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+        ),
+        "N error executions": lambda workflows: sum(
+            not execution.successful
+            for workflow in workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+        ),
+        "N classified error executions": lambda workflows: sum(
+            (not execution.successful) and execution.workflow_error is not None
             for workflow in workflows
             for revision in workflow.revisions
             for execution in revision.executions
@@ -204,11 +222,13 @@ def report_html(hub: RegistryHub) -> str:
                 ),
             ),
             html.body(
-                html.h1("Stats"),
+                heading("Stats", level=1, anchor=True),
                 get_stats(hub),
+                heading("Errors", level=1, anchor=True),
+                get_errors(hub),
                 # html.h1("Workflows"),
                 # table_by_workflows,
-                html.h1("Executions"),
+                heading("Executions", level=1, anchor=True),
                 table_by_executions,
             ),
         ).__format__("").replace("<!DOCTYPE html>\n", ""),
@@ -216,3 +236,35 @@ def report_html(hub: RegistryHub) -> str:
 
 
 # TODO: put execution resource statistics
+
+
+def fig_to_html(figure: matplotlib.figure.Figure) -> html.Element:
+    buf = io.BytesIO()
+    figure.savefig(buf, format='png')
+    return html.img(src="data:image/png;base64," + base64.b64encode(buf.getvalue()).decode('utf-8'))
+
+def get_errors(hub: RegistryHub) -> html.Element:
+    failed_executions = hub.failed_executions
+    def get_kind(execution: Execution) -> str:
+        workflow_error = execution.workflow_error
+        return workflow_error.kind if workflow_error is not None else "unknown"
+    kind_to_exemplars = groupby_dict(failed_executions, get_kind)
+    counter = collections.Counter([get_kind(execution) for execution in failed_executions])
+    return html.div(
+        html_table(
+            [
+                {
+                    "Error": html.code(kind),
+                    "Count": html.span(str(count)),
+                    "Fraction of all errors": html.span("{:.0f}%".format((count / len(failed_executions)) * 100)),
+                    "Instances": html_list(
+                        [
+                            str(execution)
+                            for execution in kind_to_exemplars[kind]
+                        ]
+                    ),
+                }
+                for (kind, count) in counter.most_common()
+            ],
+        ),
+    )

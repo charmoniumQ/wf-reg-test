@@ -26,7 +26,7 @@ def html_table(
 
 
 def html_list(elements: Sequence[TagLike], ordered: bool = False) -> html.Element:
-    list_factory = html.ol() if ordered else html.ul()
+    list_factory = html.ol if ordered else html.ul
     return list_factory(*[html.li(element) for element in elements])
 
 
@@ -112,3 +112,9 @@ def br_join(lines: Sequence[TagLike]) -> html.Element:
 
 def small(text: str) -> html.Element:
     return html.span(text, _style=css_attribute(font_size="8pt"))
+
+
+def heading(text: str, level: int, anchor: bool = True) -> html.Element:
+    tag = {1: html.h1, 2: html.h2, 3: html.h3, 4: html.h4, 5: html.h5, 6: html.h6}[level]
+    slug = text.lower().replace(" ", "-")
+    return tag(html_link(text, "#" + slug), id=slug)

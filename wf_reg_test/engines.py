@@ -349,7 +349,7 @@ class NextflowCommandError(WorkflowError):
             return NextflowCommandError(
                 "CalledProcessError",
                 match.group(1),
-                NextflowCommandError._strip_indent(match.group(2), 2),
+                NextflowCommandError._strip_indent(match.group(2), 2).strip(),
                 int(match.group(3)),
                 NextflowCommandError._strip_indent(match.group(4), 2),
                 NextflowCommandError._strip_indent(match.group(5), 2),
@@ -358,7 +358,7 @@ class NextflowCommandError(WorkflowError):
         else:
             return None
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("Caused by:\n  Process `(.*)` terminated.*\n\nCommand executed:\n(.*)\n\nCommand exit status:\n  (\\d*)\n\nCommand output:\n(.*)\n\nCommand error:\n(.*)\n\nWork dir:\n  (.*)\n", re.MULTILINE | re.DOTALL)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("Caused by:\n  Process `(.*)` terminated.*\n\nCommand executed:\n([\\s\\S]*)\n\nCommand exit status:\n  (\\d*)\n\nCommand output:\n([\\s\\S]*)\n\nCommand error:\n([\\s\\S]*)\n\nWork dir:\n  (.*)\n", re.MULTILINE)
 
 
 @dataclasses.dataclass
@@ -366,7 +366,7 @@ class NextflowJavaError(WorkflowError):
     msg: str
     rest: str
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*Exception): (.*)\n(.*)")
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception): (.*)\n(.*)")
 
     @staticmethod
     def _from_text(string: str) -> Optional[NextflowJavaError]:

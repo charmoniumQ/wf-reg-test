@@ -205,6 +205,7 @@ def report() -> None:
     hub = deserialize(index_path)
     (html_path / "result.html").write_text(report_html(hub))
     (html_path / "404.html").write_text(Path("docs/404.html").read_text())
+    print("    az storage blob update --container-name '$web' --name result.html --account-name wfregtest --content-type text/html")
 
 
 @main.command()
