@@ -29,11 +29,38 @@ def get_stats(hub: RegistryHub) -> html.Element:
     engine2workflows = groupby_dict(hub.workflows, lambda workflow: workflow.engine)
     stats: Mapping[str, Callable[[list[Workflow]], int]] = {
         "N workflows": lambda workflows: len(workflows),
+        "revisions/workflows": lambda workflows: "{:.1f}".format(
+            sum(len(workflow.revisions) for workflow in workflows)
+            / len(workflows)
+        ),
         "N revisions": lambda workflows: sum(len(workflow.revisions) for workflow in workflows),
+        "executions/revision": lambda workflows: "{:.0f}%".format(
+            100*
+            sum(
+                len(revision.executions)
+                for workflow in workflows
+                for revision in workflow.revisions
+            )
+            / sum(len(workflow.revisions) for workflow in workflows)
+        ),
         "N executions": lambda workflows: sum(
             len(revision.executions)
             for workflow in workflows
             for revision in workflow.revisions
+        ),
+        "working executions / executions": lambda workflows: "{:.0f}%".format(
+            100
+            * sum(
+                execution.successful
+                for workflow in workflows
+                for revision in workflow.revisions
+                for execution in revision.executions
+            )
+            / sum(
+                len(revision.executions)
+                for workflow in workflows
+                for revision in workflow.revisions
+            )
         ),
         "N working executions": lambda workflows: sum(
             execution.successful
@@ -41,11 +68,40 @@ def get_stats(hub: RegistryHub) -> html.Element:
             for revision in workflow.revisions
             for execution in revision.executions
         ),
+        "error executions / executions": lambda workflows: "{:.0f}%".format(
+            100
+            * sum(
+                not execution.successful
+                for workflow in workflows
+                for revision in workflow.revisions
+                for execution in revision.executions
+            )
+            / sum(
+                len(revision.executions)
+                for workflow in workflows
+                for revision in workflow.revisions
+            )
+        ),
         "N error executions": lambda workflows: sum(
             not execution.successful
             for workflow in workflows
             for revision in workflow.revisions
             for execution in revision.executions
+        ),
+        "classified error executions / error executions": lambda workflows: "{:.0f}%".format(
+            100
+            * sum(
+                (not execution.successful) and execution.workflow_error is not None
+                for workflow in workflows
+                for revision in workflow.revisions
+                for execution in revision.executions
+            )
+            / sum(
+                not execution.successful
+                for workflow in workflows
+                for revision in workflow.revisions
+                for execution in revision.executions
+            )
         ),
         "N classified error executions": lambda workflows: sum(
             (not execution.successful) and execution.workflow_error is not None
@@ -53,18 +109,18 @@ def get_stats(hub: RegistryHub) -> html.Element:
             for revision in workflow.revisions
             for execution in revision.executions
         ),
-        "N interesting workflows": lambda workflows: sum(
-            1 for workflow in workflows if is_interesting(workflow)
-        ),
-        "N revisions of interesting workflows": lambda workflows: sum(
-            len(workflow.revisions) for workflow in workflows if is_interesting(workflow)
-        ),
-        "N executions of interesting workflows": lambda workflows: sum(
-            len(revision.executions)
-            for workflow in workflows
-            if is_interesting(workflow)
-            for revision in workflow.revisions
-        ),
+        # "N interesting workflows": lambda workflows: sum(
+        #     1 for workflow in workflows if is_interesting(workflow)
+        # ),
+        # "N revisions of interesting workflows": lambda workflows: sum(
+        #     len(workflow.revisions) for workflow in workflows if is_interesting(workflow)
+        # ),
+        # "N executions of interesting workflows": lambda workflows: sum(
+        #     len(revision.executions)
+        #     for workflow in workflows
+        #     if is_interesting(workflow)
+        #     for revision in workflow.revisions
+        # ),
     }
     engines = engine2workflows.keys()
     return html_table(

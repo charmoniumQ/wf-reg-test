@@ -19,7 +19,6 @@ import tqdm
 import upath
 
 from .serialization import serialize, deserialize
-from .report import report_html
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution, File
 from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential, http_content_length
@@ -202,21 +201,27 @@ def retest(max_executions: int, engine: str) -> None:
 @main.command()
 @ch_time_block.decor()
 def report() -> None:
+    from .report import report_html
     import azure.storage.blob
+    import azure.identity
     hub = deserialize(index_path)
-    (html_path / "result.html").write_text(report_html(hub))
-    (html_path / "404.html").write_text(Path("docs/404.html").read_text())
-
-    azure.storage.blob.BlobClient(
-        html_path._kwargs["account_url"],
-        html_path._url.netloc,
-        "result.html",
-        credential=html_path._kwargs["credential"],
-    ).set_http_headers(
-        content_settings=azure.storage.blob.ContentSettings(
-            content_type="text/html",
-        ),
-    )
+    report_text = ch_time_block.decor()(report_html)(hub)
+    with ch_time_block.ctx("Upload result"):
+        if html_path._url.scheme == "abfs":
+            azure.storage.blob.BlobClient(
+                account_url=f"https://{html_path._kwargs['account_name']}.blob.core.windows.net",
+                container_name=html_path._url.netloc,
+                blob_name="result.html",
+                # Note that this should be synchronous not AIO like html_path._kwargs["credential"]
+                credential=azure.identity.DefaultAzureCredential(),
+            ).upload_blob(
+                report_text,
+                content_settings=azure.storage.blob.ContentSettings(
+                    content_type="text/html",
+                ),
+            )
+        else:
+            (html_path / "result.html").write_text(report_text)
 
 
 @main.command()
