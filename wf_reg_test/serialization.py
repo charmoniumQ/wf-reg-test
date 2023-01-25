@@ -1,4 +1,5 @@
 from datetime import datetime as DateTime
+import dataclasses
 import pickle
 import shutil
 import sys
@@ -105,6 +106,7 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
                 "wf_reg_test_revision": execution.wf_reg_test_revision,
                 "revision": revision.display_name,
                 "workflow": workflow.display_name,
+                "workflow_error": execution.workflow_error,
             }
             for workflow in registry.workflows
             for revision in workflow.revisions
@@ -201,6 +203,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
                 status_code=execution_dict["status_code"],
                 revision=revision,
                 wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", get_current_revision()),
+                workflow_error=execution_dict.get("workflow_error", None),
             )
             revision.executions.append(execution)
 

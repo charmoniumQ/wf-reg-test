@@ -261,7 +261,47 @@ def review() -> None:
 
 @main.command()
 def verify() -> None:
-    serialize(deserialize(index_path), index_path)
+    hub = deserialize(index_path)
+    serialize(hub, index_path)
+
+
+@main.command()
+def classify_errors() -> None:
+    import tarfile
+    import urllib
+    import shutil
+
+    from .engines import engines
+    from .serialization import serialize, deserialize
+    from .util import create_temp_dir, http_download_with_cache
+
+    hub = deserialize(index_path)
+    failed_executions = [
+        execution
+        for execution in hub.failed_executions
+        if execution.workflow_error is None and execution.logs.url is not None
+    ]
+    random.seed(1)
+    random.shuffle(failed_executions)
+    cache_path = Path(".cache")
+    cache_path.mkdir(exist_ok=True)
+    for execution in tqdm.tqdm(failed_executions, desc="executions"):
+        url = execution.logs.url
+        assert url
+        url = str(url)
+        with create_temp_dir() as temp_dir:
+            tarball_path = temp_dir / "archive.tar.xz"
+            http_download_with_cache(url, tarball_path, cache_path)
+            with tarfile.open(str(tarball_path), mode="r:xz") as tarball:
+                tarball.extractall(str(temp_dir))
+            revision = execution.revision
+            assert revision is not None
+            workflow = revision.workflow
+            assert workflow is not None
+            execution.workflow_error = engines[workflow.engine].parse_error(temp_dir)
+        if execution.workflow_error is None:
+            print("Unparsed error for", execution)
+        serialize(hub, index_path)
 
 
 main()

@@ -6,6 +6,7 @@ import random
 import datetime
 import dataclasses
 import contextlib
+import os
 import random
 import functools
 import subprocess
@@ -21,6 +22,7 @@ import xml.etree.ElementTree
 import azure.identity.aio
 import xxhash
 import toolz
+import tqdm
 
 
 _T = TypeVar("_T")
@@ -48,6 +50,7 @@ def create_temp_dir(cleanup: bool = True) -> Generator[Path, None, None]:
     finally:
         if cleanup:
             shutil.rmtree(temp_dir)
+            os.sync()
 
 
 def random_str(
@@ -281,3 +284,22 @@ def http_content_length(url: str) -> int:
     with urllib.request.urlopen(req) as response:
         return int(response.getheader("Content-Length"))
         
+
+chunk_size = 1024 * 16
+
+
+def http_get_with_progress(url: str, path: Path) -> None:
+    response = urllib.request.urlopen(url)
+    total = http_content_length(url)
+    bar: tqdm.tqdm[None] = tqdm.tqdm(total=total, unit="b", unit_scale=True)
+    with urllib.request.urlopen(url) as src_fobj, path.open("wb") as dst_fobj:
+        for i in range(total // chunk_size + 1):
+            dst_fobj.write(src_fobj.read(chunk_size))
+            bar.update(chunk_size)
+
+
+def http_download_with_cache(url: str, dest_path: Path, cache_path: Path) -> None:
+    cache_dest_path = cache_path / urllib.parse.quote(url, safe="")
+    if not cache_dest_path.exists():
+        http_get_with_progress(url, cache_dest_path)
+    shutil.copy(cache_dest_path, dest_path)

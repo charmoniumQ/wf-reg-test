@@ -17,7 +17,7 @@ import urllib
 import warnings
 from typing_extensions import Protocol
 from datetime import datetime as DateTime, timedelta as TimeDelta
-from typing import Any, Callable, Mapping, Optional, TypeVar, cast, ContextManager, Iterator
+from typing import Any, Callable, ClassVar, Mapping, Optional, TypeVar, cast, ContextManager, Iterator
 
 import charmonium.time_block as ch_time_block
 import yaml
@@ -40,6 +40,12 @@ class Engine:
             out_dir: pathlib.Path,
             n_cores: int,
     ) -> ContextManager[Executable]:
+        raise NotImplementedError
+
+    def parse_error(
+            self,
+            log_dir: pathlib.Path,
+    ) -> Optional[WorkflowError]:
         raise NotImplementedError
 
 
@@ -84,6 +90,7 @@ class Engine:
                     "resources": resources,
                 }))
             run_path = storage / fs_escape(revision.workflow.display_name) / random_str(8)
+            workflow_error = self.parse_error(log_dir)
             outputs = self.create_in_storage(out_dir, run_path / "output.tar.xz")
             logs = self.create_in_storage(log_dir, run_path / "logs.tar.xz")
         return Execution(
@@ -94,6 +101,7 @@ class Engine:
             condition=condition,
             resources=resources,
             status_code=proc.returncode,
+            workflow_error=workflow_error,
             revision=None,
         )
 
@@ -188,14 +196,20 @@ class SnakemakeEngine(Engine):
                 shutil.move(code_dir / fil, out_dir / fil)
 
     def parse_error(self, log_dir: pathlib.Path) -> Optional[WorkflowError]:
-        log_files = list((log_dir / "log").glob("*.snakemake.log"))
+        log_files = list((log_dir / ".snakemake/log").glob("*.snakemake.log"))
         if not log_files:
             return None
         logs = max(log_files).read_text()
         err: Optional[WorkflowError]
-        if err := SnakemakePythonError._from_text(logs):
+        if False:
+            pass
+        elif err := SnakemakePythonError._from_text(logs):
+            return err
+        elif err := SnakemakeRuleError._from_text(logs):
             return err
         elif err := SnakemakeWorkflowError._from_text(logs):
+            return err
+        elif err := SnakemakeInternalError._from_text((log_dir / "stderr.txt").read_text()):
             return err
         else:
             return None
@@ -206,7 +220,7 @@ class SnakemakePythonError(WorkflowError):
     line_no: int
     file: str
     rest: str
-    _pattern = re.compile("(.*Exception) in line (\\d*) of (.*):([\\s\\S]*)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in line (\\d*) of (.*):([\\s\\S]*)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakePythonError]:
@@ -219,14 +233,42 @@ class SnakemakePythonError(WorkflowError):
 
 
 @dataclasses.dataclass
+class SnakemakeRuleError(WorkflowError):
+    rule: str
+    file: str
+    rest: str
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) of (.*):\n([\\s\\S]*)", re.MULTILINE)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[SnakemakeRuleError]:
+        if match := SnakemakeRuleError._pattern.search(string):
+            return SnakemakeRuleError(match.group(1), match.group(2), match.group(3), match.group(4))
+        else:
+            return None
+
+
+@dataclasses.dataclass
 class SnakemakeWorkflowError(WorkflowError):
     rest: str
-    _pattern = re.compile("WorkflowError: ([\\s\\S]*)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("WorkflowError:(.*)", re.MULTILINE | re.DOTALL)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeWorkflowError]:
         if match := SnakemakeWorkflowError._pattern.search(string):
-            return SnakemakeWorkflowError("WorkflowError", match.group(1))
+            return SnakemakeWorkflowError("SnakemakeError", match.group(1))
+        else:
+            return None
+
+
+@dataclasses.dataclass
+class SnakemakeInternalError(WorkflowError):
+    rest: str
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("Traceback \\(most recent call last\\):\n(.*)", re.MULTILINE | re.DOTALL)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[SnakemakeInternalError]:
+        if match := SnakemakeInternalError._pattern.search(string):
+            return SnakemakeInternalError("SnakemakeInternalError", match.group(1))
         else:
             return None
 
@@ -275,11 +317,21 @@ class NextflowEngine(Engine):
         if not log_file.exists():
             return None
         log = log_file.read_text()
-        return NextflowError._from_text(log)
+        err: Optional[WorkflowError]
+        if err := NextflowCommandError._from_text(log):
+            return err
+        elif err := NextflowJavaError._from_text(log):
+            return err
+        elif err := NextflowMiscError._from_text(log):
+            return err
+        elif err := NextflowSigterm._from_text(log):
+            return err
+        else:
+            return None
 
 
 @dataclasses.dataclass
-class NextflowError(WorkflowError):
+class NextflowCommandError(WorkflowError):
     process: str
     command_executed: str
     exit_status: int
@@ -292,38 +344,68 @@ class NextflowError(WorkflowError):
         return "\n".join(line[n:] for line in string.split("\n"))
 
     @staticmethod
-    def _from_text(string: str) -> Optional[NextflowError]:
-        if match := NextflowError._pattern.search(string):
-            return NextflowError(
-                "CommandError",
+    def _from_text(string: str) -> Optional[NextflowCommandError]:
+        if match := NextflowCommandError._pattern.search(string):
+            return NextflowCommandError(
+                "CalledProcessError",
                 match.group(1),
-                NextflowError._strip_indent(match.group(2), 2),
+                NextflowCommandError._strip_indent(match.group(2), 2),
                 int(match.group(3)),
-                NextflowError._strip_indent(match.group(4), 2),
-                NextflowError._strip_indent(match.group(5), 2),
+                NextflowCommandError._strip_indent(match.group(4), 2),
+                NextflowCommandError._strip_indent(match.group(5), 2),
                 pathlib.Path(match.group(6)),
             )
         else:
             return None
 
-    _pattern = re.compile("""Caused by:
-  Process `(.*)` terminated.*
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("Caused by:\n  Process `(.*)` terminated.*\n\nCommand executed:\n(.*)\n\nCommand exit status:\n  (\\d*)\n\nCommand output:\n(.*)\n\nCommand error:\n(.*)\n\nWork dir:\n  (.*)\n", re.MULTILINE | re.DOTALL)
 
-Command executed:
-(.*)
 
-Command exit status:
-  (\\d*)
+@dataclasses.dataclass
+class NextflowJavaError(WorkflowError):
+    msg: str
+    rest: str
 
-Command output:
-(.*)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*Exception): (.*)\n(.*)")
 
-Command error:
-(.*)
+    @staticmethod
+    def _from_text(string: str) -> Optional[NextflowJavaError]:
+        if match := NextflowJavaError._pattern.search(string):
+            return NextflowJavaError(match.group(1), match.group(2), match.group(3))
+        else:
+            return None
 
-Work dir:
-  (.*)
-""", re.MULTILINE)
+
+@dataclasses.dataclass
+class NextflowMiscError(WorkflowError):
+    date: str
+    process: str
+    class_: str
+    rest: str
+
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("^([A-Z][a-z][a-z]-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d) \\[(.*)\\] ERROR (.*) - (.*)$", re.MULTILINE)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[NextflowMiscError]:
+        if match := NextflowMiscError._pattern.search(string):
+            return NextflowMiscError("NextflowMiscError", match.group(1), match.group(2), match.group(3), match.group(4))
+        else:
+            return None
+
+
+@dataclasses.dataclass
+class NextflowSigterm(WorkflowError):
+    date: str
+
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("^([A-Z][a-z][a-z]-\\d\\d \\d\\d:\\d\\d:\\d\\d.\\d\\d\\d) \\[SIGTERM handler\\]", re.MULTILINE)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[NextflowSigterm]:
+        if match := NextflowSigterm._pattern.search(string):
+            return NextflowSigterm("Sigterm", match.group(1))
+        else:
+            return None
+
 
 engines = {
     "snakemake": SnakemakeEngine(),
