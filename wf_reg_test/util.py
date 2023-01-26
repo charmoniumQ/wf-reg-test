@@ -131,11 +131,11 @@ def sorted_and_dropped(inp: Iterable[tuple[_T, _V]], reverse: bool = False) -> l
     return [y for x, y in sorted(inp, reverse=reverse)]
 
 
-def groupby_dict(data: Iterable[_T], key: Callable[[_T], _V]) -> Mapping[_V, list[_T]]:
-    return {
-        key: list(group)
-        for key, group in itertools.groupby(data, key)
-    }
+def groupby_dict(data: Iterable[_T], key_func: Callable[[_T], _V]) -> Mapping[_V, list[_T]]:
+    ret: dict[_V, list[_T]] = {}
+    for key, group in itertools.groupby(data, key_func):
+        ret.setdefault(key, []).extend(group)
+    return ret
 
 
 def non_unique(
@@ -291,8 +291,11 @@ chunk_size = 1024 * 16
 def http_get_with_progress(url: str, path: Path) -> None:
     response = urllib.request.urlopen(url)
     total = http_content_length(url)
-    bar: tqdm.tqdm[None] = tqdm.tqdm(total=total, unit="b", unit_scale=True)
-    with urllib.request.urlopen(url) as src_fobj, path.open("wb") as dst_fobj:
+    with (
+            urllib.request.urlopen(url) as src_fobj,
+            path.open("wb") as dst_fobj,
+            tqdm.tqdm(total=total, unit="b", unit_scale=True) as bar
+    ):
         for i in range(total // chunk_size + 1):
             dst_fobj.write(src_fobj.read(chunk_size))
             bar.update(chunk_size)

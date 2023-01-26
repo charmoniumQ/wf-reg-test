@@ -206,17 +206,19 @@ def report() -> None:
     import azure.identity
     hub = deserialize(index_path)
     report_text = ch_time_block.decor()(report_html)(hub)
-    with ch_time_block.ctx("Upload result"):
+    with ch_time_block.ctx("upload_result"):
         if html_path._url.scheme == "abfs":
+            account_name: str = html_path._kwargs['account_name']  # type: ignore
             azure.storage.blob.BlobClient(
-                account_url=f"https://{html_path._kwargs['account_name']}.blob.core.windows.net",
+                account_url=f"https://{account_name}.blob.core.windows.net",
                 container_name=html_path._url.netloc,
                 blob_name="result.html",
                 # Note that this should be synchronous not AIO like html_path._kwargs["credential"]
                 credential=azure.identity.DefaultAzureCredential(),
             ).upload_blob(
                 report_text,
-                content_settings=azure.storage.blob.ContentSettings(
+                overwrite=True,
+                content_settings=azure.storage.blob.ContentSettings(  # type: ignore
                     content_type="text/html",
                 ),
             )

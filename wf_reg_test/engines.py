@@ -224,7 +224,7 @@ class SnakemakePythonError(WorkflowError):
     line_no: int
     file: str
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in line (\\d*) of (.*):([\\s\\S]*)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in line (\\d*) of (.*):([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakePythonError]:
@@ -241,7 +241,7 @@ class SnakemakeRuleError(WorkflowError):
     rule: str
     file: str
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) of (.*):\n([\\s\\S]*)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) of (.*):\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeRuleError]:
@@ -267,7 +267,7 @@ class SnakemakeWorkflowError(WorkflowError):
 @dataclasses.dataclass
 class SnakemakeInternalError(WorkflowError):
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("Traceback \\(most recent call last\\):\n(.*)", re.MULTILINE | re.DOTALL)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("Traceback \\(most recent call last\\):\n(.*)(?:\\Z|\n\n)", re.MULTILINE | re.DOTALL)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeInternalError]:
@@ -370,7 +370,7 @@ class NextflowJavaError(WorkflowError):
     msg: str
     rest: str
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception): (.*)\n(.*)")
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception): (.*)\n(.*)(?:\\Z|\n\n)")
 
     @staticmethod
     def _from_text(string: str) -> Optional[NextflowJavaError]:

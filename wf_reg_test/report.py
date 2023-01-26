@@ -2,8 +2,9 @@ import collections
 import itertools
 import io
 import base64
+import yaml
 from datetime import datetime, timedelta
-from typing import Callable, Mapping, cast
+from typing import Callable, Mapping, cast, Union
 
 import matplotlib  # type: ignore
 import domonic as html  # type: ignore
@@ -27,14 +28,14 @@ def is_interesting(workflow: Workflow) -> bool:
 
 def get_stats(hub: RegistryHub) -> html.Element:
     engine2workflows = groupby_dict(hub.workflows, lambda workflow: workflow.engine)
-    stats: Mapping[str, Callable[[list[Workflow]], int]] = {
+    stats: Mapping[str, Callable[[list[Workflow]], Union[str, int]]] = {
         "N workflows": lambda workflows: len(workflows),
-        "revisions/workflows": lambda workflows: "{:.1f}".format(
+        "revisions / workflows": lambda workflows: "{:.1f}".format(
             sum(len(workflow.revisions) for workflow in workflows)
             / len(workflows)
         ),
         "N revisions": lambda workflows: sum(len(workflow.revisions) for workflow in workflows),
-        "executions/revision": lambda workflows: "{:.0f}%".format(
+        "executions / revision": lambda workflows: "{:.0f}%".format(
             100*
             sum(
                 len(revision.executions)
@@ -207,16 +208,23 @@ def report_html(hub: RegistryHub) -> str:
                     execution.datetime - revision.datetime,
                     {
                         "Workflow": html_link(workflow.display_name, workflow.url),
-                        "Engine": workflow.engine,
                         "Revision": html_link(revision.display_name, revision.url),
-                        "Revision date": html_date(revision.datetime),
-                        "Execution date": html_datetime(execution.datetime),
+                        "Engine": workflow.engine,
                         "Staleness": html_timedelta(
                             execution.datetime - revision.datetime,
                             unit="days",
                             digits=0,
                         ),
-                        "Success": html_emoji_bool(execution.status_code == 0),
+                        # "Revision date": html_date(revision.datetime),
+                        "Execution date": html_date(execution.datetime),
+                        "Success": (
+                            html_emoji_bool(True)
+                            if execution.workflow_error is None else
+                            html.div(
+                                html.p(html_emoji_bool(False)),
+                                html.p(collapsed("show error", html.code(html.pre(yaml.dump(execution.workflow_error, default_flow_style=False))))),
+                            )
+                        ),
                         "Logs": html_link(
                             "empty" if execution.logs.empty else f"{execution.logs.size / 2**30:.3f}GiB",
                             str(execution.logs.url),
@@ -234,7 +242,7 @@ def report_html(hub: RegistryHub) -> str:
                         "Wall Time": html_timedelta(
                             execution.resources.wall_time, unit="seconds", digits=1
                         ),
-                        "Machine": execution.machine.short_description if execution.machine else "",
+                        # "Machine": execution.machine.short_description if execution.machine else "",
                         # "Reproducible": html_emoji_bool(True),
                     },
                 )
@@ -313,11 +321,12 @@ def get_errors(hub: RegistryHub) -> html.Element:
                     "Error": html.code(kind),
                     "Count": html.span(str(count)),
                     "Fraction of all errors": html.span("{:.0f}%".format((count / len(failed_executions)) * 100)),
-                    "Instances": html_list(
-                        [
-                            str(execution)
+                    "Instances": collapsed(
+                        "See individual instances",
+                        html_list(
+                            html_link(str(execution), "#" + str(id(execution)))
                             for execution in kind_to_exemplars[kind]
-                        ]
+                        ),
                     ),
                 }
                 for (kind, count) in counter.most_common()

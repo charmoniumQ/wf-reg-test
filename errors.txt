@@ -134,3 +134,15 @@ friendsofstrandseq/ashleys-qc-pipeline1.0
             .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.mdup.2.fastq.gz
             sandbox.zenodo.org/record/1074721/files/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
             .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.mdup.1.fastq.gz
+
+----
+Errors to retry:
+isinstance(error, NextflowCommandError) and "doesn't exist in" in error.error
+hasattr(error, "rest") and "o space left on device" in rest in error.rest
+
+Snakemake install errors:
+hasattr(error, "rest") and "nstall" in error.rest
+
+Missing data errors:
+hasattr(error, "rest") and "o samples found" in error.rest or "issing input" in error.rest
+error.kind in {"FileNotFoundError", "MissingInputException"}
