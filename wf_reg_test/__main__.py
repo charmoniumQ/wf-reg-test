@@ -22,7 +22,7 @@ import upath
 from .serialization import serialize, deserialize
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution, File
-from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential, http_content_length
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential, http_content_length, upath_to_url
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
@@ -77,11 +77,15 @@ def what_to_execute(
 
 
 def check_nodes_are_owned(hub: RegistryHub) -> None:
-    [
-        {execution.logs, execution.outputs}
+    known_files = set(itertools.chain.from_iterable(
+        (execution.logs, execution.outputs)
         for execution in hub.executions
-    ]
-    pass
+    ))
+    all_files = set(storage.glob("**"))
+    for orphaned_file in all_files - known_files:
+        print(f"Remove {orphaned_file}? Y/n")
+        if input().lower()[0] == "y":
+            orphaned_file.unlink()
 
 
 storage = upath.UPath(
@@ -198,7 +202,7 @@ def report() -> None:
     report_text = ch_time_block.decor()(report_html)(hub)
     with ch_time_block.ctx("upload_result"):
         if html_path._url.scheme == "abfs":
-            account_name: str = html_path._kwargs['account_name']  # type: ignore
+            account_name: str = html_path._kwargs['account_name']
             azure.storage.blob.BlobClient(
                 account_url=f"https://{account_name}.blob.core.windows.net",
                 container_name=html_path._url.netloc,
@@ -238,23 +242,8 @@ def remove_older_executions(hub: RegistryHub) -> None:
             for execution in old_executions:
                 for file in [execution.logs, execution.outputs]:
                     url = file.url
-                    print(f"Delete {url}")
-                    fs_prefix = "file:///"
-                    azure_prefix = "https://wfregtest.blob.core.windows.net/"
-                    if url is None:
-                        pass
-                    elif url.startswith(azure_prefix):
-                        # TODO: handle this based on generic storage
-                        # See wf_reg_test.engines.create_in_storage for why this URL needs to be unquoted
-                        upath.UPath(
-                            urllib.parse.unquote(url[len(azure_prefix):]),
-                            account_name="wfregtest",
-                            credential=AzureCredential(),
-                        ).unlink()
-                    elif url.startswith(fs_prefix):
-                        Path(url[len(fs_prefix):]).unlink()
-                    else:
-                        raise NotImplementedError(f"Delete routine not implemented for {url}")
+                    if url:
+                        url.unlink()
 
 
 @main.command()
@@ -296,12 +285,10 @@ def classify_errors(url_part: str) -> None:
     cache_path = Path(".cache")
     cache_path.mkdir(exist_ok=True)
     for execution in tqdm.tqdm(failed_executions, desc="executions"):
-        url = execution.logs.url
-        assert url
-        url = str(url)
+        strurl = upath_to_url(execution.logs.url)
         with create_temp_dir() as temp_dir:
             tarball_path = temp_dir / "archive.tar.xz"
-            http_download_with_cache(url, tarball_path, cache_path)
+            http_download_with_cache(strurl, tarball_path, cache_path)
             with tarfile.open(str(tarball_path), mode="r:xz") as tarball:
                 tarball.extractall(str(temp_dir))
             revision = execution.revision
@@ -313,6 +300,40 @@ def classify_errors(url_part: str) -> None:
         if execution.workflow_error is None:
             print("Unparsed error for", execution)
         serialize(hub, index_path)
+
+
+@main.command()
+def migrate_paths() -> None:
+    hub = deserialize(index_path)
+    files_to_find = list(itertools.chain.from_iterable([
+        [execution.outputs, execution.logs]
+        for execution in hub.executions
+    ]))
+    files_to_find = [
+        file
+        for file in files_to_find
+        if isinstance(file.url, str)
+    ]
+    for file in tqdm.tqdm(files_to_find, desc="files"):
+        if file.url == "lost":
+            file.url = None
+            continue
+        candidates = [
+            "abfs://" + file.url.replace("https://wfregtest.blob.core.windows.net/", ""),
+            "abfs://" + urllib.parse.unquote(file.url.replace("https://wfregtest.blob.core.windows.net/", "")),
+        ]
+        for candidate in candidates:
+            path = upath.UPath(
+                candidate,
+                account_name="wfregtest",
+                credential=AzureCredential(),
+            )
+            if path.exists():
+                file.url = path
+                break
+        else:
+            print("Manually handle", file.url)
+    serialize(hub, index_path)
 
 
 main()

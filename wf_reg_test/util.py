@@ -1,7 +1,6 @@
 from __future__ import annotations
 import random
 import string
-from pathlib import Path
 import random
 import datetime
 import dataclasses
@@ -11,8 +10,8 @@ import random
 import functools
 import subprocess
 import tempfile
-from pathlib import Path
 import pprint
+from pathlib import Path
 from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional, Generic
 import urllib.parse
 import itertools
@@ -23,6 +22,7 @@ import azure.identity.aio
 import xxhash
 import toolz
 import tqdm
+import upath
 
 
 _T = TypeVar("_T")
@@ -306,3 +306,18 @@ def http_download_with_cache(url: str, dest_path: Path, cache_path: Path) -> Non
     if not cache_dest_path.exists():
         http_get_with_progress(url, cache_dest_path)
     shutil.copy(cache_dest_path, dest_path)
+
+
+def upath_to_url(url: Optional[Path]) -> str:
+    if url is None:
+        return "http://github.com/404"
+    elif isinstance(url, upath.implementations.cloud.AzurePath):
+        return f"https://{url._kwargs['account_name']}.blob.core.windows.net/{urllib.parse.quote(url.path[1:], safe='')}"
+    elif isinstance(url, Path):
+        if url.is_absolute():
+            return "file:///{url!s}"
+        else:
+            return "file://{url!s}"
+    else:
+        return str(url)
+

@@ -122,19 +122,9 @@ class Engine:
                 cwd=root,
             )
             length = local_archive.stat().st_size
-            if isinstance(remote_archive, upath.UPath):
-                remote_archive_path = remote_archive.path
-                # Note that Azure blob storage Python SDK already calls urlquote, so by default, these things get quoted twice!
-                # So we should unquote them here.
-                if remote_archive.fs.__class__.__name__ == "AzureBlobFileSystem":
-                    remote_archive_path = urllib.parse.unquote(remote_archive_path)
-                    url = str(remote_archive).replace("abfs://", "https://wfregtest.blob.core.windows.net/")
-                remote_archive.fs.put_file(local_archive, remote_archive._url.netloc + remote_archive_path)
-            else:
-                remote_archive.parent.mkdir(exist_ok=True, parents=True)
-                shutil.move(local_archive, remote_archive)
-                url = "file:///" + str(remote_archive)
-        return File("length", 64, length, length, url)
+            with local_archive.open("rb") as src_fileobj, remote_archive.open("wb") as dst_fileobj:
+                shutil.copyfileobj(src_fileobj, dst_fileobj)
+            return File.create(local_archive, remote_archive)
 
 
 class SnakemakeEngine(Engine):
@@ -225,7 +215,7 @@ class SnakemakeEngine(Engine):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class SnakemakePythonError(WorkflowError):
     line_no: int
     file: str
@@ -242,7 +232,7 @@ class SnakemakePythonError(WorkflowError):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class SnakemakeRuleError(WorkflowError):
     rule: str
     file: str
@@ -257,7 +247,7 @@ class SnakemakeRuleError(WorkflowError):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class SnakemakeWorkflowError(WorkflowError):
     rest: str
     _pattern: ClassVar[re.Pattern[str]] = re.compile("WorkflowError:(.*)", re.MULTILINE | re.DOTALL)
@@ -270,7 +260,7 @@ class SnakemakeWorkflowError(WorkflowError):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class SnakemakeInternalError(WorkflowError):
     rest: str
     _pattern: ClassVar[re.Pattern[str]] = re.compile("Traceback \\(most recent call last\\):\n(.*)(?:\\Z|\n\n)", re.MULTILINE | re.DOTALL)
@@ -283,7 +273,7 @@ class SnakemakeInternalError(WorkflowError):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class SnakemakeInternalError2(WorkflowError):
     msg: str
 
@@ -353,7 +343,7 @@ class NextflowEngine(Engine):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class NextflowCommandError(WorkflowError):
     process: str
     command_executed: str
@@ -384,7 +374,7 @@ class NextflowCommandError(WorkflowError):
     _pattern: ClassVar[re.Pattern[str]] = re.compile("Caused by:\n  Process `(.*)` terminated.*\n\nCommand executed:\n([\\s\\S]*)\n\nCommand exit status:\n  (\\d*)\n\nCommand output:\n([\\s\\S]*)\n\nCommand error:\n([\\s\\S]*)\n\nWork dir:\n  (.*)\n", re.MULTILINE)
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class NextflowJavaError(WorkflowError):
     msg: str
     rest: str
@@ -399,7 +389,7 @@ class NextflowJavaError(WorkflowError):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class NextflowMiscError(WorkflowError):
     date: str
     process: str
@@ -416,7 +406,7 @@ class NextflowMiscError(WorkflowError):
             return None
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class NextflowSigterm(WorkflowError):
     date: str
 

@@ -3,7 +3,7 @@ from __future__ import annotations
 import shutil
 from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
-from pathlib import Path
+import pathlib
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 import urllib.parse
 
@@ -175,7 +175,7 @@ class Revision:
                 self.executions.append(execution)
 
 
-@dataclasses.dataclass
+@dataclasses.dataclass(frozen=True)
 class WorkflowError:
     kind: str
 
@@ -290,10 +290,10 @@ class File:
     hash_bits: int
     hash_val: int
     size: int
-    url: Optional[str] = dataclasses.field(compare=False, hash=False)
+    url: Optional[pathlib.Path]
 
     @staticmethod
-    def create(path: Path, url: Optional[str] = None) -> File:
+    def create(path: pathlib.Path, url: Optional[upath.UPath] = None) -> File:
         if not path.is_file() or path.is_symlink():
             raise ValueError(f"{path} is not a regular file")
         return File(
@@ -301,7 +301,7 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
-            url=f"file://{path.resolve()!s}" if url is None else url,
+            url=path if url is None else url,
         )
 
     def __eq__(self, other: object) -> bool:

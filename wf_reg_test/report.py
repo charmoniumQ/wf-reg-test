@@ -1,13 +1,16 @@
 import collections
 import itertools
 import io
+import pathlib
 import base64
+import urllib
 import yaml
 from datetime import datetime, timedelta
-from typing import Callable, Mapping, cast, Union
+from typing import Callable, Mapping, cast, Union, Optional
 
 import matplotlib  # type: ignore
 import domonic as html  # type: ignore
+import upath
 
 from .html_helpers import (
     collapsed,
@@ -18,7 +21,7 @@ from .html_helpers import (
     html_table,
     html_list,
 )
-from .util import sorted_and_dropped, groupby_dict
+from .util import sorted_and_dropped, groupby_dict, upath_to_url
 from .workflows import Workflow, RegistryHub, Execution
 
 
@@ -240,11 +243,11 @@ def report_html(hub: RegistryHub) -> str:
                         ),
                         "Logs": html_link(
                             "empty" if execution.logs.empty else f"{execution.logs.size / 2**30:.3f}GiB",
-                            str(execution.logs.url),
+                            upath_to_url(execution.logs.url),
                         ),
                         "Outputs": html_link(
                             "empty" if execution.outputs.empty else f"{execution.outputs.size / 2**30:.3f}GiB",
-                            str(execution.outputs.url),
+                            upath_to_url(execution.outputs.url),
                         ),
                         "Max RAM": f"{execution.resources.max_rss / 2**30:.3f}GiB",
                         "CPU Time": html_timedelta(
