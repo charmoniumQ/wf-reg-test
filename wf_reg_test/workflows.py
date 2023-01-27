@@ -4,7 +4,6 @@ import shutil
 from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
 from pathlib import Path
-import tarfile
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 import urllib.parse
 
@@ -194,17 +193,22 @@ class Execution:
     wf_reg_test_revision: str = dataclasses.field(default_factory=get_current_revision)
     workflow_error: Optional[WorkflowError] = None
 
-    def with_pointers(self, machine: Machine, revision: Revision) -> Execution:
+    def with_attrs(
+            self,
+            machine: Optional[Machine] = None,
+            revision: Optional[Revision] = None,
+            workflow_error: Optional[WorkflowError] = None
+    ) -> Execution:
         return Execution(
-            machine=machine,
-            revision=revision,
+            machine=machine if machine is not None else self.machine,
+            revision=revision if revision is not None else self.revision,
             datetime=self.datetime,
             outputs=self.outputs,
             logs=self.logs,
             condition=self.condition,
             resources=self.resources,
             status_code=self.status_code,
-            workflow_error=self.workflow_error,
+            workflow_error=workflow_error if workflow_error is not None else self.workflow_error,
         )
 
     @property

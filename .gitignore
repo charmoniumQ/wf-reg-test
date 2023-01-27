@@ -9,3 +9,4 @@ __pycache__/
 .r-mount
 .ipynb_checkpoints/
 /secrets.env
+.cache/

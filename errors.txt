@@ -137,12 +137,15 @@ friendsofstrandseq/ashleys-qc-pipeline1.0
 
 ----
 Errors to retry:
-isinstance(error, NextflowCommandError) and "doesn't exist in" in error.error
-hasattr(error, "rest") and "o space left on device" in rest in error.rest
+execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "o space left on device" in execution.workflow_error.rest
+execution.workflow_error is not None and isinstance(execution.workflow_error, NextflowCommandError) and "doesn't exist in" in execution.workflow_error.error
 
 Snakemake install errors:
-hasattr(error, "rest") and "nstall" in error.rest
+execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "nstall" in execution.workflow_error.rest
 
 Missing data errors:
-hasattr(error, "rest") and "o samples found" in error.rest or "issing input" in error.rest
-error.kind in {"FileNotFoundError", "MissingInputException"}
+execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "o samples found" in execution.workflow_error.rest or "issing input" in execution.workflow_error.rest
+execution.workflow_error is not None and execution.workflow_error.kind in {"FileNotFoundErrorg", "MissingInputException"}
+
+Conda error:
+execution.workflow_error is not None and execution.workflow_error.kind == "SnakemakeInternalError" and "'conda info --json'" in execution.workflow_error.rest

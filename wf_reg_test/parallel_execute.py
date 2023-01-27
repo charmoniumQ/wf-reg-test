@@ -164,7 +164,7 @@ def parallel_execute(
     )
     last_serialization = DateTime.now()
     for (revision, _condition, execution) in iterator:
-        execution = execution.with_pointers(
+        execution = execution.with_attrs(
             machine=Machine.current_machine(),
             revision=revision,
         )

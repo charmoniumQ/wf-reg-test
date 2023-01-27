@@ -1,6 +1,6 @@
 import itertools
 from pathlib import Path
-from typing import Mapping, Optional, Sequence, TypeAlias
+from typing import Mapping, Optional, Sequence, TypeAlias, Iterable
 
 import domonic as html  # type: ignore
 
@@ -25,7 +25,7 @@ def html_table(
     )
 
 
-def html_list(elements: Sequence[TagLike], ordered: bool = False) -> html.Element:
+def html_list(elements: Iterable[TagLike], ordered: bool = False) -> html.Element:
     list_factory = html.ol if ordered else html.ul
     return list_factory(*[html.li(element) for element in elements])
 

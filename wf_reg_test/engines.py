@@ -12,7 +12,6 @@ import shlex
 import shutil
 import subprocess
 import sys
-import tarfile
 import urllib
 import warnings
 from typing_extensions import Protocol
@@ -110,14 +109,19 @@ class Engine:
         if not remote_archive.name.endswith(".tar.xz"):
             raise ValueError("Must pass a .tar.xz")
         with create_temp_dir(cleanup=True) as temp_dir:
-            tarball = tarfile.open(temp_dir / remote_archive.name, "w:xz")
-            contents: dict[pathlib.Path, File] = {}
-            for path in walk_files(root):
-                if (root / path).is_file() and not (root / path).is_symlink():
-                    contents[path] = File.create(root / path, url=f"tar://{path!s}::{remote_archive!s}")
-                    tarball.add(root / path, path)
-            tarball.close()
-            length = pathlib.Path(str(tarball.name)).stat().st_size
+            local_archive = temp_dir / remote_archive.name
+            (temp_dir / "files").write_text(
+                "\n".join(
+                    str(member.relative_to(root))
+                    for member in root.iterdir()
+                )
+            )
+            subprocess.run(
+                ["tar", "--create", "--xz", "--file", local_archive, "--files-from", str(temp_dir / "files")],
+                check=True,
+                cwd=root,
+            )
+            length = local_archive.stat().st_size
             if isinstance(remote_archive, upath.UPath):
                 remote_archive_path = remote_archive.path
                 # Note that Azure blob storage Python SDK already calls urlquote, so by default, these things get quoted twice!
@@ -125,10 +129,10 @@ class Engine:
                 if remote_archive.fs.__class__.__name__ == "AzureBlobFileSystem":
                     remote_archive_path = urllib.parse.unquote(remote_archive_path)
                     url = str(remote_archive).replace("abfs://", "https://wfregtest.blob.core.windows.net/")
-                remote_archive.fs.put_file(tarball.name, remote_archive._url.netloc + remote_archive_path)
+                remote_archive.fs.put_file(local_archive, remote_archive._url.netloc + remote_archive_path)
             else:
                 remote_archive.parent.mkdir(exist_ok=True, parents=True)
-                shutil.move(tarball.name, remote_archive)
+                shutil.move(local_archive, remote_archive)
                 url = "file:///" + str(remote_archive)
         return File("length", 64, length, length, url)
 
@@ -215,6 +219,8 @@ class SnakemakeEngine(Engine):
             return err
         elif err := SnakemakeInternalError._from_text((log_dir / "stderr.txt").read_text()):
             return err
+        elif err := SnakemakeInternalError2._from_text((log_dir / "stderr.txt").read_text()):
+            return err
         else:
             return None
 
@@ -276,6 +282,19 @@ class SnakemakeInternalError(WorkflowError):
         else:
             return None
 
+
+@dataclasses.dataclass
+class SnakemakeInternalError2(WorkflowError):
+    msg: str
+
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception):[ \n](.*)")
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[SnakemakeInternalError2]:
+        if match := SnakemakeInternalError2._pattern.search(string):
+            return SnakemakeInternalError2(match.group(1), match.group(2))
+        else:
+            return None
 
 class NextflowEngine(Engine):
     @contextlib.contextmanager

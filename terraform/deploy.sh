@@ -37,7 +37,11 @@ for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); 
     set -x
     $(cat spack/setup_env.sh)
     set +x ; source spack/activate.sh ; set -x
-    rm -rf wf-reg-test
-    git clone https://github.com/charmoniumQ/wf-reg-test
+    if [ -d wf-reg-test ]; then
+        git -C wf-reg-test fetch
+        git -C wf-reg-test reset --hard @{u}
+    else
+        git clone https://github.com/charmoniumQ/wf-reg-test
+    fi
 EOF
 done

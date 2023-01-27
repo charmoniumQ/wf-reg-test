@@ -7,6 +7,7 @@ import random
 import re
 import shutil
 import sys
+import urllib
 from datetime import datetime as DateTime
 from datetime import timedelta as TimeDelta
 from pathlib import Path
@@ -76,22 +77,11 @@ def what_to_execute(
 
 
 def check_nodes_are_owned(hub: RegistryHub) -> None:
-    raise NotImplementedError
-
-
-def review_failures(hub: RegistryHub) -> None:
-    revisions = sorted(hub.revisions, key=curried_getattr(DateTime, "datetime"), reverse=True)
-    n_total = sum(len(revision.executions) for revision in revisions)
-    n_broken = sum(int(execution.status_code != 0) for revision in revisions for execution in revision.executions)
-    print(f"{n_total} total, {n_broken} broken executions")
-    for revision in revisions:
-        for i, execution in enumerate(revision.executions):
-            if execution.status_code != 0:
-                assert revision.workflow is not None
-                assert revision.workflow.registry is not None
-                print(revision.workflow.registry.display_name, revision.workflow.display_name, revision.display_name)
-                print(execution.logs.url)
-                input(":")
+    [
+        {execution.logs, execution.outputs}
+        for execution in hub.executions
+    ]
+    pass
 
 
 storage = upath.UPath(
@@ -173,14 +163,14 @@ def test(max_executions: int) -> None:
 
 @main.command()
 @click.option("--max-executions", type=int, default=-1)
-@click.option("--engine", type=str, default="")
+@click.option("--predicate", type=str, default="")
 @ch_time_block.decor()
-def retest(max_executions: int, engine: str) -> None:
+def retest(max_executions: int, predicate: str) -> None:
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
         for execution in hub.failed_executions
-        if engine == "" or engine == expect_type(Workflow, expect_type(Revision, execution.revision).workflow).engine
+        if predicate == "" or eval(predicate, globals(), locals())
     ]
     if max_executions != -1:
         revisions_conditions = revisions_conditions[:max_executions]
@@ -255,8 +245,9 @@ def remove_older_executions(hub: RegistryHub) -> None:
                         pass
                     elif url.startswith(azure_prefix):
                         # TODO: handle this based on generic storage
+                        # See wf_reg_test.engines.create_in_storage for why this URL needs to be unquoted
                         upath.UPath(
-                            url[len(azure_prefix):],
+                            urllib.parse.unquote(url[len(azure_prefix):]),
                             account_name="wfregtest",
                             credential=AzureCredential(),
                         ).unlink()
@@ -273,19 +264,15 @@ def post_process() -> None:
 
 
 @main.command()
-def review() -> None:
-    hub = deserialize(index_path)
-    review_failures(hub)
-
-
-@main.command()
 def verify() -> None:
     hub = deserialize(index_path)
     serialize(hub, index_path)
+    check_nodes_are_owned(hub)
 
 
 @main.command()
-def classify_errors() -> None:
+@click.option("--url-part", type=str, default="")
+def classify_errors(url_part: str) -> None:
     import tarfile
     import urllib
     import shutil
@@ -298,7 +285,11 @@ def classify_errors() -> None:
     failed_executions = [
         execution
         for execution in hub.failed_executions
-        if execution.workflow_error is None and execution.logs.url is not None
+        if all([
+                execution.workflow_error is None,
+                execution.logs.url is not None,
+                url_part in str(execution.logs.url),
+        ])
     ]
     random.seed(1)
     random.shuffle(failed_executions)
@@ -317,7 +308,8 @@ def classify_errors() -> None:
             assert revision is not None
             workflow = revision.workflow
             assert workflow is not None
-            execution.workflow_error = engines[workflow.engine].parse_error(temp_dir)
+            i = revision.executions.index(execution)
+            revision.executions[i] = execution.with_attrs(workflow_error=engines[workflow.engine].parse_error(temp_dir))
         if execution.workflow_error is None:
             print("Unparsed error for", execution)
         serialize(hub, index_path)

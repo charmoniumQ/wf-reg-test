@@ -143,7 +143,7 @@ def html_date(dt: datetime) -> html.Element:
 
 
 def html_datetime(dt: datetime) -> html.Element:
-    return dt.isoformat()
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
 
 
 def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
@@ -207,7 +207,7 @@ def report_html(hub: RegistryHub) -> str:
                 (
                     execution.datetime - revision.datetime,
                     {
-                        "Workflow": html_link(workflow.display_name, workflow.url),
+                        "Workflow": html.span(html_link(workflow.display_name, workflow.url), id=str(id(execution))),
                         "Revision": html_link(revision.display_name, revision.url),
                         "Engine": workflow.engine,
                         "Staleness": html_timedelta(
@@ -216,13 +216,26 @@ def report_html(hub: RegistryHub) -> str:
                             digits=0,
                         ),
                         # "Revision date": html_date(revision.datetime),
-                        "Execution date": html_date(execution.datetime),
+                        "Execution date": html_datetime(execution.datetime),
                         "Success": (
                             html_emoji_bool(True)
-                            if execution.workflow_error is None else
+                            if execution.successful else
                             html.div(
                                 html.p(html_emoji_bool(False)),
-                                html.p(collapsed("show error", html.code(html.pre(yaml.dump(execution.workflow_error, default_flow_style=False))))),
+                                html.p(
+                                    "unknown error"
+                                    if execution.workflow_error is None else
+                                    collapsed(
+                                        "show error",
+                                        html.code(
+                                            html.pre(
+                                                yaml.dump(
+                                                    execution.workflow_error, default_flow_style=False,
+                                                )
+                                            )
+                                        )
+                                    )
+                                ),
                             )
                         ),
                         "Logs": html_link(
@@ -249,6 +262,7 @@ def report_html(hub: RegistryHub) -> str:
                 for registry in hub.registries
                 for workflow in registry.workflows
                 for revision in workflow.revisions
+                if revision.executions
                 for execution in revision.executions
             ],
             reverse=True,
@@ -290,8 +304,8 @@ def report_html(hub: RegistryHub) -> str:
                 get_stats(hub),
                 heading("Errors", level=1, anchor=True),
                 get_errors(hub),
-                # html.h1("Workflows"),
-                # table_by_workflows,
+                html.h1("Workflows"),
+                table_by_workflows,
                 heading("Executions", level=1, anchor=True),
                 table_by_executions,
             ),
