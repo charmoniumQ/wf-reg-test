@@ -1,0 +1,12 @@
+- Registry
+  - https://github.com/atrisovic/dataverse-r-study/blob/master/get-dois/get-r-dois.ipynb
+- https://github.com/atrisovic/dataverse-r-study/blob/master/docker/run_analysis.sh
+  - Download dataset https://github.com/atrisovic/dataverse-r-study/blob/master/docker/download_dataset.py
+  - 
+
+https://github.com/atrisovic/dataverse-r-study/blob/master/docker/set_environment.py
+https://github.com/atrisovic/dataverse-r-study/blob/master/docker/readability_analysis.py
+https://github.com/atrisovic/dataverse-r-study/blob/master/docker/execute_files.py
+https://github.com/atrisovic/dataverse-r-study/blob/master/docker/exec_r_files.R
+https://github.com/atrisovic/dataverse-r-study/blob/master/docker/download_dataset.py
+https://github.com/atrisovic/dataverse-r-study/blob/master/docker/run_analysis.sh

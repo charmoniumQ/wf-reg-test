@@ -4,7 +4,7 @@ if ! which tmux > /dev/null; then
     # Spack assumes libgfortram.so.5 exists, since it existed on the machine which built the env.
 fi
 
-curl --HEAD https://wfregtest.blob.core.windows.net/deployment/spack.tar.gz | grep -v x-ms-request-id | grep -v Date > spack.tar.gz.headers.1
+curl --silent --HEAD https://wfregtest.blob.core.windows.net/deployment/spack.tar.gz | grep --invert-match x-ms-request-id | grep --invert-match Date > spack.tar.gz.headers.1
 if ! diff spack.tar.gz.headers.1 spack.tar.gz.headers; then
     rm --force spack.tar.gz
     wget https://wfregtest.blob.core.windows.net/deployment/spack.tar.gz

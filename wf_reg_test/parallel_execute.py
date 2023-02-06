@@ -16,6 +16,7 @@ import urllib
 import fasteners  # type: ignore
 import tqdm
 from upath import UPath
+import charmonium.time_block as ch_time_block
 
 from .workflows import RegistryHub, Workflow, Revision, Condition, Execution
 from .serialization import serialize
@@ -174,7 +175,8 @@ def parallel_execute(
             raise warning
         # Must be no warnings. yay
         if last_serialization + serialize_every < DateTime.now():
-            serialize(hub, index_path)
+            with ch_time_block.ctx("serialize"):
+                serialize(hub, index_path)
 
 
 escape = urllib.parse.quote_plus

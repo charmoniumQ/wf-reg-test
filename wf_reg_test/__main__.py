@@ -76,16 +76,35 @@ def what_to_execute(
     return revisions_conditions
 
 
-def check_nodes_are_owned(hub: RegistryHub) -> None:
+def delete_orphans_in_storage(hub: RegistryHub) -> None:
     known_files = set(itertools.chain.from_iterable(
-        (execution.logs, execution.outputs)
+        (execution.logs.url, execution.outputs.url)
         for execution in hub.executions
     ))
-    all_files = set(storage.glob("**"))
-    for orphaned_file in all_files - known_files:
+    with ch_time_block.ctx("globbing_storage"):
+        all_files = set(storage.glob("**"))
+    for orphaned_file in tqdm.tqdm(all_files - known_files, desc="file"):
         print(f"Remove {orphaned_file}? Y/n")
         if input().lower()[0] == "y":
             orphaned_file.unlink()
+
+
+def delete_executions_missing_logs(hub: RegistryHub) -> None:
+    execution_missing_logs = [
+        execution
+        for execution in hub.executions
+        if not all([execution.logs.exists(), execution.outputs.exists()])
+    ]
+    for execution in tqdm.tqdm(execution_missing_logs, desc="executions"):
+        print(f"Remove {execution}? Y/n")
+        if input().lower()[0] == "y":
+            if execution.logs.exists():
+                execution.logs.unlink()
+            if execution.outputs.exists():
+                execution.outputs.unlink()
+            revision = executions.revision
+            assert revision
+            del revisions.executions[revision.executions.index(execution)]
 
 
 storage = upath.UPath(
@@ -220,30 +239,30 @@ def report() -> None:
             (html_path / "result.html").write_text(report_text)
 
 
-@main.command()
-def delete_old() -> None:
-    hub = deserialize(index_path)
-    remove_older_executions(hub)
-    serialize(hub, index_path)
-
-
-def remove_older_executions(hub: RegistryHub) -> None:
-    for revision in tqdm.tqdm(hub.revisions, desc="revisions"):
-        if len(revision.executions) > 2:
-            print(f"{revision!s} has multiple")
-            newest_execution = revision.executions[0]
-            for execution in revision.executions:
-                if execution.datetime >= newest_execution.datetime:
-                    newest_execution = execution
-            print(f"{newest_execution.datetime!s} is the newest")
-            old_executions = revision.executions[:]
-            old_executions.remove(newest_execution)
-            revision.executions = [newest_execution]
-            for execution in old_executions:
-                for file in [execution.logs, execution.outputs]:
-                    url = file.url
-                    if url:
+def delete_duplicate_executions(hub: RegistryHub) -> None:
+    revisions_with_multiple = [
+        revision
+        for revision in hub.revisions
+        if len(revision.executions) > 2
+    ]
+    for revision in tqdm.tqdm(revisions_with_multiple, desc="revisions"):
+        print(f"{revision!s} has multiple")
+        newest_execution = revision.executions[0]
+        for execution in revision.executions:
+            if execution.datetime >= newest_execution.datetime:
+                newest_execution = execution
+        print(f"{newest_execution.datetime!s} is the newest")
+        old_executions = revision.executions[:]
+        old_executions.remove(newest_execution)
+        revision.executions = [newest_execution]
+        for execution in old_executions:
+            for file in [execution.logs, execution.outputs]:
+                url = file.url
+                if url and url.exists():
+                    try:
                         url.unlink()
+                    except Exception as e:
+                        print(type(url), url, type(e), str(e))
 
 
 @main.command()
@@ -253,10 +272,18 @@ def post_process() -> None:
 
 
 @main.command()
-def verify() -> None:
+@click.option("--delete-duplicates", type=bool, is_flag=True, default=False)
+@click.option("--delete-orphans", type=bool, is_flag=True, default=False)
+@click.option("--delete-missing", type=bool, is_flag=True, default=False)
+def verify(delete_duplicates: bool, delete_orphans: bool, delete_missing: bool) -> None:
     hub = deserialize(index_path)
+    if delete_missing:
+        delete_executions_missing_logs(hub)
+    if delete_duplicates:
+        delete_duplicate_executions(hub)
+    if delete_orphans:
+        delete_orphans_in_storage(hub)
     serialize(hub, index_path)
-    check_nodes_are_owned(hub)
 
 
 @main.command()
@@ -300,40 +327,6 @@ def classify_errors(url_part: str) -> None:
         if execution.workflow_error is None:
             print("Unparsed error for", execution)
         serialize(hub, index_path)
-
-
-@main.command()
-def migrate_paths() -> None:
-    hub = deserialize(index_path)
-    files_to_find = list(itertools.chain.from_iterable([
-        [execution.outputs, execution.logs]
-        for execution in hub.executions
-    ]))
-    files_to_find = [
-        file
-        for file in files_to_find
-        if isinstance(file.url, str)
-    ]
-    for file in tqdm.tqdm(files_to_find, desc="files"):
-        if file.url == "lost":
-            file.url = None
-            continue
-        candidates = [
-            "abfs://" + file.url.replace("https://wfregtest.blob.core.windows.net/", ""),
-            "abfs://" + urllib.parse.unquote(file.url.replace("https://wfregtest.blob.core.windows.net/", "")),
-        ]
-        for candidate in candidates:
-            path = upath.UPath(
-                candidate,
-                account_name="wfregtest",
-                credential=AzureCredential(),
-            )
-            if path.exists():
-                file.url = path
-                break
-        else:
-            print("Manually handle", file.url)
-    serialize(hub, index_path)
 
 
 main()

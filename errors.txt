@@ -145,7 +145,7 @@ execution.workflow_error is not None and hasattr(execution.workflow_error, "rest
 
 Missing data errors:
 execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "o samples found" in execution.workflow_error.rest or "issing input" in execution.workflow_error.rest
-execution.workflow_error is not None and execution.workflow_error.kind in {"FileNotFoundErrorg", "MissingInputException"}
+execution.workflow_error is not None and execution.workflow_error.kind in {"FileNotFoundError", "MissingInputException"}
 
 Conda error:
 execution.workflow_error is not None and execution.workflow_error.kind == "SnakemakeInternalError" and "'conda info --json'" in execution.workflow_error.rest

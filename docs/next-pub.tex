@@ -1,0 +1,37 @@
+Read \cite{elsner_empirically_2021}
+
+
+(see \Cref{table:prior})
+However, there is a wide margin in those prior works and recent developments (see \Cref{table:tools}) could cause those results to change.
+Therefore, we propose an open-source experiment that subsumes and replicates prior work.
+Specifically our input selection is/does:
+\begin{itemize}
+ \item Support multiple experiment languages, so we can compare their relative qualities
+ \item Cover a wide range of time, so we can analyze historical trends
+ \item Use a large number of experiments, so we have more statistical power
+ \item Open-source, so the same experiment can be re-run and compared at a later date
+ \item Automated, to eliminate dependence on the individual experimenter
+ \item Available in raw data, to facilitate future analyses by other authors
+ \item Capture more execution details, such as computational resource requirement, which will aid in future replication
+ \item Capture a summary of the output, so we can assess and bit-wise repeatability and reproducibility
+ \item Identify good and bad examples
+ \item Test correlations between staleness, choice of tool, and features of software with reproducibility
+\end{itemize}
+
+\begin{table*}
+\caption{Prior studies of reproducibility.}
+\label{table:prior}
+{\scriptsize
+\begin{tabular}{cccccccccccc}
+& \multicolumn{4}{c}{Input experiments} & \multicolumn{2}{c}{Testing system} & \multicolumn{3}{c}{Output data} & \multicolumn{2}{c}{Research questions} \\
+\cmidrule(lr){2-5}\cmidrule(lr){6-7}\cmidrule(lr){8-10}\cmidrule(lr){11-12}
+Study & Years under study & \makecell{Multiple \\ languages} & \makecell{Multiple \\ repositories} & N experiments & \makecell{Open-\\ source} & Automated & \makecell{Raw data \\ available} & \makecell{Execution \\ details} & \makecell{Output \\ summary} & \makecell{Staleness \(\sim\) Repr} & \makecell{Tool \(\sim\) Repr} \\
+\midrule
+Collberg et al. \cite{collberg_repeatability_2016} & 2012 & \checkmark & \checkmark & 402 & N/A\footnote{Not applicable because the analysis is not automated; there is no code to be open-source.} & \(\times\) & \checkmark & \checkmark & \(\times\) & \(\times\) & \(\times\) \\
+Zhao et al. \cite{zhao_why_2012} & 2007 -- 2012 & \(\times\) & \(\times\) & 92 & \(\times\) & \checkmark & \(\times\) & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\
+Trisovic et al. \cite{trisovic_large-scale_2022} & 2010 -- 2020 & \(\times\) & \(\times\) & 2109\footnote{We report the number of ``datasets'' not the number of ``files''. An experiment in the repositories in the other studies consists of all of the scripts related to a particular experiment.} & \checkmark & \checkmark & \checkmark & \(\times\) & \(\times\) & \(\times\) & \(\times\) \\
+\todo{More works} & & & & & & & & & & & \\
+This work & 2010 -- 2022 & \checkmark & \checkmark & ? & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark & \checkmark \\
+\end{tabular}
+}
+\end{table*}
