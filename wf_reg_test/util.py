@@ -312,12 +312,12 @@ def upath_to_url(url: Optional[Path]) -> str:
     if url is None:
         return "http://github.com/404"
     elif isinstance(url, upath.implementations.cloud.AzurePath):
-        return f"https://{url._kwargs['account_name']}.blob.core.windows.net/{urllib.parse.quote(url.path[1:], safe='')}"
+        return f"https://{url._kwargs['account_name']}.blob.core.windows.net/{url._url.netloc}/{urllib.parse.quote(url.path[1:], safe='')}"
     elif isinstance(url, Path):
         if url.is_absolute():
-            return "file:///{url!s}"
+            return f"file:///{url!s}"
         else:
-            return "file://{url!s}"
+            return f"file://{url!s}"
     else:
         return str(url)
 

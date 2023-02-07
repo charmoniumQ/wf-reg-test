@@ -118,3 +118,11 @@ def heading(text: str, level: int, anchor: bool = True) -> html.Element:
     tag = {1: html.h1, 2: html.h2, 3: html.h3, 4: html.h4, 5: html.h5, 6: html.h6}[level]
     slug = text.lower().replace(" ", "-")
     return tag(html_link(text, "#" + slug), id=slug)
+
+
+def html_expand_cousin_details() -> html.Element:
+    return html.span(
+        html.button("Expand all"  , onclick="Array.from(this.parentElement.parentElement.getElementsByTagName('details')).forEach(elem => {elem.open = true; });"),
+        html.button("Collapse all", onclick="Array.from(this.parentElement.parentElement.getElementsByTagName('details')).forEach(elem => {elem.open = false;});"),
+    )
+

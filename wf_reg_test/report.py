@@ -20,6 +20,7 @@ from .html_helpers import (
     html_link,
     html_table,
     html_list,
+    html_expand_cousin_details,
 )
 from .util import sorted_and_dropped, groupby_dict, upath_to_url
 from .workflows import Workflow, RegistryHub, Execution
@@ -168,29 +169,17 @@ def report_html(hub: RegistryHub) -> str:
                         [
                             {
                                 "Revision": html_link(
-                                    revision.display_name, revision.url
+                                    revision.display_name, revision.url,
                                 ),
                                 "Date/time": html_date(revision.datetime),
                                 "Executions": html_table(
                                     [
                                         {
+                                            "Link": html_link("here", "#" + str(id(execution))),
                                             "Date/time": html_date(execution.datetime),
                                             "Success": html_emoji_bool(
                                                 execution.status_code == 0
                                             ),
-                                            "Max RAM": f"{execution.resources.max_rss / 2**30:.3f}GiB",
-                                            "CPU Time": html_timedelta(
-                                                execution.resources.user_cpu_time
-                                                + execution.resources.system_cpu_time,
-                                                unit="seconds",
-                                                digits=1,
-                                            ),
-                                            "Wall Time": html_timedelta(
-                                                execution.resources.wall_time,
-                                                unit="seconds",
-                                                digits=1,
-                                            ),
-                                            "Machine": execution.machine.short_description if execution.machine else "",
                                         }
                                         for execution in revision.executions
                                     ]
@@ -204,8 +193,9 @@ def report_html(hub: RegistryHub) -> str:
             for workflow in hub.workflows
         ]
     )
-    table_by_executions = html_table(
-        sorted_and_dropped(
+    table_by_executions = html.div(
+        html_expand_cousin_details(),
+        html_table(sorted_and_dropped(
             [
                 (
                     execution.datetime - revision.datetime,
@@ -269,7 +259,7 @@ def report_html(hub: RegistryHub) -> str:
                 for execution in revision.executions
             ],
             reverse=True,
-        )
+        )),
     )
     return cast(
         str,
