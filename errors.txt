@@ -135,17 +135,26 @@ friendsofstrandseq/ashleys-qc-pipeline1.0
             sandbox.zenodo.org/record/1074721/files/GCA_000001405.15_GRCh38_no_alt_analysis_set.fna
             .tests/data_CHR21/RPE-BM510/fastq/BM510x3PE20401.sort.mdup.1.fastq.gz
 
-----
-Errors to retry:
-execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "o space left on device" in execution.workflow_error.rest
-execution.workflow_error is not None and isinstance(execution.workflow_error, NextflowCommandError) and "doesn't exist in" in execution.workflow_error.error
+----------------------------------------------------------------------------------------------------
 
-Snakemake install errors:
-execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "nstall" in execution.workflow_error.rest
+Errors to retry:
+hasattr(error, "rest") and "o space left on device" in error.rest
+isinstance(error, NextflowCommandError) and "doesn't exist in container" in error.error
+isinstance(error, SnakemakePythonError) and "peppy" in error.rest
+isinstance(error, NextflowSigterm)
+isinstance(error, NextflowJavaError) and error.kind == "java.lang.IllegalStateException"
+error.kind == "SnakemakeInternalError" and "'conda info --json'" in error.rest
+"CreateCondaEnvironmentException" in str(error)
+
+Missing packages:
+hasattr(error, "rest") and "install" in error.rest
 
 Missing data errors:
-execution.workflow_error is not None and hasattr(execution.workflow_error, "rest") and "o samples found" in execution.workflow_error.rest or "issing input" in execution.workflow_error.rest
-execution.workflow_error is not None and execution.workflow_error.kind in {"FileNotFoundError", "MissingInputException"}
+isinstance(error, (SnakemakePythonError, SnakemakeRuleError)) and error.kind in {"InputFunctionException", "MissingInputException", "FileNotFoundError"}
 
-Conda error:
-execution.workflow_error is not None and execution.workflow_error.kind == "SnakemakeInternalError" and "'conda info --json'" in execution.workflow_error.rest
+Manual examination:
+isinstance(error, SnakemakePythonError) and error.kind in {"WorkflowError", "SystemExit"}
+
+----------------------------------------------------------------------------------------------------
+
+(hasattr(error, "rest") and ("o space left on device" in error.rest or "conda info --json" in error.rest)) or (hasattr(error, "error") and "t exist in container" in error.error) or (hasattr("error", "kind") and error.kind in {"Sigterm", "java.lang.IllegalStateException", "CreateCondaEnvironmentException"})

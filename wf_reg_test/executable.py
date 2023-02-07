@@ -148,7 +148,7 @@ def taskset(
 def timeout(
         executable: Executable,
         wall_time_limit: TimeDelta,
-        kill_after: TimeDelta = TimeDelta(seconds=30),
+        kill_after: TimeDelta = TimeDelta(seconds=120),
 ) -> Executable:
     return Executable(
         command=[

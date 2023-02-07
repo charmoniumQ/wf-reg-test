@@ -15,7 +15,6 @@ import sys
 import urllib
 import warnings
 from typing_extensions import Protocol
-from datetime import datetime as DateTime, timedelta as TimeDelta
 from typing import Any, Callable, ClassVar, Mapping, Optional, TypeVar, cast, ContextManager, Iterator
 
 import charmonium.time_block as ch_time_block
@@ -53,7 +52,7 @@ class Engine:
             revision: Revision,
             condition: Condition,
             which_cores: list[int],
-            wall_time_limit: TimeDelta,
+            wall_time_limit: datetime.timedelta,
             storage: upath.UPath,
     ) -> Execution:
         if revision.workflow is None:
@@ -75,7 +74,7 @@ class Engine:
                 executable = timeout(executable, wall_time_limit)
                 with time(executable) as (executable, time_file):
                     with ch_time_block.ctx(f"execute {revision.workflow}"):
-                        now = DateTime.now()
+                        now = datetime.datetime.now()
                         proc = executable.local_execute(check=False, capture_output=True)
                         resources = parse_time_file(time_file)
                 (log_dir / "stdout.txt").write_bytes(proc.stdout)
@@ -89,7 +88,7 @@ class Engine:
                     "resources": resources,
                 }))
             run_path = storage / fs_escape(revision.workflow.display_name) / random_str(8)
-            workflow_error = self.parse_error(log_dir)
+            workflow_error = self.parse_error(log_dir, code_dir)
             outputs = self.create_in_storage(out_dir, run_path / "output.tar.xz")
             logs = self.create_in_storage(log_dir, run_path / "logs.tar.xz")
         return Execution(
@@ -116,11 +115,23 @@ class Engine:
                     for member in root.iterdir()
                 )
             )
-            subprocess.run(
-                ["tar", "--create", "--xz", "--file", local_archive, "--files-from", str(temp_dir / "files")],
-                check=True,
-                cwd=root,
-            )
+            command = ["tar", "--create", "--xz", "--file", str(local_archive), "--files-from", str(temp_dir / "files")]
+            try:
+                subprocess.run(
+                    command,
+                    check=True,
+                    cwd=root,
+                    capture_output=True,
+                    text=True,
+                )
+            except subprocess.CalledProcessError as exc:
+                raise RuntimeError("\n".join([
+                    "Tar failed",
+                    "command: " + str(command),
+                    "stodut: " + exc.stdout,
+                    "stderr:" + exc.stderr,
+                    str(temp_dir / "files") + ": " + (temp_dir / "files").read_text().replace("\n", " "),
+                ])) from exc
             length = local_archive.stat().st_size
             with local_archive.open("rb") as src_fileobj, remote_archive.open("wb") as dst_fileobj:
                 shutil.copyfileobj(src_fileobj, dst_fileobj)
@@ -189,11 +200,11 @@ class SnakemakeEngine(Engine):
                 shutil.move(code_dir / out_file, out_dir / out_file)
         # Fallthrough, everything else goes to results.
         for fil in walk_files(code_dir):
-            if fil.exists() and fil.is_file() and DateTime.fromtimestamp(fil.stat().st_mtime) >= start_time:
+            if fil.exists() and fil.is_file() and datetime.datetime.fromtimestamp(fil.stat().st_mtime) >= start_time:
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
-    def parse_error(self, log_dir: pathlib.Path) -> Optional[WorkflowError]:
+    def parse_error(self, log_dir: pathlib.Path, code_dir: pathlib.Path) -> Optional[WorkflowError]:
         log_files = list((log_dir / ".snakemake/log").glob("*.snakemake.log"))
         if not log_files:
             return None
@@ -201,9 +212,11 @@ class SnakemakeEngine(Engine):
         err: Optional[WorkflowError]
         if False:
             pass
-        elif err := SnakemakePythonError._from_text(logs):
+        elif err := SnakemakePythonError._from_text(logs, code_dir):
             return err
-        elif err := SnakemakeRuleError._from_text(logs):
+        elif err := SnakemakeRuleError._from_text(logs, code_dir):
+            return err
+        elif err := SnakemakeCondaError._from_text(logs):
             return err
         elif err := SnakemakeWorkflowError._from_text(logs):
             return err
@@ -216,17 +229,38 @@ class SnakemakeEngine(Engine):
 
 
 @dataclasses.dataclass(frozen=True)
+class SnakemakeCondaError(WorkflowError):
+    rest: str
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("$CreateCondaEnvironmentException:\n(.*)", re.MULTILINE | re.DOTALL)
+
+    @staticmethod
+    def _from_text(string: str) -> Optional[SnakemakeCondaError]:
+        if match := SnakemakeCondaError._pattern.search(string):
+            return SnakemakeCondaError("CreateCondaEnvironmentException", match.group(1))
+        else:
+            return None
+
+@dataclasses.dataclass(frozen=True)
 class SnakemakePythonError(WorkflowError):
     line_no: int
-    file: str
+    file: Union[str, pathlib.Path]
     rest: str
     _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in line (\\d*) of (.*):([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
-    def _from_text(string: str) -> Optional[SnakemakePythonError]:
+    def _from_text(string: str, code_dir: pathlib.Path) -> Optional[SnakemakePythonError]:
         if match := SnakemakePythonError._pattern.search(string):
+            raw_file = match.group(3)
+            file: Union[pathlib.Path, str]
+            if raw_file.startswith("/"):
+                path = pathlib.Path(file)
+                if path.is_relative_to(code_dir):
+                    path = path.relative_to(code_dir)
+                file = path
+            else:
+                file = raw_file
             return SnakemakePythonError(
-                match.group(1), int(match.group(2)), match.group(3), match.group(4),
+                match.group(1), int(match.group(2)), file, match.group(4),
             )
         else:
             return None
@@ -235,14 +269,23 @@ class SnakemakePythonError(WorkflowError):
 @dataclasses.dataclass(frozen=True)
 class SnakemakeRuleError(WorkflowError):
     rule: str
-    file: str
+    file: Union[str, pathlib.Path]
     rest: str
     _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) of (.*):\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
-    def _from_text(string: str) -> Optional[SnakemakeRuleError]:
+    def _from_text(string: str, code_dir: pathlib.Path) -> Optional[SnakemakeRuleError]:
         if match := SnakemakeRuleError._pattern.search(string):
-            return SnakemakeRuleError(match.group(1), match.group(2), match.group(3), match.group(4))
+            raw_file = match.group(3)
+            file: Union[pathlib.Path, str]
+            if raw_file.startswith("/"):
+                path = pathlib.Path(file)
+                if path.is_relative_to(code_dir):
+                    path = path.relative_to(code_dir)
+                file = path
+            else:
+                file = raw_file
+            return SnakemakeRuleError(match.group(1), match.group(2), file, match.group(4))
         else:
             return None
 
@@ -321,17 +364,17 @@ class NextflowEngine(Engine):
                 shutil.move(code_dir / log_file, log_dir / log_file)
         # Fallthrough, everything else goes to results.
         for fil in walk_files(code_dir):
-            if fil.exists() and fil.is_file() and DateTime.fromtimestamp(fil.stat().st_mtime) >= start_time:
+            if fil.exists() and fil.is_file() and datetime.datetime.fromtimestamp(fil.stat().st_mtime) >= start_time:
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
-    def parse_error(self, log_dir: pathlib.Path) -> Optional[WorkflowError]:
+    def parse_error(self, log_dir: pathlib.Path, code_dir: pathlib.Path) -> Optional[WorkflowError]:
         log_file = log_dir / ".nextflow.log"
         if not log_file.exists():
             return None
         log = log_file.read_text()
         err: Optional[WorkflowError]
-        if err := NextflowCommandError._from_text(log):
+        if err := NextflowCommandError._from_text(log, code_dir):
             return err
         elif err := NextflowJavaError._from_text(log):
             return err
@@ -357,7 +400,7 @@ class NextflowCommandError(WorkflowError):
         return "\n".join(line[n:] for line in string.split("\n"))
 
     @staticmethod
-    def _from_text(string: str) -> Optional[NextflowCommandError]:
+    def _from_text(string: str, code_dir: pathlib.Path) -> Optional[NextflowCommandError]:
         if match := NextflowCommandError._pattern.search(string):
             return NextflowCommandError(
                 "CalledProcessError",
@@ -366,7 +409,7 @@ class NextflowCommandError(WorkflowError):
                 int(match.group(3)),
                 NextflowCommandError._strip_indent(match.group(4), 2),
                 NextflowCommandError._strip_indent(match.group(5), 2),
-                pathlib.Path(match.group(6)),
+                pathlib.Path(match.group(6)).relative_to(code_dir),
             )
         else:
             return None

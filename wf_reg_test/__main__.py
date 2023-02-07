@@ -76,6 +76,16 @@ def what_to_execute(
     return revisions_conditions
 
 
+def delete_execution(execution: Execution, confirm: bool = True) -> None:
+    if input(f"Remove {execution}? y/n\n") == "y":
+        for path in [execution.logs.url, execution.outputs.url]:
+            if path is not None and path.exists():
+                path.unlink()
+        revision = execution.revision
+        assert revision
+        revision.executions.remove(execution)
+
+
 def delete_orphans_in_storage(hub: RegistryHub) -> None:
     known_files = set(itertools.chain.from_iterable(
         (execution.logs.url, execution.outputs.url)
@@ -87,24 +97,6 @@ def delete_orphans_in_storage(hub: RegistryHub) -> None:
         print(f"Remove {orphaned_file}? Y/n")
         if input().lower()[0] == "y":
             orphaned_file.unlink()
-
-
-def delete_executions_missing_logs(hub: RegistryHub) -> None:
-    execution_missing_logs = [
-        execution
-        for execution in hub.executions
-        if not all([execution.logs.exists(), execution.outputs.exists()])
-    ]
-    for execution in tqdm.tqdm(execution_missing_logs, desc="executions"):
-        print(f"Remove {execution}? Y/n")
-        if input().lower()[0] == "y":
-            if execution.logs.exists():
-                execution.logs.unlink()
-            if execution.outputs.exists():
-                execution.outputs.unlink()
-            revision = executions.revision
-            assert revision
-            del revisions.executions[revision.executions.index(execution)]
 
 
 storage = upath.UPath(
@@ -186,14 +178,14 @@ def test(max_executions: int) -> None:
 
 @main.command()
 @click.option("--max-executions", type=int, default=-1)
-@click.option("--predicate", type=str, default="")
+@click.option("--predicate", type=str, default="True")
 @ch_time_block.decor()
 def retest(max_executions: int, predicate: str) -> None:
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
         for execution in hub.failed_executions
-        if predicate == "" or eval(predicate, globals(), locals())
+        if eval(predicate, globals(), {**locals(), "error": execution.workflow_error, "revision": execution.revision, "workflow": expect_type(Revision, execution.revision).workflow})
     ]
     if max_executions != -1:
         revisions_conditions = revisions_conditions[:max_executions]
@@ -207,17 +199,20 @@ def retest(max_executions: int, predicate: str) -> None:
         remote=True,
         storage=storage,
     )
-    remove_older_executions(hub)
+    delete_duplicate_executions(hub)
     serialize(hub, index_path)
 
 
 @main.command()
 @ch_time_block.decor()
 def report() -> None:
+    hub = deserialize(index_path)
+    report_inner(hub)
+
+def report_inner(hub: RegistryHub) -> None:
     from .report import report_html
     import azure.storage.blob
     import azure.identity
-    hub = deserialize(index_path)
     report_text = ch_time_block.decor()(report_html)(hub)
     with ch_time_block.ctx("upload_result"):
         if html_path._url.scheme == "abfs":
@@ -274,15 +269,19 @@ def post_process() -> None:
 @main.command()
 @click.option("--delete-duplicates", type=bool, is_flag=True, default=False)
 @click.option("--delete-orphans", type=bool, is_flag=True, default=False)
-@click.option("--delete-missing", type=bool, is_flag=True, default=False)
-def verify(delete_duplicates: bool, delete_orphans: bool, delete_missing: bool) -> None:
+@click.option("--delete-predicate", type=str, default="False")
+def verify(delete_duplicates: bool, delete_orphans: bool, delete_predicate: str) -> None:
     hub = deserialize(index_path)
-    if delete_missing:
-        delete_executions_missing_logs(hub)
     if delete_duplicates:
         delete_duplicate_executions(hub)
     if delete_orphans:
         delete_orphans_in_storage(hub)
+    to_delete = []
+    for execution in hub.executions:
+        if eval(delete_predicate, globals(), {**locals(), "error": execution.workflow_error}):
+            to_delete.append(execution)
+    for execution in tqdm.tqdm(to_delete):
+        delete_execution(execution)
     serialize(hub, index_path)
 
 
@@ -323,10 +322,11 @@ def classify_errors(url_part: str) -> None:
             workflow = revision.workflow
             assert workflow is not None
             i = revision.executions.index(execution)
-            revision.executions[i] = execution.with_attrs(workflow_error=engines[workflow.engine].parse_error(temp_dir))
+            revision.executions[i] = execution.with_attrs(workflow_error=engines[workflow.engine].parse_error(temp_dir, Path("/does-not-exist")))
         if execution.workflow_error is None:
             print("Unparsed error for", execution)
         serialize(hub, index_path)
+    report_inner(hub)
 
 
 main()
