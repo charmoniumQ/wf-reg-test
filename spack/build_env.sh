@@ -38,7 +38,9 @@ if [ -d spack/var/spack/environments/wf-reg-test/ ]; then
 fi
 spack env create wf-reg-test wf-reg-test/spack/spack.yaml
 spack env activate wf-reg-test
-spack concretize --fresh --force
+spack concretize
+# To update packages, add --fresh to the previous line
+# Otherwise, Spack defaults to reusing packages that have already been built on this machine.
 # Sometimes these spuriously fail due to race conditions
 set +e
 for i in $(seq 1 $(nproc)); do

@@ -15,7 +15,7 @@ import sys
 import urllib
 import warnings
 from typing_extensions import Protocol
-from typing import Any, Callable, ClassVar, Mapping, Optional, TypeVar, cast, ContextManager, Iterator
+from typing import Any, Callable, ClassVar, Mapping, Optional, TypeVar, cast, ContextManager, Iterator, Union
 
 import charmonium.time_block as ch_time_block
 import yaml
@@ -43,6 +43,7 @@ class Engine:
     def parse_error(
             self,
             log_dir: pathlib.Path,
+            code_dir: pathlib.Path,
     ) -> Optional[WorkflowError]:
         raise NotImplementedError
 
@@ -253,7 +254,7 @@ class SnakemakePythonError(WorkflowError):
             raw_file = match.group(3)
             file: Union[pathlib.Path, str]
             if raw_file.startswith("/"):
-                path = pathlib.Path(file)
+                path = pathlib.Path(raw_file)
                 if path.is_relative_to(code_dir):
                     path = path.relative_to(code_dir)
                 file = path
@@ -279,7 +280,7 @@ class SnakemakeRuleError(WorkflowError):
             raw_file = match.group(3)
             file: Union[pathlib.Path, str]
             if raw_file.startswith("/"):
-                path = pathlib.Path(file)
+                path = pathlib.Path(raw_file)
                 if path.is_relative_to(code_dir):
                     path = path.relative_to(code_dir)
                 file = path
