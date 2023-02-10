@@ -79,6 +79,11 @@ total=$(du --summarize --bytes spack | cut --fields=1)
 tar --create --file=- spack | tqdm --total $total --bytes | gzip - > spack.tar.gz
 # Unfortunately, azure-cli in Spack is too old.
 export PATH=$PATH:$HOME/.local/bin
-pip install --user azure-cli
-az login
+if ! which az > /dev/null; then
+	pip install --user azure-cli
+fi
+if ! az ad signed-in-user show; then
+	az login
+fi
 az storage blob upload --account-name wfregtest --container-name deployment --name spack.tar.gz --file spack.tar.gz --overwrite
+curl --silent --HEAD https://wfregtest.blob.core.windows.net/deployment/spack.tar.gz | grep Last-Modified > spack.tar.gz.headers
