@@ -102,16 +102,16 @@ class Workflow:
     registry: Registry = dataclasses.field(compare=False)
 
     def max_wall_time_estimate(self) -> TimeDelta:
-        wall_times_of_successes = [
-            execution.resources.wall_time
-            for revision in self.revisions
-            for execution in revision.executions
-            if execution.successful
-        ]
-        if wall_times_of_successes:
-            return max(wall_times_of_successes) * 3 + TimeDelta(minutes=10)
-        else:
-            return TimeDelta(minutes=120)
+        # wall_times_of_successes = [
+        #     execution.resources.wall_time
+        #     for revision in self.revisions
+        #     for execution in revision.executions
+        #     if execution.successful
+        # ]
+        # if wall_times_of_successes:
+        #     return max(wall_times_of_successes) * 3 + TimeDelta(minutes=30)
+        # else:
+        return TimeDelta(minutes=100)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"
@@ -285,11 +285,39 @@ Condition.HARD_CONTROLS = Condition(
 
 
 @dataclasses.dataclass(frozen=True)
+class FileBundle:
+    archive: File
+    files: Mapping[pathlib.Path, File]
+
+
+def migrate_file_bundle(file: File, cache_path: pathlib.Path) -> FileBundle:
+    with create_temp_dir() as temp_dir:
+        if file.url is not None:
+            local_archive = temp_dir / "test.tar.xz"
+            http_download_with_cache(file.url, local_archive, cache_path)
+            data_path = temp_dir / "data"
+            if data_path.exists():
+                shutil.rmtree(data_path)
+            data_path.mkdir()
+            subprocess.run(["tar", "--extract", f"--file", str(local_archive), "--directory", str(data_path)])
+            contents: dict[Path, File] = {}
+            for path in walk_files(data_path):
+                if (data_path / path).is_file() and not (data_path / path).is_symlink():
+                    contents[path] = File.create(data_path / path)
+            return FileBundle(File.create(local_archive), contents)
+        else:
+            (temp_dir / "blank").write_bytes()
+            return FileBundle.create(temp_dir / "blank", {})
+
+
+@dataclasses.dataclass(frozen=True)
 class File:
     hash_algo: str
     hash_bits: int
     hash_val: int
     size: int
+    # file_type: str
+    # mime_type: str
     url: Optional[pathlib.Path]
 
     @staticmethod
@@ -301,6 +329,8 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
+            # file_type=get_file_type(path),
+            # mime_type=get_mime_type(path),
             url=path if url is None else url,
         )
 

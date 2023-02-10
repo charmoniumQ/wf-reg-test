@@ -321,7 +321,7 @@ class SnakemakeInternalError(WorkflowError):
 class SnakemakeInternalError2(WorkflowError):
     msg: str
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception):[ \n](.*)")
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception):[ \n](.*)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeInternalError2]:
@@ -423,7 +423,7 @@ class NextflowJavaError(WorkflowError):
     msg: str
     rest: str
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception): (.*)\n(.*)(?:\\Z|\n\n)")
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception): (.*)\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[NextflowJavaError]:

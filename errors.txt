@@ -157,4 +157,13 @@ isinstance(error, SnakemakePythonError) and error.kind in {"WorkflowError", "Sys
 
 ----------------------------------------------------------------------------------------------------
 
-(hasattr(error, "rest") and ("o space left on device" in error.rest or "conda info --json" in error.rest)) or (hasattr(error, "error") and "t exist in container" in error.error) or (hasattr("error", "kind") and error.kind in {"Sigterm", "java.lang.IllegalStateException", "CreateCondaEnvironmentException"})
+python -m wf_reg_test retest --predicate '(hasattr(error, "rest") and  "peppy" in error.rest) or (hasattr(error, "kind") and error.kind in {"Sigterm", "java.lang.IllegalStateException", "CreateCondaEnvironmentException"})'
+
+Didn't fix:
+hasattr(error, "error") and "t exist in container" in error.error
+hasattr(error, "kind") and error.kind == "CreateCondaEnvironmentException"
+hasattr(error, "kind") and error.kind == "Sigterm"
+
+Fixed
+hasattr(error, "rest") and ("o space left on device" in error.rest or "conda info --json" in error.rest or "peppy" in error.rest)
+hasatt(error, "kind") and error.kind == "java.lang.IllegalStateException"

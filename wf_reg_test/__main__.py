@@ -238,7 +238,7 @@ def delete_duplicate_executions(hub: RegistryHub) -> None:
     revisions_with_multiple = [
         revision
         for revision in hub.revisions
-        if len(revision.executions) > 2
+        if len(revision.executions) > 1
     ]
     for revision in tqdm.tqdm(revisions_with_multiple, desc="revisions"):
         print(f"{revision!s} has multiple")

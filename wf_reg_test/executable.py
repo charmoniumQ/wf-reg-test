@@ -58,11 +58,8 @@ class Executable:
             [str(arg) for arg in self.command],
             cwd=self.cwd,
             env={
-                **({} if self.fresh_env else dict(os.environ.items())),
-                **{
-                    var: val
-                    for var, val in self.env_override.items()
-                },
+                **({} if self.fresh_env else os.environ),
+                **self.env_override,
             },
             check=check,
             capture_output=capture_output,
