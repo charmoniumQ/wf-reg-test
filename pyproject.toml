@@ -86,6 +86,7 @@ tqdm-stubs = "^0.2.1"
 azure-cli = "^2.43.0"
 pandas-stubs = "^1.5.2"
 mypy = "^0.991"
+pylsp-mypy = "^0.6.5"
 
 [tool.poetry.dependencies]
 python = ">=3.8,<3.11"
