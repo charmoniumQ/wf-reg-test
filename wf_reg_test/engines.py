@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import collections
 import contextlib
 import dataclasses
 import datetime
@@ -139,6 +140,13 @@ class Engine:
             return File.create(local_archive, remote_archive)
 
 
+def yaml_load_or(yaml_src: str, default: Any) -> Any:
+    try:
+        return yaml.safe_load(yaml_src)
+    except yaml.YAMLError:
+        return default
+
+
 class SnakemakeEngine(Engine):
     @contextlib.contextmanager
     def get_executable(
@@ -149,41 +157,66 @@ class SnakemakeEngine(Engine):
             n_cores: int,
     ) -> Iterator[Executable]:
         start_time = datetime.datetime.now()
-        # See for typical snakefile locations:
-        # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.4.1/ -> ./Snakefile
-        # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.8.4/ -> ./workflow/Snakefile
-        possible_snakefiles = ["snakefile", "Snakefile", "workflow/snakefile", "workflow/Snakefile"]
-        # This suppresses the "UnboundLocalError: local variable 'snakefile' referenced before assignment"
-        # even though Snakefile will certainly be overwritten before use
-        snakefile = possible_snakefiles[0]
-        try:
-            snakefile = next(
-                path
-                for path in possible_snakefiles
-                if (code_dir / path).exists()
-            )
-        except StopIteration as exc:
-            yield Executable(
-                command=["/usr/bin/echo", "Could not find [Ss]nakefile"],
-                cwd=code_dir,
-            )
-            return
+        github_ci_dir = pathlib.Path(code_dir / ".github/workflows")
+        if github_ci_dir.exists():
+            steps = [
+                step
+                for path in [*github_ci_dir.glob("*.yaml"), *github_ci_dir.glob("*.yml")]
+                for job in yaml_load_or(path.read_text(), {}).get("jobs", {}).values()
+                for step in job.get("steps", [])
+                if step.get("uses", "").startswith("snakemake/snakemake-github-action")
+            ]
+        else:
+            steps = []
+        if steps:
+            # Sorted prioritizes short directories over long ones when they occur the same number of times
+            directory = collections.Counter(sorted([
+                pathlib.Path(step.get("with", {}).get("directory", ".test"))
+                for step in steps
+            ])).most_common(1)[0][0]
+            snakefile = collections.Counter(sorted([
+                pathlib.Path(step.get("with", {}).get("snakefile", "Snakefile"))
+                for step in steps
+            ])).most_common(1)[0][0]
+        else:
+            directory = code_dir
+            # See for typical snakefile locations:
+            # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.4.1/ -> ./Snakefile
+            # https://github.com/friendsofstrandseq/mosaicatcher-pipeline/tree/1.8.4/ -> ./workflow/Snakefile
+            possible_snakefiles = ["snakefile", "Snakefile", "workflow/snakefile", "workflow/Snakefile"]
+            # This suppresses the "UnboundLocalError: local variable 'snakefile' referenced before assignment"
+            # even though Snakefile will certainly be overwritten before use
+            snakefile = pathlib.Path(possible_snakefiles[0])
+            try:
+                snakefile = next(
+                    pathlib.Path(path)
+                    for path in possible_snakefiles
+                    if (code_dir / path).exists()
+                )
+            except StopIteration as exc:
+                yield Executable(
+                    command=["/usr/bin/echo", "Could not find [Ss]nakefile"],
+                    cwd=code_dir,
+                )
+                return
         yield Executable(
             command=[
+                # See https://github.com/snakemake/snakemake-github-action/blob/master/entrypoint.sh
                 "snakemake",
                 f"--cores={n_cores}",
+                f"--directory={directory}",
                 "--use-singularity",
                 "--use-conda",
                 "--conda-frontend=conda",
                 "--forceall",
                 f"--snakefile={snakefile!s}",
             ],
+            cwd=code_dir,
             env_override={
                 # Doing without cache gives a better estimate on the time/compute resources required to get the **first** replication.
                 # Also, this would fill without bound and cause "no space left on storage device" error.
                 "SINGULARITY_DISABLE_CACHE": "1",
             },
-            cwd=code_dir,
             read_write_mounts={
                 code_dir: code_dir,
                 log_dir: log_dir,

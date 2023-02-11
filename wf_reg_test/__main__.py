@@ -179,14 +179,16 @@ def test(max_executions: int) -> None:
 @main.command()
 @click.option("--max-executions", type=int, default=-1)
 @click.option("--predicate", type=str, default="True")
+@click.option("--seed", type=int, default=0)
 @ch_time_block.decor()
-def retest(max_executions: int, predicate: str) -> None:
+def retest(max_executions: int, predicate: str, seed: str) -> None:
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
         for execution in hub.failed_executions
         if eval(predicate, globals(), {**locals(), "error": execution.workflow_error, "revision": execution.revision, "workflow": expect_type(Revision, execution.revision).workflow})
     ]
+    revisions_conditions = functional_shuffle(revisions_conditions, seed)
     if max_executions != -1:
         revisions_conditions = revisions_conditions[:max_executions]
     parallel_execute(
