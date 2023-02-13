@@ -16,7 +16,6 @@ Host manager
     User azureuser
 
 EOF
-ssh-keygen -R "manager"
 
 worker_count=$(terraform -chdir=terraform output --raw worker_count)
 
@@ -29,7 +28,6 @@ Host worker-${worker}
     ProxyJump manager
 
 EOF
-    ssh-keygen -R "worker-${worker}"
 done
 
 for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); do

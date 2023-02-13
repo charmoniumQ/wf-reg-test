@@ -42,9 +42,13 @@ def create_temp_file(cleanup: bool = True) -> Generator[Path, None, None]:
         yield Path(temp_dir / "file")
 
 
+tmp_root = Path.home() / "tmp"
+
+
 @contextlib.contextmanager
 def create_temp_dir(cleanup: bool = True) -> Generator[Path, None, None]:
-    temp_dir = Path(tempfile.mkdtemp())
+    temp_dir = get_unused_path(tmp_root, (random_str(10) for _ in itertools.count()))
+    temp_dir.mkdir(parents=True)
     try:
         yield Path(temp_dir)
     finally:

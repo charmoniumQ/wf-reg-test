@@ -72,9 +72,44 @@ resource "azurerm_resource_group" "default" {
   name     = "terraform"
 }
 
+resource "azurerm_virtual_network" "default" {
+  name                = "default"
+  address_space       = ["10.0.0.0/16"]
+  location            = azurerm_resource_group.default.location
+  resource_group_name = azurerm_resource_group.default.name
+}
+
 #############################################
 # Storage resources
 #############################################
+
+resource "azurerm_storage_account" "default-premium" {
+  name                     = "wfregtestfiles"
+  resource_group_name      = azurerm_resource_group.default.name
+  location                 = azurerm_resource_group.default.location
+  account_tier             = "Premium"
+  account_replication_type = "LRS"
+  account_kind             = "FileStorage"
+}
+
+resource "azurerm_storage_share" "default" {
+  name                 = "default"
+  storage_account_name = azurerm_storage_account.default-premium.name
+  quota                = 100
+  enabled_protocol     = "NFS"
+}
+
+# resource "azurerm_private_endpoint" "nfs" {
+#   name                = "nfs"
+#   resource_group_name = azurerm_resource_group.default.name
+#   location            = azurerm_resource_group.default.location
+#   subnet_id           = azurerm_subnet.default.id
+#   private_service_connection = {
+# 	name                           = "nfs"
+# 	is_manual_connection           = false
+# 	private_connection_resource_id = 
+#   }
+# }
 
 resource "azurerm_storage_account" "default" {
   name                     = "wfregtest"
@@ -124,14 +159,6 @@ resource "tls_private_key" "manager" {
   algorithm = "RSA"
   rsa_bits  = 4096
 }
-
-resource "azurerm_virtual_network" "default" {
-  name                = "default"
-  address_space       = ["10.0.0.0/16"]
-  location            = azurerm_resource_group.default.location
-  resource_group_name = azurerm_resource_group.default.name
-}
-
 
 output "developer_ssh_key" {
   value = tls_private_key.developer.private_key_openssh
