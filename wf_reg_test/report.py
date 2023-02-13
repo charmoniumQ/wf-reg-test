@@ -1,14 +1,11 @@
 import collections
 import itertools
-import io
 import pathlib
-import base64
 import urllib
 import yaml
 from datetime import datetime, timedelta
 from typing import Callable, Mapping, cast, Union, Optional
 
-import matplotlib  # type: ignore
 import domonic as html  # type: ignore
 import upath
 
@@ -21,6 +18,11 @@ from .html_helpers import (
     html_table,
     html_list,
     html_expand_cousin_details,
+    html_date,
+    html_datetime,
+    html_timedelta,
+    html_mpl_fig,
+    
 )
 from .util import sorted_and_dropped, groupby_dict, upath_to_url
 from .workflows import Workflow, RegistryHub, Execution
@@ -142,17 +144,32 @@ def get_stats(hub: RegistryHub) -> html.Element:
     )
 
 
-def html_date(dt: datetime) -> html.Element:
-    return dt.strftime("%Y-%m-%d")
-
-
-def html_datetime(dt: datetime) -> html.Element:
-    return dt.strftime("%Y-%m-%d %H:%M:%S")
-
-
-def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
-    day_diff = td.total_seconds() / timedelta(**{unit: 1}).total_seconds()
-    return f"{day_diff:.{digits}f} {unit}"
+def get_errors(hub: RegistryHub) -> html.Element:
+    failed_executions = hub.failed_executions
+    def get_kind(execution: Execution) -> str:
+        workflow_error = execution.workflow_error
+        return workflow_error.kind if workflow_error is not None else "unknown"
+    kind_to_exemplars = groupby_dict(failed_executions, get_kind)
+    counter = collections.Counter([get_kind(execution) for execution in failed_executions])
+    return html.div(
+        html_table(
+            [
+                {
+                    "Error": html.code(kind),
+                    "Count": html.span(str(count)),
+                    "Fraction of all errors": html.span("{:.0f}%".format((count / len(failed_executions)) * 100)),
+                    "Instances": collapsed(
+                        "See individual instances",
+                        html_list(
+                            html_link(str(execution), "#" + str(id(execution)))
+                            for execution in kind_to_exemplars[kind]
+                        ),
+                    ),
+                }
+                for (kind, count) in counter.most_common()
+            ],
+        ),
+    )
 
 
 def report_html(hub: RegistryHub) -> str:
@@ -293,13 +310,15 @@ def report_html(hub: RegistryHub) -> str:
                 ),
             ),
             html.body(
-                heading("Stats", level=1, anchor=True),
+                heading("wf-reg-test results", level=1),
+                html.span("Time: ", html_datetime(datetime.now())),
+                heading("Stats", level=2, anchor=True),
                 get_stats(hub),
-                heading("Errors", level=1, anchor=True),
+                heading("Errors", level=2, anchor=True),
                 get_errors(hub),
-                html.h1("Workflows"),
+                heading("Workflows", level=2, anchor=True),
                 table_by_workflows,
-                heading("Executions", level=1, anchor=True),
+                heading("Executions", level=2, anchor=True),
                 table_by_executions,
             ),
         ).__format__("").replace("<!DOCTYPE html>\n", ""),
@@ -307,36 +326,3 @@ def report_html(hub: RegistryHub) -> str:
 
 
 # TODO: put execution resource statistics
-
-
-def fig_to_html(figure: matplotlib.figure.Figure) -> html.Element:
-    buf = io.BytesIO()
-    figure.savefig(buf, format='png')
-    return html.img(src="data:image/png;base64," + base64.b64encode(buf.getvalue()).decode('utf-8'))
-
-def get_errors(hub: RegistryHub) -> html.Element:
-    failed_executions = hub.failed_executions
-    def get_kind(execution: Execution) -> str:
-        workflow_error = execution.workflow_error
-        return workflow_error.kind if workflow_error is not None else "unknown"
-    kind_to_exemplars = groupby_dict(failed_executions, get_kind)
-    counter = collections.Counter([get_kind(execution) for execution in failed_executions])
-    return html.div(
-        html_table(
-            [
-                {
-                    "Error": html.code(kind),
-                    "Count": html.span(str(count)),
-                    "Fraction of all errors": html.span("{:.0f}%".format((count / len(failed_executions)) * 100)),
-                    "Instances": collapsed(
-                        "See individual instances",
-                        html_list(
-                            html_link(str(execution), "#" + str(id(execution)))
-                            for execution in kind_to_exemplars[kind]
-                        ),
-                    ),
-                }
-                for (kind, count) in counter.most_common()
-            ],
-        ),
-    )

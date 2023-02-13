@@ -1,8 +1,12 @@
+import base64
+import io
 import itertools
+from datetime import datetime, timedelta
 from pathlib import Path
 from typing import Mapping, Optional, Sequence, TypeAlias, Iterable
 
 import domonic as html  # type: ignore
+import matplotlib  # type: ignore
 
 TagLike: TypeAlias = html.Element | str
 
@@ -126,3 +130,20 @@ def html_expand_cousin_details() -> html.Element:
         html.button("Collapse all", onclick="Array.from(this.parentElement.parentElement.getElementsByTagName('details')).forEach(elem => {elem.open = false;});"),
     )
 
+def html_date(dt: datetime) -> html.Element:
+    return dt.strftime("%Y-%m-%d")
+
+
+def html_datetime(dt: datetime) -> html.Element:
+    return dt.strftime("%Y-%m-%d %H:%M:%S")
+
+
+def html_timedelta(td: timedelta, unit: str, digits: int) -> html.Element:
+    day_diff = td.total_seconds() / timedelta(**{unit: 1}).total_seconds()
+    return f"{day_diff:.{digits}f} {unit}"
+
+
+def html_mpl_fig(figure: matplotlib.figure.Figure) -> html.Element:
+    buf = io.BytesIO()
+    figure.savefig(buf, format='png')
+    return html.img(src="data:image/png;base64," + base64.b64encode(buf.getvalue()).decode('utf-8'))
