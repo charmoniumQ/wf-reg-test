@@ -29,7 +29,7 @@ from .workflows import Workflow, RegistryHub, Execution
 
 
 def is_interesting(workflow: Workflow) -> bool:
-    return sum(bool(revision.executions) for revision in workflow.revisions) > 3
+    return sum(bool(revision.executions) for revision in workflow.revisions) >= 1
 
 
 def get_stats(hub: RegistryHub) -> html.Element:

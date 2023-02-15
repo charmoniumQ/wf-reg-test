@@ -58,7 +58,7 @@ class Executable:
             [str(arg) for arg in self.command],
             cwd=self.cwd,
             env={
-                **({} if self.fresh_env else os.environ),
+                **({} if self.fresh_env else dict(os.environ.items())),
                 **self.env_override,
             },
             check=check,

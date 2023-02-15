@@ -4,12 +4,13 @@ import shutil
 from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
 import pathlib
+import subprocess
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 import urllib.parse
 
 import upath
 
-from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr, create_temp_dir, get_current_revision
+from .util import non_unique, concat_lists, hash_path, walk_files, curried_getattr, create_temp_dir, get_current_revision, file_type, mime_type, http_download_with_cache, upath_to_url
 from .executable import Executable, ComputeResources, Machine
 
 
@@ -180,12 +181,13 @@ class WorkflowError:
     kind: str
 
 
-@dataclasses.dataclass(frozen=True)
+# TODO: refreeze
+@dataclasses.dataclass#(frozen=True)
 class Execution:
     machine: Optional[Machine]
     datetime: DateTime
-    outputs: File
-    logs: File
+    outputs: FileBundle
+    logs: FileBundle
     condition: Condition
     resources: ComputeResources
     status_code: int
@@ -289,26 +291,64 @@ class FileBundle:
     archive: File
     files: Mapping[pathlib.Path, File]
 
+    @staticmethod
+    def from_path(data_path: pathlib.Path, remote_archive: upath.UPath) -> FileBundle:
+        contents: dict[pathlib.Path, File] = {}
+        for path in walk_files(data_path):
+            if (data_path / path).is_file() and not (data_path / path).is_symlink():
+                contents[path] = File.from_path(data_path / path)
+        with create_temp_dir(cleanup=True) as temp_dir:
+            local_archive = temp_dir / remote_archive.name
+            (temp_dir / "files").write_text(
+                "\n".join(
+                    str(member.relative_to(data_path))
+                    for member in data_path.iterdir()
+                )
+            )
+            subprocess.run(
+                ["tar", "--create", "--xz", f"--file={local_archive}", f"--files-from={temp_dir / 'files'}"],
+                check=True,
+                capture_output=True,
+            )
+            with local_archive.open("rb") as src_fileobj, remote_archive.open("wb") as dst_fileobj:
+                shutil.copyfileobj(src_fileobj, dst_fileobj)
+            return FileBundle(File.from_path(local_archive, remote_archive), contents)
 
-def migrate_file_bundle(file: File, cache_path: pathlib.Path) -> FileBundle:
-    with create_temp_dir() as temp_dir:
-        if file.url is not None:
+    @staticmethod
+    def blank() -> FileBundle:
+        return FileBundle(File.blank(), {})
+
+    @staticmethod
+    def from_file_archive(remote_archive: File, cache_path: pathlib.Path) -> FileBundle:
+        with create_temp_dir() as temp_dir:
             local_archive = temp_dir / "test.tar.xz"
-            http_download_with_cache(file.url, local_archive, cache_path)
+            http_download_with_cache(upath_to_url(remote_archive.url), local_archive, cache_path)
             data_path = temp_dir / "data"
             if data_path.exists():
                 shutil.rmtree(data_path)
             data_path.mkdir()
-            subprocess.run(["tar", "--extract", f"--file", str(local_archive), "--directory", str(data_path)])
-            contents: dict[Path, File] = {}
+            subprocess.run(
+                ["tar", "--extract", f"--file={local_archive}", f"--directory={data_path}"],
+                check=True,
+                capture_output=True,
+            )
+            contents: dict[pathlib.Path, File] = {}
             for path in walk_files(data_path):
                 if (data_path / path).is_file() and not (data_path / path).is_symlink():
-                    contents[path] = File.create(data_path / path)
-            return FileBundle(File.create(local_archive), contents)
-        else:
-            (temp_dir / "blank").write_bytes()
-            return FileBundle.create(temp_dir / "blank", {})
+                    contents[path] = File.from_path(data_path / path)
+        return FileBundle(remote_archive, contents)
 
+    def check_invariants(self) -> Iterable[UserWarning]:
+        for file in self.files.values():
+            yield from file.check_invariants()
+
+    @property
+    def empty(self) -> int:
+        return bool(self.files)
+
+    @property
+    def size(self) -> int:
+        return sum(file.size for file in self.files.values())
 
 @dataclasses.dataclass(frozen=True)
 class File:
@@ -316,12 +356,12 @@ class File:
     hash_bits: int
     hash_val: int
     size: int
-    # file_type: str
-    # mime_type: str
+    file_type: str
+    mime_type: str
     url: Optional[pathlib.Path]
 
     @staticmethod
-    def create(path: pathlib.Path, url: Optional[upath.UPath] = None) -> File:
+    def from_path(path: pathlib.Path, url: Optional[upath.UPath] = None) -> File:
         if not path.is_file() or path.is_symlink():
             raise ValueError(f"{path} is not a regular file")
         return File(
@@ -329,9 +369,21 @@ class File:
             hash_bits=64,
             hash_val=hash_path(path, size=64),
             size=path.stat().st_size,
-            # file_type=get_file_type(path),
-            # mime_type=get_mime_type(path),
+            file_type=file_type(path),
+            mime_type=mime_type(path),
             url=path if url is None else url,
+        )
+
+    @staticmethod
+    def blank() -> File:
+        return File(
+            hash_algo="xxhash",
+            hash_bits=64,
+            hash_val=hash_path(pathlib.Path("/dev/null", size=64)),
+            size=0,
+            file_type="empty",
+            mime_type="empty",
+            url=None,
         )
 
     def __eq__(self, other: object) -> bool:
