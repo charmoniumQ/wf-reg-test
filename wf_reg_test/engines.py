@@ -23,7 +23,7 @@ import yaml
 import upath
 
 from .util import create_temp_dir, expect_type, walk_files, random_str, fs_escape
-from .workflows import Execution, Revision, Condition, WorkflowError
+from .workflows import Execution, Revision, Condition, WorkflowError, FileBundle
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
 
@@ -91,8 +91,8 @@ class Engine:
                 }))
             run_path = storage / fs_escape(revision.workflow.display_name) / random_str(8)
             workflow_error = self.parse_error(log_dir, code_dir)
-            outputs = self.create_in_storage(out_dir, run_path / "output.tar.xz")
-            logs = self.create_in_storage(log_dir, run_path / "logs.tar.xz")
+            outputs = FileBundle.from_path(out_dir, run_path / "output.tar.xz")
+            logs = FileBundle.from_path(log_dir, run_path / "logs.tar.xz")
         return Execution(
             machine=None,
             datetime=now,
@@ -104,42 +104,6 @@ class Engine:
             workflow_error=workflow_error,
             revision=None,
         )
-
-
-    @staticmethod
-    def create_in_storage(root: pathlib.Path, remote_archive: upath.UPath) -> File:
-        if not remote_archive.name.endswith(".tar.xz"):
-            raise ValueError("Must pass a .tar.xz")
-        with create_temp_dir(cleanup=True) as temp_dir:
-            local_archive = temp_dir / remote_archive.name
-            (temp_dir / "files").write_text(
-                "\n".join(
-                    str(member.relative_to(root))
-                    for member in root.iterdir()
-                )
-            )
-            command = ["tar", "--create", "--xz", "--file", str(local_archive), "--files-from", str(temp_dir / "files")]
-            try:
-                subprocess.run(
-                    command,
-                    check=True,
-                    cwd=root,
-                    capture_output=True,
-                    text=True,
-                )
-            except subprocess.CalledProcessError as exc:
-                raise RuntimeError("\n".join([
-                    "Tar failed",
-                    "command: " + str(command),
-                    "stodut: " + exc.stdout,
-                    "stderr:" + exc.stderr,
-                    str(temp_dir / "files") + ": " + (temp_dir / "files").read_text().replace("\n", " "),
-                ])) from exc
-            length = local_archive.stat().st_size
-            with local_archive.open("rb") as src_fileobj, remote_archive.open("wb") as dst_fileobj:
-                shutil.copyfileobj(src_fileobj, dst_fileobj)
-            return File.create(local_archive, remote_archive)
-
 
 
 def yaml_load_or(yaml_src: str, default: Any) -> Any:

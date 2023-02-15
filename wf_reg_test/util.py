@@ -12,6 +12,7 @@ import subprocess
 import tempfile
 import pprint
 from pathlib import Path
+import re
 from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional, Generic
 import urllib.parse
 import itertools
@@ -325,3 +326,17 @@ def upath_to_url(url: Optional[Path]) -> str:
     else:
         return str(url)
 
+
+def file_type(path: Path) -> str:
+    return subprocess.run(["file", "--brief", str(path)], capture_output=True, text=True, check=True).stdout
+
+
+def mime_type(path: Path) -> str:
+    return subprocess.run(["file", "--brief", "--mime-type", str(path)], capture_output=True, text=True, check=True).stdout
+
+
+def sanitize_file_type(file_str: str) -> str:
+    file_str = re.sub(r"\d\d:\d\d:\d\d:", "time", file_str)
+    file_str = re.sub(r"\d{2,}", "##", file_str)
+    file_str = re.sub('".*"', '"string"', file_str)
+    return file_str

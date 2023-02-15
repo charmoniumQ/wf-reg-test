@@ -78,7 +78,7 @@ def what_to_execute(
 
 def delete_execution(execution: Execution, confirm: bool = True) -> None:
     if input(f"Remove {execution}? y/n\n") == "y":
-        for path in [execution.logs.url, execution.outputs.url]:
+        for path in [execution.logs.archive.url, execution.outputs.archive.url]:
             if path is not None and path.exists():
                 path.unlink()
         revision = execution.revision
@@ -88,7 +88,7 @@ def delete_execution(execution: Execution, confirm: bool = True) -> None:
 
 def delete_orphans_in_storage(hub: RegistryHub) -> None:
     known_files = set(itertools.chain.from_iterable(
-        (execution.logs.url, execution.outputs.url)
+        (execution.logs.archive.url, execution.outputs.archive.url)
         for execution in hub.executions
     ))
     with ch_time_block.ctx("globbing_storage"):
@@ -181,7 +181,7 @@ def test(max_executions: int) -> None:
 @click.option("--predicate", type=str, default="True")
 @click.option("--seed", type=int, default=0)
 @ch_time_block.decor()
-def retest(max_executions: int, predicate: str, seed: str) -> None:
+def retest(max_executions: int, predicate: str, seed: int) -> None:
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
@@ -304,8 +304,8 @@ def classify_errors(url_part: str) -> None:
         for execution in hub.failed_executions
         if all([
                 execution.workflow_error is None,
-                execution.logs.url is not None,
-                url_part in str(execution.logs.url),
+                execution.logs.archive.url is not None,
+                url_part in str(execution.logs.archive.url),
         ])
     ]
     random.seed(1)
@@ -313,7 +313,7 @@ def classify_errors(url_part: str) -> None:
     cache_path = Path(".cache")
     cache_path.mkdir(exist_ok=True)
     for execution in tqdm.tqdm(failed_executions, desc="executions"):
-        strurl = upath_to_url(execution.logs.url)
+        strurl = upath_to_url(execution.logs.archive.url)
         with create_temp_dir() as temp_dir:
             tarball_path = temp_dir / "archive.tar.xz"
             http_download_with_cache(strurl, tarball_path, cache_path)
@@ -329,6 +329,38 @@ def classify_errors(url_part: str) -> None:
             print("Unparsed error for", execution)
         serialize(hub, index_path)
     report_inner(hub)
+
+
+@main.command()
+def migrate_file_bundle() -> None:
+    from .workflows import FileBundle, File
+
+    hub = deserialize(index_path)
+
+    cache_path = Path(".cache")
+    executions: list[Execution] = []
+    for execution in hub.executions:
+        if isinstance(cast(Any, execution.logs), File) is not None:
+            executions.append(execution)
+    for execution in tqdm.tqdm(executions, desc="executions"):
+        file = cast(File, execution.logs)
+        if file.url is not None:
+            execution.logs = FileBundle.from_file_archive(file, cache_path)
+        else:
+            execution.logs = FileBundle.blank()
+
+    executions.clear()
+    for execution in hub.executions:
+        if isinstance(cast(Any, execution.outputs), File) is not None:
+            executions.append(execution)
+    for execution in tqdm.tqdm(executions, desc="executions"):
+        file = cast(File, execution.outputs)
+        if file.url is not None:
+            execution.outputs = FileBundle.from_file_archive(file, cache_path)
+        else:
+            execution.outputs = FileBundle.blank()
+
+    serialize(hub, index_path)
 
 
 main()
