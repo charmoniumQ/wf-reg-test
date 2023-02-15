@@ -1,0 +1,3 @@
+- https://github.com/ESR-NZ/human_genomics_pipeline
+- https://github.com/marcodelapierre/toy-gpu-nf
+- https://github.com/snewhouse/nextflow_machine_learning

@@ -23,7 +23,7 @@ import yaml
 import upath
 
 from .util import create_temp_dir, expect_type, walk_files, random_str, fs_escape
-from .workflows import Execution, Revision, Condition, File, WorkflowError
+from .workflows import Execution, Revision, Condition, WorkflowError, File
 from .executable import Machine, Executable, ComputeResources, time, timeout, taskset, parse_time_file
 from .repos import get_repo
 
@@ -105,6 +105,7 @@ class Engine:
             revision=None,
         )
 
+
     @staticmethod
     def create_in_storage(root: pathlib.Path, remote_archive: upath.UPath) -> File:
         if not remote_archive.name.endswith(".tar.xz"):
@@ -138,6 +139,7 @@ class Engine:
             with local_archive.open("rb") as src_fileobj, remote_archive.open("wb") as dst_fileobj:
                 shutil.copyfileobj(src_fileobj, dst_fileobj)
             return File.create(local_archive, remote_archive)
+
 
 
 def yaml_load_or(yaml_src: str, default: Any) -> Any:
@@ -199,6 +201,12 @@ class SnakemakeEngine(Engine):
                     cwd=code_dir,
                 )
                 return
+        catalog_file = code_dir / ".snakemake-workflow-catalog.yml"
+        extra_flags = (yaml_load_or(catalog_file.read_text(), {}) if catalog_file.exists() else {}).get("mandatory-flags", {}).get("flags", "")
+        conda_path = code_dir.resolve().parent / "conda"
+        conda_path.mkdir()
+        singularity_dir = code_dir.resolve().parent / "singularity"
+        singularity_dir.mkdir()
         yield Executable(
             command=[
                 # See https://github.com/snakemake/snakemake-github-action/blob/master/entrypoint.sh
@@ -210,12 +218,12 @@ class SnakemakeEngine(Engine):
                 "--conda-frontend=conda",
                 "--forceall",
                 f"--snakefile={snakefile!s}",
+                *shlex.split(extra_flags)
             ],
             cwd=code_dir,
             env_override={
-                # Doing without cache gives a better estimate on the time/compute resources required to get the **first** replication.
-                # Also, this would fill without bound and cause "no space left on storage device" error.
-                "SINGULARITY_DISABLE_CACHE": "1",
+                "CONDA_ENVS_PATH": str(conda_path),
+                "SINGULARITY_CACHE": str(singularity_dir),
             },
             read_write_mounts={
                 code_dir: code_dir,
@@ -243,6 +251,7 @@ class SnakemakeEngine(Engine):
         if not log_files:
             return None
         logs = max(log_files).read_text()
+        stderr = (log_dir / "stderr.txt").read_text()
         err: Optional[WorkflowError]
         if False:
             pass
@@ -252,11 +261,15 @@ class SnakemakeEngine(Engine):
             return err
         elif err := SnakemakeCondaError._from_text(logs):
             return err
+        elif err := SnakemakeCondaError._from_text(stderr):
+            return err
         elif err := SnakemakeWorkflowError._from_text(logs):
             return err
-        elif err := SnakemakeInternalError._from_text((log_dir / "stderr.txt").read_text()):
+        elif err := SnakemakeWorkflowError._from_text(stderr):
             return err
-        elif err := SnakemakeInternalError2._from_text((log_dir / "stderr.txt").read_text()):
+        elif err := SnakemakeInternalError._from_text(stderr):
+            return err
+        elif err := SnakemakeInternalError2._from_text(stderr):
             return err
         else:
             return None
@@ -265,7 +278,7 @@ class SnakemakeEngine(Engine):
 @dataclasses.dataclass(frozen=True)
 class SnakemakeCondaError(WorkflowError):
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("$CreateCondaEnvironmentException:\n(.*)", re.MULTILINE | re.DOTALL)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("CreateCondaEnvironmentException:\n(.*)", re.MULTILINE | re.DOTALL)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeCondaError]:
@@ -373,6 +386,8 @@ class NextflowEngine(Engine):
             n_cores: int,
     ) -> Iterator[Executable]:
         start_time = datetime.datetime.now()
+        singularity_dir = code_dir.resolve().parent / "singularity"
+        singularity_dir.mkdir()
         yield Executable(
             command=[
                 "nextflow",
@@ -384,7 +399,8 @@ class NextflowEngine(Engine):
                 out_dir.resolve(),
             ],
             env_override={
-                "SINGULARITY_DISABLE_CACHE": "1",
+                "SINGULARITY_CACHEDIR": str(singularity_dir),
+                "NXF_SINGULARITY_CACHEDIR": str(singularity_dir),
             },
             cwd=code_dir.resolve(),
             read_write_mounts={

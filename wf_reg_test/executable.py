@@ -139,6 +139,7 @@ def taskset(
     core_list = ",".join(str(core) for core in which_cores)
     return Executable(
         command=["taskset", "--cpu-list", core_list, *executable.to_env_command()],
+        check=executable.check,
     )
 
 
@@ -154,6 +155,7 @@ def timeout(
             f"{wall_time_limit.total_seconds():.0f}",
             *executable.to_env_command(),
         ],
+        check=executable.check,
     )
 
 
@@ -169,6 +171,7 @@ def time(executable: Executable) -> Iterator[tuple[Executable, Path]]:
                 "--format=%M %S %U %e %x",
                 *executable.to_env_command(),
             ],
+            check=executable.check,
         ), time_file
 
 
