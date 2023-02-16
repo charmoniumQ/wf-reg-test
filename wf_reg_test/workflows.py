@@ -4,6 +4,7 @@ import shutil
 from datetime import datetime as DateTime, timedelta as TimeDelta
 import dataclasses
 import pathlib
+import shlex
 import subprocess
 from typing import ClassVar, ContextManager, Optional, Iterable, Mapping
 import urllib.parse
@@ -132,7 +133,9 @@ class Workflow:
     def check_invariants(self) -> Iterable[UserWarning]:
         if self not in self.registry.workflows:
             yield UserWarning("Not in own registry")
-        for attr in ["url", "display_name", "rev"]:
+        # rev can be the same if nothing changes between revisions
+        # E.g., https://github.com/franciscozorrilla/metaGEM v1.0.1 and v1.0.0 are both cc3d75a9
+        for attr in ["url", "display_name"]:
             for rev_i, rev_j, i, j in non_unique(self.revisions, curried_getattr(str, attr)):
                 yield UserWarning(f"Two revisions have the same {attr}: {i} \"{rev_i!s}\", {j} \"{rev_j!s}\"")
         for revision in self.revisions:
@@ -181,8 +184,7 @@ class WorkflowError:
     kind: str
 
 
-# TODO: refreeze
-@dataclasses.dataclass#(frozen=True)
+@dataclasses.dataclass(frozen=True)
 class Execution:
     machine: Optional[Machine]
     datetime: DateTime
@@ -297,18 +299,21 @@ class FileBundle:
         for path in walk_files(data_path):
             if (data_path / path).is_file() and not (data_path / path).is_symlink():
                 contents[path] = File.from_path(data_path / path)
-        with create_temp_dir(cleanup=True) as temp_dir:
+        with create_temp_dir() as temp_dir:
             local_archive = temp_dir / remote_archive.name
             (temp_dir / "files").write_text(
                 "\n".join(
                     str(member.relative_to(data_path))
                     for member in data_path.iterdir()
-                )
+                ) + "\n"
             )
-            subprocess.run(
-                ["tar", "--create", "--xz", f"--file={local_archive}", f"--files-from={temp_dir / 'files'}"],
+            cmd = ["tar", "--create", "--xz", f"--file={local_archive}", f"--files-from={temp_dir / 'files'}"]
+            proc = subprocess.run(
+                cmd,
+                cwd=data_path,
                 check=True,
                 capture_output=True,
+                text=True,
             )
             with local_archive.open("rb") as src_fileobj, remote_archive.open("wb") as dst_fileobj:
                 shutil.copyfileobj(src_fileobj, dst_fileobj)
@@ -343,8 +348,8 @@ class FileBundle:
             yield from file.check_invariants()
 
     @property
-    def empty(self) -> int:
-        return bool(self.files)
+    def empty(self) -> bool:
+        return not bool(self.files)
 
     @property
     def size(self) -> int:

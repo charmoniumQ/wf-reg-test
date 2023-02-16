@@ -8,6 +8,7 @@ import urllib.parse
 from pathlib import Path
 from typing import ContextManager, Optional, Any, Iterable, Mapping
 from typing_extensions import Protocol
+import warnings
 
 import git
 import github
@@ -79,6 +80,11 @@ class GitHubRepo(Repo):
             for release in repo.get_releases():
                 if (not self.skip_drafts or not release.draft) and (not self.skip_prereleases or not release.prerelease):
                     tag = tags[release.tag_name]
+                    try:
+                        commit = tag.commit.commit
+                    except github.GithubException:
+                        warnings.warn(f"Problem fetching commit for {self.url} {release.tag_name}")
+                        continue
                     yield Revision(
                         rev=tag.commit.sha,
                         display_name=tag.name,
@@ -88,12 +94,12 @@ class GitHubRepo(Repo):
                         workflow=None,
                     )
         elif self.revisions == "commits":
-            for commit in repo.get_commits():
+            for commit2 in repo.get_commits():
                 yield Revision(
-                    rev=commit.sha,
-                    display_name=commit.sha[:6],
-                    url=f"{self.url}/tree/{commit.sha}",
-                    datetime=commit.commit.committer.date,
+                    rev=commit2.sha,
+                    display_name=commit2.sha[:6],
+                    url=f"{self.url}/tree/{commit2.sha}",
+                    datetime=commit2.commit.committer.date,
                     executions=[],
                     workflow=None,
                 )

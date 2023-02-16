@@ -21,7 +21,7 @@ variable "builder_vm_size" {
 
 variable "workers" {
   type    = number
-  default = 5
+  default = 60
 }
 
 variable "worker_vm_size" {
@@ -125,14 +125,20 @@ resource "azurerm_storage_container" "index" {
   container_access_type = "blob" # blobs are publicly accessible
 }
 
-resource "azurerm_storage_container" "web" {
-  name                  = "$web"
+resource "azurerm_storage_container" "data" {
+  name                  = "data"
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible
 }
 
-resource "azurerm_storage_container" "data" {
-  name                  = "data"
+resource "azurerm_storage_container" "index2" {
+  name                  = "index2"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
+resource "azurerm_storage_container" "data2" {
+  name                  = "data2"
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible
 }

@@ -124,26 +124,24 @@ class SnakemakeEngine(Engine):
     ) -> Iterator[Executable]:
         start_time = datetime.datetime.now()
         github_ci_dir = pathlib.Path(code_dir / ".github/workflows")
+        steps = []
         if github_ci_dir.exists():
+            # Exclude --report and --lint runs, which may have different args than the main run
+            # There still could be multiple arg sets, of which, we simply choose the first.
             steps = [
                 step
                 for path in [*github_ci_dir.glob("*.yaml"), *github_ci_dir.glob("*.yml")]
                 for job in yaml_load_or(path.read_text(), {}).get("jobs", {}).values()
                 for step in job.get("steps", [])
                 if step.get("uses", "").startswith("snakemake/snakemake-github-action")
+                   and "--report" not in step.get("with", {}).get("args", {})
+                   and "--lint" not in step.get("with", {}).get("args", {})
             ]
-        else:
-            steps = []
         if steps:
-            # Sorted prioritizes short directories over long ones when they occur the same number of times
-            directory = collections.Counter(sorted([
-                pathlib.Path(step.get("with", {}).get("directory", ".test"))
-                for step in steps
-            ])).most_common(1)[0][0]
-            snakefile = collections.Counter(sorted([
-                pathlib.Path(step.get("with", {}).get("snakefile", "Snakefile"))
-                for step in steps
-            ])).most_common(1)[0][0]
+            main_step = steps[0]
+            directory = main_step.get("with", {}).get("directory", ".test")
+            snakefile = main_step.get("with", {}).get("snakefile", "Snakefile")
+            extra_args = shlex.split(main_step.get("with", {}).get("args", ""))
         else:
             directory = code_dir
             # See for typical snakefile locations:
@@ -165,8 +163,9 @@ class SnakemakeEngine(Engine):
                     cwd=code_dir,
                 )
                 return
+            extra_args = []
         catalog_file = code_dir / ".snakemake-workflow-catalog.yml"
-        extra_flags = (yaml_load_or(catalog_file.read_text(), {}) if catalog_file.exists() else {}).get("mandatory-flags", {}).get("flags", "")
+        extra_args += shlex.split((yaml_load_or(catalog_file.read_text(), {}) if catalog_file.exists() else {}).get("mandatory-flags", {}).get("flags", ""))
         conda_path = code_dir.resolve().parent / "conda"
         conda_path.mkdir()
         singularity_dir = code_dir.resolve().parent / "singularity"
@@ -182,7 +181,7 @@ class SnakemakeEngine(Engine):
                 "--conda-frontend=conda",
                 "--forceall",
                 f"--snakefile={snakefile!s}",
-                *shlex.split(extra_flags)
+                *extra_args,
             ],
             cwd=code_dir,
             env_override={

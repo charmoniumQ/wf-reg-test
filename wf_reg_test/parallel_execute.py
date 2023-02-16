@@ -109,14 +109,13 @@ logging.getLogger("parsl").propagate = False
 def parsl_parallel_map_with_id(
         execute_one: Callable[[_T, _U, Optional[ResourcePool[int]]], _V],
         ts_vs: list[tuple[_T, _U]],
-        parallelism: int,
         oversubscribe: bool,
         remote: bool,
         **kwargs: Any,
 ) -> Iterable[tuple[_T, _U, _V]]:
     with create_temp_dir() as temp_dir:
         # Note, I am using a tuple instead of a list because tuples are covariant.
-        exec(Path(os.environ["PARSL_CONFIG"]).read_text(), globals(), locals())
+        exec(Path(os.environ.get("PARSL_CONFIG", "parsl_configs/local.py")).read_text(), globals(), locals())
         if oversubscribe:
             raise NotImplementedError("Oversubscribe is not implemented for multi-node deployments yet.")
             @parsl.python_app
@@ -145,7 +144,6 @@ def parallel_execute(
     hub: RegistryHub,
     revisions_conditions: list[tuple[Revision, Condition]],
     index_path: Path,
-    parallelism: int,
     oversubscribe: bool,
     remote: bool,
     storage: UPath,
@@ -155,7 +153,6 @@ def parallel_execute(
         parallel_map_with_id(
             execute_one,
             revisions_conditions,
-            parallelism=parallelism,
             oversubscribe=oversubscribe,
             remote=remote,
             storage=storage,

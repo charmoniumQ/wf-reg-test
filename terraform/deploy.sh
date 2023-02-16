@@ -35,6 +35,7 @@ for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); 
     set -x
     $(cat spack/setup_env.sh)
     set +x ; source spack/activate.sh ; set -x
+    rm -rf ~/tmp ~/.singularity
     if [ -d wf-reg-test ]; then
         git -C wf-reg-test fetch
         git -C wf-reg-test reset --hard @{u}
@@ -43,3 +44,4 @@ for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); 
     fi
 EOF
 done
+wait

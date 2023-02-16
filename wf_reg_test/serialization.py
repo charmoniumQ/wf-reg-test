@@ -100,8 +100,8 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             {
                 "machine": execution.machine.short_description if execution.machine else "<unknown>",
                 "datetime": execution.datetime,
-                "outputs": execution.outputs,
-                "logs": execution.logs,
+                "outputs": execution.outputs.file,
+                "logs": execution.logs.file,
                 "condition": execution.condition,
                 "resources": execution.resources,
                 "status_code": execution.status_code,

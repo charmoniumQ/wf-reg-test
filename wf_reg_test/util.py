@@ -328,11 +328,11 @@ def upath_to_url(url: Optional[Path]) -> str:
 
 
 def file_type(path: Path) -> str:
-    return subprocess.run(["file", "--brief", str(path)], capture_output=True, text=True, check=True).stdout
+    return subprocess.run(["file", "--brief", str(path)], capture_output=True, text=True, check=True).stdout.strip()
 
 
 def mime_type(path: Path) -> str:
-    return subprocess.run(["file", "--brief", "--mime-type", str(path)], capture_output=True, text=True, check=True).stdout
+    return subprocess.run(["file", "--brief", "--mime-type", str(path)], capture_output=True, text=True, check=True).stdout.strip()
 
 
 def sanitize_file_type(file_str: str) -> str:

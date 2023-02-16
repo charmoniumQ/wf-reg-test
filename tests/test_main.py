@@ -104,13 +104,15 @@ def test_file_bundle() -> None:
         (temp_dir / "blah/foo").write_text("hello")
         (temp_dir / "bar").symlink_to("foo")
         (temp_dir / "baz").hardlink_to(temp_dir / "foo")
-        actual = FileBundle.create(temp_dir)
-    expected = FileBundle(contents={
-        Path('foo'): File(hash_val=16899831174130972922, size=2, hash_algo='xxhash', hash_bits=64, contents_url=None),
-        Path('baz'): File(hash_val=16899831174130972922, size=2, hash_algo='xxhash', hash_bits=64, contents_url=None),
-        Path('blah/foo'): File(hash_val=2794345569481354659, size=5, hash_algo='xxhash', hash_bits=64, contents_url=None),
-    })
-    assert actual == expected, summarize_diff(actual, expected)
+        file_bundle_loc = temp_dir / "test.tar.xz"
+        actual = FileBundle.from_path(temp_dir, file_bundle_loc)
+        kwargs = dict(hash_algo='xxhash', hash_bits=64, file_type="ASCII text", mime_type="text/plain")
+        expected = {
+            Path('foo'): File(hash_val=16899831174130972922, size=2, url=None, **kwargs),
+            Path('baz'): File(hash_val=16899831174130972922, size=2, url=None, **kwargs),
+            Path('blah/foo'): File(hash_val=2794345569481354659, size=5, url=None, **kwargs),
+        }
+        assert actual.files == expected
 
 
 def test_walk_files() -> None:

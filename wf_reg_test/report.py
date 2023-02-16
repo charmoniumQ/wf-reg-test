@@ -32,84 +32,87 @@ def is_interesting(workflow: Workflow) -> bool:
     return sum(bool(revision.executions) for revision in workflow.revisions) >= 1
 
 
+def divide_or(a: int, b: int) -> float:
+    if b == 0:
+        return 0
+    else:
+        return a / b
+
+
 def get_stats(hub: RegistryHub) -> html.Element:
     engine2workflows = groupby_dict(hub.workflows, lambda workflow: workflow.engine)
     stats: Mapping[str, Callable[[list[Workflow]], Union[str, int]]] = {
         "N workflows": lambda workflows: len(workflows),
-        "revisions / workflows": lambda workflows: "{:.1f}".format(
-            sum(len(workflow.revisions) for workflow in workflows)
-            / len(workflows)
-        ),
+        "revisions / workflows": lambda workflows: "{:.1f}".format(divide_or(
+            sum(len(workflow.revisions) for workflow in workflows),
+            len(workflows),
+        )),
         "N revisions": lambda workflows: sum(len(workflow.revisions) for workflow in workflows),
-        "executions / revision": lambda workflows: "{:.0f}%".format(
-            100*
+        "executions / revision": lambda workflows: "{:.0f}%".format(100 * divide_or(
             sum(
                 len(revision.executions)
                 for workflow in workflows
                 for revision in workflow.revisions
-            )
-            / sum(len(workflow.revisions) for workflow in workflows)
-        ),
+            ),
+            sum(len(workflow.revisions) for workflow in workflows),
+        )),
         "N executions": lambda workflows: sum(
             len(revision.executions)
             for workflow in workflows
             for revision in workflow.revisions
         ),
-        "working executions / executions": lambda workflows: "{:.0f}%".format(
-            100
-            * sum(
+        "working executions / executions": lambda workflows: "{:.0f}%".format(100 * divide_or(
+            sum(
                 execution.successful
                 for workflow in workflows
                 for revision in workflow.revisions
                 for execution in revision.executions
-            )
-            / sum(
+            ),
+            sum(
                 len(revision.executions)
                 for workflow in workflows
                 for revision in workflow.revisions
-            )
-        ),
+            ),
+        )),
         "N working executions": lambda workflows: sum(
             execution.successful
             for workflow in workflows
             for revision in workflow.revisions
             for execution in revision.executions
         ),
-        "error executions / executions": lambda workflows: "{:.0f}%".format(
-            100
-            * sum(
+        "error executions / executions": lambda workflows: "{:.0f}%".format(100 * divide_or(
+            sum(
                 not execution.successful
                 for workflow in workflows
                 for revision in workflow.revisions
                 for execution in revision.executions
-            )
-            / sum(
+            ),
+            sum(
                 len(revision.executions)
                 for workflow in workflows
                 for revision in workflow.revisions
-            )
-        ),
+            ),
+        )),
         "N error executions": lambda workflows: sum(
             not execution.successful
             for workflow in workflows
             for revision in workflow.revisions
             for execution in revision.executions
         ),
-        "classified error executions / error executions": lambda workflows: "{:.0f}%".format(
-            100
-            * sum(
+        "classified error executions / error executions": lambda workflows: "{:.0f}%".format(100 * divide_or(
+            sum(
                 (not execution.successful) and execution.workflow_error is not None
                 for workflow in workflows
                 for revision in workflow.revisions
                 for execution in revision.executions
-            )
-            / sum(
+            ),
+            sum(
                 not execution.successful
                 for workflow in workflows
                 for revision in workflow.revisions
                 for execution in revision.executions
-            )
-        ),
+            ),
+        )),
         "N classified error executions": lambda workflows: sum(
             (not execution.successful) and execution.workflow_error is not None
             for workflow in workflows
@@ -250,11 +253,11 @@ def report_html(hub: RegistryHub) -> str:
                         ),
                         "Logs": html_link(
                             "empty" if execution.logs.empty else f"{execution.logs.size / 2**30:.3f}GiB",
-                            upath_to_url(execution.logs.url),
+                            upath_to_url(execution.logs.archive.url),
                         ),
                         "Outputs": html_link(
                             "empty" if execution.outputs.empty else f"{execution.outputs.size / 2**30:.3f}GiB",
-                            upath_to_url(execution.outputs.url),
+                            upath_to_url(execution.outputs.archive.url),
                         ),
                         "Max RAM": f"{execution.resources.max_rss / 2**30:.3f}GiB",
                         "CPU Time": html_timedelta(
@@ -278,7 +281,7 @@ def report_html(hub: RegistryHub) -> str:
             reverse=True,
         )),
     )
-    return cast(
+    return "<!DOCTYPE html>\n" + cast(
         str,
         html.html(
             html.head(

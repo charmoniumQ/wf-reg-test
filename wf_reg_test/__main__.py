@@ -26,6 +26,22 @@ from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr
 from .executable import Machine
 from .parallel_execute import parallel_execute
 
+
+storage = upath.UPath(
+    "abfs://data2/",
+    account_name="wfregtest",
+    credential=AzureCredential(),
+)
+
+
+index_path = upath.UPath(
+    "abfs://index2/",
+    account_name="wfregtest",
+    credential=AzureCredential(),
+)
+
+html_path = index_path
+
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 ch_time_block.disable_stderr()
@@ -99,26 +115,6 @@ def delete_orphans_in_storage(hub: RegistryHub) -> None:
             orphaned_file.unlink()
 
 
-storage = upath.UPath(
-    "abfs://data/",
-    account_name="wfregtest",
-    credential=AzureCredential(),
-)
-
-
-index_path = upath.UPath(
-    "abfs://index/",
-    account_name="wfregtest",
-    credential=AzureCredential(),
-)
-
-html_path = upath.UPath(
-    "abfs://$web/",
-    account_name="wfregtest",
-    credential=AzureCredential(),
-)
-
-
 # TODO: should code be self-aware that it is in Git?
 
 
@@ -152,9 +148,10 @@ def clear() -> None:
 
 
 @main.command()
-@click.argument("max_executions", type=int)
+@click.option("--max-executions", type=int, default=None)
+@click.option("--serialize-every", type=int, default=120)
 @ch_time_block.decor()
-def test(max_executions: int) -> None:
+def test(max_executions: Optional[int], serialize_every: int) -> None:
     hub = deserialize(index_path)
     revisions_conditions = what_to_execute(
         hub=hub,
@@ -166,9 +163,8 @@ def test(max_executions: int) -> None:
     parallel_execute(
         hub,
         revisions_conditions,
-        parallelism=10,
         index_path=index_path,
-        serialize_every=TimeDelta(seconds=0),
+        serialize_every=TimeDelta(seconds=serialize_every),
         oversubscribe=False,
         remote=True,
         storage=storage,
@@ -180,8 +176,9 @@ def test(max_executions: int) -> None:
 @click.option("--max-executions", type=int, default=-1)
 @click.option("--predicate", type=str, default="True")
 @click.option("--seed", type=int, default=0)
+@click.option("--serialize-every", type=int, default=120)
 @ch_time_block.decor()
-def retest(max_executions: int, predicate: str, seed: int) -> None:
+def retest(max_executions: int, predicate: str, seed: int, serialize_every) -> None:
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
@@ -194,9 +191,8 @@ def retest(max_executions: int, predicate: str, seed: int) -> None:
     parallel_execute(
         hub,
         revisions_conditions,
-        parallelism=10,
         index_path=index_path,
-        serialize_every=TimeDelta(seconds=0),
+        serialize_every=TimeDelta(seconds=serialize_every),
         oversubscribe=False,
         remote=True,
         storage=storage,
@@ -222,7 +218,7 @@ def report_inner(hub: RegistryHub) -> None:
             azure.storage.blob.BlobClient(
                 account_url=f"https://{account_name}.blob.core.windows.net",
                 container_name=html_path._url.netloc,
-                blob_name="result.html",
+                blob_name="results.html",
                 # Note that this should be synchronous not AIO like html_path._kwargs["credential"]
                 credential=azure.identity.DefaultAzureCredential(),
             ).upload_blob(
@@ -233,7 +229,7 @@ def report_inner(hub: RegistryHub) -> None:
                 ),
             )
         else:
-            (html_path / "result.html").write_text(report_text)
+            (html_path / "results.html").write_text(report_text)
 
 
 def delete_duplicate_executions(hub: RegistryHub) -> None:
@@ -254,7 +250,7 @@ def delete_duplicate_executions(hub: RegistryHub) -> None:
         revision.executions = [newest_execution]
         for execution in old_executions:
             for file in [execution.logs, execution.outputs]:
-                url = file.url
+                url = file.archive.url
                 if url and url.exists():
                     try:
                         url.unlink()
@@ -329,38 +325,6 @@ def classify_errors(url_part: str) -> None:
             print("Unparsed error for", execution)
         serialize(hub, index_path)
     report_inner(hub)
-
-
-@main.command()
-def migrate_file_bundle() -> None:
-    from .workflows import FileBundle, File
-
-    hub = deserialize(index_path)
-
-    cache_path = Path(".cache")
-    executions: list[Execution] = []
-    for execution in hub.executions:
-        if isinstance(cast(Any, execution.logs), File) is not None:
-            executions.append(execution)
-    for execution in tqdm.tqdm(executions, desc="executions"):
-        file = cast(File, execution.logs)
-        if file.url is not None:
-            execution.logs = FileBundle.from_file_archive(file, cache_path)
-        else:
-            execution.logs = FileBundle.blank()
-
-    executions.clear()
-    for execution in hub.executions:
-        if isinstance(cast(Any, execution.outputs), File) is not None:
-            executions.append(execution)
-    for execution in tqdm.tqdm(executions, desc="executions"):
-        file = cast(File, execution.outputs)
-        if file.url is not None:
-            execution.outputs = FileBundle.from_file_archive(file, cache_path)
-        else:
-            execution.outputs = FileBundle.blank()
-
-    serialize(hub, index_path)
 
 
 main()

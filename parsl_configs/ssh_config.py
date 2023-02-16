@@ -11,7 +11,6 @@ parsl.load(parsl.config.Config(
                 ],
                 worker_init="source $HOME/spack/activate.sh\nexport PYTHONPATH=$HOME/wf-reg-test:$PYTHONPATH\n",
             ),
-            max_workers=parallelism,
         ),
     ],
    monitoring=(
