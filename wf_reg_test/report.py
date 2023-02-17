@@ -119,6 +119,18 @@ def get_stats(hub: RegistryHub) -> html.Element:
             for revision in workflow.revisions
             for execution in revision.executions
         ),
+        "wall time hours": lambda workflows: int(sum(
+            execution.resources.wall_time.total_seconds()
+            for workflow in workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+        ) / 60),
+        "cpu time hours": lambda workflows: int(sum(
+            (execution.resources.user_cpu_time + execution.resources.system_cpu_time).total_seconds()
+            for workflow in workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+        ) / 60),
         # "N interesting workflows": lambda workflows: sum(
         #     1 for workflow in workflows if is_interesting(workflow)
         # ),

@@ -1690,7 +1690,7 @@ python-versions = ">=3.8,<4.0"
 
 [[package]]
 name = "charmonium.time-block"
-version = "0.3.0"
+version = "0.3.1"
 description = "Time a block of code."
 category = "main"
 optional = false
@@ -2616,7 +2616,7 @@ tabulate = "*"
 name = "lazy-object-proxy"
 version = "1.9.0"
 description = "A fast and thorough lazy object proxy."
-category = "dev"
+category = "main"
 optional = false
 python-versions = ">=3.7"
 
@@ -4325,7 +4325,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "flake8 (<5)", "pytest-co
 [metadata]
 lock-version = "1.1"
 python-versions = ">=3.8,<3.11"
-content-hash = "2eff24f933e8faf3665310e38bd5e620c58beacff0cd86750ce9f69044761d90"
+content-hash = "7998847564f364f531a2ab860cb2b724c24ed2dc84a35cefc25f6e7a46d1db0b"
 
 [metadata.files]
 adal = [
@@ -4720,10 +4720,7 @@ chardet = []
     {file = "charmonium.async_subprocess-0.1.7.tar.gz", hash = "sha256:0a5c86cebe5f7b74237925b9ed0092079fe8c0abee90b4cb8331771e16ae7064"},
 ]
 "charmonium.freeze" = []
-"charmonium.time-block" = [
-    {file = "charmonium.time_block-0.3.0-py3-none-any.whl", hash = "sha256:1d2526fd0c7828f0980de6a9f58f2d26a398ad4ad05f6c7e26c9463bb3301c60"},
-    {file = "charmonium.time_block-0.3.0.tar.gz", hash = "sha256:805e93c746c93b8b6cbd5d64dcfd1742ffe06617653677031b917a898a931828"},
-]
+"charmonium.time-block" = []
 charset-normalizer = [
     {file = "charset-normalizer-2.1.1.tar.gz", hash = "sha256:5a3d016c7c547f69d6f81fb0db9449ce888b418b5b9952cc5e6e66843e9dd845"},
     {file = "charset_normalizer-2.1.1-py3-none-any.whl", hash = "sha256:83e9a75d1911279afd89352c68b45348559d1fc0506b054b346651b5e7fee29f"},

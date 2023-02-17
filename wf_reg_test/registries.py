@@ -43,7 +43,7 @@ def nf_core_registry(limit: Optional[int] = None) -> Registry:
                 display_name=repo.name,
                 repo_url=f"https://github.com/{repo.full_name}?revisions=releases&skip-drafts=1&skip-preleases=1",
                 revisions=[],
-                registry=registry
+                # registry=registry,
             ))
     return registry
 
@@ -72,6 +72,6 @@ def snakemake_registry(limit: Optional[int] = None) -> Registry:
                 display_name=repo_info["full_name"],
                 repo_url=f"https://github.com/{full_name}?revisions=releases&skip-drafts=1&skip-preleases=1",
                 revisions=[],
-                registry=registry,
+                # registry=registry,
             ))
     return registry

@@ -110,7 +110,6 @@ def parsl_parallel_map_with_id(
         execute_one: Callable[[_T, _U, Optional[ResourcePool[int]]], _V],
         ts_vs: list[tuple[_T, _U]],
         oversubscribe: bool,
-        remote: bool,
         **kwargs: Any,
 ) -> Iterable[tuple[_T, _U, _V]]:
     with create_temp_dir() as temp_dir:
@@ -145,16 +144,14 @@ def parallel_execute(
     revisions_conditions: list[tuple[Revision, Condition]],
     index_path: Path,
     oversubscribe: bool,
-    remote: bool,
     storage: UPath,
-    serialize_every: TimeDelta = TimeDelta(minutes=5),
+    serialize_every: TimeDelta,
 ) -> None:
     iterator = tqdm.tqdm(
         parallel_map_with_id(
             execute_one,
             revisions_conditions,
             oversubscribe=oversubscribe,
-            remote=remote,
             storage=storage,
         ),
         total=len(revisions_conditions),
@@ -174,6 +171,7 @@ def parallel_execute(
         if last_serialization + serialize_every < DateTime.now():
             with ch_time_block.ctx("serialize"):
                 serialize(hub, index_path)
+                last_serialization = DateTime.now()
 
 
 escape = urllib.parse.quote_plus
@@ -191,8 +189,7 @@ def execute_one(
     if storage is None:
         raise TypeError()
     workflow = expect_type(Workflow, revision.workflow)
-    registry = workflow.registry
-    print(workflow.display_name, registry.display_name, revision.display_name)
+    #print(workflow.engine, workflow.display_name, revision.display_name)
     engine = engines[workflow.engine]
     if core_pool is not None:
         with core_pool.get_many(1 if condition.single_core else 2, delay=10) as cores:

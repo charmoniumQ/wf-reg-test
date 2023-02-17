@@ -3,18 +3,22 @@ import dataclasses
 import pickle
 import shutil
 import sys
+import pathlib
 import urllib.parse
 import warnings
+from typing import cast, Mapping, Any
 
+import lazy_object_proxy  # type: ignore
 import yaml
 import pickle
 import charmonium.freeze
 import charmonium.time_block
 import tqdm
 import upath
+import zlib
 
-from .workflows import RegistryHub, Registry, Workflow, Revision, Execution
-from .util import expect_type, get_current_revision
+from .workflows import RegistryHub, Registry, Workflow, Revision, Execution, File, FileBundle
+from .util import expect_type, get_current_revision, merge_dicts, groupby_dict, raise_
 
 """
 
@@ -43,6 +47,17 @@ registries, workflows, revisions, and executions in separate files.
 encode = urllib.parse.quote_plus
 
 
+def write_text(path: upath.UPath, text: str) -> None:
+    # with charmonium.time_block.ctx(f"write_text({path.name})"):
+    return path.write_text(text)
+
+
+def read_text(path: upath.UPath) -> str:
+    # with charmonium.time_block.ctx(f"read_text({path.name})"):
+    return path.read_text()
+
+
+
 @charmonium.time_block.ctx("serialize")
 def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
     if warn:
@@ -55,7 +70,7 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
     if not path.exists():
         path.mkdir()
 
-    (path / "index.yaml").write_text(yaml.dump([
+    write_text(path / "index.yaml", yaml.dump([
         {
             "display_name": registry.display_name,
             "url": registry.url,
@@ -71,14 +86,14 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
         for execution in revision.executions
         if execution.machine
     }
-    (path / f"machines.yaml").write_text(yaml.dump({
+    write_text(path / f"machines.yaml", yaml.dump({
         machine.short_description: machine
         for machine in unique_machines
     }))
 
     for registry in hub.registries:
         name = encode(registry.display_name)
-        (path / f"{name}_workflows.yaml").write_text(yaml.dump([
+        write_text(path / f"{name}_workflows.yaml", yaml.dump([
             {
                 "engine": workflow.engine,
                 "url": workflow.url,
@@ -87,7 +102,7 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             }
             for workflow in registry.workflows
         ]))
-        (path / f"{name}_revisions.yaml").write_text(yaml.dump([
+        write_text(path / f"{name}_revisions.yaml", yaml.dump([
             {
                 "display_name": revision.display_name,
                 "url": revision.url,
@@ -98,12 +113,17 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             for workflow in registry.workflows
             for revision in workflow.revisions
         ]))
-        (path / f"{name}_executions.pkl").write_bytes(pickle.dumps([
+        write_text(path / f"{name}_executions.yaml", yaml.dump([
             {
                 "machine": execution.machine.short_description if execution.machine else "<unknown>",
                 "datetime": execution.datetime,
-                "outputs": execution.outputs,
-                "logs": execution.logs,
+                # Note that FileBundle.files are too big to store in the rest of the object.
+                # Instead we store a thunk that looks up the FileBundle based on the workflow and archive hash.
+                # Using the workflow to define the storage location helps batch the downloads.
+                # Within that file, the archive hash uniquely points to the file map.
+                # If two archives are the same, its ok to only store their file map once; it should be identical.
+                "outputs": execution.outputs.archive,
+                "logs": execution.logs.archive,
                 "condition": execution.condition,
                 "resources": execution.resources,
                 "status_code": execution.status_code,
@@ -116,6 +136,27 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             for revision in workflow.revisions
             for execution in revision.executions
         ]))
+
+        file_bundles = [
+            file_bundle
+            for workflow in registry.workflows
+            for revision in workflow.revisions
+            for execution in revision.executions
+            for file_bundle in [execution.outputs, execution.logs]
+        ]
+        real_file_bundles = [
+            file_bundle
+            for file_bundle in file_bundles
+            if not is_lazy_object_proxy(file_bundle.files)
+        ]
+        if real_file_bundles:
+            for file_bundle in tqdm.tqdm(real_file_bundles, desc="file bundle"):
+                file_bundle_path = path / "files" / f"{file_bundle.archive.hash_val}"
+                file_bundle_path.write_bytes(pickle.dumps(file_bundle.files))
+                file_bundle.files = lazy_object_proxy.Proxy(
+                    lambda: pickle.loads(file_bundle_path.read_bytes())
+                )
+                assert is_lazy_object_proxy(file_bundle.files)
 
     if warn:
         stored_hub = deserialize(path, warn=False)
@@ -137,7 +178,7 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
 @charmonium.time_block.ctx("deserialize")
 def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
     registry_dicts = yaml.load(
-        (path / "index.yaml").read_text(),
+        read_text(path / "index.yaml"),
         Loader=yaml.Loader,
     )
     hub = RegistryHub(
@@ -151,7 +192,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
         ]
     )
     machine_map = yaml.load(
-        (path / f"machines.yaml").read_text(),
+        read_text(path / f"machines.yaml"),
         Loader=yaml.Loader,
     )
 
@@ -159,7 +200,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
         name = encode(registry.display_name)
 
         workflow_dicts = yaml.load(
-            (path / f"{name}_workflows.yaml").read_text(),
+            read_text(path / f"{name}_workflows.yaml"),
             Loader=yaml.Loader,
         )
         workflows_map: dict[str, Workflow] = {}
@@ -170,13 +211,13 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
                 display_name=workflow_dict["display_name"],
                 repo_url=workflow_dict["repo_url"],
                 revisions=[],
-                registry=registry,
+                #registry=registry,
             )
             registry.workflows.append(workflow)
             workflows_map[workflow.display_name] = workflow
 
         revision_dicts = yaml.load(
-            (path / f"{name}_revisions.yaml").read_text(),
+            read_text(path / f"{name}_revisions.yaml"),
             Loader=yaml.Loader,
         )
         revision_map: dict[tuple[str, str], Revision] = {}
@@ -194,20 +235,28 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
 
             revision_map[workflow.display_name, revision.display_name] = revision
 
-        with charmonium.time_block.ctx(f"fetch executions {registry.display_name}"):
-            execution_dicts_pkl = (path / f"{name}_executions.pkl").read_bytes()
-        with charmonium.time_block.ctx(f"parse executions {registry.display_name}"):
-            execution_dicts = pickle.loads(
-                execution_dicts_pkl,
-            )
+        execution_dicts_yaml = read_text(path / f"{name}_executions.yaml")
+        execution_dicts = yaml.load(
+            execution_dicts_yaml,
+            Loader=yaml.Loader,
+        )
 
         for execution_dict in execution_dicts:
             revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
+            for file_bundle_key in ["outputs", "logs"]:
+                if isinstance(execution_dict[file_bundle_key], File):
+                    files = cast(Mapping[pathlib.Path, File], lazy_object_proxy.Proxy(
+                        lambda:
+                        pickle.loads((path / "files" / f"{execution_dict[file_bundle_key].archive.hash_val}").read_bytes())
+                    ))
+                    execution_dict[file_bundle_key] = FileBundle(execution_dict[file_bundle_key], files)
+                else:
+                    raise TypeError(type())
             execution = Execution(
                 machine=machine_map.get(execution_dict["machine"]),
                 datetime=expect_type(DateTime, execution_dict["datetime"]),
-                outputs=execution_dict["outputs"],
-                logs=execution_dict["logs"],
+                outputs=execution_dict["outputs"] if execution_dict["outputs"] is not None else FileBundle.blank(),
+                logs=execution_dict["logs"] if execution_dict["logs"] is not None else FileBundle.blank(),
                 condition=execution_dict["condition"],
                 resources=execution_dict["resources"],
                 status_code=execution_dict["status_code"],
@@ -215,6 +264,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
                 wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", get_current_revision()),
                 workflow_error=execution_dict.get("workflow_error", None),
             )
+
             revision.executions.append(execution)
 
     if warn:
@@ -222,3 +272,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
             warnings.warn(warning)
 
     return hub
+
+
+def is_lazy_object_proxy(obj: Any) -> bool:
+    return hasattr(obj, "__factory__")

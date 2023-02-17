@@ -90,9 +90,11 @@ def what_to_execute(
 
 def delete_execution(execution: Execution, confirm: bool = True) -> None:
     if input(f"Remove {execution}? y/n\n") == "y":
-        for path in [execution.logs.archive.url, execution.outputs.archive.url]:
-            if path is not None and path.exists():
-                path.unlink()
+        for file_bundle in [execution.logs, execution.outputs]:
+            file_bundle_files = (index_path / "files" / f"{file_bundle.archive.hash_val}")
+            if file_bundle_files.exists():
+                file_bundle_files.unlink()
+            file_bundle.archive.unlink()
         revision = execution.revision
         assert revision
         revision.executions.remove(execution)
@@ -162,7 +164,6 @@ def test(max_executions: Optional[int], serialize_every: int) -> None:
         index_path=index_path,
         serialize_every=TimeDelta(seconds=serialize_every),
         oversubscribe=False,
-        remote=True,
         storage=storage,
     )
     serialize(hub, index_path)
@@ -174,7 +175,7 @@ def test(max_executions: Optional[int], serialize_every: int) -> None:
 @click.option("--seed", type=int, default=0)
 @click.option("--serialize-every", type=int, default=120)
 @ch_time_block.decor()
-def retest(max_executions: int, predicate: str, seed: int, serialize_every) -> None:
+def retest(max_executions: int, predicate: str, seed: int, serialize_every: int) -> None:
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
@@ -190,7 +191,6 @@ def retest(max_executions: int, predicate: str, seed: int, serialize_every) -> N
         index_path=index_path,
         serialize_every=TimeDelta(seconds=serialize_every),
         oversubscribe=False,
-        remote=True,
         storage=storage,
     )
     delete_duplicate_executions(hub)
@@ -264,7 +264,8 @@ def post_process() -> None:
 @click.option("--delete-duplicates", type=bool, is_flag=True, default=False)
 @click.option("--delete-orphans", type=bool, is_flag=True, default=False)
 @click.option("--delete-predicate", type=str, default="False")
-def verify(delete_duplicates: bool, delete_orphans: bool, delete_predicate: str) -> None:
+@click.option("--check-size", type=bool, default=False)
+def verify(delete_duplicates: bool, delete_orphans: bool, delete_predicate: str, check_size: bool) -> None:
     hub = deserialize(index_path)
     if delete_duplicates:
         delete_duplicate_executions(hub)
@@ -276,6 +277,29 @@ def verify(delete_duplicates: bool, delete_orphans: bool, delete_predicate: str)
             to_delete.append(execution)
     for execution in tqdm.tqdm(to_delete):
         delete_execution(execution)
+    if check_size:
+        import dill  # type: ignore
+        for executions in hub.executions:
+            for file_bundle in [execution.logs, execution.outputs]:
+                len(file_bundle.files)
+        sizes = sorted([
+            (len(dill.dumps(workflow)), random.randint(0, 100000), workflow)
+            for workflow in hub.workflows
+        ])
+        # Note that Parsl has a serialization limit.
+        # We need to check that all of our objects are less than the limit.
+        limit = 1048576 # found in `cat runinfo/*/parsl.log | grep 'Serialized object exceeds buffer threshold of'`
+        for size, _, workflow in sizes[:6]:
+            print(f"{size/limit:.2f} * limit = len(dill.dumps({workflow!s}))")
+            for revision in workflow.revisions:
+                print(f"  {len(dill.dumps(revision))/limit:.2f} * limit ~ len(dill.dumps({revision!s}))")
+                for execution in revision.executions:
+                    print(f"    {len(dill.dumps(execution))/limit:.2f} * limit ~ len(dill.dumps({execution!s}))")
+                    print(f"      {len(dill.dumps(execution.outputs))/limit:.2f} * limit ~ len(dill.dumps(execution.outputs))")
+                    print(f"        {len(dill.dumps(execution.outputs))/limit:.2f} * limit ~ len(dill.dumps(execution.outputs.files))")
+                    print(f"      {len(dill.dumps(execution.logs))/limit:.2f} * limit ~ len(dill.dumps(execution.logs))")
+                    print(f"        {len(dill.dumps(execution.logs))/limit:.2f} * limit ~ len(dill.dumps(execution.logs.files))")
+                    print(f"      {len(dill.dumps(execution.workflow_error))/limit:.2f} * limit ~ len(dill.dumps(execution.workflow_error))")
     serialize(hub, index_path)
 
 

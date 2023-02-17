@@ -13,7 +13,7 @@ import tempfile
 import pprint
 from pathlib import Path
 import re
-from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional, Generic
+from typing import Callable, Generator, Iterable, TypeVar, Union, cast, Mapping, Any, Optional, Generic, NoReturn
 import urllib.parse
 import itertools
 import shutil
@@ -143,6 +143,13 @@ def groupby_dict(data: Iterable[_T], key_func: Callable[[_T], _V]) -> Mapping[_V
     return ret
 
 
+def merge_dicts(dicts: Iterable[Mapping[_T, _V]]) -> dict[_T, _V]:
+    ret: dict[_T, _V] = {}
+    for dict in dicts:
+        ret.update(dict)
+    return ret
+
+
 def non_unique(
     data: Iterable[_T],
     key: Callable[[_T], Any] = toolz.identity,
@@ -160,6 +167,10 @@ def expect_type(typ: type[_T], data: Any) -> _T:
     # Apparently they're pretty smart.
     # return cast(_T, data)
     return data
+
+
+def raise_(exception: Exception) -> NoReturn:
+    raise exception
 
 
 def concat_lists(lists: Iterable[list[_T]]) -> list[_T]:
@@ -204,33 +215,6 @@ def xml_to_dict(elem: xml.etree.ElementTree.Element) -> Any:
 
 def fs_escape(string: str) -> str:
     return urllib.parse.quote(string.replace(" ", "-").replace("_", "-"), safe="")
-
-
-class ThunkObject:
-    def __init__(self, ty: type[_T], thunk: Callable[[], _T]) -> None:
-        self._ty = ty
-        self._thunk = thunk
-        self._value: Optional[_T]
-        self._value = None
-
-    def __getstate__(self) -> Any:
-        return self._thunk
-
-    def __setstate__(self, thunk: Callable[[], _T]) -> None:
-        self._thunk = thunk
-        self._value = None
-
-    def _reify(self, ty: type[_T]) -> _T:
-        if self._value is None:
-            self._value = self._thunk()
-            assert self._value is not None
-            for attr in dir(self._value):
-                if attr not in ["__class__", "__getstate__", "__setstate__"]:
-                    setattr(self, attr, getattr(self._value, attr))
-        return self._value
-
-    def __getattr__(self, attr: str) -> Any:
-        return getattr(self._reify(self._ty), attr)
 
 
 # azure.identity.aio.DefaultIdentityCredential is not picklable.

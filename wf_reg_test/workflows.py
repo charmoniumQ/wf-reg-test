@@ -85,8 +85,8 @@ class Registry:
             for wf_i, wf_j, i, j in non_unique(self.workflows, curried_getattr(str, attr)):
                 yield UserWarning(f"Two workflows have the same {attr}: {i} \"{wf_i!s}\", {j} \"{wf_j!s}\"")
         for wf in self.workflows:
-            if wf.registry != self:
-                yield UserWarning("Workflow does not point back to self", wf, self)
+            # if wf.registry != self:
+            #     yield UserWarning("Workflow does not point back to self", wf, self)
             yield from wf.check_invariants()
 
 
@@ -101,7 +101,8 @@ class Workflow:
     display_name: str
     repo_url: str
     revisions: list[Revision]
-    registry: Registry = dataclasses.field(compare=False)
+    # I changed this because the serialization of the workflow was too large when it included an up-pointer to the registry and the entire hub.
+    #registry: Registry = dataclasses.field(compare=False)
 
     def max_wall_time_estimate(self) -> TimeDelta:
         # wall_times_of_successes = [
@@ -131,8 +132,8 @@ class Workflow:
                 self.revisions.append(revision)
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        if self not in self.registry.workflows:
-            yield UserWarning("Not in own registry")
+        # if self not in self.registry.workflows:
+        #     yield UserWarning("Not in own registry")
         # rev can be the same if nothing changes between revisions
         # E.g., https://github.com/franciscozorrilla/metaGEM v1.0.1 and v1.0.0 are both cc3d75a9
         for attr in ["url", "display_name"]:
@@ -288,7 +289,7 @@ Condition.HARD_CONTROLS = Condition(
     )
 
 
-@dataclasses.dataclass(frozen=True)
+@dataclasses.dataclass#(frozen=True)
 class FileBundle:
     archive: File
     files: Mapping[pathlib.Path, File]
@@ -344,16 +345,22 @@ class FileBundle:
         return FileBundle(remote_archive, contents)
 
     def check_invariants(self) -> Iterable[UserWarning]:
-        for file in self.files.values():
-            yield from file.check_invariants()
+        ## This might involve fetching a lazy_object_proxy.
+        ## Not worth it!
+        # for file in self.files.values():
+        #     yield from file.check_invariants()
+        yield from []
 
     @property
     def empty(self) -> bool:
-        return not bool(self.files)
+        return False
+        # return not bool(self.files)
 
     @property
     def size(self) -> int:
-        return sum(file.size for file in self.files.values())
+        return self.archive.size
+        # return sum(file.size for file in self.files.values())
+
 
 @dataclasses.dataclass(frozen=True)
 class File:

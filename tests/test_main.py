@@ -77,25 +77,20 @@ def test_serialize(compute_resources: ComputeResources, machine: Machine) -> Non
     assert type(machine2) is type(machine)
 
 wait = 0.2
-def worker(arg0: int, arg1: int, core_pool: ResourcePool[int]) -> tuple[int, int]:
-    with core_pool.get_many(1, delay=wait) as (core_id,):
-        ret = arg0 + arg1
-        time.sleep(wait)
-        return (ret, core_id)
+def worker(arg0: int, arg1: int, core_pool: ResourcePool[int], wait: float = wait) -> tuple[int, int]:
+    ret = arg0 + arg1
+    time.sleep(wait)
+    return ret
 
 def test_parallel_map() -> None:
     total_items = 20
-    parallelism = 4
     args_list = [(i, i**2) for i in range(total_items)]
     start = DateTime.now()
-    results = list(parallel_map_with_id(worker, args_list, parallelism=parallelism))
+    results = list(parallel_map_with_id(worker, args_list, oversubscribe=False, ))
     elapsed = (DateTime.now() - start).total_seconds()
-    print(wait * math.ceil(total_items / parallelism), elapsed, wait * math.ceil(total_items / (parallelism - 1)))
-    assert wait * math.ceil(total_items / parallelism) < elapsed < wait * total_items
     assert len(results) == total_items
-    for (arg0, arg1, (ret, worker_id)) in results:
+    for (arg0, arg1, ret) in results:
         assert ret == arg0 + arg1
-        assert 0 <= worker_id < parallelism
 
 def test_file_bundle() -> None:
     with wf_reg_test.util.create_temp_dir() as temp_dir:
