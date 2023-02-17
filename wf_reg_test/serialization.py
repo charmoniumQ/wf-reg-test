@@ -7,6 +7,7 @@ import urllib.parse
 import warnings
 
 import yaml
+import pickle
 import charmonium.freeze
 import charmonium.time_block
 import tqdm
@@ -42,6 +43,7 @@ registries, workflows, revisions, and executions in separate files.
 encode = urllib.parse.quote_plus
 
 
+@charmonium.time_block.ctx("serialize")
 def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
     if warn:
         for warning in hub.check_invariants():
@@ -96,12 +98,12 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             for workflow in registry.workflows
             for revision in workflow.revisions
         ]))
-        (path / f"{name}_executions.yaml").write_text(yaml.dump([
+        (path / f"{name}_executions.pkl").write_bytes(pickle.dumps([
             {
                 "machine": execution.machine.short_description if execution.machine else "<unknown>",
                 "datetime": execution.datetime,
-                "outputs": execution.outputs.file,
-                "logs": execution.logs.file,
+                "outputs": execution.outputs,
+                "logs": execution.logs,
                 "condition": execution.condition,
                 "resources": execution.resources,
                 "status_code": execution.status_code,
@@ -132,85 +134,88 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             warnings.warn("hub != stored_hub, see diff.log")
 
 
+@charmonium.time_block.ctx("deserialize")
 def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
-    with charmonium.time_block.ctx("registry"):
-        registry_dicts = yaml.load(
-            (path / "index.yaml").read_text(),
+    registry_dicts = yaml.load(
+        (path / "index.yaml").read_text(),
+        Loader=yaml.Loader,
+    )
+    hub = RegistryHub(
+        registries=[
+            Registry(
+                display_name=registry_dict["display_name"],
+                url=registry_dict["url"],
+                workflows=[],
+            )
+            for registry_dict in registry_dicts
+        ]
+    )
+    machine_map = yaml.load(
+        (path / f"machines.yaml").read_text(),
+        Loader=yaml.Loader,
+    )
+
+    for registry in hub.registries:
+        name = encode(registry.display_name)
+
+        workflow_dicts = yaml.load(
+            (path / f"{name}_workflows.yaml").read_text(),
             Loader=yaml.Loader,
         )
-        hub = RegistryHub(
-            registries=[
-                Registry(
-                    display_name=registry_dict["display_name"],
-                    url=registry_dict["url"],
-                    workflows=[],
-                )
-                for registry_dict in registry_dicts
-            ]
-        )
-        machine_map = yaml.load(
-            (path / f"machines.yaml").read_text(),
+        workflows_map: dict[str, Workflow] = {}
+        for workflow_dict in workflow_dicts:
+            workflow = Workflow(
+                engine=workflow_dict["engine"],
+                url=workflow_dict["url"],
+                display_name=workflow_dict["display_name"],
+                repo_url=workflow_dict["repo_url"],
+                revisions=[],
+                registry=registry,
+            )
+            registry.workflows.append(workflow)
+            workflows_map[workflow.display_name] = workflow
+
+        revision_dicts = yaml.load(
+            (path / f"{name}_revisions.yaml").read_text(),
             Loader=yaml.Loader,
         )
-
-    with charmonium.time_block.ctx("everything else"):
-        for registry in hub.registries:
-            name = encode(registry.display_name)
-
-            workflow_dicts = yaml.load(
-                (path / f"{name}_workflows.yaml").read_text(),
-                Loader=yaml.Loader,
+        revision_map: dict[tuple[str, str], Revision] = {}
+        for revision_dict in revision_dicts:
+            workflow = workflows_map[revision_dict["workflow"]]
+            revision = Revision(
+                display_name=revision_dict["display_name"],
+                url=revision_dict["url"],
+                datetime=expect_type(DateTime, revision_dict["datetime"]),
+                rev=revision_dict["rev"],
+                executions=[],
+                workflow=workflow,
             )
-            workflows_map: dict[str, Workflow] = {}
-            for workflow_dict in workflow_dicts:
-                workflow = Workflow(
-                    engine=workflow_dict["engine"],
-                    url=workflow_dict["url"],
-                    display_name=workflow_dict["display_name"],
-                    repo_url=workflow_dict["repo_url"],
-                    revisions=[],
-                    registry=registry,
-                )
-                registry.workflows.append(workflow)
-                workflows_map[workflow.display_name] = workflow
+            workflow.revisions.append(revision)
 
-            revision_dicts = yaml.load(
-                (path / f"{name}_revisions.yaml").read_text(),
-                Loader=yaml.Loader,
-            )
-            revision_map: dict[tuple[str, str], Revision] = {}
-            for revision_dict in revision_dicts:
-                workflow = workflows_map[revision_dict["workflow"]]
-                revision = Revision(
-                    display_name=revision_dict["display_name"],
-                    url=revision_dict["url"],
-                    datetime=expect_type(DateTime, revision_dict["datetime"]),
-                    rev=revision_dict["rev"],
-                    executions=[],
-                    workflow=workflow,
-                )
-                workflow.revisions.append(revision)
-                revision_map[workflow.display_name, revision.display_name] = revision
+            revision_map[workflow.display_name, revision.display_name] = revision
 
-            execution_dicts = yaml.load(
-                (path / f"{name}_executions.yaml").read_text(),
-                Loader=yaml.Loader,
+        with charmonium.time_block.ctx(f"fetch executions {registry.display_name}"):
+            execution_dicts_pkl = (path / f"{name}_executions.pkl").read_bytes()
+        with charmonium.time_block.ctx(f"parse executions {registry.display_name}"):
+            execution_dicts = pickle.loads(
+                execution_dicts_pkl,
             )
-            for execution_dict in execution_dicts:
-                revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
-                execution = Execution(
-                    machine=machine_map.get(execution_dict["machine"]),
-                    datetime=expect_type(DateTime, execution_dict["datetime"]),
-                    outputs=execution_dict["outputs"],
-                    logs=execution_dict["logs"],
-                    condition=execution_dict["condition"],
-                    resources=execution_dict["resources"],
-                    status_code=execution_dict["status_code"],
-                    revision=revision,
-                    wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", get_current_revision()),
-                    workflow_error=execution_dict.get("workflow_error", None),
-                )
-                revision.executions.append(execution)
+
+        for execution_dict in execution_dicts:
+            revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
+            execution = Execution(
+                machine=machine_map.get(execution_dict["machine"]),
+                datetime=expect_type(DateTime, execution_dict["datetime"]),
+                outputs=execution_dict["outputs"],
+                logs=execution_dict["logs"],
+                condition=execution_dict["condition"],
+                resources=execution_dict["resources"],
+                status_code=execution_dict["status_code"],
+                revision=revision,
+                wf_reg_test_revision=execution_dict.get("wf_reg_test_revision", get_current_revision()),
+                workflow_error=execution_dict.get("workflow_error", None),
+            )
+            revision.executions.append(execution)
 
     if warn:
         for warning in hub.check_invariants():

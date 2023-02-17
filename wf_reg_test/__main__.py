@@ -51,10 +51,6 @@ for name in ["paramiko", "azure"]:
     logging.getLogger(name).propagate = False
 
 
-serialize = ch_time_block.decor()(serialize)
-deserialize = ch_time_block.decor()(deserialize)
-
-
 @ch_time_block.decor()
 def ensure_revisions(
         hub: RegistryHub, only_empty: bool = True,
