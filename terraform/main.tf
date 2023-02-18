@@ -4,7 +4,7 @@
 
 variable "os_disk_size_gb" {
   type    = string
-  default = "64"
+  default = "400"
   # Usually can't be smaller than 30
 }
 
@@ -21,7 +21,7 @@ variable "builder_vm_size" {
 
 variable "workers" {
   type    = number
-  default = 4
+  default = 1
 }
 
 variable "worker_vm_size" {
@@ -138,6 +138,18 @@ resource "azurerm_storage_container" "index2" {
 }
 
 resource "azurerm_storage_container" "data2" {
+  name                  = "data2"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
+resource "azurerm_storage_container" "index3" {
+  name                  = "index2"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
+resource "azurerm_storage_container" "data3" {
   name                  = "data2"
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible

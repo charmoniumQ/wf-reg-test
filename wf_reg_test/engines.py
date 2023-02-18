@@ -72,7 +72,9 @@ class Engine:
                 dir.mkdir()
             repo.checkout(revision, code_dir)
             with self.get_executable(code_dir, log_dir, out_dir, len(which_cores)) as executable:
-                executable = taskset(executable, which_cores)
+                # It takes a lot of effort in logic and coordination to get which_cores to work correctly.
+                # I think the Linux scheduler should be good enough
+                #executable = taskset(executable, which_cores)
                 executable = timeout(executable, wall_time_limit)
                 with time(executable) as (executable, time_file):
                     with ch_time_block.ctx(f"execute {revision.workflow}"):
@@ -366,6 +368,7 @@ class NextflowEngine(Engine):
                 code_dir.resolve(),
                 "-profile",
                 "test,singularity",
+                f"-process.cpus={n_cores}",
                 f"--outdir",
                 out_dir.resolve(),
             ],

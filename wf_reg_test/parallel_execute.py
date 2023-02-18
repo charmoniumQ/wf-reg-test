@@ -169,9 +169,8 @@ def parallel_execute(
             raise warning
         # Must be no warnings. yay
         if last_serialization + serialize_every < DateTime.now():
-            with ch_time_block.ctx("serialize"):
-                serialize(hub, index_path)
-                last_serialization = DateTime.now()
+            serialize(hub, index_path, warn=False)
+            last_serialization = DateTime.now()
 
 
 escape = urllib.parse.quote_plus

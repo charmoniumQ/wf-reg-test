@@ -28,14 +28,14 @@ from .parallel_execute import parallel_execute
 
 
 storage = upath.UPath(
-    "abfs://data2/",
+    "abfs://data3/",
     account_name="wfregtest",
     credential=AzureCredential(),
 )
 
 
 index_path = upath.UPath(
-    "abfs://index2/",
+    "abfs://index3/",
     account_name="wfregtest",
     credential=AzureCredential(),
 )
@@ -149,9 +149,10 @@ def clear() -> None:
 
 @main.command()
 @click.option("--max-executions", type=int, default=None)
-@click.option("--serialize-every", type=int, default=120)
+@click.option("--serialize-every", type=int, default=0)
+@click.option("--seed", type=int, default=0)
 @ch_time_block.decor()
-def test(max_executions: Optional[int], serialize_every: int) -> None:
+def test(max_executions: Optional[int], serialize_every: int, seed: int) -> None:
     hub = deserialize(index_path)
     revisions_conditions = what_to_execute(
         hub=hub,
@@ -160,6 +161,7 @@ def test(max_executions: Optional[int], serialize_every: int) -> None:
         desired_execution_count=1,
         max_executions=max_executions,
     )
+    revisions_conditions = functional_shuffle(revisions_conditions, seed=seed)
     parallel_execute(
         hub,
         revisions_conditions,
@@ -175,7 +177,7 @@ def test(max_executions: Optional[int], serialize_every: int) -> None:
 @click.option("--max-executions", type=int, default=-1)
 @click.option("--predicate", type=str, default="True")
 @click.option("--seed", type=int, default=0)
-@click.option("--serialize-every", type=int, default=120)
+@click.option("--serialize-every", type=int, default=0)
 @ch_time_block.decor()
 def retest(max_executions: int, predicate: str, seed: int, serialize_every: int) -> None:
     hub = deserialize(index_path)
