@@ -149,14 +149,13 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             for file_bundle in file_bundles
             if not is_lazy_object_proxy(file_bundle.files)
         ]
-        if real_file_bundles:
-            for file_bundle in tqdm.tqdm(real_file_bundles, desc="file bundle"):
-                file_bundle_path = path / "files" / f"{file_bundle.archive.hash_val}"
-                file_bundle_path.write_bytes(pickle.dumps(file_bundle.files))
-                file_bundle.files = lazy_object_proxy.Proxy(
-                    lambda: pickle.loads(file_bundle_path.read_bytes())
-                )
-                assert is_lazy_object_proxy(file_bundle.files)
+        for file_bundle in real_file_bundles:
+            file_bundle_path = path / "files" / f"{file_bundle.archive.hash_val}"
+            file_bundle_path.write_bytes(pickle.dumps(file_bundle.files))
+            file_bundle.files = lazy_object_proxy.Proxy(
+                lambda: pickle.loads(file_bundle_path.read_bytes())
+            )
+            assert is_lazy_object_proxy(file_bundle.files)
 
     if warn:
         stored_hub = deserialize(path, warn=False)

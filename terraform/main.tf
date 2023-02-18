@@ -21,12 +21,12 @@ variable "builder_vm_size" {
 
 variable "workers" {
   type    = number
-  default = 60
+  default = 4
 }
 
 variable "worker_vm_size" {
   type    = string
-  default = "Standard_D2as_v5"
+  default = "Standard_D32as_v5"
 }
 
 variable "vm_image" {

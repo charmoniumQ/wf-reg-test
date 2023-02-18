@@ -136,6 +136,7 @@ class SnakemakeEngine(Engine):
                 if step.get("uses", "").startswith("snakemake/snakemake-github-action")
                    and "--report" not in step.get("with", {}).get("args", {})
                    and "--lint" not in step.get("with", {}).get("args", {})
+                   and "--conda-create-envs-only" not in steps.get("with", {}).get("args", {})
             ]
         if steps:
             main_step = steps[0]

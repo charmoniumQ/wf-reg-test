@@ -88,6 +88,10 @@ If you want to run in parallel using Parsl, set `PARSL_CONFIG` to a file that ex
 - Computational experiment runtimes
   - [x] [Nextflow](https://nextflow.io)
   - [x] [Snakemake](https://snakemake.github.io/)
+    - [ ] Make sure Conda cache and Singularity cache are disabled.
+    - [ ] Run singularity in a tighter container. In the current system, the process can still write to $HOME, I think.
+    - [ ] Make sure malicious workflows can do no damage.
+    - [ ] Capture a summary Singularity image files and Conda env without storing the entire thing. This can be useful for provenance, tell me the first difference between their run and mine.
   - [ ] SAW NGW (proprietary)
   - [ ] Galaxy
   - [ ] WDL
@@ -97,6 +101,8 @@ If you want to run in parallel using Parsl, set `PARSL_CONFIG` to a file that ex
 
 - Tests
   - [x] Repeatable crash-freedom?
+  - [x] Parse error messages?
+  - [x] Parse output format?
   - [ ] If crashes, repeatable error-message?
   - [ ] If not crashes, repeatable bitwise-equivalent with holding zero, one, two, three, or four of {/dev/{,u}random, datetime, ASL, single-core}?
   - [ ] Repeatable 5--95%-ile interval?
