@@ -6,6 +6,7 @@ import os
 import types
 import urllib.parse
 from pathlib import Path
+import subprocess
 from typing import ContextManager, Optional, Any, Iterable, Mapping
 from typing_extensions import Protocol
 import warnings
@@ -111,11 +112,15 @@ class GitHubRepo(Repo):
             revision: Revision,
             dest_path: Path,
     ) -> None:
-        repo = git.repo.Repo.clone_from(self.url, dest_path)
-        repo.head.reset(revision.rev, index=True, working_tree=True)
+        subprocess.run(["git", "clone", "--recursive", self.url, str(dest_path)], check=True, capture_output=True)
+        subprocess.run(["git", "-C", str(dest_path), "checkout", revision.rev], check=True, capture_output=True)
+        proc = subprocess.run(["git", "-C", str(dest_path), "submodule", "update", "--init", "--recursive"], check=False, capture_output=True)
+        if proc.returncode != 0:
+            warnings.warn(f"Could not update submodules for {self.url} in {dest_path}")
 
     def get_checkout_cmd(self, revision: Revision, dest_path: Path) -> list[list[str]]:
         return [
-            ["git", "clone", self.url, str(dest_path)],
+            ["git", "clone", "--recursive", self.url, str(dest_path)],
             ["git", "-C", str(dest_path), "checkout", revision.rev],
+            ["git", "submodule", "update", "--recursive"],
         ]

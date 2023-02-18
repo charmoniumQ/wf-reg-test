@@ -72,6 +72,8 @@ If you want to run in parallel using Parsl, set `PARSL_CONFIG` to a file that ex
 
 6. At any time after step 4 (even during step 5), run `python -m wf_reg_test report` to get a report on the results in `$index_path/results.html`.
 
+Be sure to check that the workers are not running out of disk space periodically. If they are, you can use `python -m wf_reg_test retest --predicate 'HERE'` to rerun just those failing workflows, replacing `HERE` with a Python expression which selects the revisions you wish to re-execute.
+
 # TODO list
 
 - Registries of computational experiments
@@ -91,7 +93,9 @@ If you want to run in parallel using Parsl, set `PARSL_CONFIG` to a file that ex
     - [ ] Make sure Conda cache and Singularity cache are disabled.
     - [ ] Run singularity in a tighter container. In the current system, the process can still write to $HOME, I think.
     - [ ] Make sure malicious workflows can do no damage.
+    - [ ] Move Conda dirs and Singularity dirs to the same root.
     - [ ] Capture a summary Singularity image files and Conda env without storing the entire thing. This can be useful for provenance, tell me the first difference between their run and mine.
+	- [ ] Use cgroups instead of taskste (see also benchexec)
   - [ ] SAW NGW (proprietary)
   - [ ] Galaxy
   - [ ] WDL

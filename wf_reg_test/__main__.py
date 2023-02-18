@@ -139,7 +139,9 @@ def regenerate() -> None:
 def clear() -> None:
     (index_path / "nf-core_executions.yaml").write_text("[]")
     (index_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
-    for blob in tqdm.tqdm(list(index_path.glob("**.tar.xz"))):
+    for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz"))):
+        blob.unlink()
+    for blob in tqdm.tqdm(list(index_path.glob("files/**"))):
         blob.unlink()
     if Path(".repos").exists():
         shutil.rmtree(".repos")
@@ -179,7 +181,7 @@ def retest(max_executions: int, predicate: str, seed: int, serialize_every: int)
     hub = deserialize(index_path)
     revisions_conditions = [
         (expect_type(Revision, execution.revision), execution.condition)
-        for execution in hub.failed_executions
+        for execution in hub.executions
         if eval(predicate, globals(), {**locals(), "error": execution.workflow_error, "revision": execution.revision, "workflow": expect_type(Revision, execution.revision).workflow})
     ]
     revisions_conditions = functional_shuffle(revisions_conditions, seed)

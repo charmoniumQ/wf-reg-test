@@ -1,7 +1,7 @@
 set -e
 echo "$(hostname): setting up"
 
-sudo rm -rf /etc/update-motd.d /var/run/motd.dynamic ~/tmp ~/.singularity /tmp/conda ~/.conda
+sudo rm -rf /etc/update-motd.d /var/run/motd.dynamic ~/tmp ~/.singularity /tmp/conda ~/.conda /tmp/bundle-temp-* /tmp/build-temp-*
 
 if ! which tmux > /dev/null; then
 	echo "$(hostname): needs to apt-get"

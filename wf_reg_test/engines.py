@@ -136,7 +136,7 @@ class SnakemakeEngine(Engine):
                 if step.get("uses", "").startswith("snakemake/snakemake-github-action")
                    and "--report" not in step.get("with", {}).get("args", {})
                    and "--lint" not in step.get("with", {}).get("args", {})
-                   and "--conda-create-envs-only" not in steps.get("with", {}).get("args", {})
+                   and "--conda-create-envs-only" not in step.get("with", {}).get("args", {})
             ]
         if steps:
             main_step = steps[0]
@@ -171,6 +171,8 @@ class SnakemakeEngine(Engine):
         conda_path.mkdir()
         singularity_dir = code_dir.resolve().parent / "singularity"
         singularity_dir.mkdir()
+        singularity_tmp_dir = code_dir.resolve().parent / "singularity-tmp"
+        singularity_tmp_dir.mkdir()
         yield Executable(
             command=[
                 # See https://github.com/snakemake/snakemake-github-action/blob/master/entrypoint.sh
@@ -188,6 +190,9 @@ class SnakemakeEngine(Engine):
             env_override={
                 "CONDA_ENVS_PATH": str(conda_path),
                 "SINGULARITY_CACHE": str(singularity_dir),
+                "SINGULARITY_TMPDIR": str(singularity_tmp_dir),
+                "SINGULARITY_LOCALCACHEDIR": str(singularity_tmp_dir),
+                "TMPDIR": str(singularity_tmp_dir),
             },
             read_write_mounts={
                 code_dir: code_dir,
@@ -352,6 +357,8 @@ class NextflowEngine(Engine):
         start_time = datetime.datetime.now()
         singularity_dir = code_dir.resolve().parent / "singularity"
         singularity_dir.mkdir()
+        singularity_tmp_dir = code_dir.resolve().parent / "singularity-tmp"
+        singularity_tmp_dir.mkdir
         yield Executable(
             command=[
                 "nextflow",
@@ -365,6 +372,9 @@ class NextflowEngine(Engine):
             env_override={
                 "SINGULARITY_CACHEDIR": str(singularity_dir),
                 "NXF_SINGULARITY_CACHEDIR": str(singularity_dir),
+                "SINGULARITY_TMPDIR": str(singularity_tmp_dir),
+                "SINGULARITY_LOCALCACHEDIR": str(singularity_tmp_dir),
+                "TMPDIR": str(singularity_tmp_dir),
             },
             cwd=code_dir.resolve(),
             read_write_mounts={
