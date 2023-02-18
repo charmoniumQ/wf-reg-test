@@ -31,8 +31,10 @@ class PyCharmoniumTimeBlock(PythonPackage):
     maintainers = ["charmoniumQ"]
 
     version("0.3.0", sha256="805e93c746c93b8b6cbd5d64dcfd1742ffe06617653677031b917a898a931828")
+    version("0.3.1", sha256="19da973fa1f8e450f61743a8f80e04fba3d18e1d79bc9c16b00791b186990116")
+    version("0.3.2", sha256="dbd15cf34e753117f25c404594ad984d91d658552a647ea680b1affd2b6374ce")
 
-    patch("fix_poetry.patch")
+    patch("fix_poetry.patch", when="@:0.3.1")
 
     depends_on("python@3.7:", type=("build", "run"))
     depends_on("py-psutil@5.7:", type=("build", "run"))

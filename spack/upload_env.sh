@@ -1,6 +1,11 @@
 #!/usr/bin/env bash
 
-set -x -e
+set -e
+
+source spack/share/spack/setup-env.sh
+spack env activate wf-reg-test
+
+set -x
 
 # Create install script:
 spack env deactivate --sh > spack/deactivate.sh

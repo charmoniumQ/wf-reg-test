@@ -20,4 +20,4 @@ Host builder
 
 EOF
 
-ssh -o StrictHostKeyChecking=no -F terraform/ssh_config builder "$(cat spack/build_env.sh)"
+ssh -T -o StrictHostKeyChecking=no -F terraform/ssh_config builder "$(cat spack/build_env.sh)"

@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -e -x -o nounset
+set -e -o nounset
 
 cd $(dirname $(dirname $0))
 
@@ -31,17 +31,7 @@ EOF
 done
 
 for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); do
-    ssh -o StrictHostKeyChecking=no -F terraform/ssh_config $host <<EOF
-    set -x
-    $(cat spack/setup_env.sh)
-    set +x ; source spack/activate.sh ; set -x
-    rm -rf ~/tmp ~/.singularity
-    if [ -d wf-reg-test ]; then
-        git -C wf-reg-test fetch
-        git -C wf-reg-test reset --hard @{u}
-    else
-        git clone https://github.com/charmoniumQ/wf-reg-test
-    fi
-EOF
+    (ssh -T -o StrictHostKeyChecking=no -F terraform/ssh_config $host "$(cat spack/setup_env.sh)" || echo "$host: failed to setup") &
+	sleep 0.1
 done
 wait
