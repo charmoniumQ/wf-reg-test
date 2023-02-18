@@ -49,7 +49,7 @@ encode = urllib.parse.quote_plus
 
 def write_text(path: upath.UPath, text: str) -> None:
     # with charmonium.time_block.ctx(f"write_text({path.name})"):
-    return path.write_text(text)
+    path.write_text(text)
 
 
 def read_text(path: upath.UPath) -> str:
@@ -113,7 +113,7 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             for workflow in registry.workflows
             for revision in workflow.revisions
         ]))
-        write_text(path / f"{name}_executions.yaml", yaml.dump([
+        (path / f"{name}_executions.pkl").write_bytes(pickle.dumps([
             {
                 "machine": execution.machine.short_description if execution.machine else "<unknown>",
                 "datetime": execution.datetime,
@@ -234,11 +234,12 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
 
             revision_map[workflow.display_name, revision.display_name] = revision
 
-        execution_dicts_yaml = read_text(path / f"{name}_executions.yaml")
-        execution_dicts = yaml.load(
-            execution_dicts_yaml,
-            Loader=yaml.Loader,
-        )
+        executions_path = path / f"{name}_executions.pkl"
+        if executions_path.exists():
+            execution_dicts_pkl = executions_path.read_bytes()
+            execution_dicts = pickle.loads(execution_dicts_pkl)
+        else:
+            execution_dicts = []
 
         for execution_dict in execution_dicts:
             revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
@@ -250,7 +251,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
                     ))
                     execution_dict[file_bundle_key] = FileBundle(execution_dict[file_bundle_key], files)
                 else:
-                    raise TypeError(type())
+                    raise TypeError(f"execution.{file_bundle_key} of Execution {execution_dict['datetime']} of Revision {execution_dict['revision']} of Workflow {execution_dict['workflow']} is type {type(execution_dict[file_bundle_key])}")
             execution = Execution(
                 machine=machine_map.get(execution_dict["machine"]),
                 datetime=expect_type(DateTime, execution_dict["datetime"]),

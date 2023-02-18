@@ -94,7 +94,9 @@ def delete_execution(execution: Execution, confirm: bool = True) -> None:
             file_bundle_files = (index_path / "files" / f"{file_bundle.archive.hash_val}")
             if file_bundle_files.exists():
                 file_bundle_files.unlink()
-            file_bundle.archive.unlink()
+            url = file_bundle.archive.url
+            if url is not None:
+                url.unlink()
         revision = execution.revision
         assert revision
         revision.executions.remove(execution)
@@ -137,8 +139,8 @@ def regenerate() -> None:
 @main.command()
 @ch_time_block.decor()
 def clear() -> None:
-    (index_path / "nf-core_executions.yaml").write_text("[]")
-    (index_path / "snakemake-workflow-catalog_executions.yaml").write_text("[]")
+    (index_path / "nf-core_executions.yaml").unlink()
+    (index_path / "snakemake-workflow-catalog_executions.yaml").unlink()
     for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz"))):
         blob.unlink()
     for blob in tqdm.tqdm(list(index_path.glob("files/**"))):
