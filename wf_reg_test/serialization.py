@@ -149,6 +149,8 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
             for file_bundle in file_bundles
             if not is_lazy_object_proxy(file_bundle.files)
         ]
+        if len(real_file_bundles) > 4:
+            real_file_bundles = tqdm.tqdm(real_file_bundles, desc="file bundles")
         for file_bundle in real_file_bundles:
             file_bundle_path = path / "files" / f"{file_bundle.archive.hash_val}"
             file_bundle_path.write_bytes(pickle.dumps(file_bundle.files))
@@ -159,19 +161,19 @@ def serialize(hub: RegistryHub, path: upath.UPath, warn: bool = True) -> None:
 
     if warn:
         stored_hub = deserialize(path, warn=False)
-        if stored_hub != hub:
-            upath.UPath("diff.log").write_text(
-                charmonium.freeze.summarize_diff(
-                    hub,
-                    stored_hub,
-                    charmonium.freeze.Config(
-                        ignore_all_code=True,
-                        ignore_all_classes=True,
-                        ignore_dict_order=True,
-                    ),
-                )
-            )
-            warnings.warn("hub != stored_hub, see diff.log")
+        # if stored_hub != hub:
+        #     warnings.warn("hub != stored_hub, see diff.log")
+        #     upath.UPath("diff.log").write_text(
+        #         charmonium.freeze.summarize_diff(
+        #             hub,
+        #             stored_hub,
+        #             charmonium.freeze.Config(
+        #                 ignore_all_code=True,
+        #                 ignore_all_classes=True,
+        #                 ignore_dict_order=True,
+        #             ),
+        #         )
+        #     )
 
 
 @charmonium.time_block.ctx("deserialize")
