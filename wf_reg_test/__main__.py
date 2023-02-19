@@ -17,30 +17,14 @@ import click
 import charmonium.time_block as ch_time_block
 import yaml
 import tqdm
-import upath
 
 from .serialization import serialize, deserialize
 from .repos import get_repo
 from .workflows import RegistryHub, Revision, Workflow, Condition, Execution, File
-from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, AzureCredential, http_content_length, upath_to_url
+from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, http_content_length, upath_to_url
 from .executable import Machine
 from .parallel_execute import parallel_execute
-
-
-storage = upath.UPath(
-    "abfs://data3/",
-    account_name="wfregtest",
-    credential=AzureCredential(),
-)
-
-
-index_path = upath.UPath(
-    "abfs://index3/",
-    account_name="wfregtest",
-    credential=AzureCredential(),
-)
-
-html_path = index_path
+from .config import data_path, index_path
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -108,7 +92,7 @@ def delete_orphans_in_storage(hub: RegistryHub) -> None:
         for execution in hub.executions
     ))
     with ch_time_block.ctx("globbing_storage"):
-        all_files = set(storage.glob("**"))
+        all_files = set(data_path.glob("**"))
     for orphaned_file in tqdm.tqdm(all_files - known_files, desc="file"):
         print(f"Remove {orphaned_file}? Y/n")
         if input().lower()[0] == "y":
@@ -139,11 +123,14 @@ def regenerate() -> None:
 @main.command()
 @ch_time_block.decor()
 def clear() -> None:
-    (index_path / "nf-core_executions.yaml").unlink()
-    (index_path / "snakemake-workflow-catalog_executions.yaml").unlink()
-    for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz"))):
+    hub = deserialize(index_path)
+    for registry in hub.registries:
+        path = index_path / f"{registry.display_name}_executions.pkl"
+        if path.exists():
+            path.unlink()
+    for blob in tqdm.tqdm(list(data_path.glob("**.tar.xz")), desc="file archive"):
         blob.unlink()
-    for blob in tqdm.tqdm(list(index_path.glob("files/**"))):
+    for blob in tqdm.tqdm(list(index_path.glob("files/**")), desc="file maps"):
         blob.unlink()
     if Path(".repos").exists():
         shutil.rmtree(".repos")
@@ -170,7 +157,7 @@ def test(max_executions: Optional[int], serialize_every: int, seed: int) -> None
         index_path=index_path,
         serialize_every=TimeDelta(seconds=serialize_every),
         oversubscribe=False,
-        storage=storage,
+        storage=data_path,
     )
     serialize(hub, index_path)
 
@@ -197,7 +184,7 @@ def retest(max_executions: int, predicate: str, seed: int, serialize_every: int)
         index_path=index_path,
         serialize_every=TimeDelta(seconds=serialize_every),
         oversubscribe=False,
-        storage=storage,
+        storage=data_path,
     )
     delete_duplicate_executions(hub)
     serialize(hub, index_path)
@@ -215,11 +202,11 @@ def report_inner(hub: RegistryHub) -> None:
     import azure.identity
     report_text = ch_time_block.decor()(report_html)(hub)
     with ch_time_block.ctx("upload_result"):
-        if html_path._url.scheme == "abfs":
-            account_name: str = html_path._kwargs['account_name']
+        if index_path._url.scheme == "abfs":
+            account_name: str = index_path._kwargs['account_name']
             azure.storage.blob.BlobClient(
                 account_url=f"https://{account_name}.blob.core.windows.net",
-                container_name=html_path._url.netloc,
+                container_name=index_path._url.netloc,
                 blob_name="results.html",
                 # Note that this should be synchronous not AIO like html_path._kwargs["credential"]
                 credential=azure.identity.DefaultAzureCredential(),
@@ -231,7 +218,7 @@ def report_inner(hub: RegistryHub) -> None:
                 ),
             )
         else:
-            (html_path / "results.html").write_text(report_text)
+            (index_path / "results.html").write_text(report_text)
 
 
 def delete_duplicate_executions(hub: RegistryHub) -> None:
@@ -332,8 +319,6 @@ def classify_errors(url_part: str) -> None:
     ]
     random.seed(1)
     random.shuffle(failed_executions)
-    cache_path = Path(".cache")
-    cache_path.mkdir(exist_ok=True)
     for execution in tqdm.tqdm(failed_executions, desc="executions"):
         strurl = upath_to_url(execution.logs.archive.url)
         with create_temp_dir() as temp_dir:

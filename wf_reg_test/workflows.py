@@ -114,7 +114,7 @@ class Workflow:
         # if wall_times_of_successes:
         #     return max(wall_times_of_successes) * 3 + TimeDelta(minutes=30)
         # else:
-        return TimeDelta(minutes=100)
+        return TimeDelta(minutes=60)
 
     def __str__(self) -> str:
         return f"{self.__class__.__name__} {self.display_name}"

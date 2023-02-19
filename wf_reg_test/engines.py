@@ -144,7 +144,9 @@ class SnakemakeEngine(Engine):
             main_step = steps[0]
             directory = main_step.get("with", {}).get("directory", ".test")
             snakefile = main_step.get("with", {}).get("snakefile", "Snakefile")
-            extra_args = shlex.split(main_step.get("with", {}).get("args", ""))
+            # This extra_args might have --conda-frontend=mamba and is generally too unpredictable to include
+            #extra_args = shlex.split(main_step.get("with", {}).get("args", ""))
+            extra_args = []
         else:
             directory = code_dir
             # See for typical snakefile locations:
@@ -162,12 +164,14 @@ class SnakemakeEngine(Engine):
                 )
             except StopIteration as exc:
                 yield Executable(
-                    command=["/usr/bin/echo", "Could not find [Ss]nakefile"],
+                    command=["/usr/bin/false", "Could not find [Ss]nakefile"],
                     cwd=code_dir,
                 )
                 return
             extra_args = []
         catalog_file = code_dir / ".snakemake-workflow-catalog.yml"
+        # This extra args, however, is used more conservatively.
+        # This are labelled "mandatory"
         extra_args += shlex.split((yaml_load_or(catalog_file.read_text(), {}) if catalog_file.exists() else {}).get("mandatory-flags", {}).get("flags", ""))
         conda_path = code_dir.resolve().parent / "conda"
         conda_path.mkdir()
@@ -254,7 +258,7 @@ class SnakemakeCondaError(WorkflowError):
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeCondaError]:
         if match := SnakemakeCondaError._pattern.search(string):
-            return SnakemakeCondaError("CreateCondaEnvironmentException", match.group(1))
+            return SnakemakeCondaError("CreateCondaEnvironmentException", match.group(1).strip())
         else:
             return None
 
@@ -278,7 +282,7 @@ class SnakemakePythonError(WorkflowError):
             else:
                 file = raw_file
             return SnakemakePythonError(
-                match.group(1), int(match.group(2)), file, match.group(4),
+                match.group(1), int(match.group(2)), file, match.group(4).strip(),
             )
         else:
             return None
@@ -289,7 +293,7 @@ class SnakemakeRuleError(WorkflowError):
     rule: str
     file: Union[str, pathlib.Path]
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) of (.*):\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) .*of (.*):\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str, code_dir: pathlib.Path) -> Optional[SnakemakeRuleError]:
@@ -303,7 +307,7 @@ class SnakemakeRuleError(WorkflowError):
                 file = path
             else:
                 file = raw_file
-            return SnakemakeRuleError(match.group(1), match.group(2), file, match.group(4))
+            return SnakemakeRuleError(match.group(1), match.group(2), file, match.group(4).strip())
         else:
             return None
 
@@ -329,7 +333,7 @@ class SnakemakeInternalError(WorkflowError):
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeInternalError]:
         if match := SnakemakeInternalError._pattern.search(string):
-            return SnakemakeInternalError("SnakemakeInternalError", match.group(1))
+            return SnakemakeInternalError("SnakemakeInternalError", match.group(1).strip())
         else:
             return None
 
@@ -343,7 +347,7 @@ class SnakemakeInternalError2(WorkflowError):
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeInternalError2]:
         if match := SnakemakeInternalError2._pattern.search(string):
-            return SnakemakeInternalError2(match.group(1), match.group(2))
+            return SnakemakeInternalError2(match.group(1), match.group(2).strip())
         else:
             return None
 
@@ -360,7 +364,7 @@ class NextflowEngine(Engine):
         singularity_dir = code_dir.resolve().parent / "singularity"
         singularity_dir.mkdir()
         singularity_tmp_dir = code_dir.resolve().parent / "singularity-tmp"
-        singularity_tmp_dir.mkdir
+        singularity_tmp_dir.mkdir()
         yield Executable(
             command=[
                 "nextflow",
@@ -424,7 +428,7 @@ class NextflowCommandError(WorkflowError):
 
     @staticmethod
     def _strip_indent(string: str, n: int) -> str:
-        return "\n".join(line[n:] for line in string.split("\n"))
+        return "\n".join(line[n:] for line in string.split("\n")).strip()
 
     @staticmethod
     def _from_text(string: str, code_dir: pathlib.Path) -> Optional[NextflowCommandError]:
@@ -454,7 +458,7 @@ class NextflowJavaError(WorkflowError):
     @staticmethod
     def _from_text(string: str) -> Optional[NextflowJavaError]:
         if match := NextflowJavaError._pattern.search(string):
-            return NextflowJavaError(match.group(1), match.group(2), match.group(3))
+            return NextflowJavaError(match.group(1), match.group(2).strip(), match.group(3).strip())
         else:
             return None
 
@@ -471,7 +475,7 @@ class NextflowMiscError(WorkflowError):
     @staticmethod
     def _from_text(string: str) -> Optional[NextflowMiscError]:
         if match := NextflowMiscError._pattern.search(string):
-            return NextflowMiscError("NextflowMiscError", match.group(1), match.group(2), match.group(3), match.group(4))
+            return NextflowMiscError("NextflowMiscError", match.group(1), match.group(2), match.group(3), match.group(4).strip())
         else:
             return None
 

@@ -27,10 +27,7 @@ source spack/activate.sh
 
 if [ -d wf-reg-test ]; then
     git -C wf-reg-test fetch --quiet
-    if [ -n "$(git -C wf-reg-test diff main origin/main)" ]; then
-        echo "$(hostname): updating git commit for wf-reg-test"
-        git -C wf-reg-test reset --hard --quiet @{u}
-    fi
+    git -C wf-reg-test reset --hard --quiet @{u}
 else
     echo "$(hostname): git clone wf-reg-test"
     git clone --quiet https://github.com/charmoniumQ/wf-reg-test
