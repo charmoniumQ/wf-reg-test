@@ -24,6 +24,7 @@ from .workflows import RegistryHub, Revision, Workflow, Condition, Execution, Fi
 from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, http_content_length, upath_to_url
 from .executable import Machine
 from .parallel_execute import parallel_execute
+from .high_level_errors import classify
 from .config import data_path, index_path, cache_path
 
 logging.basicConfig(level=logging.INFO)
@@ -193,13 +194,10 @@ def retest(max_executions: int, predicate: str, seed: int, serialize_every: int)
 @main.command()
 @ch_time_block.decor()
 def report() -> None:
-    hub = deserialize(index_path)
-    report_inner(hub)
-
-def report_inner(hub: RegistryHub) -> None:
     from .report import report_html
     import azure.storage.blob
     import azure.identity
+    hub = deserialize(index_path)
     report_text = ch_time_block.decor()(report_html)(hub)
     with ch_time_block.ctx("upload_result"):
         if index_path._url.scheme == "abfs":
@@ -338,7 +336,6 @@ def classify_errors(url_part: str, reclassify: bool) -> None:
         else:
             print(type(execution.workflow_error), execution.workflow_error.kind)
             serialize(hub, index_path, warn=False)
-    report_inner(hub)
 
 
 main()
