@@ -5,7 +5,7 @@ import upath
 from .util import AzureCredential
 
 
-cache_path = pathlib.Path(".cache")
+cache_path = pathlib.Path(".cache2")
 cache_path.mkdir(exist_ok=True)
 
 

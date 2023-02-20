@@ -93,7 +93,7 @@ python = ">=3.8,<3.11"
 # make sure to keep the Python versions here consistent with those tested by Tox (tool.tox.legacy_tox_ini.tox.envlist).
 PyGithub = "^1.55"
 GitPython = "^3.1.27"
-xxhash = {git = "https://github.com/charmoniumQ/python-xxhash", rev = "add-types"}
+xxhash = "^2.0"
 PyYAML = "^6.0"
 install = "^1.3.5"
 domonic = "^0.9.11"

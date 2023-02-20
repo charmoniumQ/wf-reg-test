@@ -1,0 +1,5 @@
+*.pkl
+*.tex
+*.pdf
+*.png
+!df.pkl
