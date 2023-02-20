@@ -30,8 +30,10 @@ Host worker-${worker}
 EOF
 done
 
+
 for host in manager $(seq 0 $((worker_count - 1)) | xargs -I% echo 'worker-%'); do
+    #ssh-keygen -R $host
     (ssh -T -o StrictHostKeyChecking=no -F terraform/ssh_config $host "$(cat spack/setup_env.sh)" || echo "$host: failed to setup") &
-	sleep 0.1
+    sleep 0.1
 done
 wait

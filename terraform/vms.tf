@@ -72,7 +72,7 @@ resource "azurerm_linux_virtual_machine" "manager" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"
-    disk_size_gb         = var.os_disk_size_gb
+    disk_size_gb         = var.manager_disk_size_gb
   }
   identity {
     type = "SystemAssigned"
@@ -93,7 +93,7 @@ resource "azurerm_linux_virtual_machine" "manager" {
       ]
   }
   provisioner "file" {
-      content = "export PARSL_WORKERS=${join(",", [for i in range(var.workers): "worker-${i}"])}\nexport PARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py\n"
+	content = "export PARSL_WORKERS=$(python -c 'print(\",\".join(f\"worker-{i}\" for i in range(${var.workers}))))\nexport PARSL_CONFIG=~/wf-reg-test/parsl_configs/ssh_config.py\n"
       destination = "/home/${var.username}/parsl-config.sh"
   }
   # provisioner "remote-exec" {
@@ -154,7 +154,7 @@ resource "azurerm_linux_virtual_machine" "worker" {
   os_disk {
     caching              = "ReadWrite"
     storage_account_type = "StandardSSD_LRS"
-    disk_size_gb         = var.os_disk_size_gb
+    disk_size_gb         = var.worker_disk_size_gb
   }
   identity {
     type = "SystemAssigned"
@@ -231,7 +231,7 @@ resource azurerm_role_assignment worker-data {
 #   os_disk {
 #     caching              = "ReadWrite"
 #     storage_account_type = "StandardSSD_LRS"
-#     disk_size_gb         = var.os_disk_size_gb
+#     disk_size_gb         = var.manager_disk_size_gb
 #   }
 #   identity {
 #     type = "SystemAssigned"

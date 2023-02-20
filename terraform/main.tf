@@ -2,9 +2,9 @@
 # Variables
 #############################################
 
-variable "os_disk_size_gb" {
+variable "manager_disk_size_gb" {
   type    = string
-  default = "400"
+  default = "40"
   # Usually can't be smaller than 30
 }
 
@@ -21,12 +21,18 @@ variable "builder_vm_size" {
 
 variable "workers" {
   type    = number
-  default = 1
+  default = 0
+}
+
+variable "worker_disk_size_gb" {
+  type    = string
+  default = "300"
+  # Usually can't be smaller than 30
 }
 
 variable "worker_vm_size" {
   type    = string
-  default = "Standard_D32as_v5"
+  default = "Standard_D4as_v5"
 }
 
 variable "vm_image" {
@@ -144,13 +150,13 @@ resource "azurerm_storage_container" "data2" {
 }
 
 resource "azurerm_storage_container" "index3" {
-  name                  = "index2"
+  name                  = "index3"
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible
 }
 
 resource "azurerm_storage_container" "data3" {
-  name                  = "data2"
+  name                  = "data3"
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible
 }
