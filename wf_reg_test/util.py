@@ -324,3 +324,11 @@ def sanitize_file_type(file_str: str) -> str:
     file_str = re.sub(r"\d{2,}", "##", file_str)
     file_str = re.sub('".*"', '"string"', file_str)
     return file_str
+
+
+def invert_dict(mapping: Mapping[_T, _V]) -> dict[_V, _T]:
+    return {value: key for key, value in mapping.items()}
+
+
+def invert_list(lst: list[_T]) -> dict[_T, int]:
+    return {value: index for index, value in enumerate(lst)}

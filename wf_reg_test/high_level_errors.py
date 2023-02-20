@@ -29,21 +29,21 @@ def classify(error: Optional[WorkflowError]) -> HighLevelError:
         elif m := re.search("MissingInputException: Missing input files for rule (.*):", error.rest):
             return HighLevelError("missing input", "rule " + m.group(1))
         elif error.kind == "SnakemakeError" and (m := re.search("Failed to pull singularity image from (.*):\n", error.rest, re.MULTILINE)):
-            return HighLevelError("experiment error", "singularity failed to pull image", m.group(1))
+            return HighLevelError("missing dep", "singularity failed to pull image", m.group(1))
         else:
-            return HighLevelError("unknown", str(error)[:error_trunc])
+            return HighLevelError("unclassified", str(error)[:error_trunc])
     elif isinstance(error, SnakemakeRuleError):
         if error.kind == "MissingInputException":
             return HighLevelError("missing input", error.rule)
         else:
-            return HighLevelError("unknown", str(error)[:error_trunc])
+            return HighLevelError("unclassified", str(error)[:error_trunc])
     elif isinstance(error, SnakemakePythonError):
         if error.kind == "SystemExit" and "Snakefile" in error.rest:
             return HighLevelError("missing input")
         elif error.kind == "ModuleNotFound" and (m := re.search("No module named '(.*)'", error.rest)):
             return HighLevelError("missing dep", m.group(1))
         elif error.kind == "CalledProcessError" and "singularity" in error.rest:
-            return HighLevelError("experiment error", "singularity")
+            return HighLevelError("workflow step error", "singularity")
         elif m := re.search("'(.*)' is a required property", error.rest):
             return HighLevelError("missing input", "property " + m.group(1))
         elif m := re.search("Please make sure that they are correctly defined before running Snakemake:\n(.*)", error.rest):
@@ -62,9 +62,9 @@ def classify(error: Optional[WorkflowError]) -> HighLevelError:
             return HighLevelError("missing input", m.group(1))
         else:
             # return HighLevelError("workflow step error")
-            return HighLevelError("unknown", str(error)[:error_trunc])
+            return HighLevelError("unclassified", str(error)[:error_trunc])
     elif isinstance(error, SnakemakeCondaError):
-            return HighLevelError("experiment error", "conda")
+            return HighLevelError("missing dep", "conda error")
     elif isinstance(error, NextflowSigterm):
         return HighLevelError("timeout")
     elif isinstance(error, NextflowCommandError):
@@ -82,7 +82,7 @@ def classify(error: Optional[WorkflowError]) -> HighLevelError:
             return HighLevelError("missing input", m.group(1))
         elif "argument of length 0\nExecution halted" in error.error:
             return HighLevelError("missing input", "", error.error)
-        elif "FATAL: External invocation of comet.exe failed":
+        elif "FATAL: External invocation of comet.exe failed" in error.error:
             return HighLevelError("workflow step error", "comet.exe")
         elif "UNIQUE constraint" in error.error:
             return HighLevelError("workflow step error", "", error.error.split("\n")[-1])
@@ -96,12 +96,12 @@ def classify(error: Optional[WorkflowError]) -> HighLevelError:
         elif m := re.search("Failed to open the file (.*)", error.error):
             return HighLevelError("missing input", m.group(1))
         else:
-            return HighLevelError("unknown", str(error)[:error_trunc])
+            return HighLevelError("unclassified", str(error)[:error_trunc])
     elif isinstance(error, NextflowJavaError):
         if error.msg == "Unknown configuration profile: 'singularity'":
             return HighLevelError("missing input", "singularity profile")
         elif "Failed to pull singularity image" in error.msg:
-            return HighLevelError("experiment error", "failed to pull singularity image")
+            return HighLevelError("missing dep", "failed to pull singularity image")
         elif error.kind == "java.lang.IllegalStateException" and error.msg.startswith("Include statement"):
             return HighLevelError("workflow script error", error.msg)
         elif error.kind.startswith("nextflow.dag"):
@@ -109,13 +109,13 @@ def classify(error: Optional[WorkflowError]) -> HighLevelError:
         elif (m := re.search(r"\(([^()]+.groovy:[0-9]+)\)", error.rest)):
             return HighLevelError("workflow script error", error.kind, m.group(1))
         else:
-            return HighLevelError("unknown", str(error)[:error_trunc])
+            return HighLevelError("unclassified", str(error)[:error_trunc])
     elif isinstance(error, NextflowMiscError):
         if "BISMARK_SUMMARY" in error.rest:
             return HighLevelError("workflow script error", "input file name collision")
         elif error.class_ != "nextflow.processor.TaskProcessor":
             return HighLevelError("missing input", error.rest)
         else:
-            return HighLevelError("unknown", str(error)[:error_trunc])
+            return HighLevelError("unclassified", str(error)[:error_trunc])
     else:
-      return HighLevelError("unknown", str(error)[:error_trunc])
+      return HighLevelError("unclassified", str(error)[:error_trunc])

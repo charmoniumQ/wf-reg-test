@@ -18,7 +18,9 @@ import upath
 import zlib
 
 from .workflows import RegistryHub, Registry, Workflow, Revision, Execution, File, FileBundle
-from .util import expect_type, get_current_revision, merge_dicts, groupby_dict, raise_
+from .util import expect_type, get_current_revision, merge_dicts, groupby_dict, raise_, upath_to_url
+from .config import cache_path
+# TODO: Figure out if I even need to take an argument for index_path, since I'm also importing cache_path directly.
 
 """
 
@@ -56,6 +58,15 @@ def read_text(path: upath.UPath) -> str:
     # with charmonium.time_block.ctx(f"read_text({path.name})"):
     return path.read_text()
 
+
+def cached_read_bytes(path: upath.UPath) -> bytes:
+    cache_dest = cache_path / urllib.parse.quote(upath_to_url(path), safe="")
+    if not cache_dest.exists():
+        ret = path.read_bytes()
+        cache_dest.write_bytes(ret)
+        return ret
+    else:
+        return cache_dest.read_bytes()
 
 
 @charmonium.time_block.ctx("serialize")
@@ -249,7 +260,7 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
                 if isinstance(execution_dict[file_bundle_key], File):
                     files = cast(Mapping[pathlib.Path, File], lazy_object_proxy.Proxy(
                         lambda:
-                        pickle.loads((path / "files" / f"{execution_dict[file_bundle_key].archive.hash_val}").read_bytes())
+                        pickle.loads(cached_read_bytes(path / "files" / f"{execution_dict[file_bundle_key].archive.hash_val}"))
                     ))
                     execution_dict[file_bundle_key] = FileBundle(execution_dict[file_bundle_key], files)
                 else:
