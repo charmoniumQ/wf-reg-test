@@ -1,6 +1,7 @@
 import collections
 import itertools
 import pathlib
+import seaborn
 import urllib
 import yaml
 from datetime import datetime, timedelta
@@ -160,28 +161,58 @@ def get_stats(hub: RegistryHub) -> html.Element:
 
 
 def get_errors(hub: RegistryHub) -> html.Element:
-    failed_executions = hub.failed_executions
-    def get_kind(execution: Execution) -> str:
-        workflow_error = execution.workflow_error
-        return workflow_error.kind if workflow_error is not None else "unknown"
-    kind_to_exemplars = groupby_dict(failed_executions, get_kind)
-    counter = collections.Counter([get_kind(execution) for execution in failed_executions])
+    from .high_level_errors import classify
+    classes_to_exemplars = groupby_dict(
+        (
+            (classify(execution.workflow_error), execution)
+            for execution in hub.failed_executions
+        ),
+        lambda pair: pair[0].class_,
+    )
+    classes_to_exemplars = dict(sorted(classes_to_exemplars.items(), key=lambda pair: len(pair[1]), reverse=True))
+    unknown = groupby_dict(
+        classes_to_exemplars.get("unknown", []),
+        lambda pair: (pair[1].workflow_error.__class__.__name__, getattr(pair[1].workflow_error, "kind", "")),
+    )
+    unknown = dict(sorted(unknown.items(), key=lambda pair: len(pair[1]), reverse=True))
     return html.div(
         html_table(
             [
                 {
-                    "Error": html.code(kind),
-                    "Count": html.span(str(count)),
-                    "Fraction of all errors": html.span("{:.0f}%".format((count / len(failed_executions)) * 100)),
+                    "Error": html.code(class_),
+                    "Count": html.span(str(len(exemplars))),
+                    "Fraction of all errors": html.span("{:.0f}%".format((len(exemplars) / len(hub.failed_executions)) * 100)),
+                    "Instances": collapsed(
+                        "See individual instances",
+                        html_list(
+                            html.span(
+                                html_link(str(execution), "#" + str(id(execution))),
+                                html.code(high_level_error.subclass), 
+                                html.code(high_level_error.extra),
+                            )
+                            for high_level_error, execution in exemplars
+                        ),
+                    ),
+                }
+                for class_, exemplars in classes_to_exemplars.items()
+            ],
+        ),
+        html_table(
+            [
+                {
+                    "Error": html.code(class_),
+                    "Kind": html.code(kind),
+                    "Count": html.span(str(len(executions))),
+                    "Fraction of all unknown": html.span("{:.0f}%".format(len(executions) / sum(len(group) for group in unknown.values()) * 100)),
                     "Instances": collapsed(
                         "See individual instances",
                         html_list(
                             html_link(str(execution), "#" + str(id(execution)))
-                            for execution in kind_to_exemplars[kind]
+                            for _, execution in executions
                         ),
                     ),
                 }
-                for (kind, count) in counter.most_common()
+                for (class_, kind), executions in unknown.items()
             ],
         ),
     )

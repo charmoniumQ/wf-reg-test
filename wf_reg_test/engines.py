@@ -45,6 +45,8 @@ class Engine:
             self,
             log_dir: pathlib.Path,
             code_dir: pathlib.Path,
+            resources: ComputeResources,
+            status_code: int,
     ) -> Optional[WorkflowError]:
         raise NotImplementedError
 
@@ -92,7 +94,7 @@ class Engine:
                     "resources": resources,
                 }))
             run_path = storage / fs_escape(revision.workflow.display_name) / random_str(8)
-            workflow_error = self.parse_error(log_dir, code_dir)
+            workflow_error = self.parse_error(log_dir, code_dir, resources, proc.returncode)
             outputs = FileBundle.from_path(out_dir, run_path / "output.tar.xz")
             logs = FileBundle.from_path(log_dir, run_path / "logs.tar.xz")
         return Execution(
@@ -221,28 +223,28 @@ class SnakemakeEngine(Engine):
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
-    def parse_error(self, log_dir: pathlib.Path, code_dir: pathlib.Path) -> Optional[WorkflowError]:
+    def parse_error(self, log_dir: pathlib.Path, code_dir: pathlib.Path, resources: ComputeResources, status_code: int) -> Optional[WorkflowError]:
+        # TODO: don't hardcode the limit here
+        if resources.wall_time > datetime.timedelta(seconds=3590) and status_code == 124:
+            return WorkflowTimeoutError("timeout")
         log_files = list((log_dir / ".snakemake/log").glob("*.snakemake.log"))
-        if not log_files:
-            return None
-        logs = max(log_files).read_text()
+        logs = max(log_files).read_text() if log_files else ""
         stderr = (log_dir / "stderr.txt").read_text()
         err: Optional[WorkflowError]
-        if False:
-            pass
-        elif err := SnakemakePythonError._from_text(logs, code_dir):
+        if "Could not find [Ss]nakefile" in (log_dir / "command.sh").read_text():
+            return NoSnakefileError(kind="NoSnakefileError")
+        elif err := SnakemakePythonError._from_text(logs, stderr, code_dir):
             return err
-        elif err := SnakemakeRuleError._from_text(logs, code_dir):
+        elif err := SnakemakeRuleError._from_text(logs, stderr, code_dir):
             return err
-        elif err := SnakemakeCondaError._from_text(logs):
+        elif err := SnakemakeCondaError._from_text(logs, stderr):
             return err
-        elif err := SnakemakeCondaError._from_text(stderr):
-            return err
-        elif err := SnakemakeWorkflowError._from_text(logs):
-            return err
-        elif err := SnakemakeWorkflowError._from_text(stderr):
+        elif err := SnakemakeWorkflowError._from_text(logs, stderr):
             return err
         elif err := SnakemakeInternalError._from_text(stderr):
+            # TODO: some InternalErrors also cause PythonErrors
+            # But they get parsed incorrectly as PythonErrors
+            # But moving this block above that makes true PythonErrors get parsed incorrectly as InternalError.
             return err
         elif err := SnakemakeInternalError2._from_text(stderr):
             return err
@@ -251,14 +253,24 @@ class SnakemakeEngine(Engine):
 
 
 @dataclasses.dataclass(frozen=True)
+class WorkflowTimeoutError(WorkflowError):
+    pass
+
+
+@dataclasses.dataclass(frozen=True)
+class NoSnakefileError(WorkflowError):
+    pass
+
+@dataclasses.dataclass(frozen=True)
 class SnakemakeCondaError(WorkflowError):
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("CreateCondaEnvironmentException:\n(.*)", re.MULTILINE | re.DOTALL)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(?:CreateCondaEnvironmentException|UnsatisfiableError):\n(.*)", re.MULTILINE | re.DOTALL)
 
     @staticmethod
-    def _from_text(string: str) -> Optional[SnakemakeCondaError]:
-        if match := SnakemakeCondaError._pattern.search(string):
-            return SnakemakeCondaError("CreateCondaEnvironmentException", match.group(1).strip())
+    def _from_text(logs: str, stderr: str) -> Optional[SnakemakeCondaError]:
+        for string in [logs, stderr]:
+            if match := SnakemakeCondaError._pattern.search(string):
+                return SnakemakeCondaError("CreateCondaEnvironmentException", match.group(1).strip())
         else:
             return None
 
@@ -267,23 +279,24 @@ class SnakemakePythonError(WorkflowError):
     line_no: int
     file: Union[str, pathlib.Path]
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in line (\\d*) of (.*):([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in line (\\d*) of (.*):([\\s\\S]*)", re.MULTILINE)
 
     @staticmethod
-    def _from_text(string: str, code_dir: pathlib.Path) -> Optional[SnakemakePythonError]:
-        if match := SnakemakePythonError._pattern.search(string):
-            raw_file = match.group(3)
-            file: Union[pathlib.Path, str]
-            if raw_file.startswith("/"):
-                path = pathlib.Path(raw_file)
-                if path.is_relative_to(code_dir):
-                    path = path.relative_to(code_dir)
-                file = path
-            else:
-                file = raw_file
-            return SnakemakePythonError(
-                match.group(1), int(match.group(2)), file, match.group(4).strip(),
-            )
+    def _from_text(logs: str, stderr: str, code_dir: pathlib.Path) -> Optional[SnakemakePythonError]:
+        for string in [logs, stderr]:
+            if match := SnakemakePythonError._pattern.search(string):
+                raw_file = match.group(3)
+                file: Union[pathlib.Path, str]
+                if raw_file.startswith("/"):
+                    path = pathlib.Path(raw_file)
+                    if path.is_relative_to(code_dir):
+                        path = path.relative_to(code_dir)
+                    file = path
+                else:
+                    file = raw_file
+                return SnakemakePythonError(
+                    match.group(1), int(match.group(2)), file, match.group(4).strip(),
+                )
         else:
             return None
 
@@ -293,21 +306,22 @@ class SnakemakeRuleError(WorkflowError):
     rule: str
     file: Union[str, pathlib.Path]
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error)) in rule (.*) .*of (.*):\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("(.*(?:Exception|Error|Exit)) in rule (.*) .*of (.*):\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
-    def _from_text(string: str, code_dir: pathlib.Path) -> Optional[SnakemakeRuleError]:
-        if match := SnakemakeRuleError._pattern.search(string):
-            raw_file = match.group(3)
-            file: Union[pathlib.Path, str]
-            if raw_file.startswith("/"):
-                path = pathlib.Path(raw_file)
-                if path.is_relative_to(code_dir):
-                    path = path.relative_to(code_dir)
-                file = path
-            else:
-                file = raw_file
-            return SnakemakeRuleError(match.group(1), match.group(2), file, match.group(4).strip())
+    def _from_text(logs: str, stderr: str, code_dir: pathlib.Path) -> Optional[SnakemakeRuleError]:
+        for string in [logs, stderr]:
+            if match := SnakemakeRuleError._pattern.search(string):
+                raw_file = match.group(3)
+                file: Union[pathlib.Path, str]
+                if raw_file.startswith("/"):
+                    path = pathlib.Path(raw_file)
+                    if path.is_relative_to(code_dir):
+                        path = path.relative_to(code_dir)
+                    file = path
+                else:
+                    file = raw_file
+                return SnakemakeRuleError(match.group(1), match.group(2), file, match.group(4).strip())
         else:
             return None
 
@@ -318,9 +332,10 @@ class SnakemakeWorkflowError(WorkflowError):
     _pattern: ClassVar[re.Pattern[str]] = re.compile("WorkflowError:(.*)", re.MULTILINE | re.DOTALL)
 
     @staticmethod
-    def _from_text(string: str) -> Optional[SnakemakeWorkflowError]:
-        if match := SnakemakeWorkflowError._pattern.search(string):
-            return SnakemakeWorkflowError("SnakemakeError", match.group(1))
+    def _from_text(logs: str, stderr: str) -> Optional[SnakemakeWorkflowError]:
+        for string in [logs, stderr]:
+            if match := SnakemakeWorkflowError._pattern.search(string):
+                return SnakemakeWorkflowError("SnakemakeError", match.group(1))
         else:
             return None
 
@@ -328,7 +343,7 @@ class SnakemakeWorkflowError(WorkflowError):
 @dataclasses.dataclass(frozen=True)
 class SnakemakeInternalError(WorkflowError):
     rest: str
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("Traceback \\(most recent call last\\):\n(.*)(?:\\Z|\n\n)", re.MULTILINE | re.DOTALL)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("Traceback \\(most recent call last\\):\n(.*\n\S.*\n)", re.MULTILINE | re.DOTALL)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeInternalError]:
@@ -342,7 +357,7 @@ class SnakemakeInternalError(WorkflowError):
 class SnakemakeInternalError2(WorkflowError):
     msg: str
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception):[ \n](.*)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*(?:Exception|Error|Exit)):[ \n](.*)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[SnakemakeInternalError2]:
@@ -399,7 +414,7 @@ class NextflowEngine(Engine):
                 (out_dir / fil).parent.mkdir(exist_ok=True, parents=True)
                 shutil.move(code_dir / fil, out_dir / fil)
 
-    def parse_error(self, log_dir: pathlib.Path, code_dir: pathlib.Path) -> Optional[WorkflowError]:
+    def parse_error(self, log_dir: pathlib.Path, code_dir: pathlib.Path, resources: ComputeResources, status_code: int) -> Optional[WorkflowError]:
         log_file = log_dir / ".nextflow.log"
         if not log_file.exists():
             return None
@@ -433,6 +448,7 @@ class NextflowCommandError(WorkflowError):
     @staticmethod
     def _from_text(string: str, code_dir: pathlib.Path) -> Optional[NextflowCommandError]:
         if match := NextflowCommandError._pattern.search(string):
+            work_dir = pathlib.Path(match.group(6))
             return NextflowCommandError(
                 "CalledProcessError",
                 match.group(1),
@@ -440,12 +456,12 @@ class NextflowCommandError(WorkflowError):
                 int(match.group(3)),
                 NextflowCommandError._strip_indent(match.group(4), 2),
                 NextflowCommandError._strip_indent(match.group(5), 2),
-                pathlib.Path(match.group(6)).relative_to(code_dir),
+                work_dir.relative_to(code_dir) if work_dir.is_relative_to(code_dir) else work_dir,
             )
         else:
             return None
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("Caused by:\n  Process `(.*)` terminated.*\n\nCommand executed:\n([\\s\\S]*)\n\nCommand exit status:\n  (\\d*)\n\nCommand output:\n([\\s\\S]*)\n\nCommand error:\n([\\s\\S]*)\n\nWork dir:\n  (.*)\n", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("Caused by:\n  (.*)\n\nCommand executed:\n([\\s\\S]*)\n\nCommand exit status:\n  (\\d*)\n\nCommand output:\n([\\s\\S]*)\n\nCommand error:\n([\\s\\S]*)\n\nWork dir:\n  (.*)\n", re.MULTILINE)
 
 
 @dataclasses.dataclass(frozen=True)
@@ -453,7 +469,7 @@ class NextflowJavaError(WorkflowError):
     msg: str
     rest: str
 
-    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*Exception): (.*)\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
+    _pattern: ClassVar[re.Pattern[str]] = re.compile("\n([a-zA-Z0-9.]*(?:Exception|Error|Exit)): (.*)\n([\\s\\S]*)(?:\\Z|\n\n)", re.MULTILINE)
 
     @staticmethod
     def _from_text(string: str) -> Optional[NextflowJavaError]:

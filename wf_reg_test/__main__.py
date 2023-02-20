@@ -24,7 +24,7 @@ from .workflows import RegistryHub, Revision, Workflow, Condition, Execution, Fi
 from .util import groupby_dict, functional_shuffle, expect_type, curried_getattr, http_content_length, upath_to_url
 from .executable import Machine
 from .parallel_execute import parallel_execute
-from .config import data_path, index_path
+from .config import data_path, index_path, cache_path
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -249,8 +249,8 @@ def delete_duplicate_executions(hub: RegistryHub) -> None:
 
 @main.command()
 def post_process() -> None:
-    from .postprocess import get_data
-    get_data()
+    from .post_process import post_process
+    post_process()
 
 
 @main.command()
@@ -298,7 +298,8 @@ def verify(delete_duplicates: bool, delete_orphans: bool, delete_predicate: str,
 
 @main.command()
 @click.option("--url-part", type=str, default="")
-def classify_errors(url_part: str) -> None:
+@click.option("--reclassify", is_flag=True, type=bool, default=False)
+def classify_errors(url_part: str, reclassify: bool) -> None:
     import tarfile
     import urllib
     import shutil
@@ -308,18 +309,18 @@ def classify_errors(url_part: str) -> None:
     from .util import create_temp_dir, http_download_with_cache
 
     hub = deserialize(index_path)
-    failed_executions = [
+    executions_to_classify = [
         execution
         for execution in hub.failed_executions
         if all([
-                execution.workflow_error is None,
+                (reclassify or execution.workflow_error is None),
                 execution.logs.archive.url is not None,
                 url_part in str(execution.logs.archive.url),
         ])
     ]
     random.seed(1)
-    random.shuffle(failed_executions)
-    for execution in tqdm.tqdm(failed_executions, desc="executions"):
+    random.shuffle(executions_to_classify)
+    for execution in tqdm.tqdm(executions_to_classify, desc="executions"):
         strurl = upath_to_url(execution.logs.archive.url)
         with create_temp_dir() as temp_dir:
             tarball_path = temp_dir / "archive.tar.xz"
@@ -331,10 +332,12 @@ def classify_errors(url_part: str) -> None:
             workflow = revision.workflow
             assert workflow is not None
             i = revision.executions.index(execution)
-            revision.executions[i] = execution.with_attrs(workflow_error=engines[workflow.engine].parse_error(temp_dir, Path("/does-not-exist")))
-        if execution.workflow_error is None:
+            revision.executions[i] = execution.with_attrs(workflow_error=engines[workflow.engine].parse_error(temp_dir, Path("/does-not-exist"), execution.resources, execution.status_code))
+        if revision.executions[i] is None:
             print("Unparsed error for", execution)
-        serialize(hub, index_path)
+        else:
+            print(type(execution.workflow_error), execution.workflow_error.kind)
+            serialize(hub, index_path, warn=False)
     report_inner(hub)
 
 
