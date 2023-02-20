@@ -1,0 +1,25 @@
+
+
+Science owes its self-correcting nature to certain norms of research in the scientific community, including organized skepticism and communalism~\cite{merton_sociology_1974}.
+Satisfying these norms in a computational context requires reproducible experiments.
+
+%More than 90% of scientists surveyed across all fields use research software and 50% develop software for their research experiments~\cite{hettrick_softwaresavedsoftware_in_research_survey_2014_2018}.
+
+\textbf{Organized skepticism} means scientific claims should be exposed to critical scrutiny before being accepted~\cite{merton_sociology_1974}.
+One form of critical scrutiny is reproducing the experiments supporting a claim.
+When experiments in modern science are not reproducible, they lose important validation opportunities.
+Unlike physical experiments, computational experiments have no requirement for a steady hand, calibrated sensors, or uncontaminated dishware; one would expect they should be easier to reproduce.
+Nevertheless, computational experiments are often a source of irreproducibility, for example~\cite{mytkowicz_producing_2009,neupane_characterization_2019}.
+
+\textbf{Communalism} means that any scientist can freely modify and reuse methods of research developed by someone else.
+For computational research, communalism requires that the computational methods be open source\footnote{There are many definitions of ``open source''; here, we mean the source code must be available for free for research purposes.} and reproducible by other researchers.
+Without this, scientists have to duplicate each other's work, which creates another avenue for errors and mistakes.
+
+When either of these norms are lacking, computational methods can yield wrong results in basic research, for example~\cite{herndon_does_2014,miller_scientists_2006,wang_retracted_2012,neupane_characterization_2019,qiu_retraction_2019,villanueva_no_2021,mytkowicz_producing_2009}, further eroding public trust in science.
+
+Outside of basic research, reproducibility of experiments is important in applied science.
+Engineers use computational experiments to simulate the behavior of a physical part.
+Simulations are rapidly improving, so they may want to rerun a simulation done in the past with newer techniques or with different parameters.
+The physical part may have a lifetime measured in decades, but the software simulation is much more fragile, lasting only years.
+If the computation is not reproducible, they cannot easily rerun the simulation; they must either attempt time-consuming digital archaeology or rewrite the simulation from scratch.
+Irreproducibility hinders day-to-day operations in applied science.
