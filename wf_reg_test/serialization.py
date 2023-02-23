@@ -257,12 +257,13 @@ def deserialize(path: upath.UPath, warn: bool = True) -> RegistryHub:
         for execution_dict in execution_dicts:
             revision = revision_map[execution_dict["workflow"], execution_dict["revision"]]
             for file_bundle_key in ["outputs", "logs"]:
-                if isinstance(execution_dict[file_bundle_key], File):
+                obj = execution_dict[file_bundle_key]
+                if isinstance(obj, File):
                     files = cast(Mapping[pathlib.Path, File], lazy_object_proxy.Proxy(
-                        lambda:
-                        pickle.loads(cached_read_bytes(path / "files" / f"{execution_dict[file_bundle_key].archive.hash_val}"))
+                        lambda path=path, obj=obj:
+                        pickle.loads(cached_read_bytes(path / "files" / f"{obj.hash_val}"))
                     ))
-                    execution_dict[file_bundle_key] = FileBundle(execution_dict[file_bundle_key], files)
+                    execution_dict[file_bundle_key] = FileBundle(obj, files)
                 else:
                     raise TypeError(f"execution.{file_bundle_key} of Execution {execution_dict['datetime']} of Revision {execution_dict['revision']} of Workflow {execution_dict['workflow']} is type {type(execution_dict[file_bundle_key])}")
             execution = Execution(

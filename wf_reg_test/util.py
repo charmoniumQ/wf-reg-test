@@ -320,9 +320,10 @@ def mime_type(path: Path) -> str:
 
 
 def sanitize_file_type(file_str: str) -> str:
-    file_str = re.sub(r"\d\d:\d\d:\d\d:", "time", file_str)
-    file_str = re.sub(r"\d{2,}", "##", file_str)
-    file_str = re.sub('".*"', '"string"', file_str)
+    file_str = file_str.partition(",")[0]
+    file_str = re.sub(r"\(identified as .*\)", "", file_str)
+    file_str = re.sub(r" \(Version 2\)", "", file_str)
+    file_str = re.sub(r"CPython [0-9a-z\.]+", "CPython %version", file_str)
     return file_str
 
 
@@ -332,3 +333,10 @@ def invert_dict(mapping: Mapping[_T, _V]) -> dict[_V, _T]:
 
 def invert_list(lst: list[_T]) -> dict[_T, int]:
     return {value: index for index, value in enumerate(lst)}
+
+
+def divide_or(a: int, b: int) -> float:
+    if b == 0:
+        return 0
+    else:
+        return a / b

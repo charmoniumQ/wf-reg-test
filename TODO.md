@@ -20,6 +20,7 @@
     - [ ] Move Conda dirs and Singularity dirs to the same root.
     - [ ] Capture a summary Singularity image files and Conda env without storing the entire thing. This can be useful for provenance, tell me the first difference between their run and mine.
 	- [ ] Use cgroups instead of taskste (see also benchexec)
+	- [ ] Use `environment.yml` if it exists
   - [ ] SAW NGW (proprietary)
   - [ ] Galaxy
   - [ ] WDL

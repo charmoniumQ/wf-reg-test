@@ -25,19 +25,12 @@ from .html_helpers import (
     html_mpl_fig,
     
 )
-from .util import sorted_and_dropped, groupby_dict, upath_to_url
+from .util import sorted_and_dropped, groupby_dict, upath_to_url, divide_or
 from .workflows import Workflow, RegistryHub, Execution
 
 
 def is_interesting(workflow: Workflow) -> bool:
     return sum(bool(revision.executions) for revision in workflow.revisions) >= 1
-
-
-def divide_or(a: int, b: int) -> float:
-    if b == 0:
-        return 0
-    else:
-        return a / b
 
 
 def get_stats(hub: RegistryHub) -> html.Element:
