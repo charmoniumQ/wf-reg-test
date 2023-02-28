@@ -35,6 +35,9 @@
   - [ ] If crashes, repeatable error-message?
   - [ ] If not crashes, repeatable bitwise-equivalent with holding zero, one, two, three, or four of {/dev/{,u}random, datetime, ASL, single-core}?
   - [ ] Repeatable 5--95%-ile interval?
+  - [ ] NCSA Delta access
+    - https://wiki.ncsa.illinois.edu/display/DSC/Delta+User+Guide
+	- https://allocations.access-ci.org/exchange_calculatro
 
 - Code analysis
   - [ ] SLoC by type
