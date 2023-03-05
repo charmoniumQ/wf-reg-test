@@ -1,0 +1,88 @@
+\documentclass[a1paper]{article}
+\usepackage{better_poster}
+
+\postersize{a1paper}
+
+\title{Automatic Reproduction of Workflows}
+\author{Samuel Grayson, Darko Marinov, Daniel S. Katz, Reed Milewicz}
+
+% type of poster: [exp]erimental results, [methods], [theory]
+% Disclaimer: the original classification had "study" and "intervention" as separate categories. I group them under experimental results.
+\newcommand\postertype{exp} % [exp],[methods],[theory]
+
+\begin{document}
+
+% main point of your study
+\makefinding{
+  \textbf{Even with} modern tools (e.g., containers), reproducibility is \textbf{still} difficult to attain in practice.
+}
+
+
+% the main text of your poster goes here
+\makemain{
+    % you can have 1 or 2 columns
+    \raggedcolumns
+    \begin{multicols}{3}
+        \section{Intro}
+        \begin{compactitem}
+            \item Workflows are becoming more common
+            \item Reproducibility is a necessity for valid science and engineering!
+            \item Workflows claim to make it easy to be reproducible
+        \end{compactitem}
+        
+        \section{Methods}
+        \begin{compactitem}
+            \item Curate a large corpus of workflows in the wild
+            \item Try running them
+            \item Examine outputs, logs, and errors
+        \end{compactitem}
+        
+    % this determines where your columns will be separated
+    \columnbreak
+        
+        \section{Results}
+        \begin{compactitem}
+            \item Found 100 of workflows, 500 revisions, Snakemake and Nextflow engine
+            \item 28\% actually work
+            \begin{compactitem}
+                \item Number varies greatly based on community standards (10\% to 50\%)
+            \end{compactitem}
+            \item 32\% Failures are often caused by lack of input data
+            \item Numeric outputs rarely available (19\% have them)
+            \item Need root to run containers!
+            \item Median survival time is 2 years
+            \begin{compactitem}
+               \item compare to physical components which last decades
+            \end{compactitem}
+        \end{compactitem}
+
+    \columnbreak
+        
+        \section{What to do?}
+        \begin{compactitem}
+            \item Define execution records (provenance)
+            \begin{compactitem}
+                \item Existing provenance systems not ``replayable''
+                \item Existing provenance do not record resource utilization
+            \end{compactitem}
+            \item Tool that automatically captures them
+            \begin{compactitem}
+                \item Existing record/replay systems too slow and not HPC
+            \end{compactitem}
+            \item Automatically distributed
+        \end{compactitem}
+
+    \end{multicols}
+
+}
+
+
+% If you have extra figures or data to show
+
+%% \makefooter{
+%%   \includegraphics[height=0.11\paperheight, left]{blah}
+%% }{
+%%   images/qr-code.png
+%% }
+ 
+\end{document}

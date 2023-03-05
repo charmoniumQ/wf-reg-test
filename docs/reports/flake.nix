@@ -31,6 +31,7 @@
             default = nix-utils-lib.mergeDerivations {
               packageSet = nix-utils-lib.packageSetRec
                 (self: [
+                  /*
                   (nix-documents-lib.markdownDocument {
                     src = ./.;
                     main = "ncsa_delta_proposal.md";
@@ -54,6 +55,31 @@
                     };
                     outputFormat = "pdf";
                     date = 1665609977; # date +%s
+                  })
+                  */
+                  (nix-documents-lib.latexDocument {
+                    src = ./.;
+                    main = "poster.tex";
+                    name = "poster.pdf";
+                    texEngine = "pdflatex";
+                    texlivePackages = {
+                      inherit (pkgs.texlive)
+                        adjustbox
+                        xcolor
+                        xkeyval
+                        collectbox
+                        anyfontsize
+                        framed
+                        hyphenat
+                        lipsum
+                        vwcol
+                        environ
+                        ragged2e
+                        paralist
+                        sfmath
+                        pgf
+                      ;
+                    };
                   })
                 ]);
             };

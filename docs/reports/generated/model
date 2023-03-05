@@ -1,0 +1,16 @@
+digraph {
+	r [label="r
+~
+Uniform" shape=ellipse]
+	p_0 [label="p_0
+~
+Uniform" shape=ellipse]
+	subgraph cluster584 {
+		p_t [label="p_t
+~
+Bernoulli" shape=ellipse style=filled]
+		label=584 labeljust=r labelloc=b style=rounded
+	}
+	r -> p_t
+	p_0 -> p_t
+}
