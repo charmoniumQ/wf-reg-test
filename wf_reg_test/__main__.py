@@ -141,8 +141,9 @@ def clear() -> None:
 @click.option("--max-executions", type=int, default=None)
 @click.option("--serialize-every", type=int, default=0)
 @click.option("--seed", type=int, default=0)
+@click.option("--dry-run", type=bool, is_flag=True, default=0)
 @ch_time_block.decor()
-def test(max_executions: Optional[int], serialize_every: int, seed: int) -> None:
+def test(max_executions: Optional[int], serialize_every: int, seed: int, dry_run: bool) -> None:
     hub = deserialize(index_path)
     revisions_conditions = what_to_execute(
         hub=hub,
@@ -152,15 +153,19 @@ def test(max_executions: Optional[int], serialize_every: int, seed: int) -> None
         max_executions=max_executions,
     )
     revisions_conditions = functional_shuffle(revisions_conditions, seed=seed)
-    parallel_execute(
-        hub,
-        revisions_conditions,
-        index_path=index_path,
-        serialize_every=TimeDelta(seconds=serialize_every),
-        oversubscribe=False,
-        storage=data_path,
-    )
-    serialize(hub, index_path)
+    if dry_run:
+        for revision, condition in revisions_conditions:
+            print(revision, condition)
+    else:
+        parallel_execute(
+            hub,
+            revisions_conditions,
+            index_path=index_path,
+            serialize_every=TimeDelta(seconds=serialize_every),
+            oversubscribe=False,
+            storage=data_path,
+        )
+        serialize(hub, index_path)
 
 
 @main.command()
@@ -255,7 +260,7 @@ def post_process() -> None:
 @click.option("--delete-duplicates", type=bool, is_flag=True, default=False)
 @click.option("--delete-orphans", type=bool, is_flag=True, default=False)
 @click.option("--delete-predicate", type=str, default="False")
-@click.option("--check-size", type=bool, default=False)
+@click.option("--check-size", type=bool, is_flag=True, default=False)
 def verify(delete_duplicates: bool, delete_orphans: bool, delete_predicate: str, check_size: bool) -> None:
     hub = deserialize(index_path)
     if delete_duplicates:

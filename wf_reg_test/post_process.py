@@ -51,7 +51,7 @@ def to_pandas(hub: RegistryHub) -> pandas.DataFrame:
             for execution in revision.executions
         ],
     )
-    df["registry"] = pandas.Categorical(df["registry"])
+    df["registry"] = pandas.Categorical(df["registry"], categories=["SWC", "nf-core"], ordered=True)
     df["workflow"] = pandas.Categorical(df["workflow"])
     df["revision"] = pandas.Categorical(df["revision"])
     df["error"] = pandas.Categorical(df["error"])
@@ -62,11 +62,11 @@ def summary_table(df: pandas.DataFrame) -> str:
     nf_mask = df["registry"] == "nf-core"
     sm_mask = df["registry"] == "SWC"
     def do_three_times(func):
-        return  " & ".join(map(str, ["", func(df), func(df[nf_mask]), func(df[sm_mask])]))
+        return  " & ".join(map(str, ["", func(df), func(df[sm_mask]), func(df[nf_mask])]))
     return "\n".join([
         r"\begin{tabular}{p{1.7in}ccc}",
         textwrap.indent(" \\\\\n".join([
-            r"Quantity & Total & nf-core & SWC",
+            r"Quantity & Total & SWC & nf-core",
             r"\midrule \# workflows" + do_three_times(lambda df: df["workflow"].nunique()),
             fr"\# revisions" + do_three_times(lambda df: len(df)),
             fr"\% of revisions with no crash" + do_three_times(lambda df: "{:.0f}\%".format(df["success"].sum() / len(df) * 100)),
@@ -91,11 +91,11 @@ def crash_table(df: pandas.DataFrame) -> str:
         "workflow step error": "Other (containerized task)",
     }
     def do_three_times(func):
-        return  " & ".join(map(str, ["", func(df), func(df[nf_mask]), func(df[sm_mask])]))
+        return  " & ".join(map(str, ["", func(df), func(df[sm_mask]), func(df[nf_mask])]))
     return "\n".join([
         r"\begin{tabular}{p{1.7in}ccc}",
         textwrap.indent("\n".join([
-            r"Kind of crash & all & nf-core & SWC \\",
+            r"Kind of crash & all & SWC & nf-core \\",
             r"\midrule",
             *[
                 translate_error.get(error, error) + do_three_times(lambda df: "{:.1f}\%".format(sum(df["error"] == error) / len(df) * 100)) + r" \\"
@@ -112,6 +112,8 @@ def crash_table(df: pandas.DataFrame) -> str:
 def revisions_per_workflow(data_by_workflow: pandas.DataFrame) -> matplotlib.figure.Figure:
     fig = matplotlib.figure.Figure()
     ax = fig.subplots()
+    print(data_by_workflow["registry"].cat.categories)
+    print(data_by_workflow["registry"].cat.ordered)
     seaborn.histplot(
         data=data_by_workflow.rename(columns={
             "revision": "Revisions per workflow",
@@ -348,7 +350,7 @@ def common_file_types_table(df: pandas.DataFrame) -> str:
     nf_mask = df["registry"] == "nf-core"
     sm_mask = df["registry"] == "smk-wf-cat"
     def do_three_times(func):
-        return  " & ".join(map(str, ["", func(df), func(df[nf_mask]), func(df[sm_mask])]))
+        return  " & ".join(map(str, ["", func(df), func(df[sm_mask]), func(df[nf_mask])]))
     translate_type = {
         "Blocked GNU Zip Format (BGZF; gzip compatible)": "Blocked GNU Zip Format",
         "SVG Scalable Vector Graphics image": "SVG image",
@@ -356,7 +358,7 @@ def common_file_types_table(df: pandas.DataFrame) -> str:
     return "\n".join([
         r"\begin{tabular}{p{1.7in}ccc}",
         textwrap.indent("\n".join([
-            r"Type & Total & nf-core & smk-wf-cat \\",
+            r"Type & Total & SWC & nf-core \\",
             r"\midrule",
             *[
                 translate_type.get(type, type) + do_three_times(lambda df: r"{:.0f}\%".format(divide_or(
@@ -412,18 +414,19 @@ def post_process(random_seed: int = 0) -> None:
             "success": lambda df: sum(df) / len(df) * 100,
         })
     )
+    data_by_workflow["registry"] = pandas.Categorical(data_by_workflow["registry"], categories=["nf-core", "SWC"], ordered=True)
 
-    sm_mask = data_by_workflow["registry"] == "smk-wf-cat"
-    nf_mask = data_by_workflow["registry"] == "nf-core"
-    for mask in [sm_mask, nf_mask]:
-        df2 = data_by_workflow[mask].sort_values("revision")
-        print(df2.head())
-        print(df2.tail())
-        print(df2["revision"].describe())
-        df2 = data_by_workflow[mask].sort_values("success")
-        print(df2.head())
-        print(df2.tail())
-        print(df2["success"].describe())
+    # sm_mask = data_by_workflow["registry"] == "smk-wf-cat"
+    # nf_mask = data_by_workflow["registry"] == "nf-core"
+    # for mask in [sm_mask, nf_mask]:
+    #     df2 = data_by_workflow[mask].sort_values("revision")
+    #     print(df2.head())
+    #     print(df2.tail())
+    #     print(df2["revision"].describe())
+    #     df2 = data_by_workflow[mask].sort_values("success")
+    #     print(df2.head())
+    #     print(df2.tail())
+    #     print(df2["success"].describe())
 
     fig = revisions_per_workflow(data_by_workflow)
     fig.savefig(generated_path / "revisions_per_workflow.pdf")

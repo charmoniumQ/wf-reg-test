@@ -21,7 +21,7 @@ variable "builder_vm_size" {
 
 variable "workers" {
   type    = number
-  default = 0
+  default = 1
 }
 
 variable "worker_disk_size_gb" {
@@ -125,30 +125,6 @@ resource "azurerm_storage_account" "default" {
   account_replication_type = "LRS"
 }
 
-resource "azurerm_storage_container" "index" {
-  name                  = "index"
-  storage_account_name  = azurerm_storage_account.default.name
-  container_access_type = "blob" # blobs are publicly accessible
-}
-
-resource "azurerm_storage_container" "data" {
-  name                  = "data"
-  storage_account_name  = azurerm_storage_account.default.name
-  container_access_type = "blob" # blobs are publicly accessible
-}
-
-resource "azurerm_storage_container" "index2" {
-  name                  = "index2"
-  storage_account_name  = azurerm_storage_account.default.name
-  container_access_type = "blob" # blobs are publicly accessible
-}
-
-resource "azurerm_storage_container" "data2" {
-  name                  = "data2"
-  storage_account_name  = azurerm_storage_account.default.name
-  container_access_type = "blob" # blobs are publicly accessible
-}
-
 resource "azurerm_storage_container" "index3" {
   name                  = "index3"
   storage_account_name  = azurerm_storage_account.default.name
@@ -157,6 +133,18 @@ resource "azurerm_storage_container" "index3" {
 
 resource "azurerm_storage_container" "data3" {
   name                  = "data3"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
+resource "azurerm_storage_container" "index4" {
+  name                  = "index4"
+  storage_account_name  = azurerm_storage_account.default.name
+  container_access_type = "blob" # blobs are publicly accessible
+}
+
+resource "azurerm_storage_container" "data4" {
+  name                  = "data4"
   storage_account_name  = azurerm_storage_account.default.name
   container_access_type = "blob" # blobs are publicly accessible
 }
