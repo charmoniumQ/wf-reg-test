@@ -243,6 +243,11 @@
   rev: e69aa3dd0e0d090e49f0c13208a15da9460b8427
   url: https://github.com/nf-core/coproid/tree/1.0
   workflow: coproid
+- datetime: 2023-02-02 10:05:41
+  display_name: '1.0'
+  rev: 53572ae0879454115d778862e89614e6279856f8
+  url: https://github.com/nf-core/crisprseq/tree/1.0
+  workflow: crisprseq
 - datetime: 2022-10-27 09:03:44
   display_name: '3.0'
   rev: dcaa4423d783017996c30302d16d772facb0da7e
@@ -268,6 +273,11 @@
   rev: 2b5486356c4dbd4dcb598b611281997119c2e350
   url: https://github.com/nf-core/deepvariant/tree/1.0
   workflow: deepvariant
+- datetime: 2023-01-23 21:48:59
+  display_name: 1.1.0
+  rev: 8e42b6cb4e12bf00828fa8cb282e01bcb487fe6e
+  url: https://github.com/nf-core/demultiplex/tree/1.1.0
+  workflow: demultiplex
 - datetime: 2022-10-06 14:18:20
   display_name: 1.0.0
   rev: b0a004eb2e79f6fceb9b5d79b91b563b7724ed62
@@ -308,6 +318,16 @@
   rev: 39db11edcd318870329a5ab91518d4d076539de4
   url: https://github.com/nf-core/diaproteomics/tree/1.0.0
   workflow: diaproteomics
+- datetime: 2023-01-25 10:13:40
+  display_name: 1.0.1
+  rev: f9bed37741dd5b9b67c9ef7b6d65af1122b69115
+  url: https://github.com/nf-core/differentialabundance/tree/1.0.1
+  workflow: differentialabundance
+- datetime: 2023-01-24 10:39:14
+  display_name: 1.0.0
+  rev: 17aec4fd0ab2c84b1d384932187797aa7ea1e962
+  url: https://github.com/nf-core/differentialabundance/tree/1.0.0
+  workflow: differentialabundance
 - datetime: 2021-02-14 19:34:16
   display_name: 1.0.0
   rev: d8dcd8acfa6f1c2de933294bc73344d6258ebb42
@@ -508,11 +528,21 @@
   rev: 4611da4046667c74ad3bb943e88fcd6f5e60287a
   url: https://github.com/nf-core/fetchngs/tree/1.0
   workflow: fetchngs
+- datetime: 2023-02-15 11:32:23
+  display_name: 1.0.0
+  rev: d6773ca1902569c89da607d578eab70a1ff590b9
+  url: https://github.com/nf-core/funcscan/tree/1.0.0
+  workflow: funcscan
 - datetime: 2022-10-24 12:37:05
   display_name: 1.0.0
   rev: 4cd916f0c15e2c1a6a4a09228981cfd919b33222
   url: https://github.com/nf-core/hgtseq/tree/1.0.0
   workflow: hgtseq
+- datetime: 2023-01-21 11:40:44
+  display_name: 2.0.0
+  rev: b4d89cfacf97a5835fba804887cf0fc7e0449e8d
+  url: https://github.com/nf-core/hic/tree/2.0.0
+  workflow: hic
 - datetime: 2021-05-24 19:00:38
   display_name: 1.3.0
   rev: ac74763a91961ef7b274a651608c76be05be15e4
@@ -598,6 +628,11 @@
   rev: 5d6631332b43c78f12b853594e91a7f7356d87ae
   url: https://github.com/nf-core/imcyto/tree/1.0.0
   workflow: imcyto
+- datetime: 2023-01-11 10:24:30
+  display_name: 1.1.2
+  rev: a568a758220204c0baa4a0ea74496d37811a205f
+  url: https://github.com/nf-core/isoseq/tree/1.1.2
+  workflow: isoseq
 - datetime: 2022-09-27 14:59:17
   display_name: 1.1.1
   rev: 322f3a2f4b22855c03f59d29802fe35c5ddaafbc
@@ -863,6 +898,11 @@
   rev: 05669df8a8e42837c8a16cc2985d9c8a19e48c4f
   url: https://github.com/nf-core/nanoseq/tree/1.0.0
   workflow: nanoseq
+- datetime: 2023-02-15 15:39:37
+  display_name: 2.1.0
+  rev: 12e9ba628540fbf63e7dfc888bb23325218a3ee0
+  url: https://github.com/nf-core/nascent/tree/2.1.0
+  workflow: nascent
 - datetime: 2022-10-24 14:41:36
   display_name: 2.0.0
   rev: 985f37e1030e838d692a742f45fb67aa94cb1d76
@@ -883,6 +923,16 @@
   rev: 4eda7a827f83a9be0470de16331f7105ab48bdd1
   url: https://github.com/nf-core/pgdb/tree/1.0.0
   workflow: pgdb
+- datetime: 2023-02-15 16:54:00
+  display_name: 1.0.0
+  rev: 665a4c2d3c39e8684ef6c3fdef680817ee876498
+  url: https://github.com/nf-core/phyloplace/tree/1.0.0
+  workflow: phyloplace
+- datetime: 2023-02-10 07:44:58
+  display_name: 1.0.0
+  rev: 94bd58250591c29e23d9afbb9deedf95800fe3fc
+  url: https://github.com/nf-core/proteinfold/tree/1.0.0
+  workflow: proteinfold
 - datetime: 2020-10-18 21:47:43
   display_name: 1.0.0
   rev: 43c77e50c955d7e62899e7d31e0d6f6a87ac2316

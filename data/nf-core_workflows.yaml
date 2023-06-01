@@ -22,6 +22,10 @@
   engine: nextflow
   repo_url: https://github.com/nf-core/cageseq?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/cageseq
+- display_name: callingcards
+  engine: nextflow
+  repo_url: https://github.com/nf-core/callingcards?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://nf-co.re/callingcards
 - display_name: chipseq
   engine: nextflow
   repo_url: https://github.com/nf-core/chipseq?revisions=releases&skip-drafts=1&skip-preleases=1
@@ -206,6 +210,10 @@
   engine: nextflow
   repo_url: https://github.com/nf-core/pgdb?revisions=releases&skip-drafts=1&skip-preleases=1
   url: https://nf-co.re/pgdb
+- display_name: phyloplace
+  engine: nextflow
+  repo_url: https://github.com/nf-core/phyloplace?revisions=releases&skip-drafts=1&skip-preleases=1
+  url: https://nf-co.re/phyloplace
 - display_name: proteinfold
   engine: nextflow
   repo_url: https://github.com/nf-core/proteinfold?revisions=releases&skip-drafts=1&skip-preleases=1

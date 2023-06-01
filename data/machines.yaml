@@ -10,17 +10,20 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
       - object
       - !!python/object/apply:builtins.frozenset
         - - !!python/tuple
-            - allowed_cpuset
-            - '0x00000003'
-          - !!python/tuple
-            - gp_index
-            - '1'
+            - type
+            - Machine
           - !!python/tuple
             - allowed_nodeset
             - '0x00000001'
           - !!python/tuple
-            - type
-            - Machine
+            - gp_index
+            - '1'
+          - !!python/tuple
+            - nodeset
+            - '0x00000001'
+          - !!python/tuple
+            - os_index
+            - '0'
           - !!python/tuple
             - cpuset
             - '0x00000003'
@@ -28,14 +31,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
             - complete_nodeset
             - '0x00000001'
           - !!python/tuple
-            - nodeset
-            - '0x00000001'
+            - allowed_cpuset
+            - '0x00000003'
           - !!python/tuple
             - complete_cpuset
             - '0x00000003'
-          - !!python/tuple
-            - os_index
-            - '0'
       - !!python/tuple
         - !!python/tuple
           - info
@@ -50,29 +50,29 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - value
-                - Hyper-V UEFI Release v4.1
-              - !!python/tuple
                 - name
                 - DMIProductVersion
+              - !!python/tuple
+                - value
+                - Hyper-V UEFI Release v4.1
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - value
-                - 6986f62e-1673-4543-a63d-4b3cfb4266e7
-              - !!python/tuple
                 - name
                 - DMIProductUUID
+              - !!python/tuple
+                - value
+                - aa77006a-5cbb-4aea-a515-a332794e07e1
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - value
-                - Microsoft Corporation
-              - !!python/tuple
                 - name
                 - DMIBoardVendor
+              - !!python/tuple
+                - value
+                - Microsoft Corporation
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
@@ -86,11 +86,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - value
-                - Hyper-V UEFI Release v4.1
-              - !!python/tuple
                 - name
                 - DMIBoardVersion
+              - !!python/tuple
+                - value
+                - Hyper-V UEFI Release v4.1
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
@@ -167,11 +167,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - value
-                - Microsoft Corporation
-              - !!python/tuple
                 - name
                 - DMISysVendor
+              - !!python/tuple
+                - value
+                - Microsoft Corporation
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
@@ -185,11 +185,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - value
-                - /
-              - !!python/tuple
                 - name
                 - LinuxCgroup
+              - !!python/tuple
+                - value
+                - /
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
@@ -203,11 +203,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - name
-                - OSRelease
-              - !!python/tuple
                 - value
                 - 5.15.0-1023-azure
+              - !!python/tuple
+                - name
+                - OSRelease
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
@@ -230,17 +230,17 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - name
-                - Architecture
-              - !!python/tuple
                 - value
                 - x86_64
+              - !!python/tuple
+                - name
+                - Architecture
         - !!python/tuple
           - info
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
                 - value
-                - 2.8.0
+                - 2.9.0
               - !!python/tuple
                 - name
                 - hwlocVersion
@@ -257,8 +257,14 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
           - object
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
+                - nodeset
+                - '0x00000001'
+              - !!python/tuple
                 - type
                 - Package
+              - !!python/tuple
+                - os_index
+                - '0'
               - !!python/tuple
                 - gp_index
                 - '3'
@@ -269,14 +275,8 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                 - complete_nodeset
                 - '0x00000001'
               - !!python/tuple
-                - nodeset
-                - '0x00000001'
-              - !!python/tuple
                 - complete_cpuset
                 - '0x00000003'
-              - !!python/tuple
-                - os_index
-                - '0'
           - !!python/tuple
             - !!python/tuple
               - info
@@ -291,11 +291,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - name
-                    - CPUFamilyNumber
-                  - !!python/tuple
                     - value
                     - '25'
+                  - !!python/tuple
+                    - name
+                    - CPUFamilyNumber
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
@@ -309,47 +309,47 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - 'AMD EPYC 7763 64-Core Processor                '
-                  - !!python/tuple
                     - name
                     - CPUModel
+                  - !!python/tuple
+                    - value
+                    - 'AMD EPYC 7763 64-Core Processor                '
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - '1'
-                  - !!python/tuple
                     - name
                     - CPUStepping
+                  - !!python/tuple
+                    - value
+                    - '1'
             - !!python/tuple
               - object
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - type
-                    - NUMANode
-                  - !!python/tuple
-                    - local_memory
-                    - '8337518592'
-                  - !!python/tuple
-                    - cpuset
-                    - '0x00000003'
+                    - nodeset
+                    - '0x00000001'
                   - !!python/tuple
                     - gp_index
                     - '10'
                   - !!python/tuple
+                    - os_index
+                    - '0'
+                  - !!python/tuple
+                    - cpuset
+                    - '0x00000003'
+                  - !!python/tuple
                     - complete_nodeset
                     - '0x00000001'
                   - !!python/tuple
-                    - nodeset
-                    - '0x00000001'
+                    - local_memory
+                    - '8337518592'
+                  - !!python/tuple
+                    - type
+                    - NUMANode
                   - !!python/tuple
                     - complete_cpuset
                     - '0x00000003'
-                  - !!python/tuple
-                    - os_index
-                    - '0'
               - !!python/tuple
                 - !!python/tuple
                   - page_type
@@ -364,11 +364,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                   - page_type
                   - !!python/object/apply:builtins.frozenset
                     - - !!python/tuple
-                        - size
-                        - '2097152'
-                      - !!python/tuple
                         - count
                         - '0'
+                      - !!python/tuple
+                        - size
+                        - '2097152'
                 - !!python/tuple
                   - page_type
                   - !!python/object/apply:builtins.frozenset
@@ -382,69 +382,78 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
               - object
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - cache_linesize
-                    - '64'
-                  - !!python/tuple
-                    - depth
-                    - '3'
-                  - !!python/tuple
-                    - gp_index
-                    - '8'
-                  - !!python/tuple
-                    - type
-                    - L3Cache
-                  - !!python/tuple
-                    - cache_type
-                    - '0'
-                  - !!python/tuple
                     - cache_associativity
                     - '16'
-                  - !!python/tuple
-                    - cpuset
-                    - '0x00000003'
-                  - !!python/tuple
-                    - complete_nodeset
-                    - '0x00000001'
                   - !!python/tuple
                     - nodeset
                     - '0x00000001'
                   - !!python/tuple
-                    - complete_cpuset
+                    - cache_linesize
+                    - '64'
+                  - !!python/tuple
+                    - cache_type
+                    - '0'
+                  - !!python/tuple
+                    - type
+                    - L3Cache
+                  - !!python/tuple
+                    - os_index
+                    - '0'
+                  - !!python/tuple
+                    - cpuset
                     - '0x00000003'
+                  - !!python/tuple
+                    - depth
+                    - '3'
+                  - !!python/tuple
+                    - complete_nodeset
+                    - '0x00000001'
                   - !!python/tuple
                     - cache_size
                     - '33554432'
                   - !!python/tuple
-                    - os_index
-                    - '0'
+                    - gp_index
+                    - '8'
+                  - !!python/tuple
+                    - complete_cpuset
+                    - '0x00000003'
               - !!python/tuple
                 - !!python/tuple
                   - info
                   - !!python/object/apply:builtins.frozenset
                     - - !!python/tuple
-                        - name
-                        - Inclusive
-                      - !!python/tuple
                         - value
                         - '0'
+                      - !!python/tuple
+                        - name
+                        - Inclusive
                 - !!python/tuple
                   - object
                   - !!python/object/apply:builtins.frozenset
                     - - !!python/tuple
-                        - cache_linesize
-                        - '64'
-                      - !!python/tuple
                         - gp_index
                         - '7'
+                      - !!python/tuple
+                        - type
+                        - L2Cache
+                      - !!python/tuple
+                        - nodeset
+                        - '0x00000001'
+                      - !!python/tuple
+                        - cache_linesize
+                        - '64'
                       - !!python/tuple
                         - cache_type
                         - '0'
                       - !!python/tuple
+                        - depth
+                        - '2'
+                      - !!python/tuple
                         - cache_associativity
                         - '8'
                       - !!python/tuple
-                        - cache_size
-                        - '524288'
+                        - os_index
+                        - '0'
                       - !!python/tuple
                         - cpuset
                         - '0x00000003'
@@ -452,20 +461,11 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                         - complete_nodeset
                         - '0x00000001'
                       - !!python/tuple
-                        - nodeset
-                        - '0x00000001'
+                        - cache_size
+                        - '524288'
                       - !!python/tuple
                         - complete_cpuset
                         - '0x00000003'
-                      - !!python/tuple
-                        - os_index
-                        - '0'
-                      - !!python/tuple
-                        - depth
-                        - '2'
-                      - !!python/tuple
-                        - type
-                        - L2Cache
                   - !!python/tuple
                     - !!python/tuple
                       - info
@@ -480,14 +480,20 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                       - object
                       - !!python/object/apply:builtins.frozenset
                         - - !!python/tuple
-                            - cache_linesize
-                            - '64'
-                          - !!python/tuple
                             - cache_type
                             - '1'
                           - !!python/tuple
-                            - gp_index
-                            - '5'
+                            - type
+                            - L1Cache
+                          - !!python/tuple
+                            - depth
+                            - '1'
+                          - !!python/tuple
+                            - nodeset
+                            - '0x00000001'
+                          - !!python/tuple
+                            - cache_linesize
+                            - '64'
                           - !!python/tuple
                             - cache_size
                             - '32768'
@@ -495,36 +501,30 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                             - cache_associativity
                             - '8'
                           - !!python/tuple
+                            - os_index
+                            - '0'
+                          - !!python/tuple
                             - cpuset
                             - '0x00000003'
                           - !!python/tuple
                             - complete_nodeset
                             - '0x00000001'
                           - !!python/tuple
-                            - nodeset
-                            - '0x00000001'
-                          - !!python/tuple
-                            - type
-                            - L1Cache
+                            - gp_index
+                            - '5'
                           - !!python/tuple
                             - complete_cpuset
                             - '0x00000003'
-                          - !!python/tuple
-                            - depth
-                            - '1'
-                          - !!python/tuple
-                            - os_index
-                            - '0'
                       - !!python/tuple
                         - !!python/tuple
                           - info
                           - !!python/object/apply:builtins.frozenset
                             - - !!python/tuple
-                                - name
-                                - Inclusive
-                              - !!python/tuple
                                 - value
                                 - '0'
+                              - !!python/tuple
+                                - name
+                                - Inclusive
                         - !!python/tuple
                           - object
                           - !!python/object/apply:builtins.frozenset
@@ -532,11 +532,17 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                                 - cache_type
                                 - '2'
                               - !!python/tuple
-                                - cache_linesize
-                                - '64'
+                                - depth
+                                - '1'
                               - !!python/tuple
                                 - gp_index
                                 - '6'
+                              - !!python/tuple
+                                - nodeset
+                                - '0x00000001'
+                              - !!python/tuple
+                                - cache_linesize
+                                - '64'
                               - !!python/tuple
                                 - cache_size
                                 - '32768'
@@ -544,42 +550,45 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                                 - cache_associativity
                                 - '8'
                               - !!python/tuple
+                                - os_index
+                                - '0'
+                              - !!python/tuple
                                 - cpuset
                                 - '0x00000003'
-                              - !!python/tuple
-                                - type
-                                - L1iCache
                               - !!python/tuple
                                 - complete_nodeset
                                 - '0x00000001'
                               - !!python/tuple
-                                - nodeset
-                                - '0x00000001'
+                                - type
+                                - L1iCache
                               - !!python/tuple
                                 - complete_cpuset
                                 - '0x00000003'
-                              - !!python/tuple
-                                - depth
-                                - '1'
-                              - !!python/tuple
-                                - os_index
-                                - '0'
                           - !!python/tuple
                             - !!python/tuple
                               - info
                               - !!python/object/apply:builtins.frozenset
                                 - - !!python/tuple
-                                    - name
-                                    - Inclusive
-                                  - !!python/tuple
                                     - value
                                     - '0'
+                                  - !!python/tuple
+                                    - name
+                                    - Inclusive
                             - !!python/tuple
                               - object
                               - !!python/object/apply:builtins.frozenset
                                 - - !!python/tuple
+                                    - type
+                                    - Core
+                                  - !!python/tuple
+                                    - nodeset
+                                    - '0x00000001'
+                                  - !!python/tuple
                                     - gp_index
                                     - '2'
+                                  - !!python/tuple
+                                    - os_index
+                                    - '0'
                                   - !!python/tuple
                                     - cpuset
                                     - '0x00000003'
@@ -587,35 +596,17 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                                     - complete_nodeset
                                     - '0x00000001'
                                   - !!python/tuple
-                                    - nodeset
-                                    - '0x00000001'
-                                  - !!python/tuple
                                     - complete_cpuset
                                     - '0x00000003'
-                                  - !!python/tuple
-                                    - os_index
-                                    - '0'
-                                  - !!python/tuple
-                                    - type
-                                    - Core
                               - !!python/tuple
                                 - !!python/tuple
                                   - object
                                   - !!python/object/apply:builtins.frozenset
                                     - - !!python/tuple
-                                        - cpuset
-                                        - '0x00000001'
-                                      - !!python/tuple
-                                        - complete_cpuset
-                                        - '0x00000001'
-                                      - !!python/tuple
-                                        - gp_index
-                                        - '4'
-                                      - !!python/tuple
                                         - type
                                         - PU
                                       - !!python/tuple
-                                        - complete_nodeset
+                                        - cpuset
                                         - '0x00000001'
                                       - !!python/tuple
                                         - nodeset
@@ -623,30 +614,39 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                                       - !!python/tuple
                                         - os_index
                                         - '0'
-                                - !!python/tuple
-                                  - object
-                                  - !!python/object/apply:builtins.frozenset
-                                    - - !!python/tuple
-                                        - os_index
-                                        - '1'
-                                      - !!python/tuple
-                                        - cpuset
-                                        - '0x00000002'
                                       - !!python/tuple
                                         - gp_index
-                                        - '9'
-                                      - !!python/tuple
-                                        - type
-                                        - PU
-                                      - !!python/tuple
-                                        - complete_cpuset
-                                        - '0x00000002'
+                                        - '4'
                                       - !!python/tuple
                                         - complete_nodeset
                                         - '0x00000001'
                                       - !!python/tuple
+                                        - complete_cpuset
+                                        - '0x00000001'
+                                - !!python/tuple
+                                  - object
+                                  - !!python/object/apply:builtins.frozenset
+                                    - - !!python/tuple
+                                        - complete_cpuset
+                                        - '0x00000002'
+                                      - !!python/tuple
+                                        - type
+                                        - PU
+                                      - !!python/tuple
+                                        - os_index
+                                        - '1'
+                                      - !!python/tuple
                                         - nodeset
                                         - '0x00000001'
+                                      - !!python/tuple
+                                        - gp_index
+                                        - '9'
+                                      - !!python/tuple
+                                        - complete_nodeset
+                                        - '0x00000001'
+                                      - !!python/tuple
+                                        - cpuset
+                                        - '0x00000002'
             - !!python/tuple
               - object
               - !!python/object/apply:builtins.frozenset
@@ -654,33 +654,30 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                     - name
                     - eth0
                   - !!python/tuple
+                    - gp_index
+                    - '13'
+                  - !!python/tuple
                     - type
                     - OSDev
                   - !!python/tuple
                     - osdev_type
                     - '2'
-                  - !!python/tuple
-                    - gp_index
-                    - '13'
               - !!python/tuple
                 - !!python/tuple
                   - info
                   - !!python/object/apply:builtins.frozenset
                     - - !!python/tuple
-                        - value
-                        - 00:22:48:22:68:ee
-                      - !!python/tuple
                         - name
                         - Address
+                      - !!python/tuple
+                        - value
+                        - 00:22:48:21:03:93
         - !!python/tuple
           - object
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - type
-                - OSDev
-              - !!python/tuple
-                - osdev_type
-                - '0'
+                - gp_index
+                - '11'
               - !!python/tuple
                 - subtype
                 - Removable Media Device
@@ -688,18 +685,21 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
                 - name
                 - sr0
               - !!python/tuple
-                - gp_index
-                - '11'
+                - type
+                - OSDev
+              - !!python/tuple
+                - osdev_type
+                - '0'
           - !!python/tuple
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - '628'
-                  - !!python/tuple
                     - name
                     - Size
+                  - !!python/tuple
+                    - value
+                    - '628'
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
@@ -713,75 +713,75 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - name
-                    - LinuxDeviceID
-                  - !!python/tuple
                     - value
                     - '11:0'
+                  - !!python/tuple
+                    - name
+                    - LinuxDeviceID
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - Msft
-                  - !!python/tuple
                     - name
                     - Vendor
+                  - !!python/tuple
+                    - value
+                    - Msft
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - Virtual_DVD-ROM
-                  - !!python/tuple
                     - name
                     - Model
+                  - !!python/tuple
+                    - value
+                    - Virtual_DVD-ROM
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - name
-                    - Revision
-                  - !!python/tuple
                     - value
                     - '1.0'
+                  - !!python/tuple
+                    - name
+                    - Revision
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - name
-                    - SerialNumber
-                  - !!python/tuple
                     - value
                     - 4d534654202020207305e3437703544694957d7ced624a7d
+                  - !!python/tuple
+                    - name
+                    - SerialNumber
         - !!python/tuple
           - object
           - !!python/object/apply:builtins.frozenset
             - - !!python/tuple
-                - type
-                - OSDev
-              - !!python/tuple
                 - name
                 - sda
               - !!python/tuple
-                - osdev_type
-                - '0'
+                - subtype
+                - Disk
               - !!python/tuple
                 - gp_index
                 - '12'
               - !!python/tuple
-                - subtype
-                - Disk
+                - type
+                - OSDev
+              - !!python/tuple
+                - osdev_type
+                - '0'
           - !!python/tuple
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
+                    - value
+                    - '41943040'
+                  - !!python/tuple
                     - name
                     - Size
-                  - !!python/tuple
-                    - value
-                    - '67108864'
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
@@ -804,38 +804,38 @@ manager-Linux-5.15.0-1023-azure-x86_64-with-glibc2.35: !!python/object:wf_reg_te
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - Msft
-                  - !!python/tuple
                     - name
                     - Vendor
+                  - !!python/tuple
+                    - value
+                    - Msft
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - value
-                    - Virtual_Disk
-                  - !!python/tuple
                     - name
                     - Model
+                  - !!python/tuple
+                    - value
+                    - Virtual_Disk
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
-                    - name
-                    - Revision
-                  - !!python/tuple
                     - value
                     - '1.0'
+                  - !!python/tuple
+                    - name
+                    - Revision
             - !!python/tuple
               - info
               - !!python/object/apply:builtins.frozenset
                 - - !!python/tuple
+                    - value
+                    - 600224802d6191fb45c83da8f63c4e69
+                  - !!python/tuple
                     - name
                     - SerialNumber
-                  - !!python/tuple
-                    - value
-                    - 60022480650012403009efde9cb3523d
     - !!python/tuple
       - support
       - !!python/object/apply:builtins.frozenset
