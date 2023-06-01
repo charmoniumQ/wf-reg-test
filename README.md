@@ -22,6 +22,12 @@ for registry in registries:
                 ))
 ```
 
+# Raw data
+
+Human-readable view can be found at: [`data/results.html`](https://htmlpreview.github.io/?https://github.com/charmoniumQ/wf-reg-test/blob/main/data/results.html)
+
+Machine-readable view can be found at: [`data.html`](https://github.com/charmoniumQ/wf-reg-test/blob/main/data)
+
 # Reproducing
 
 See [`REPRODUCING.md`](REPRODUCING.md) for instructions on reproducing these results.

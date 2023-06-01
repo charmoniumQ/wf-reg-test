@@ -66,7 +66,7 @@ def summary_table(df: pandas.DataFrame) -> str:
     return "\n".join([
         r"\begin{tabular}{p{1.7in}ccc}",
         textwrap.indent(" \\\\\n".join([
-            r"Quantity & Total & SWC & nf-core",
+            r"Quantity & All & SWC & nf-core",
             r"\midrule \# workflows" + do_three_times(lambda df: df["workflow"].nunique()),
             fr"\# revisions" + do_three_times(lambda df: len(df)),
             fr"\% of revisions with no crash" + do_three_times(lambda df: "{:.0f}\%".format(df["success"].sum() / len(df) * 100)),
@@ -82,20 +82,21 @@ def crash_table(df: pandas.DataFrame) -> str:
     error_classes = df["error"].value_counts().index
     translate_error = {
         "missing input": "Missing input",
-        "experiment error": "Experiment error",
         "timeout": "Timeout reached",
         "missing dep": "Missing dependency",
         "network resource changed": "Network resource changed",
         "unclassified": "Unclassified reason",
         "workflow script error": "Other (workflow script)",
         "workflow step error": "Other (containerized task)",
+        "conda": "Conda environment unsolvable",
+        "singularity": "Singularity error",
     }
     def do_three_times(func):
         return  " & ".join(map(str, ["", func(df), func(df[sm_mask]), func(df[nf_mask])]))
     return "\n".join([
         r"\begin{tabular}{p{1.7in}ccc}",
         textwrap.indent("\n".join([
-            r"Kind of crash & all & SWC & nf-core \\",
+            r"Kind of crash & All & SWC & nf-core \\",
             r"\midrule",
             *[
                 translate_error.get(error, error) + do_three_times(lambda df: "{:.1f}\%".format(sum(df["error"] == error) / len(df) * 100)) + r" \\"
@@ -104,7 +105,7 @@ def crash_table(df: pandas.DataFrame) -> str:
             ],
         ]), prefix="    "),
         r"    \midrule No crash" + do_three_times(lambda df: "{:.1f}\%".format(sum(df["error"].isna()) / len(df) * 100)) + r" \\",
-        r"    \midrule Total & 100\% & 100\% & 100\% \\"
+        r"    \midrule Total & 100\% & 100\% & 100\% \\",
         r"\end{tabular}",
     ])
 
@@ -358,7 +359,7 @@ def common_file_types_table(df: pandas.DataFrame) -> str:
     return "\n".join([
         r"\begin{tabular}{p{1.7in}ccc}",
         textwrap.indent("\n".join([
-            r"Type & Total & SWC & nf-core \\",
+            r"Type & All & SWC & nf-core \\",
             r"\midrule",
             *[
                 translate_type.get(type, type) + do_three_times(lambda df: r"{:.0f}\%".format(divide_or(
@@ -444,20 +445,20 @@ def post_process(random_seed: int = 0) -> None:
     fig.savefig(generated_path / "staleness.pdf")
     matplotlib.pyplot.close(fig)
 
-    model = pymc_model(df)
+    # model = pymc_model(df)
 
-    pymc.model_to_graphviz(model).render(engine="dot", format="pdf", filename=generated_path / "model")
+    # pymc.model_to_graphviz(model).render(engine="dot", format="pdf", filename=generated_path / "model")
 
-    if (cache_path / "sample.pkl").exists():
-        idata = pickle.loads((cache_path / "sample.pkl").read_bytes())
-    else:
-        idata = pymc_sample(model, random_seed)
-        (cache_path / "sample.pkl").write_bytes(pickle.dumps(idata))
+    # if (cache_path / "sample.pkl").exists():
+    #     idata = pickle.loads((cache_path / "sample.pkl").read_bytes())
+    # else:
+    #     idata = pymc_sample(model, random_seed)
+    #     (cache_path / "sample.pkl").write_bytes(pickle.dumps(idata))
 
-    fig = posterior_success_and_staleness(df, idata)
-    fig.savefig(generated_path / "posterior_success_and_staleness.pdf")
-    matplotlib.pyplot.close(fig)
+    # fig = posterior_success_and_staleness(df, idata)
+    # fig.savefig(generated_path / "posterior_success_and_staleness.pdf")
+    # matplotlib.pyplot.close(fig)
 
-    fig = params(idata)
-    fig.savefig(generated_path / "params.pdf")
-    matplotlib.pyplot.close(fig)
+    # fig = params(idata)
+    # fig.savefig(generated_path / "params.pdf")
+    # matplotlib.pyplot.close(fig)

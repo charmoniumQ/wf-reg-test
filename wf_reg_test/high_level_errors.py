@@ -68,9 +68,7 @@ def classify(error: Optional[WorkflowError]) -> HighLevelError:
     elif isinstance(error, NextflowSigterm):
         return HighLevelError("timeout")
     elif isinstance(error, NextflowCommandError):
-        if "unexpected end of file" in error.error or "Unexpected EOF" in error.error:
-            return HighLevelError("experiment error")
-        elif m := re.search("(.*)\u2019: No such file or directory", error.error):
+        if m := re.search("(.*)\u2019: No such file or directory", error.error):
             return HighLevelError("workflow step error", m.group(1) + " not found")
         elif m := re.search("Could not run command: (.*) ", error.error):
             return HighLevelError("workflow step error", m.group(1))
