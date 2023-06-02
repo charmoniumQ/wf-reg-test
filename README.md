@@ -2,10 +2,11 @@
 
 Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
 Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
-We propose to create the first public dataset of automatically executable scientific experiments.
+We propose to create a public dataset of automatically executable computational experiments.
 This data could be used to identify best practices, make continuous testing feasible, and repair broken programs.
 These techniques increase the replicability of computational experiments.
 
+This software collects the data for that dataset by attempting to automatically execute computational experiments.
 Conceptually, we intend to collect the following:
 
 ```python
