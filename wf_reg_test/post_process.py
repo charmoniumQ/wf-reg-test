@@ -27,6 +27,9 @@ from .workflows import RegistryHub
 from .high_level_errors import classify
 
 
+matplotlib.rcParams['pdf.fonttype'] = 42
+matplotlib.rcParams['ps.fonttype'] = 42
+
 # TODO: move this stuff into report.
 
 

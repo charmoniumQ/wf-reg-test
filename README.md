@@ -1,4 +1,4 @@
-# wf-reg-test
+# Workflow Registry Tester
 
 Software tends to break or "collapse" over time, even if it is unchanged, due to non-obvious changes in the computational environment.
 Collapse in computational experiments undermines long-term credibility and hinders day-to-day operations.
