@@ -1,0 +1,842 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>acm_rep_pres</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+    div.csl-bib-body { }
+    div.csl-entry {
+      clear: both;
+    }
+    .hanging div.csl-entry {
+      margin-left:2em;
+      text-indent:-2em;
+    }
+    div.csl-left-margin {
+      min-width:2em;
+      float:left;
+    }
+    div.csl-right-inline {
+      margin-left:2em;
+      padding-left:1em;
+    }
+    div.csl-indent {
+      margin-left: 2em;
+    }
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <style>
+    :root {
+      --r-heading1-size: 1.6em;
+      --r-heading2-size: 1.4em;
+      --r-heading3-size: 1.2em;
+      --r-heading4-size: 1em;
+    }
+    .reveal table {
+      border: separate;
+    }
+    .reveal .slide-number {
+      right: 40px;
+      bottom: 120px;
+      font-size: 16px;
+    }
+  </style>
+  <script>
+    // The default Pandoc-generated citation links don't work because they link to a different slide.
+    document.querySelectorAll(".citation a").forEach(a => {a.href = "#/references";});
+
+    // Set the title without generating a title slide
+    window.title = "Automatic reproduction of Workflows in Snakemake Workflow Catalog and Nf-core"
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section>
+<section
+id="automatic-reproduction-of-workflows-in-snakemake-workflow-catalog-and-nf-core"
+class="title-slide slide level1" style="font-size: 1.2em">
+<h1 style="font-size: 1.2em">Automatic reproduction of Workflows in
+Snakemake Workflow Catalog and Nf-core</h1>
+<p><span style="font-size: 1.0em">Samuel Grayson, Darko Marinov, Daniel
+S. Katz, Reed Milewicz</span></p>
+</section>
+<section class="slide level2">
+
+<p><span class="fragment">Automatic Reproduction</span> <span
+class="fragment">of Workflows</span> <span class="fragment">in
+Registries</span> <span class="fragment">(Snakemake Workflow Catalog and
+Nf-core)</span></p>
+</section>
+<section id="why-automatic-reproducibility" class="slide level2">
+<h2>Why automatic reproducibility?</h2>
+<div>
+<ul>
+<li class="fragment">Test the current state of reproducibility in
+practice</li>
+<li class="fragment">Reproducible ≔ different team/machine + same code ⇒
+consistent measurement <span class="citation"
+data-cites="acm_inc_staff_artifact_2020">[<a
+href="#/ref-acm_inc_staff_artifact_2020"
+role="doc-biblioref">4</a>]</span></li>
+<li class="fragment">True “research” reproducibility would need
+knowledge of the specific experiment</li>
+<li class="fragment">Instead, look at crash-free reproducibility</li>
+<li class="fragment">Crash-free reproducibility is necessary for resarch
+reproducibility</li>
+</ul>
+</div>
+</section>
+<section id="why-workflows" class="slide level2">
+<h2>Why workflows?</h2>
+<div>
+<ul>
+<li class="fragment">Workflow ≔ script that generates directed acyclic
+graph (DAG) of tasks
+<ul>
+<li class="fragment">DAG edges specify data dependencies to other
+nodes</li>
+<li class="fragment">Usually each node runs in a container</li>
+</ul></li>
+<li class="fragment">Workflow engine ≔ interpreter that runs the
+workflow and executes the DAG</li>
+<li class="fragment">Workflow registry ≔ archive of workflows
+(e.g. GitHub)</li>
+<li class="fragment">Workflows are easier to code than programs
+<ul>
+<li class="fragment">Especially parallelism</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="prior-work" class="slide level2">
+<h2>Prior work</h2>
+<div>
+<ul>
+<li class="fragment">“Why workflows break — understanding and combating
+decay in Taverna workflows” Zhao et al. 2012 <span class="citation"
+data-cites="zhao_why_2012">[<a href="#/ref-zhao_why_2012"
+role="doc-biblioref">6</a>]</span></li>
+<li class="fragment">“Repeatability in Computer Systems Research”
+Collberg and Proebsting 2016 <span class="citation"
+data-cites="collberg_repeatability_2016">[<a
+href="#/ref-collberg_repeatability_2016"
+role="doc-biblioref">1</a>]</span></li>
+<li class="fragment">“A large-scale study on research code quality and
+execution” Trisovic et al. 2022 <span class="citation"
+data-cites="trisovic_large-scale_2022">[<a
+href="#/ref-trisovic_large-scale_2022"
+role="doc-biblioref">5</a>]</span></li>
+</ul>
+</div>
+</section></section>
+<section id="research-questions" class="title-slide slide level1">
+<h1>Research questions</h1>
+<div>
+<ol start="0" type="1">
+<li class="fragment">Characterize the registries</li>
+<li class="fragment">How many workflows were crash-free
+reproducible?</li>
+<li class="fragment">Causes of crashes?</li>
+</ol>
+</div>
+</section>
+
+<section>
+<section id="rq0-workflow-registries" class="title-slide slide level1">
+<h1>RQ0: Workflow registries</h1>
+<div>
+<ul>
+<li class="fragment">Drawn from <a href="https://workflows.community/"
+class="uri">https://workflows.community/</a></li>
+</ul>
+</div>
+</section>
+<section id="registry-nf-core-ewels_nf-core_2020" class="slide level2">
+<h2>Registry: nf-core <span class="citation"
+data-cites="ewels_nf-core_2020">[<a href="#/ref-ewels_nf-core_2020"
+role="doc-biblioref">2</a>]</span></h2>
+<div>
+<ul>
+<li class="fragment">Nextflow engine only</li>
+<li class="fragment">Mostly multiomics users (genomics, proteomics,
+…)</li>
+<li class="fragment">Community-curated workflows for common tasks</li>
+<li class="fragment">Nf-core workflows follow certain conventions
+<ul>
+<li class="fragment">Have <code>./main.nf</code></li>
+<li class="fragment">Define profile for Singularity, Docker</li>
+</ul></li>
+<li class="fragment">48 workflows</li>
+<li class="fragment">All less than 4.5 years</li>
+<li class="fragment">Hosted in GitHub, can be viewed at <a
+href="https://nf-co.re" class="uri">https://nf-co.re</a></li>
+</ul>
+</div>
+</section>
+<section id="registry-snakemake-workflow-catalog" class="slide level2">
+<h2>Registry: Snakemake Workflow Catalog</h2>
+<div style="font-size: 36px;">
+<ul>
+<li class="fragment">Snakemake engine only</li>
+<li class="fragment">Mostly multiomics users (genomics, proteomics,
+…)</li>
+<li class="fragment">All GitHub repositories that follow certain
+standards
+<ul>
+<li class="fragment">Have a snakefile in a specific place</li>
+</ul></li>
+<li class="fragment">2,045 workflows but only 53 workflows with GitHub
+releases</li>
+<li class="fragment">Developers can customize the usage command with
+their run file <code>.snakemake-workflow-catalog.yml</code></li>
+<li class="fragment">Almost all less than 2.5 years</li>
+<li class="fragment">Hosted in GitHub, can be viewed at <a
+href="https://snakemake.github.io/snakemake-workflow-catalog/"
+class="uri">https://snakemake.github.io/snakemake-workflow-catalog/</a></li>
+</ul>
+</div>
+</section>
+<section id="registry-workflowhub-and-dockstore" class="slide level2">
+<h2>Registry: WorkflowHub and Dockstore</h2>
+<div>
+<ul>
+<li class="fragment">WorkflowHub.eu <span class="citation"
+data-cites="ferreira_da_silva_workflowhub_2020">[<a
+href="#/ref-ferreira_da_silva_workflowhub_2020"
+role="doc-biblioref">3</a>]</span> and Dockstore
+<ul>
+<li class="fragment">Multiple workflow engines ⇒ no automatic run
+commands</li>
+<li class="fragment">Future work</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="results" class="slide level2">
+<h2>Results</h2>
+<table>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>All</th>
+<th>SWC</th>
+<th>nf-core</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># workflows</td>
+<td>101</td>
+<td>53</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td># releases</td>
+<td>584</td>
+<td>333</td>
+<td>251</td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="rq1-of-automatic-reproducibility"
+class="title-slide slide level1">
+<h1>RQ1: % of automatic reproducibility</h1>
+<ul>
+<li>The registries advertise a command which runs these
+repositories.</li>
+<li>We want to know how often this command works without manual
+input.</li>
+</ul>
+</section>
+<section id="results-1" class="slide level2">
+<h2>Results</h2>
+<table>
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>All</th>
+<th>SWC</th>
+<th>nf-core</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># workflows</td>
+<td>101</td>
+<td>53</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td>% of workflows with ≥ 1 non-crashing release</td>
+<td><span class="fragment">53%</span></td>
+<td><span class="fragment">23%</span></td>
+<td><span class="fragment">88%</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td># releases</td>
+<td>584</td>
+<td>333</td>
+<td>251</td>
+</tr>
+<tr class="odd">
+<td>% of releases with no crash</td>
+<td><span class="fragment">28%</span></td>
+<td><span class="fragment">11%</span></td>
+<td><span class="fragment">51%</span></td>
+</tr>
+</tbody>
+</table>
+</section></section>
+<section>
+<section id="rq2-what-are-common-error-causes"
+class="title-slide slide level1">
+<h1>RQ2: What are common error causes</h1>
+
+</section>
+<section class="slide level2">
+
+<div>
+<ol type="1">
+<li class="fragment">Look at one unclassified crashing execution by
+hand.
+<ul>
+<li class="fragment">Describe the high-level reason.</li>
+</ul></li>
+<li class="fragment">Write a regular expression to catch this kind of
+error (stderr, stdout, logs).
+<ul>
+<li class="fragment">Make sure it is exclusive with the other regular
+expressions.</li>
+</ul></li>
+<li class="fragment">Mark these as classified.</li>
+<li class="fragment">Repeat to 1</li>
+<li class="fragment">Spotcheck the results</li>
+</ol>
+</div>
+</section>
+<section class="slide level2">
+
+<div>
+<ul>
+<li class="fragment">Workflow task error
+<ul>
+<li class="fragment">Timeout</li>
+<li class="fragment">Network resource changed</li>
+<li class="fragment">Missing software dependency</li>
+<li class="fragment">Other</li>
+</ul></li>
+<li class="fragment">Workflow script error
+<ul>
+<li class="fragment">Missing data/config input</li>
+<li class="fragment">Other</li>
+</ul></li>
+<li class="fragment">Workflow engine error
+<ul>
+<li class="fragment">Singularity error</li>
+<li class="fragment">Conda environment unsolvable</li>
+</ul></li>
+<li class="fragment">Unclassified</li>
+</ul>
+</div>
+</section>
+<section id="results-2" class="slide level2">
+<h2>Results</h2>
+<div style="font-size: 24px">
+<table>
+<thead>
+<tr class="header">
+<th>Kind of crash</th>
+<th>All</th>
+<th>SWC</th>
+<th>nf-core</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Missing data/config input</td>
+<td>32.2%</td>
+<td>43.8%</td>
+<td>16.7%</td>
+</tr>
+<tr class="even">
+<td>Conda environment unsolvable</td>
+<td>10.8%</td>
+<td>18.9%</td>
+<td>0.0%</td>
+</tr>
+<tr class="odd">
+<td>Unclassified reason</td>
+<td>7.9%</td>
+<td>12.0%</td>
+<td>2.4%</td>
+</tr>
+<tr class="even">
+<td>Timeout reached</td>
+<td>7.0%</td>
+<td>5.7%</td>
+<td>8.8%</td>
+</tr>
+<tr class="odd">
+<td>Singularity error</td>
+<td>6.0%</td>
+<td>6.6%</td>
+<td>5.2%</td>
+</tr>
+<tr class="even">
+<td>Other (workflow script)</td>
+<td>5.7%</td>
+<td>1.5%</td>
+<td>11.2%</td>
+</tr>
+<tr class="odd">
+<td>Other (workflow task)</td>
+<td>1.2%</td>
+<td>0.0%</td>
+<td>2.8%</td>
+</tr>
+<tr class="even">
+<td>Network resource changed</td>
+<td>0.7%</td>
+<td>0.0%</td>
+<td>1.6%</td>
+</tr>
+<tr class="odd">
+<td>Missing software dependency</td>
+<td>0.5%</td>
+<td>0.9%</td>
+<td>0.0%</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>No crash</td>
+<td>28.1%</td>
+<td>10.5%</td>
+<td>51.4%</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section id="observations" class="slide level2">
+<h2>Observations</h2>
+<div style="font-size: 32px">
+<ul>
+<li class="fragment">Misisng example data/config is prominent
+<ul>
+<li class="fragment">SWC YAML run file does not have a place for example
+data</li>
+<li class="fragment">Sometimes the nf-core <code>test</code> profile is
+insufficient!</li>
+<li class="fragment">Workflows should default to example data
+(downloaded or generated)</li>
+</ul></li>
+<li class="fragment">Conda environment solve is also a common factor
+<ul>
+<li class="fragment">Conda, by default, does not generate lockfiles</li>
+<li class="fragment">Difficult to debug</li>
+<li class="fragment">Packages can get yoinked</li>
+<li class="fragment">Source-level package managers could be more robust
+(Spack, Nix, Guix)
+<ul>
+<li class="fragment">But Conda is specially supported by Snakemake</li>
+</ul></li>
+</ul></li>
+</ul>
+</div>
+<!-- 
+# RQ4: What were the outputs?
+
+---
+
+::: {style="font-size: 20px"}
+| Type                       | All | SWC | nf-core |
+|----------------------------|-----|-----|---------|
+| ASCII text                 | 85% | 33% | 100%    |
+| HTML document              | 59% | 0%  | 76%     |
+| SVG image                  | 26% | 0%  | 33%     |
+| Zip archive data           | 7%  | 0%  | 10%     |
+| XML 1.0 document           | 4%  | 0%  | 5%      |
+| CSV text                   | 19% | 0%  | 24%     |
+| JSON text data             | 15% | 0%  | 19%     |
+| very short file (no magic) | 4%  | 0%  | 5%      |
+| gzip compressed data       | 11% | 0%  | 14%     |
+| PDF document               | 7%  | 0%  | 10%     |
+| Blocked GNU Zip Format     | 7%  | 17% | 5%      |
+| PNG image data             | 4%  | 0%  | 5%      |
+| LaTeX 2e document          | 4%  | 0%  | 5%      |
+|                            |     |     |         |
+| Total                      | 27  | 6   | 21      |
+:::
+
+---
+
+- Many plaintext!
+- Could be more easily stored and analyzed by registries
+
+-->
+</section></section>
+<section>
+<section id="discussion" class="title-slide slide level1">
+<h1>Discussion</h1>
+
+</section>
+<section id="containers-require-superuser-to-install"
+class="slide level2">
+<h2>Containers require superuser to install</h2>
+<div>
+<ul>
+<li class="fragment">Users won’t necessarily have root on shared
+systems</li>
+<li class="fragment">Rootless user-namespaces exist, but may be too new
+or not enabled</li>
+<li class="fragment">Why do we need root to reproduce someone else’s
+code?
+<ul>
+<li class="fragment">Linux filesystems are kernel modules, requires root
+to modify</li>
+</ul></li>
+<li class="fragment">Future work could look at CharlieCloud</li>
+</ul>
+</div>
+</section>
+<section id="towards-an-execution-description-language"
+class="slide level2">
+<h2>Towards an execution description language</h2>
+<div>
+<ul>
+<li class="fragment">SWC supports a YAML file which says how to run the
+workflow</li>
+<li class="fragment">Develop workflow-agnostic way of saying how to run
+a workflow
+<ul>
+<li class="fragment">Stored with the workflow code</li>
+<li class="fragment">Could be done by workflow authors or by
+reproducers</li>
+<li class="fragment">Simplify artifact evaluation, CI, reusability,
+reproducibility</li>
+</ul></li>
+</ul>
+</div>
+</section></section>
+<section id="references" class="title-slide slide level1"
+style="font-size: 1.3em">
+<h1 style="font-size: 1.3em">References</h1>
+<div id="refs" class="references csl-bib-body" style="font-size: 18px"
+role="doc-bibliography">
+<div id="ref-collberg_repeatability_2016" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[1] </div><div
+class="csl-right-inline">Collberg, C. and Proebsting, T.A. 2016.
+Repeatability in computer systems research. <em>Communications of the
+ACM</em>. 59, 3 (Feb. 2016), 62–69. DOI:https://doi.org/<a
+href="https://doi.org/10.1145/2812803">10.1145/2812803</a>.</div>
+</div>
+<div id="ref-ewels_nf-core_2020" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[2] </div><div
+class="csl-right-inline">Ewels, P.A. et al. 2020. The nf-core framework
+for community-curated bioinformatics pipelines. <em>Nature
+Biotechnology</em>. 38, 3 (Mar. 2020), 276–278. DOI:https://doi.org/<a
+href="https://doi.org/10.1038/s41587-020-0439-x">10.1038/s41587-020-0439-x</a>.</div>
+</div>
+<div id="ref-ferreira_da_silva_workflowhub_2020" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[3] </div><div
+class="csl-right-inline">Ferreira da Silva, R. et al. 2020. <a
+href="https://doi.org/10.1109/WORKS51914.2020.00012"><span>WorkflowHub</span>:
+<span>Community</span> <span>Framework</span> for <span>Enabling</span>
+<span>Scientific</span> <span>Workflow</span> <span>Research</span> and
+<span>Development</span></a>. <em>2020
+<span>IEEE</span>/<span>ACM</span> <span>Workflows</span> in
+<span>Support</span> of <span>Large</span>-<span>Scale</span>
+<span>Science</span> (<span>WORKS</span>)</em> (Georgia, USA, Nov.
+2020), 49–56.</div>
+</div>
+<div id="ref-acm_inc_staff_artifact_2020" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[4] </div><div
+class="csl-right-inline">staff, A.Inc. 2020. <a
+href="https://www.acm.org/publications/policies/artifact-review-and-badging-current">Artifact
+<span>Review</span> and <span>Badging</span></a>.</div>
+</div>
+<div id="ref-trisovic_large-scale_2022" class="csl-entry"
+role="doc-biblioentry">
+<div class="csl-left-margin">[5] </div><div
+class="csl-right-inline">Trisovic, A. et al. 2022. A large-scale study
+on research code quality and execution. <em>Scientific Data</em>. 9, 1
+(Feb. 2022), 60. DOI:https://doi.org/<a
+href="https://doi.org/10.1038/s41597-022-01143-6">10.1038/s41597-022-01143-6</a>.</div>
+</div>
+<div id="ref-zhao_why_2012" class="csl-entry" role="doc-biblioentry">
+<div class="csl-left-margin">[6] </div><div
+class="csl-right-inline">Zhao, J. et al. 2012. <a
+href="https://doi.org/10.1109/eScience.2012.6404482">Why workflows break
+— understanding and combating decay in <span>Taverna</span>
+workflows</a>. <em>2012 <span>IEEE</span> 8th <span>International</span>
+<span>Conference</span> on <span>E</span>-<span>Science</span>
+(e-<span>Science</span>)</em> (Chicago, IL, Oct. 2012), 9.</div>
+</div>
+</div>
+</section>
+
+<section>
+<section id="backup-slides" class="title-slide slide level1">
+<h1>Backup slides</h1>
+
+</section>
+<section id="links" class="slide level2">
+<h2>Links</h2>
+<ul>
+<li><a
+href="https://htmlpreview.github.io/?https://github.com/charmoniumQ/wf-reg-test/blob/main/docs/reports/acm_rep_pres.html">This
+presentation</a></li>
+<li><a
+href="https://raw.githubusercontent.com/charmoniumQ/wf-reg-test/main/docs/reports/Understanding-the-results-of-automatic-reproduction-of-workflows-in-nf-core-and-Snakemake-Workflow-Catalog.pdf">Paper
+preprint</a></li>
+<li>Code <a
+href="https://github.com/charmoniumQ/wf-reg-test/">(GitHub)</a> <a
+href="https://zenodo.org/record/7996835">(archived)</a></li>
+<li>Raw data <a
+href="https://htmlpreview.github.io/?https://github.com/charmoniumQ/wf-reg-test/blob/main/data/results.html">(rendered)</a>
+<a href="https://zenodo.org/record/7996835">(archived)</a>
+<code>./data/results.html</code></li>
+</ul>
+</section>
+<section id="continuous-integration" class="slide level2">
+<h2>Continuous integration</h2>
+<div>
+<ul>
+<li class="fragment">Use current CI scripts
+<ul>
+<li class="fragment">If the script multiple targets, which one to
+use?</li>
+<li class="fragment">None of them may actually run the experiment, if it
+is too expensive to run in CI.</li>
+</ul></li>
+<li class="fragment">Use CI script format but write new scripts
+<ul>
+<li class="fragment">No way to say <strong>what</strong> the command
+does</li>
+<li class="fragment">Need linked data for that</li>
+</ul></li>
+</ul>
+</div>
+<!--
+docker run astefanutti/decktape reveal file:///home/sam/box/wf-reg-test/docs/reports/acm_rep_pres.html acm_rep_pres.pdf
+-->
+</section></section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>

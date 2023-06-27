@@ -20,19 +20,30 @@
           nix-documents-lib = nix-documents.lib.${system};
         in
         {
-          packages = {
-            default = nix-utils-lib.mergeDerivations {
-              packageSet = nix-utils-lib.packageSetRec
-                (self: [
-                  (nix-documents-lib.markdownDocument {
-                    src = ./.;
-                    main = "ncsa_delta_proposal.md";
-                    name = "ncsa_delta_proposal.pdf";
-                    outputFormat = "pdf";
-                    date = 1665609977; # date +%s
-                  })
-                ]);
-            };
-          };
+          packages = nix-utils-lib.packageSetRec (self: [
+            (nix-documents-lib.markdownDocument {
+              src = ./.;
+              main = "ncsa_delta_proposal.md";
+              name = "ncsa_delta_proposal";
+              outputFormat = "pdf";
+              date = 1665609977; # date +%s
+            })
+            (pkgs.stdenv.mkDerivation {
+              name = "acm_rep_pres";
+              src = ./.;
+              buildPhase = ''
+                ${pkgs.pandoc}/bin/pandoc \
+                  --citeproc \
+                  --bibliography=main.bib \
+                  --csl=${nix-documents.packages.${system}.citation-style-language-styles}/acm-sig-proceedings.csl \
+                  --standalone \
+                  --slide-level=2 \
+                  --to=revealjs \
+                  --output=$out \
+                  $src/acm_rep_pres.md
+              '';
+              installPhase = "true";
+            })
+          ]);
         });
 }
