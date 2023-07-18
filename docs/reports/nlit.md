@@ -10,6 +10,9 @@ header-includes: |
       --r-heading3-size: 1.2em;
       --r-heading4-size: 1em;
     }
+    code {
+      font-size: 20pt
+    }
   </style>
   <script>
     // Set the title without generating a title slide
@@ -17,178 +20,180 @@ header-includes: |
   </script>
 ---
 
-# Title {style="font-size: 1.2em"}
+# How to keep computational experiments alive {style="font-size: 1.2em"}
 
-[Samuel Grayson, Reed Milewicz]{style="font-size: 1.0em"}
+[Samuel Grayson (Sandia, UIUC), Reed Milewicz (Sandia)]{style="font-size: 1.0em"}
 
-## Why automatic reproducibility?
+## What is alive?
 
 ::: incremental
-- Test the current state of reproducibility in practice
-- Reproducibility := different team/machine + same code -> consistent measurement [@acm_inc_staff_artifact_2020]
-- True "research" reproducibility would need knowledge of the specific experiment
-- Instead, look at crash-free reproducibility (no domain knowledge)
-- Crash-free reproducibility is necessary for resarch reproducibility
+- (required) Run the experiment
+- (would be nice) Results reproducible
+  - Within statistical degree
 :::
 
-## Why workflows?
+## Why long-term survivability?
 
 ::: incremental
-- Workflow := script that generates directed acyclic graph (DAG) of tasks
-  - Usually each node runs in isolation
-  - DAG edges specify  I/O to other nodes
-- Workflow engine := interpreter that runs the workflow and executes the DAG
-- Workflow registry := set of repositories containing workflows (e.g. GitHub)
-- Workflows are easier to code than programs
-  - Especially parallelism
+- Parts last for decades
+- Be engineers not archeologists
+- Provenance: how did we get here
+- Rerun: updated knowledge or methods
+- Extend: new questions
 :::
 
-<!--
-## Registry: nf-core [@ewels_nf-core_2020]
+# Methods
+
+## Open source samples
 
 ::: incremental
-- Nextflow engine only
-- Community-curated workflows for common tasks
-- Nf-core workflows follow certain conventions
-  - Always have `./main.nf`
-  - Always define profile for Singularity, Docker
-- 48 workflows
-- All less than 4.5 years
-- Hosted in GitHub, can be viewed at <https://nf-co.re>
+- Snakemake and Nextflow workflows
+- Workflows nodes are container + cmd, edges are files
+  - <img src="./dag_call.webp" style="width: 300px"/>
+- One minute to half an hour
 :::
 
-## Registry: Snakemake Workflow Catalog
+# Results
+
+## How many workflows? How many still alive?
+
+| Quantity                                        | All              | Snakemake        | Nextflow         |
+|-------------------------------------------------|------------------|------------------|------------------|
+| \# workflows                                    | 101              | 53               | 48               |
+| % of workflows with &ge; 1 non-crashing release | [53%]{.fragment} | [23%]{.fragment} | [88%]{.fragment} |
+|                                                 |                  |                  |                  |
+| \# releases                                     | 584              | 333              | 251              |
+| % of releases with no crash                     | [28%]{.fragment} | [11%]{.fragment} | [51%]{.fragment} |
+
+## What are common error causes
 
 ::: incremental
-- Snakemake engine only
-- All GitHub repositories that follow certain standards
-  - Have a snakefile in a specific place
-- 2,045 workflows but only 53 workflows with GitHub releases
-- Almost all less than 2.5 years
-- Hosted in GitHub, can be viewed at <https://snakemake.github.io/snakemake-workflow-catalog/>
-:::
-
-# % of automatic reproducibility
-
-- The registries advertise a command which runs these repositories.
-- We want to know how often this command is sufficient by itself.
-
-## Workflow engines: Nextflow and Snakemake
-
-::: incremental
-- Mostly multiomics users (genomics, proteomics, ...)
-- Run in cloud, cluster, or local
-- Workflows **may** support running each step in Singularity container
-- Singularity := container engine (like Docker)
-:::
-
--->
-
-
-## Results of automatic reproduction
-
-| Quantity                                              | All              | SWC              | nf-core          |
-|-------------------------------------------------------|------------------|------------------|------------------|
-| \# workflows                                          | 101              | 53               | 48               |
-| % of workflows with at least one non-crashing release | [53%]{.fragment} | [23%]{.fragment} | [88%]{.fragment} |
-| \# revisions                                          | 584              | 333              | 251              |
-| % of revisions with no crash                          | [28%]{.fragment} | [11%]{.fragment} | [51%]{.fragment} |
-
-# What are common error causes
-
-::: incremental
-- Workflow task error
-  - Timeout
-  - Other
-  - Network resource changed
-  - Missing software dependency
-- Workflow script error
-  - Missing data/config input
-  - Other
-- Workflow engine error
-  - Singularity error
-  - Conda environment unsolvable
+- Timeout
+- Network resource changed
+- Missing software dependency
+- Missing data/config input
+- Singularity error
+- Conda environment unsolvable
 - Unclassified
 :::
 
 ## Results
 
-::: {.table style="font-size: 24px"}
+<div style="font-size: 24px">
 
-| Kind of crash                | All   | SWC   | nf-core |
-|------------------------------|-------|-------|---------|
-| Missing data/config input    | 32.2% | 43.8% | 16.7%   |
-| Conda environment unsolvable | 10.8% | 18.9% | 0.0%    |
-| Unclassified reason          | 7.9%  | 12.0% | 2.4%    |
-| Timeout reached              | 7.0%  | 5.7%  | 8.8%    |
-| Singularity error            | 6.0%  | 6.6%  | 5.2%    |
-| Other (workflow script)      | 5.7%  | 1.5%  | 11.2%   |
-| Other (workflow task)        | 1.2%  | 0.0%  | 2.8%    |
-| Network resource changed     | 0.7%  | 0.0%  | 1.6%    |
-| Missing software dependency  | 0.5%  | 0.9%  | 0.0%    |
-|                              |       |       |         |
-| No crash                     | 28.1% | 10.5% | 51.4%   |
-|                              |       |       |         |
-| Total                        | 100%  | 100%  | 100%    |
+| Kind of crash                | All   | Snakemake | Nextflow |
+|------------------------------|-------|-----------|----------|
+| Missing data/config input    | 32.2% | 43.8%     | 16.7%    |
+| Conda environment unsolvable | 10.8% | 18.9%     | 0.0%     |
+| Unclassified reason          | 7.9%  | 12.0%     | 2.4%     |
+| Timeout reached              | 7.0%  | 5.7%      | 8.8%     |
+| Singularity error            | 6.0%  | 6.6%      | 5.2%     |
+| Other (workflow script)      | 5.7%  | 1.5%      | 11.2%    |
+| Other (workflow task)        | 1.2%  | 0.0%      | 2.8%     |
+| Network resource changed     | 0.7%  | 0.0%      | 1.6%     |
+| Missing software dependency  | 0.5%  | 0.9%      | 0.0%     |
+|                              |       |           |          |
+| No crash                     | 28.1% | 10.5%     | 51.4%    |
+|                              |       |           |          |
+| Total                        | 100%  | 100%      | 100%     |
+
+</div>
+
+---
+
+<img src=./SurvivalCurveUpdated.png style="width: 600px" />
 
 # Discussion
 
 ## Missing example data is prominent
 
 ::: incremental
-- Workflow authors should include example data, even if it has to be downloaded from the internet or generated
-- This would allow these workflows to be tested automatically by someone without knowledge of how the experiment works
-:::
-
-## Container infrastructure is difficult
-
-::: incremental
-- Distribute container images or distribute container build files?
-- Distribute container images:
-  - Expensive to store (DockerHub kicks off free projects)
-  - Link rot
-  - How to update just one dep?
-- Distribute container build files:
-  - Lose reproducibility benefits if each user has to build
-  - Need a reproducible package manager to do the build
-    - Workable solution here!
+- Experimenters should include example data (downloaded or generated)
+- This would allow these workflows to be tested by idiots
+- But, default data can be confusing
 :::
 
 ## Conda environment unsolvable
 
 ::: incremental
-- Prominent error class
-- Package managers should include the spec-file and lock-file
-- Source-level functional package managers may be more robust
-  - Multi-arch
-  - Less storage intensive
-  - E.g., Nix, Guix, Spack
-    - Guix has support for Software Heritage
-  - Can build container images reproducibly
+- Packages can get yoinked
+  - [Spec](https://github.com/atrisovic/dataverse-r-study/blob/master/docker/Dockerfile) [Repo](https://anaconda.org/conda-forge/r/files)
+- Conda has no lockfile; only specfile
+  - If you have to use Conda, [Conda-lock](https://github.com/conda/conda-lock)
+- Impossible to debug
+  - [StackOverflow](https://stackoverflow.com/a/69137255/1078199)
+  - If you have to use Conda, use Mamba frontend
 :::
 
-## Continuous integration to detect configuration errors
+## Container infrastructure is difficult (images)
+::: incremental
+- Distribute container images or distribute container build files?
+- Expensive to store (DockerHub)
+  - Is this container safe to delete? Append-only
+  - `apt install x y` and `apt install x z` no reuse
+  - Flask baseimage, Numpy baseimage, what if I need both?
+- Link rot -> registries are ephemeral
+:::
+
+## Container infrastructure is difficult (build files)
 
 ::: incremental
+- Lose reproducibility benefits if each user has to build
+  - `apt update` -> `apt install x` is not reproducible
+- Need a reproducible package manager to do the build
+- Workable solution here!
+:::
+
+## Source-level package managers
+
+::: incremental
+- Guix, Nix, Spack
+- Source is less expensive to store (delta compress, multiarch)
+  - Reuse for `install x==1.0` and `install x==2.0`
+  - Guix links to Software Heritage
+- Binary buildcache available (more secure)
+- Build containers reproducibly
+  - Software environment is a DAG not a chain!
+:::
+
+## CI for configuration errors
+
+::: incremental
+- Too slow to run in CI
 - Scale down fidelity and size
 - Rerun periodically, not just when code changes
 - Store small artifacts
   - File read/write set and hash (ptrace)
 :::
 
-## Continuous integration to detect bugs
+## CI for detect semantic errors
 
 ::: incremental
 - Parameterize test fidelity and size
 - Schedule scaled down test frequently, full fidelity test infrequently
-- Instead of hash, collect statistical summary
-- Write provenance data to link the inputs to intermediates to outputs
+- Write provenance data (DAG of inputs, intermediates, outputs)
+  - Collect statistical summary
   - Interoperable with other tools (W3C PROV)
-<!-- Picture -->
+  - Prov diff
 :::
 
-<!--
-Update title
-Better terminology for bugs
-Graphs?
--->
+## Failure prediction
+
+::: incremental
+- For each experiment, estimate probability of failure
+- Probability of failure determines frequency of testing
+- Factors:
+  - History of that individual workflow
+  - History of workflows in that language and ecosystem
+  - If A fails and B has many same components, B might fail
+:::
+
+# Solutions
+
+::: incremental
+- Default example data (for idiots)
+- Conda &rArr; Mamba + Conda-lock
+- Source-level package managers build containers reproducibly
+- Multi-scale CI
+- Failure prediction (research)
+:::

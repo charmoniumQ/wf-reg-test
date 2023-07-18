@@ -44,6 +44,19 @@
               '';
               installPhase = "true";
             })
+            (pkgs.stdenv.mkDerivation {
+              name = "nlit";
+              src = ./.;
+              buildPhase = ''
+                ${pkgs.pandoc}/bin/pandoc \
+                  --standalone \
+                  --slide-level=2 \
+                  --to=revealjs \
+                  --output=$out \
+                  $src/nlit.md
+              '';
+              installPhase = "true";
+            })
           ]);
         });
 }

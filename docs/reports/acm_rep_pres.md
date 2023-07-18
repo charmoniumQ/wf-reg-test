@@ -150,7 +150,7 @@ header-includes: |
 ::: incremental
 1. Look at one unclassified crashing execution by hand.
    * Describe the high-level reason.
-2. Write a regular expression to catch this kind of error (stderr, stdout, logs).
+2. Write a regular expression to catch this kind of error.
    * Make sure it is exclusive with the other regular expressions.
 3. Mark these as classified.
 4. Repeat to 1
@@ -292,5 +292,7 @@ header-includes: |
 :::
 
 <!--
-docker run astefanutti/decktape reveal file:///home/sam/box/wf-reg-test/docs/reports/acm_rep_pres.html acm_rep_pres.pdf
+python -m http.server
+docker run -v $PWD:$PWD astefanutti/decktape reveal file://$PWD/acm_rep_pres.html $PWD/acm_rep_pres.pdf
+docker run --net=host -v ${PWD}:/slides astefanutti/decktape reveal http://localhost:8000/acm_rep_pres.html acm_rep_pres.pdf 
 -->

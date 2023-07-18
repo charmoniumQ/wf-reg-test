@@ -1,0 +1,592 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="generator" content="pandoc">
+  <title>nlit</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reset.css">
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/reveal.css">
+  <style>
+    .reveal .sourceCode {  /* see #7635 */
+      overflow: visible;
+    }
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+    .display.math{display: block; text-align: center; margin: 0.5rem auto;}
+  </style>
+  <link rel="stylesheet" href="https://unpkg.com/reveal.js@^4//dist/theme/black.css" id="theme">
+  <style>
+    :root {
+      --r-heading1-size: 1.6em;
+      --r-heading2-size: 1.4em;
+      --r-heading3-size: 1.2em;
+      --r-heading4-size: 1em;
+    }
+    code {
+      font-size: 20pt
+    }
+  </style>
+  <script>
+    // Set the title without generating a title slide
+    window.title = "Automatic reproduction of Workflows in Snakemake Workflow Catalog and Nf-core"
+  </script>
+</head>
+<body>
+  <div class="reveal">
+    <div class="slides">
+
+
+<section>
+<section id="how-to-keep-computational-experiments-alive"
+class="title-slide slide level1" style="font-size: 1.2em">
+<h1 style="font-size: 1.2em">How to keep computational experiments
+alive</h1>
+<p><span style="font-size: 1.0em">Samuel Grayson (Sandia, UIUC), Reed
+Milewicz (Sandia)</span></p>
+</section>
+<section id="what-is-alive" class="slide level2">
+<h2>What is alive?</h2>
+<div>
+<ul>
+<li class="fragment">(required) Run the experiment</li>
+<li class="fragment">(would be nice) Results reproducible
+<ul>
+<li class="fragment">Within statistical degree</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="why-long-term-survivability" class="slide level2">
+<h2>Why long-term survivability?</h2>
+<div>
+<ul>
+<li class="fragment">Parts last for decades</li>
+<li class="fragment">Be engineers not archeologists</li>
+<li class="fragment">Provenance: how did we get here</li>
+<li class="fragment">Rerun: updated knowledge or methods</li>
+<li class="fragment">Extend: new questions</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="methods" class="title-slide slide level1">
+<h1>Methods</h1>
+
+</section>
+<section id="open-source-samples" class="slide level2">
+<h2>Open source samples</h2>
+<div>
+<ul>
+<li class="fragment">Snakemake and Nextflow workflows</li>
+<li class="fragment">Workflows nodes are container + cmd, edges are
+files
+<ul>
+<li
+class="fragment"><img src="./dag_call.webp" style="width: 300px"/></li>
+</ul></li>
+<li class="fragment">One minute to half an hour</li>
+</ul>
+</div>
+</section></section>
+<section>
+<section id="results" class="title-slide slide level1">
+<h1>Results</h1>
+
+</section>
+<section id="how-many-workflows-how-many-still-alive"
+class="slide level2">
+<h2>How many workflows? How many still alive?</h2>
+<table>
+<colgroup>
+<col style="width: 47%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+<col style="width: 17%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th>Quantity</th>
+<th>All</th>
+<th>Snakemake</th>
+<th>Nextflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td># workflows</td>
+<td>101</td>
+<td>53</td>
+<td>48</td>
+</tr>
+<tr class="even">
+<td>% of workflows with ≥ 1 non-crashing release</td>
+<td><span class="fragment">53%</span></td>
+<td><span class="fragment">23%</span></td>
+<td><span class="fragment">88%</span></td>
+</tr>
+<tr class="odd">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="even">
+<td># releases</td>
+<td>584</td>
+<td>333</td>
+<td>251</td>
+</tr>
+<tr class="odd">
+<td>% of releases with no crash</td>
+<td><span class="fragment">28%</span></td>
+<td><span class="fragment">11%</span></td>
+<td><span class="fragment">51%</span></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="what-are-common-error-causes" class="slide level2">
+<h2>What are common error causes</h2>
+<div>
+<ul>
+<li class="fragment">Timeout</li>
+<li class="fragment">Network resource changed</li>
+<li class="fragment">Missing software dependency</li>
+<li class="fragment">Missing data/config input</li>
+<li class="fragment">Singularity error</li>
+<li class="fragment">Conda environment unsolvable</li>
+<li class="fragment">Unclassified</li>
+</ul>
+</div>
+</section>
+<section id="results-1" class="slide level2">
+<h2>Results</h2>
+<div style="font-size: 24px">
+<table>
+<thead>
+<tr class="header">
+<th>Kind of crash</th>
+<th>All</th>
+<th>Snakemake</th>
+<th>Nextflow</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Missing data/config input</td>
+<td>32.2%</td>
+<td>43.8%</td>
+<td>16.7%</td>
+</tr>
+<tr class="even">
+<td>Conda environment unsolvable</td>
+<td>10.8%</td>
+<td>18.9%</td>
+<td>0.0%</td>
+</tr>
+<tr class="odd">
+<td>Unclassified reason</td>
+<td>7.9%</td>
+<td>12.0%</td>
+<td>2.4%</td>
+</tr>
+<tr class="even">
+<td>Timeout reached</td>
+<td>7.0%</td>
+<td>5.7%</td>
+<td>8.8%</td>
+</tr>
+<tr class="odd">
+<td>Singularity error</td>
+<td>6.0%</td>
+<td>6.6%</td>
+<td>5.2%</td>
+</tr>
+<tr class="even">
+<td>Other (workflow script)</td>
+<td>5.7%</td>
+<td>1.5%</td>
+<td>11.2%</td>
+</tr>
+<tr class="odd">
+<td>Other (workflow task)</td>
+<td>1.2%</td>
+<td>0.0%</td>
+<td>2.8%</td>
+</tr>
+<tr class="even">
+<td>Network resource changed</td>
+<td>0.7%</td>
+<td>0.0%</td>
+<td>1.6%</td>
+</tr>
+<tr class="odd">
+<td>Missing software dependency</td>
+<td>0.5%</td>
+<td>0.9%</td>
+<td>0.0%</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>No crash</td>
+<td>28.1%</td>
+<td>10.5%</td>
+<td>51.4%</td>
+</tr>
+<tr class="even">
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td>100%</td>
+<td>100%</td>
+<td>100%</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<section class="slide level2">
+
+<p><img src=./SurvivalCurveUpdated.png style="width: 600px" /></p>
+</section></section>
+<section>
+<section id="discussion" class="title-slide slide level1">
+<h1>Discussion</h1>
+
+</section>
+<section id="missing-example-data-is-prominent" class="slide level2">
+<h2>Missing example data is prominent</h2>
+<div>
+<ul>
+<li class="fragment">Experimenters should include example data
+(downloaded or generated)</li>
+<li class="fragment">This would allow these workflows to be tested by
+idiots</li>
+<li class="fragment">But, default data can be confusing</li>
+</ul>
+</div>
+</section>
+<section id="conda-environment-unsolvable" class="slide level2">
+<h2>Conda environment unsolvable</h2>
+<div>
+<ul>
+<li class="fragment">Packages can get yoinked
+<ul>
+<li class="fragment"><a
+href="https://github.com/atrisovic/dataverse-r-study/blob/master/docker/Dockerfile">Spec</a>
+<a href="https://anaconda.org/conda-forge/r/files">Repo</a></li>
+</ul></li>
+<li class="fragment">Conda has no lockfile; only specfile
+<ul>
+<li class="fragment">If you have to use Conda, <a
+href="https://github.com/conda/conda-lock">Conda-lock</a></li>
+</ul></li>
+<li class="fragment">Impossible to debug
+<ul>
+<li class="fragment"><a
+href="https://stackoverflow.com/a/69137255/1078199">StackOverflow</a></li>
+<li class="fragment">If you have to use Conda, use Mamba frontend</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="container-infrastructure-is-difficult-images"
+class="slide level2">
+<h2>Container infrastructure is difficult (images)</h2>
+<div>
+<ul>
+<li class="fragment">Distribute container images or distribute container
+build files?</li>
+<li class="fragment">Expensive to store (DockerHub)
+<ul>
+<li class="fragment">Is this container safe to delete? Append-only</li>
+<li class="fragment"><code>apt install x y</code> and
+<code>apt install x z</code> no reuse</li>
+<li class="fragment">Flask baseimage, Numpy baseimage, what if I need
+both?</li>
+</ul></li>
+<li class="fragment">Link rot -&gt; registries are ephemeral</li>
+</ul>
+</div>
+</section>
+<section id="container-infrastructure-is-difficult-build-files"
+class="slide level2">
+<h2>Container infrastructure is difficult (build files)</h2>
+<div>
+<ul>
+<li class="fragment">Lose reproducibility benefits if each user has to
+build
+<ul>
+<li class="fragment"><code>apt update</code> -&gt;
+<code>apt install x</code> is not reproducible</li>
+</ul></li>
+<li class="fragment">Need a reproducible package manager to do the
+build</li>
+<li class="fragment">Workable solution here!</li>
+</ul>
+</div>
+</section>
+<section id="source-level-package-managers" class="slide level2">
+<h2>Source-level package managers</h2>
+<div>
+<ul>
+<li class="fragment">Guix, Nix, Spack</li>
+<li class="fragment">Source is less expensive to store (delta compress,
+multiarch)
+<ul>
+<li class="fragment">Reuse for <code>install x==1.0</code> and
+<code>install x==2.0</code></li>
+<li class="fragment">Guix links to Software Heritage</li>
+</ul></li>
+<li class="fragment">Binary buildcache available (more secure)</li>
+<li class="fragment">Build containers reproducibly
+<ul>
+<li class="fragment">Software environment is a DAG not a chain!</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="ci-for-configuration-errors" class="slide level2">
+<h2>CI for configuration errors</h2>
+<div>
+<ul>
+<li class="fragment">Too slow to run in CI</li>
+<li class="fragment">Scale down fidelity and size</li>
+<li class="fragment">Rerun periodically, not just when code changes</li>
+<li class="fragment">Store small artifacts
+<ul>
+<li class="fragment">File read/write set and hash (ptrace)</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="ci-for-detect-semantic-errors" class="slide level2">
+<h2>CI for detect semantic errors</h2>
+<div>
+<ul>
+<li class="fragment">Parameterize test fidelity and size</li>
+<li class="fragment">Schedule scaled down test frequently, full fidelity
+test infrequently</li>
+<li class="fragment">Write provenance data (DAG of inputs,
+intermediates, outputs)
+<ul>
+<li class="fragment">Collect statistical summary</li>
+<li class="fragment">Interoperable with other tools (W3C PROV)</li>
+<li class="fragment">Prov diff</li>
+</ul></li>
+</ul>
+</div>
+</section>
+<section id="failure-prediction" class="slide level2">
+<h2>Failure prediction</h2>
+<div>
+<ul>
+<li class="fragment">For each experiment, estimate probability of
+failure</li>
+<li class="fragment">Probability of failure determines frequency of
+testing</li>
+<li class="fragment">Factors:
+<ul>
+<li class="fragment">History of that individual workflow</li>
+<li class="fragment">History of workflows in that language and
+ecosystem</li>
+<li class="fragment">If A fails and B has many same components, B might
+fail</li>
+</ul></li>
+</ul>
+</div>
+</section></section>
+<section id="solutions" class="title-slide slide level1">
+<h1>Solutions</h1>
+<div>
+<ul>
+<li class="fragment">Default example data (for idiots)</li>
+<li class="fragment">Conda ⇒ Mamba + Conda-lock</li>
+<li class="fragment">Source-level package managers build containers
+reproducibly</li>
+<li class="fragment">Multi-scale CI</li>
+<li class="fragment">Failure prediction (research)</li>
+</ul>
+</div>
+</section>
+    </div>
+  </div>
+
+  <script src="https://unpkg.com/reveal.js@^4//dist/reveal.js"></script>
+
+  <!-- reveal.js plugins -->
+  <script src="https://unpkg.com/reveal.js@^4//plugin/notes/notes.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/search/search.js"></script>
+  <script src="https://unpkg.com/reveal.js@^4//plugin/zoom/zoom.js"></script>
+
+  <script>
+
+      // Full list of configuration options available at:
+      // https://revealjs.com/config/
+      Reveal.initialize({
+        // Display controls in the bottom right corner
+        controls: true,
+
+        // Help the user learn the controls by providing hints, for example by
+        // bouncing the down arrow when they first encounter a vertical slide
+        controlsTutorial: true,
+
+        // Determines where controls appear, "edges" or "bottom-right"
+        controlsLayout: 'bottom-right',
+
+        // Visibility rule for backwards navigation arrows; "faded", "hidden"
+        // or "visible"
+        controlsBackArrows: 'faded',
+
+        // Display a presentation progress bar
+        progress: true,
+
+        // Display the page number of the current slide
+        slideNumber: true,
+
+        // 'all', 'print', or 'speaker'
+        showSlideNumber: 'all',
+
+        // Add the current slide number to the URL hash so that reloading the
+        // page/copying the URL will return you to the same slide
+        hash: true,
+
+        // Start with 1 for the hash rather than 0
+        hashOneBasedIndex: false,
+
+        // Flags if we should monitor the hash and change slides accordingly
+        respondToHashChanges: true,
+
+        // Push each slide change to the browser history
+        history: false,
+
+        // Enable keyboard shortcuts for navigation
+        keyboard: true,
+
+        // Enable the slide overview mode
+        overview: true,
+
+        // Disables the default reveal.js slide layout (scaling and centering)
+        // so that you can use custom CSS layout
+        disableLayout: false,
+
+        // Vertical centering of slides
+        center: true,
+
+        // Enables touch navigation on devices with touch input
+        touch: true,
+
+        // Loop the presentation
+        loop: false,
+
+        // Change the presentation direction to be RTL
+        rtl: false,
+
+        // see https://revealjs.com/vertical-slides/#navigation-mode
+        navigationMode: 'default',
+
+        // Randomizes the order of slides each time the presentation loads
+        shuffle: false,
+
+        // Turns fragments on and off globally
+        fragments: true,
+
+        // Flags whether to include the current fragment in the URL,
+        // so that reloading brings you to the same fragment position
+        fragmentInURL: true,
+
+        // Flags if the presentation is running in an embedded mode,
+        // i.e. contained within a limited portion of the screen
+        embedded: false,
+
+        // Flags if we should show a help overlay when the questionmark
+        // key is pressed
+        help: true,
+
+        // Flags if it should be possible to pause the presentation (blackout)
+        pause: true,
+
+        // Flags if speaker notes should be visible to all viewers
+        showNotes: false,
+
+        // Global override for autoplaying embedded media (null/true/false)
+        autoPlayMedia: null,
+
+        // Global override for preloading lazy-loaded iframes (null/true/false)
+        preloadIframes: null,
+
+        // Number of milliseconds between automatically proceeding to the
+        // next slide, disabled when set to 0, this value can be overwritten
+        // by using a data-autoslide attribute on your slides
+        autoSlide: 0,
+
+        // Stop auto-sliding after user input
+        autoSlideStoppable: true,
+
+        // Use this method for navigation when auto-sliding
+        autoSlideMethod: null,
+
+        // Specify the average time in seconds that you think you will spend
+        // presenting each slide. This is used to show a pacing timer in the
+        // speaker view
+        defaultTiming: null,
+
+        // Enable slide navigation via mouse wheel
+        mouseWheel: false,
+
+        // The display mode that will be used to show slides
+        display: 'block',
+
+        // Hide cursor if inactive
+        hideInactiveCursor: true,
+
+        // Time before the cursor is hidden (in ms)
+        hideCursorTime: 5000,
+
+        // Opens links in an iframe preview overlay
+        previewLinks: false,
+
+        // Transition style (none/fade/slide/convex/concave/zoom)
+        transition: 'slide',
+
+        // Transition speed (default/fast/slow)
+        transitionSpeed: 'default',
+
+        // Transition style for full page slide backgrounds
+        // (none/fade/slide/convex/concave/zoom)
+        backgroundTransition: 'fade',
+
+        // Number of slides away from the current that are visible
+        viewDistance: 3,
+
+        // Number of slides away from the current that are visible on mobile
+        // devices. It is advisable to set this to a lower number than
+        // viewDistance in order to save resources.
+        mobileViewDistance: 2,
+
+        // reveal.js plugins
+        plugins: [
+          RevealNotes,
+          RevealSearch,
+          RevealZoom
+        ]
+      });
+    </script>
+    </body>
+</html>
